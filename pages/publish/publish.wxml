@@ -1,0 +1,178 @@
+<!--pages/publish/publish.wxml-->
+<view class="page">
+  <!-- 发布类型选择 -->
+  <view class="type-tabs">
+    <view class="type-tab {{publishType === 'product' ? 'active' : ''}}" bindtap="switchType" data-type="product">
+      <icon name="package" size="36" color="{{publishType === 'product' ? '#E6A023' : '#888'}}"></icon>
+      <text>闲置物品</text>
+    </view>
+    <view class="type-tab {{publishType === 'free' ? 'active' : ''}}" bindtap="switchType" data-type="free">
+      <icon name="gift" size="36" color="{{publishType === 'free' ? '#E6A023' : '#888'}}"></icon>
+      <text>免费送</text>
+    </view>
+    <view class="type-tab {{publishType === 'post' ? 'active' : ''}}" bindtap="switchType" data-type="post">
+      <icon name="message-circle" size="36" color="{{publishType === 'post' ? '#E6A023' : '#888'}}"></icon>
+      <text>发帖子</text>
+    </view>
+    <view class="type-tab {{publishType === 'help' ? 'active' : ''}}" bindtap="switchType" data-type="help">
+      <icon name="handshake" size="36" color="{{publishType === 'help' ? '#E6A023' : '#888'}}"></icon>
+      <text>求帮忙</text>
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="form-scroll">
+    <!-- 发布商品表单 -->
+    <view wx:if="{{publishType === 'product' || publishType === 'free'}}">
+      <!-- 图片上传 -->
+      <view class="form-section">
+        <view class="upload-area">
+          <view class="image-list">
+            <view class="image-item" wx:for="{{imageList}}" wx:key="index">
+              <image src="{{item}}" mode="aspectFill" class="uploaded-img"></image>
+              <view class="remove-btn" bindtap="removeImage" data-index="{{index}}">
+                <icon name="x" size="22" color="#fff"></icon>
+              </view>
+            </view>
+            <view class="image-item add-btn" bindtap="chooseImage" wx:if="{{imageList.length < 9}}">
+              <icon name="camera" size="48" color="#bbb"></icon>
+              <text class="add-text">{{imageList.length}}/9</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 标题 -->
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">标题</text>
+          <input class="form-input" placeholder="描述一下你的宝贝" maxlength="30" bindinput="onInput" data-field="title" value="{{form.title}}"/>
+        </view>
+      </view>
+
+      <!-- 分类 -->
+      <view class="form-section">
+        <view class="form-item" bindtap="showCategoryPicker">
+          <text class="form-label">分类</text>
+          <view class="form-value">
+            <text class="{{form.category ? '' : 'placeholder'}}">{{form.category || '选择分类'}}</text>
+            <text class="form-arrow">›</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 价格（非免费） -->
+      <view class="form-section" wx:if="{{publishType === 'product'}}">
+        <view class="form-item">
+          <text class="form-label">价格</text>
+          <input class="form-input" type="digit" placeholder="输入价格" bindinput="onInput" data-field="price" value="{{form.price}}"/>
+          <text class="form-unit">元</text>
+        </view>
+        <view class="form-item">
+          <text class="form-label">原价</text>
+          <input class="form-input" type="digit" placeholder="可选" bindinput="onInput" data-field="originalPrice" value="{{form.originalPrice}}"/>
+          <text class="form-unit">元</text>
+        </view>
+      </view>
+
+      <!-- 成色 -->
+      <view class="form-section">
+        <view class="form-item" bindtap="showConditionPicker">
+          <text class="form-label">成色</text>
+          <view class="form-value">
+            <text class="{{form.condition ? '' : 'placeholder'}}">{{form.condition || '选择成色'}}</text>
+            <text class="form-arrow">›</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 描述 -->
+      <view class="form-section">
+        <view class="form-item-col">
+          <text class="form-label">详细描述</text>
+          <textarea class="form-textarea" placeholder="描述宝贝的使用状况、购买时间等" maxlength="500" bindinput="onInput" data-field="description" value="{{form.description}}"/>
+        </view>
+      </view>
+
+      <!-- 交易方式 -->
+      <view class="form-section">
+        <view class="form-item" bindtap="showTradePicker">
+          <text class="form-label">交易方式</text>
+          <view class="form-value">
+            <text class="{{form.tradeMethod ? '' : 'placeholder'}}">{{form.tradeMethod || '选择交易方式'}}</text>
+            <text class="form-arrow">›</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 发帖表单 -->
+    <view wx:if="{{publishType === 'post'}}">
+      <view class="form-section">
+        <view class="form-item" bindtap="showPostCategoryPicker">
+          <text class="form-label">帖子分类</text>
+          <view class="form-value">
+            <text class="{{form.postCategory ? '' : 'placeholder'}}">{{form.postCategory || '选择分类'}}</text>
+            <text class="form-arrow">›</text>
+          </view>
+        </view>
+      </view>
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">标题</text>
+          <input class="form-input" placeholder="帖子标题" maxlength="30" bindinput="onInput" data-field="title" value="{{form.title}}"/>
+        </view>
+      </view>
+      <view class="form-section">
+        <view class="form-item-col">
+          <text class="form-label">内容</text>
+          <textarea class="form-textarea" placeholder="说点什么..." maxlength="1000" bindinput="onInput" data-field="description" value="{{form.description}}" style="height: 300rpx;"/>
+        </view>
+      </view>
+      <view class="form-section">
+        <view class="upload-area">
+          <view class="image-list">
+            <view class="image-item" wx:for="{{imageList}}" wx:key="index">
+              <image src="{{item}}" mode="aspectFill" class="uploaded-img"></image>
+              <view class="remove-btn" bindtap="removeImage" data-index="{{index}}">
+                <icon name="x" size="22" color="#fff"></icon>
+              </view>
+            </view>
+            <view class="image-item add-btn" bindtap="chooseImage" wx:if="{{imageList.length < 9}}">
+              <icon name="camera" size="48" color="#bbb"></icon>
+              <text class="add-text">添加图片</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 求帮忙表单 -->
+    <view wx:if="{{publishType === 'help'}}">
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">标题</text>
+          <input class="form-input" placeholder="简短描述你需要的帮助" maxlength="30" bindinput="onInput" data-field="title" value="{{form.title}}"/>
+        </view>
+      </view>
+      <view class="form-section">
+        <view class="form-item-col">
+          <text class="form-label">详细说明</text>
+          <textarea class="form-textarea" placeholder="详细描述你需要的帮助..." maxlength="500" bindinput="onInput" data-field="description" value="{{form.description}}"/>
+        </view>
+      </view>
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">是否紧急</text>
+          <switch checked="{{form.isUrgent}}" bindchange="onUrgentChange" color="#E6A023"/>
+        </view>
+      </view>
+    </view>
+
+    <view style="height: 160rpx;"></view>
+  </scroll-view>
+
+  <!-- 底部发布按钮 -->
+  <view class="publish-bar safe-bottom">
+    <button class="btn-publish" bindtap="onPublish">发布</button>
+  </view>
+</view>

@@ -1,0 +1,48 @@
+<!--pages/rental/rental.wxml-->
+<view class="page">
+  <scroll-view scroll-y class="scroll-content">
+    <view class="rental-list">
+      <view class="rental-card" wx:for="{{rentals}}" wx:key="id">
+        <view class="rental-image">
+          <image src="{{item.images[0]}}" mode="aspectFill" class="rental-img"></image>
+          <view class="owner-tag" wx:if="{{!item.isAgent}}">
+            <icon name="home" size="22" color="#fff"></icon>
+            <text> 房东直租</text>
+          </view>
+          <view class="agent-tag" wx:else>中介</view>
+        </view>
+
+        <view class="rental-info">
+          <text class="rental-title">{{item.title}}</text>
+
+          <view class="rental-meta">
+            <text class="meta-item">{{item.roomType}}</text>
+            <text class="meta-dot">·</text>
+            <text class="meta-item">{{item.area}}㎡</text>
+            <text class="meta-dot">·</text>
+            <text class="meta-item">{{item.building}}</text>
+          </view>
+
+          <text class="rental-desc line-clamp-2">{{item.description}}</text>
+
+          <view class="rental-bottom">
+            <view class="rent-price">
+              <text class="rent-num">{{item.rent}}</text>
+              <text class="rent-unit">元/月</text>
+            </view>
+            <text class="deposit">{{item.deposit}}</text>
+          </view>
+        </view>
+
+        <view class="rental-actions">
+          <button class="btn-contact-rental" bindtap="onContact" data-id="{{item.id}}">联系房东</button>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{rentals.length === 0}}">
+      <icon name="home" size="96" color="#ccc"></icon>
+      <text class="text">暂无房源</text>
+    </view>
+  </scroll-view>
+</view>

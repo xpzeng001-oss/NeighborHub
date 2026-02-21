@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "邻里帮忙",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
+}

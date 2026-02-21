@@ -1,0 +1,99 @@
+<!--pages/detail/detail.wxml-->
+<view class="page">
+  <scroll-view scroll-y class="scroll-content">
+    <!-- 图片轮播 -->
+    <swiper class="image-swiper" indicator-dots circular current="{{currentImage}}">
+      <swiper-item wx:for="{{product.images}}" wx:key="index">
+        <image src="{{item}}" mode="aspectFill" class="swiper-img" bindtap="previewImage" data-index="{{index}}"></image>
+      </swiper-item>
+    </swiper>
+
+    <!-- 价格信息 -->
+    <view class="price-section">
+      <view class="price-row">
+        <text class="price" wx:if="{{!product.isFree}}">¥{{product.price}}</text>
+        <text class="price free" wx:else>免费自取</text>
+        <text class="original" wx:if="{{product.originalPrice > 0 && !product.isFree}}">原价 ¥{{product.originalPrice}}</text>
+      </view>
+      <view class="tags">
+        <text class="tag tag-green">{{product.condition}}</text>
+        <text class="tag tag-blue">{{product.category}}</text>
+        <view class="tag tag-orange" wx:if="{{product.isFree}}" style="display:inline-flex;align-items:center;gap:4rpx;">
+          <icon name="recycle" size="22" color="#ff976a"></icon>
+          <text>环保</text>
+        </view>
+      </view>
+      <text class="title">{{product.title}}</text>
+    </view>
+
+    <!-- 描述 -->
+    <view class="section">
+      <text class="section-title">宝贝描述</text>
+      <text class="description">{{product.description}}</text>
+      <view class="meta-row">
+        <text class="meta">交易方式：{{product.tradeMethod}}</text>
+      </view>
+    </view>
+
+    <!-- 卖家信息 -->
+    <view class="section seller-section" bindtap="viewSeller">
+      <view class="seller-left">
+        <image class="seller-avatar" src="{{product.userAvatar}}" mode="aspectFill"></image>
+        <view class="seller-info">
+          <text class="seller-name">{{product.userName}}</text>
+          <text class="seller-building">{{product.building}}</text>
+        </view>
+      </view>
+      <text class="seller-arrow">›</text>
+    </view>
+
+    <!-- 数据统计 -->
+    <view class="section stats-row">
+      <view class="stat-item">
+        <text class="stat-value">{{product.viewCount}}</text>
+        <text class="stat-label">浏览</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{product.wantCount}}</text>
+        <text class="stat-label">想要</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{timeAgo}}</text>
+        <text class="stat-label">发布时间</text>
+      </view>
+    </view>
+
+    <!-- 举报 -->
+    <view class="report-row" bindtap="onReport">
+      <view style="display:inline-flex;align-items:center;gap:8rpx;">
+        <icon name="alert-triangle" size="28" color="#ccc"></icon>
+        <text class="report-text">举报此商品</text>
+      </view>
+    </view>
+
+    <view style="height: 160rpx;"></view>
+  </scroll-view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar safe-bottom">
+    <view class="bar-left">
+      <view class="bar-icon-item" bindtap="toggleFav">
+        <icon name="heart" size="40" color="{{isFav ? '#fa5151' : '#888'}}" filled="{{isFav}}"></icon>
+        <text class="bar-icon-label">{{isFav ? '已收藏' : '收藏'}}</text>
+      </view>
+      <view class="bar-icon-item" bindtap="onShare">
+        <icon name="share-2" size="40" color="#888"></icon>
+        <text class="bar-icon-label">分享</text>
+      </view>
+    </view>
+    <view class="bar-right">
+      <button class="btn-chat" bindtap="onChat">
+        <view style="display:inline-flex;align-items:center;gap:8rpx;">
+          <icon name="message-circle" size="28" color="#E6A023"></icon>
+          <text>私信</text>
+        </view>
+      </button>
+      <button class="btn-want" bindtap="onWant">我想要</button>
+    </view>
+  </view>
+</view>

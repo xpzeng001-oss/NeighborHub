@@ -1,0 +1,50 @@
+/* pages/help/help.wxss */
+.page { background: #f5f6fa; min-height: 100vh; }
+.scroll-content { height: 100vh; }
+
+.help-list { padding: 20rpx 24rpx; }
+.help-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+}
+
+.help-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20rpx; }
+.help-user { display: flex; align-items: center; gap: 16rpx; }
+.help-avatar { width: 72rpx; height: 72rpx; border-radius: 50%; background: #f0f0f0; }
+.help-name { font-size: 28rpx; font-weight: 500; color: #333; display: block; }
+.help-building { font-size: 22rpx; color: #999; }
+.urgent-tag { font-size: 22rpx; color: #fa5151; background: rgba(250,81,81,0.08); padding: 6rpx 16rpx; border-radius: 8rpx; font-weight: 500; display: inline-flex; align-items: center; gap: 2rpx; }
+
+.help-title { font-size: 32rpx; font-weight: 600; color: #222; display: block; margin-bottom: 12rpx; }
+.help-desc { font-size: 26rpx; color: #666; line-height: 1.6; display: block; }
+
+.help-footer { display: flex; justify-content: space-between; margin-top: 20rpx; }
+.help-time { font-size: 22rpx; color: #ccc; }
+.help-deadline { font-size: 22rpx; color: #ff976a; }
+
+.help-actions { display: flex; gap: 16rpx; margin-top: 20rpx; }
+.btn-help {
+  flex: 1; height: 68rpx; line-height: 68rpx; text-align: center;
+  background: #E6A023;
+  color: #fff; font-size: 26rpx; border-radius: 34rpx; border: none;
+}
+.btn-help::after { border: none; }
+.btn-contact {
+  flex: 1; height: 68rpx; line-height: 68rpx; text-align: center;
+  background: #fff; color: #E6A023; font-size: 26rpx; border: 2rpx solid #E6A023;
+  border-radius: 34rpx;
+}
+.btn-contact::after { border: none; }
+
+.fab-btn {
+  position: fixed; right: 40rpx; bottom: 60rpx;
+  width: 100rpx; height: 100rpx;
+  background: #C62828;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 44rpx;
+  box-shadow: 0 8rpx 30rpx rgba(198, 40, 40, 0.3);
+}

@@ -1,0 +1,48 @@
+/* pages/search/search.wxss */
+.page { background: #f5f6fa; min-height: 100vh; }
+
+.search-header {
+  display: flex; align-items: center; padding: 16rpx 24rpx;
+  background: #fff; gap: 16rpx;
+}
+.search-input-wrap {
+  flex: 1; display: flex; align-items: center;
+  background: #f5f6fa; border-radius: 36rpx; padding: 0 24rpx; height: 72rpx;
+}
+.search-input-wrap icon { margin-right: 12rpx; }
+.search-input { flex: 1; font-size: 28rpx; }
+.clear-btn { font-size: 28rpx; color: #ccc; padding: 8rpx; }
+.cancel-btn { font-size: 28rpx; color: #E6A023; flex-shrink: 0; }
+
+.history-section, .hot-section { background: #fff; margin-top: 16rpx; padding: 28rpx; }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20rpx; }
+.section-title { font-size: 28rpx; font-weight: 600; color: #333; }
+.clear-history { font-size: 24rpx; color: #ccc; }
+
+.history-tags { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.history-tag {
+  background: #f5f6fa; padding: 12rpx 24rpx; border-radius: 24rpx;
+  font-size: 26rpx; color: #666;
+}
+
+.hot-section .section-title { margin-bottom: 20rpx; }
+.hot-list { }
+.hot-item { display: flex; align-items: center; padding: 20rpx 0; gap: 20rpx; border-bottom: 1rpx solid #f8f8f8; font-size: 28rpx; color: #333; }
+.hot-item:last-child { border-bottom: none; }
+.hot-rank { width: 40rpx; text-align: center; font-size: 26rpx; color: #999; font-weight: 600; }
+.hot-rank.top { color: #fa5151; }
+
+.results { padding: 0 24rpx; }
+.result-count { font-size: 24rpx; color: #999; padding: 20rpx 0; }
+
+.result-item {
+  display: flex; background: #fff; border-radius: 12rpx;
+  overflow: hidden; margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+}
+.result-img { width: 220rpx; height: 220rpx; flex-shrink: 0; }
+.result-info { flex: 1; padding: 20rpx 24rpx; display: flex; flex-direction: column; justify-content: center; }
+.result-title { font-size: 28rpx; font-weight: 500; color: #333; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.result-price { font-size: 34rpx; color: #fa5151; font-weight: 700; margin-top: 12rpx; }
+.result-price.free { font-size: 28rpx; color: #E6A023; }
+.result-meta { font-size: 22rpx; color: #bbb; margin-top: 8rpx; }

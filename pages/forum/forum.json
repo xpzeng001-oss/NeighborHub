@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "楼里事儿",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
+}

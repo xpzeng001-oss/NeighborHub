@@ -1,0 +1,21 @@
+<view class="tab-bar safe-bottom">
+  <!-- 首页 -->
+  <view class="tab-item" bindtap="switchTab" data-path="/pages/index/index" data-index="0">
+    <icon name="home" size="44" color="{{selected === 0 ? '#E6A023' : '#999999'}}"></icon>
+    <text class="tab-label" style="color: {{selected === 0 ? '#E6A023' : '#999999'}}">首页</text>
+  </view>
+
+  <!-- 发布（突出按钮） -->
+  <view class="tab-item publish-item" bindtap="switchTab" data-path="/pages/publish/publish" data-index="1">
+    <view class="publish-btn">
+      <icon name="plus" size="48" color="#ffffff"></icon>
+    </view>
+    <text class="tab-label" style="color: {{selected === 1 ? '#E6A023' : '#999999'}}">发布</text>
+  </view>
+
+  <!-- 我的 -->
+  <view class="tab-item" bindtap="switchTab" data-path="/pages/mine/mine" data-index="2">
+    <icon name="user" size="44" color="{{selected === 2 ? '#E6A023' : '#999999'}}"></icon>
+    <text class="tab-label" style="color: {{selected === 2 ? '#E6A023' : '#999999'}}">我的</text>
+  </view>
+</view>

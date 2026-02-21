@@ -1,0 +1,44 @@
+<!--pages/help/help.wxml-->
+<view class="page">
+  <scroll-view scroll-y class="scroll-content">
+    <view class="help-list">
+      <view class="help-card" wx:for="{{helps}}" wx:key="id">
+        <view class="help-header">
+          <view class="help-user">
+            <image class="help-avatar" src="{{item.userAvatar}}" mode="aspectFill"></image>
+            <view>
+              <text class="help-name">{{item.userName}}</text>
+              <text class="help-building">{{item.building}}</text>
+            </view>
+          </view>
+          <view class="urgent-tag" wx:if="{{item.isUrgent}}">
+            <icon name="flame" size="22" color="#fa5151"></icon>
+            <text> 紧急</text>
+          </view>
+        </view>
+
+        <text class="help-title">{{item.title}}</text>
+        <text class="help-desc">{{item.description}}</text>
+
+        <view class="help-footer">
+          <text class="help-time">{{item.timeAgo}}</text>
+          <text class="help-deadline" wx:if="{{item.deadline}}">截止：{{item.deadline}}</text>
+        </view>
+
+        <view class="help-actions">
+          <button class="btn-help" bindtap="onHelp" data-id="{{item.id}}">我能帮忙</button>
+          <button class="btn-contact" bindtap="onContact" data-id="{{item.id}}">联系TA</button>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{helps.length === 0}}">
+      <icon name="handshake" size="96" color="#ccc"></icon>
+      <text class="text">暂无求助信息</text>
+    </view>
+  </scroll-view>
+
+  <view class="fab-btn" bindtap="goPublish">
+    <icon name="life-buoy" size="44" color="#fff"></icon>
+  </view>
+</view>

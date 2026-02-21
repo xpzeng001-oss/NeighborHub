@@ -1,0 +1,60 @@
+<!--pages/forum/forum.wxml-->
+<view class="page">
+  <!-- 分类Tab -->
+  <view class="forum-tabs">
+    <view class="forum-tab {{forumTab === item ? 'active' : ''}}"
+          wx:for="{{tabs}}" wx:key="*this"
+          bindtap="switchTab" data-tab="{{item}}">
+      {{item}}
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="scroll-content" refresher-enabled="{{true}}"
+               bindrefresherrefresh="onRefresh" refresher-triggered="{{isRefreshing}}">
+    <view class="post-list">
+      <view class="post-item" wx:for="{{filteredPosts}}" wx:key="id" bindtap="goPostDetail" data-id="{{item.id}}">
+        <!-- 置顶标记 -->
+        <view class="top-badge" wx:if="{{item.isTop}}">
+          <icon name="pin" size="22" color="#fa5151"></icon>
+          <text> 置顶</text>
+        </view>
+
+        <!-- 帖子头部 -->
+        <view class="post-header">
+          <image class="post-avatar" src="{{item.userAvatar}}" mode="aspectFill"></image>
+          <view class="post-user">
+            <text class="post-username">{{item.userName}}</text>
+            <text class="post-time">{{item.timeAgo}}</text>
+          </view>
+          <view class="category-tag tag-{{item.categoryClass}}">{{item.category}}</view>
+        </view>
+
+        <!-- 帖子内容 -->
+        <text class="post-title">{{item.title}}</text>
+        <text class="post-content line-clamp-2">{{item.content}}</text>
+
+        <!-- 帖子底部 -->
+        <view class="post-footer">
+          <view class="footer-item">
+            <icon name="thumbs-up" size="28" color="#999"></icon>
+            <text> {{item.likeCount}}</text>
+          </view>
+          <view class="footer-item">
+            <icon name="message-circle" size="28" color="#999"></icon>
+            <text> {{item.commentCount}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{filteredPosts.length === 0}}">
+      <icon name="message-circle" size="96" color="#ccc"></icon>
+      <text class="text">暂无帖子</text>
+    </view>
+  </scroll-view>
+
+  <!-- 发帖按钮 -->
+  <view class="fab-btn" bindtap="goPublish">
+    <icon name="pencil" size="44" color="#fff"></icon>
+  </view>
+</view>
