@@ -5,13 +5,13 @@ const { formatTime } = require('../../utils/util');
 
 Page({
   data: {
-    currentCommunity: '仁恒河滨花园',
+    statusBarHeight: 44,
+    currentCommunity: '仁恒峦山美地',
     communities: [],
     showCommunityPicker: false,
     banners: [
-      { id: 1, title: '邻里市集上线啦', desc: '闲置好物 邻里共享', iconName: 'sparkles', bg: '#E6A023' },
-      { id: 2, title: '免费自取专区', desc: '好物不浪费 环保又省钱', iconName: 'gift', bg: '#D4930D' },
-      { id: 3, title: '社区团购进行中', desc: '新鲜水果 产地直供', iconName: 'shopping-bag', bg: '#C8880D' }
+      { id: 1, image: '/images/banner-01.png' },
+      { id: 2, image: '/images/banner-02.png' }
     ],
     categories: categories,
     activeCategory: 'all',
@@ -26,7 +26,9 @@ Page({
   },
 
   onLoad() {
+    const sysInfo = wx.getSystemInfoSync();
     this.setData({
+      statusBarHeight: sysInfo.statusBarHeight,
       communities: app.globalData.communities,
       currentCommunity: app.globalData.currentCommunity.name
     });
@@ -140,9 +142,8 @@ Page({
   goRental() {
     wx.navigateTo({ url: '/pages/rental/rental' });
   },
-  goFree() {
-    this.setData({ activeTab: 1 });
-    this.loadProducts();
+  goPet() {
+    wx.navigateTo({ url: '/pages/pet/pet' });
   },
 
   onShareAppMessage() {

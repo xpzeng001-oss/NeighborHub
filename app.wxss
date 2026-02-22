@@ -9,12 +9,12 @@ page {
 }
 
 /* ===== 色彩变量（通过class实现） ===== */
-.text-primary { color: #E6A023; }
+.text-primary { color: #1A1A1A; }
 .text-secondary { color: #999; }
 .text-danger { color: #fa5151; }
 .text-warning { color: #ff976a; }
 .text-white { color: #fff; }
-.bg-primary { background-color: #E6A023; }
+.bg-primary { background-color: #C8FF00; }
 .bg-white { background-color: #fff; }
 
 /* ===== 布局工具 ===== */
@@ -81,7 +81,7 @@ page {
 
 /* ===== 按钮 ===== */
 .btn-primary {
-  background: #E6A023;
+  background: #1A1A1A;
   color: #fff;
   border: none;
   border-radius: 44rpx;
@@ -95,8 +95,8 @@ page {
 
 .btn-outline {
   background: transparent;
-  color: #E6A023;
-  border: 2rpx solid #E6A023;
+  color: #1A1A1A;
+  border: 2rpx solid #1A1A1A;
   border-radius: 44rpx;
   height: 72rpx;
   line-height: 72rpx;
@@ -114,8 +114,8 @@ page {
   margin-right: 12rpx;
 }
 .tag-green {
-  background: rgba(230, 160, 35, 0.1);
-  color: #E6A023;
+  background: rgba(200, 255, 0, 0.15);
+  color: #7A9900;
 }
 .tag-orange {
   background: rgba(255, 151, 106, 0.1);

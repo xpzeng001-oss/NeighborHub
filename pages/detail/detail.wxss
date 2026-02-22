@@ -11,7 +11,7 @@
 }
 .price-row { display: flex; align-items: baseline; gap: 16rpx; }
 .price { font-size: 48rpx; color: #fa5151; font-weight: 700; }
-.price.free { font-size: 40rpx; color: #E6A023; }
+.price.free { font-size: 40rpx; color: #7A9900; }
 .original { font-size: 26rpx; color: #bbb; text-decoration: line-through; }
 .tags { display: flex; margin-top: 16rpx; }
 .title { display: block; font-size: 34rpx; font-weight: 600; margin-top: 20rpx; line-height: 1.5; color: #222; }
@@ -68,11 +68,12 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 110rpx;
   background: #fff;
   display: flex;
   align-items: center;
-  padding: 0 24rpx;
+  padding: 16rpx 24rpx;
+  padding-bottom: calc(16rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
   box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.06);
   z-index: 100;
 }
@@ -100,8 +101,8 @@
   text-align: center;
   font-size: 28rpx;
   background: #fff;
-  color: #E6A023;
-  border: 2rpx solid #E6A023;
+  color: #1A1A1A;
+  border: 2rpx solid #1A1A1A;
   border-radius: 40rpx;
   padding: 0;
 }
@@ -112,7 +113,7 @@
   line-height: 76rpx;
   text-align: center;
   font-size: 28rpx;
-  background: #E6A023;
+  background: #1A1A1A;
   color: #fff;
   border: none;
   border-radius: 40rpx;

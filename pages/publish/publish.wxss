@@ -20,8 +20,8 @@
   gap: 8rpx;
 }
 .type-tab.active {
-  background: rgba(230, 160, 35, 0.08);
-  color: #E6A023;
+  background: rgba(200, 255, 0, 0.12);
+  color: #7A9900;
   font-weight: 500;
 }
 .type-tab icon { margin-bottom: 4rpx; }
@@ -129,11 +129,13 @@
   left: 0;
   right: 0;
   padding: 16rpx 30rpx;
+  padding-bottom: calc(16rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
   background: #fff;
   box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.06);
 }
 .btn-publish {
-  background: #E6A023;
+  background: #1A1A1A;
   color: #fff;
   border: none;
   border-radius: 44rpx;

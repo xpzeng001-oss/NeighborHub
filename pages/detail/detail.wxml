@@ -71,7 +71,7 @@
       </view>
     </view>
 
-    <view style="height: 160rpx;"></view>
+    <view style="height: 220rpx;"></view>
   </scroll-view>
 
   <!-- 底部操作栏 -->
@@ -89,7 +89,7 @@
     <view class="bar-right">
       <button class="btn-chat" bindtap="onChat">
         <view style="display:inline-flex;align-items:center;gap:8rpx;">
-          <icon name="message-circle" size="28" color="#E6A023"></icon>
+          <icon name="message-circle" size="28" color="#1A1A1A"></icon>
           <text>私信</text>
         </view>
       </button>

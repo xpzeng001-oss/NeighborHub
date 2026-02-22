@@ -3,19 +3,19 @@
   <!-- 发布类型选择 -->
   <view class="type-tabs">
     <view class="type-tab {{publishType === 'product' ? 'active' : ''}}" bindtap="switchType" data-type="product">
-      <icon name="package" size="36" color="{{publishType === 'product' ? '#E6A023' : '#888'}}"></icon>
+      <icon name="package" size="36" color="{{publishType === 'product' ? '#7A9900' : '#888'}}"></icon>
       <text>闲置物品</text>
     </view>
     <view class="type-tab {{publishType === 'free' ? 'active' : ''}}" bindtap="switchType" data-type="free">
-      <icon name="gift" size="36" color="{{publishType === 'free' ? '#E6A023' : '#888'}}"></icon>
+      <icon name="gift" size="36" color="{{publishType === 'free' ? '#7A9900' : '#888'}}"></icon>
       <text>免费送</text>
     </view>
     <view class="type-tab {{publishType === 'post' ? 'active' : ''}}" bindtap="switchType" data-type="post">
-      <icon name="message-circle" size="36" color="{{publishType === 'post' ? '#E6A023' : '#888'}}"></icon>
+      <icon name="message-circle" size="36" color="{{publishType === 'post' ? '#7A9900' : '#888'}}"></icon>
       <text>发帖子</text>
     </view>
     <view class="type-tab {{publishType === 'help' ? 'active' : ''}}" bindtap="switchType" data-type="help">
-      <icon name="handshake" size="36" color="{{publishType === 'help' ? '#E6A023' : '#888'}}"></icon>
+      <icon name="handshake" size="36" color="{{publishType === 'help' ? '#7A9900' : '#888'}}"></icon>
       <text>求帮忙</text>
     </view>
   </view>
@@ -163,7 +163,7 @@
       <view class="form-section">
         <view class="form-item">
           <text class="form-label">是否紧急</text>
-          <switch checked="{{form.isUrgent}}" bindchange="onUrgentChange" color="#E6A023"/>
+          <switch checked="{{form.isUrgent}}" bindchange="onUrgentChange" color="#C8FF00"/>
         </view>
       </view>
     </view>

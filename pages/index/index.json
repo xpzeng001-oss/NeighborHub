@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "",
-  "navigationStyle": "default",
+  "navigationStyle": "custom",
   "enablePullDownRefresh": false,
   "usingComponents": {
     "icon": "/components/icon/icon"

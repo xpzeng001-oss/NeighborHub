@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "宠物喂养",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
+}

@@ -28,13 +28,13 @@
 .help-actions { display: flex; gap: 16rpx; margin-top: 20rpx; }
 .btn-help {
   flex: 1; height: 68rpx; line-height: 68rpx; text-align: center;
-  background: #E6A023;
+  background: #1A1A1A;
   color: #fff; font-size: 26rpx; border-radius: 34rpx; border: none;
 }
 .btn-help::after { border: none; }
 .btn-contact {
   flex: 1; height: 68rpx; line-height: 68rpx; text-align: center;
-  background: #fff; color: #E6A023; font-size: 26rpx; border: 2rpx solid #E6A023;
+  background: #fff; color: #1A1A1A; font-size: 26rpx; border: 2rpx solid #1A1A1A;
   border-radius: 34rpx;
 }
 .btn-contact::after { border: none; }

@@ -6,15 +6,17 @@
   background: #f5f6fa;
 }
 
-/* 顶部 */
+/* 顶部渐变区域 */
+.top-gradient {
+  background: linear-gradient(180deg, #B8F04A 0%, #C8FF00 30%, #d9f5a0 70%, #f5f6fa 100%);
+  padding-top: var(--status-bar-height, 44px);
+  padding-bottom: 24rpx;
+}
+
 .header {
   display: flex;
   align-items: center;
-  padding: 16rpx 24rpx;
-  background: #fff;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  padding: 16rpx 24rpx 20rpx;
   gap: 20rpx;
 }
 .community-select {
@@ -23,30 +25,30 @@
   flex-shrink: 0;
 }
 .community-name {
-  font-size: 30rpx;
-  font-weight: 600;
-  color: #333;
-  max-width: 180rpx;
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #1A1A1A;
+  max-width: 240rpx;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 .arrow {
   font-size: 22rpx;
-  color: #999;
+  color: #333;
   margin-left: 6rpx;
 }
 .search-bar {
   flex: 1;
   height: 64rpx;
-  background: #f5f6fa;
+  background: rgba(255, 255, 255, 0.6);
   border-radius: 32rpx;
   display: flex;
   align-items: center;
   padding: 0 24rpx;
 }
 .search-bar icon { margin-right: 12rpx; }
-.search-placeholder { color: #bbb; font-size: 26rpx; }
+.search-placeholder { color: #888; font-size: 26rpx; }
 
 .scroll-content {
   flex: 1;
@@ -62,29 +64,11 @@
   border-radius: 20rpx;
   overflow: hidden;
 }
-.banner-item {
+.banner-img {
+  width: 100%;
   height: 100%;
   border-radius: 20rpx;
-  padding: 36rpx;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
 }
-.banner-content { flex: 1; }
-.banner-title {
-  font-size: 34rpx;
-  font-weight: 700;
-  color: #fff;
-  display: block;
-  margin-bottom: 12rpx;
-}
-.banner-desc {
-  font-size: 24rpx;
-  color: rgba(255,255,255,0.85);
-  display: block;
-}
-.banner-item icon { flex-shrink: 0; }
 
 /* 快捷入口 */
 .quick-entry {
@@ -133,7 +117,7 @@
   flex-shrink: 0;
 }
 .tab-item.active {
-  color: #E6A023;
+  color: #1A1A1A;
   font-weight: 600;
 }
 .tab-line {
@@ -143,7 +127,7 @@
   transform: translateX(-50%);
   width: 40rpx;
   height: 6rpx;
-  background: #E6A023;
+  background: #C8FF00;
   border-radius: 3rpx;
 }
 
@@ -166,7 +150,7 @@
   flex-shrink: 0;
 }
 .category-item.active {
-  background: rgba(230, 160, 35, 0.08);
+  background: rgba(200, 255, 0, 0.12);
 }
 .category-item icon { margin-bottom: 4rpx; }
 .cat-name {
@@ -175,7 +159,7 @@
   margin-top: 4rpx;
 }
 .category-item.active .cat-name {
-  color: #E6A023;
+  color: #7A9900;
   font-weight: 500;
 }
 
@@ -241,7 +225,7 @@
 }
 .free-price {
   font-size: 28rpx;
-  color: #E6A023;
+  color: #7A9900;
 }
 .original-price {
   font-size: 22rpx;
@@ -304,8 +288,8 @@
   font-size: 30rpx;
 }
 .community-option.selected {
-  background: rgba(230, 160, 35, 0.06);
-  color: #E6A023;
+  background: rgba(200, 255, 0, 0.1);
+  color: #7A9900;
   font-weight: 500;
 }
-.check { color: #E6A023; font-weight: 700; }
+.check { color: #7A9900; font-weight: 700; }

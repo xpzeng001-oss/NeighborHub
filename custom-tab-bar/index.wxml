@@ -1,21 +1,22 @@
-<view class="tab-bar safe-bottom">
-  <!-- 首页 -->
-  <view class="tab-item" bindtap="switchTab" data-path="/pages/index/index" data-index="0">
-    <icon name="home" size="44" color="{{selected === 0 ? '#E6A023' : '#999999'}}"></icon>
-    <text class="tab-label" style="color: {{selected === 0 ? '#E6A023' : '#999999'}}">首页</text>
-  </view>
+<view class="tab-bar-wrap safe-bottom">
+  <view class="tab-bar-inner">
+    <!-- 左侧胶囊导航 -->
+    <view class="tab-pill">
+      <view class="pill-item {{selected === 0 ? 'active' : ''}}" bindtap="switchTab" data-path="/pages/index/index" data-index="0">
+        <icon name="home" size="42" color="{{selected === 0 ? '#1A1A1A' : '#BBBBBB'}}" filled="{{selected === 0}}"></icon>
+      </view>
+      <view class="pill-item" bindtap="goPage" data-path="/pages/forum/forum">
+        <icon name="message-circle" size="42" color="#BBBBBB"></icon>
+      </view>
 
-  <!-- 发布（突出按钮） -->
-  <view class="tab-item publish-item" bindtap="switchTab" data-path="/pages/publish/publish" data-index="1">
-    <view class="publish-btn">
+      <view class="pill-item {{selected === 2 ? 'active' : ''}}" bindtap="switchTab" data-path="/pages/mine/mine" data-index="2">
+        <icon name="user" size="42" color="{{selected === 2 ? '#1A1A1A' : '#BBBBBB'}}" filled="{{selected === 2}}"></icon>
+      </view>
+    </view>
+
+    <!-- 右侧发布按钮 -->
+    <view class="publish-fab" bindtap="switchTab" data-path="/pages/publish/publish" data-index="1">
       <icon name="plus" size="48" color="#ffffff"></icon>
     </view>
-    <text class="tab-label" style="color: {{selected === 1 ? '#E6A023' : '#999999'}}">发布</text>
-  </view>
-
-  <!-- 我的 -->
-  <view class="tab-item" bindtap="switchTab" data-path="/pages/mine/mine" data-index="2">
-    <icon name="user" size="44" color="{{selected === 2 ? '#E6A023' : '#999999'}}"></icon>
-    <text class="tab-label" style="color: {{selected === 2 ? '#E6A023' : '#999999'}}">我的</text>
   </view>
 </view>

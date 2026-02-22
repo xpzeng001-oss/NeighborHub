@@ -8,6 +8,10 @@ Component({
       const data = e.currentTarget.dataset;
       const url = data.path;
       wx.switchTab({ url: url });
+    },
+    goPage(e) {
+      const url = e.currentTarget.dataset.path;
+      wx.navigateTo({ url: url });
     }
   }
 });

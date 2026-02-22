@@ -1,0 +1,80 @@
+<!--pages/pet/pet.wxml-->
+<view class="page">
+  <!-- 分类Tab -->
+  <view class="pet-tabs">
+    <view class="pet-tab {{activeTab === index ? 'active' : ''}}"
+          wx:for="{{tabs}}" wx:key="index"
+          bindtap="switchTab" data-index="{{index}}">
+      {{item}}
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="scroll-content">
+    <view class="pet-list">
+      <view class="pet-card" wx:for="{{filteredList}}" wx:key="id">
+        <!-- 类型标签 -->
+        <view class="card-type type-{{item.type}}">
+          <icon name="{{item.type === 'need' ? 'paw-print' : item.type === 'offer' ? 'heart' : 'sparkles'}}" size="24" color="{{item.type === 'need' ? '#E8590C' : item.type === 'offer' ? '#7A9900' : '#6366F1'}}"></icon>
+          <text>{{item.type === 'need' ? '寻求喂养' : item.type === 'offer' ? '可以帮喂' : '宠物活动'}}</text>
+        </view>
+
+        <!-- 用户信息 -->
+        <view class="card-header">
+          <image class="avatar" src="{{item.userAvatar}}" mode="aspectFill"></image>
+          <view class="user-info">
+            <text class="user-name">{{item.userName}}</text>
+            <text class="user-building">{{item.building}}</text>
+          </view>
+          <text class="time">{{item.createdAt}}</text>
+        </view>
+
+        <!-- 内容 -->
+        <text class="card-title">{{item.title}}</text>
+        <text class="card-desc line-clamp-2">{{item.description}}</text>
+
+        <!-- 信息行 -->
+        <view class="info-row" wx:if="{{item.dateRange}}">
+          <icon name="calendar" size="26" color="#999"></icon>
+          <text class="info-text">{{item.dateRange}}</text>
+        </view>
+        <view class="info-row" wx:if="{{item.eventTime}}">
+          <icon name="clock" size="26" color="#999"></icon>
+          <text class="info-text">{{item.eventTime}} · {{item.location}}</text>
+        </view>
+        <view class="info-row" wx:if="{{item.reward}}">
+          <text class="reward">{{item.reward}}</text>
+        </view>
+        <view class="info-row" wx:if="{{item.availableTime}}">
+          <icon name="clock" size="26" color="#999"></icon>
+          <text class="info-text">{{item.availableTime}}</text>
+        </view>
+
+        <!-- 标签 -->
+        <view class="tag-row">
+          <text class="pet-tag" wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag">{{tag}}</text>
+        </view>
+
+        <!-- 底部操作 -->
+        <view class="card-bottom">
+          <text class="response-count">{{item.responseCount}}人响应</text>
+          <view class="card-actions">
+            <button class="btn-contact" bindtap="onContact" data-id="{{item.id}}">私信</button>
+            <button class="btn-respond" bindtap="onRespond" data-id="{{item.id}}">
+              {{item.type === 'need' ? '我来帮忙' : item.type === 'offer' ? '我需要' : '我要参加'}}
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{filteredList.length === 0}}">
+      <icon name="paw-print" size="96" color="#ccc"></icon>
+      <text class="text">暂无内容</text>
+    </view>
+  </scroll-view>
+
+  <!-- 发布按钮 -->
+  <view class="fab-btn" bindtap="goPublish">
+    <icon name="plus" size="44" color="#1A1A1A"></icon>
+  </view>
+</view>

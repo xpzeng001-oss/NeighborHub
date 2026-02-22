@@ -1,12 +1,10 @@
-.tab-bar {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-around;
-  background: #ffffff;
-  height: 110rpx;
-  padding-bottom: 10rpx;
-  box-shadow: 0 -2rpx 12rpx rgba(0, 0, 0, 0.06);
-  position: relative;
+.tab-bar-wrap {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding: 0 20rpx 16rpx;
 }
 
 .safe-bottom {
@@ -14,36 +12,56 @@
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-.tab-item {
+.tab-bar-inner {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex: 1;
-  padding-top: 10rpx;
+  gap: 16rpx;
 }
 
-.tab-label {
-  font-size: 22rpx;
-  margin-top: 4rpx;
+/* 左侧白色胶囊 */
+.tab-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: #ffffff;
+  height: 96rpx;
+  border-radius: 48rpx;
+  box-shadow: 0 2rpx 20rpx rgba(0, 0, 0, 0.07);
+  padding: 0 16rpx;
+  width: 420rpx;
 }
 
-.publish-item {
-  position: relative;
+.pill-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
 }
 
-.publish-btn {
-  width: 100rpx;
-  height: 100rpx;
-  background: #E6A023;
+.pill-item:active {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.pill-item.active {
+  background: rgba(200, 255, 0, 0.25);
+}
+
+/* 右侧大圆按钮 */
+.publish-fab {
+  width: 96rpx;
+  height: 96rpx;
+  background: #1A1A1A;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: -40rpx;
-  box-shadow: 0 8rpx 24rpx rgba(230, 160, 35, 0.35);
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
 }
 
-.publish-btn:active {
-  background: #C8880D;
+.publish-fab:active {
+  background: #333333;
 }

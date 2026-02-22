@@ -55,6 +55,6 @@
 
   <!-- 发帖按钮 -->
   <view class="fab-btn" bindtap="goPublish">
-    <icon name="pencil" size="44" color="#fff"></icon>
+    <icon name="pencil" size="44" color="#1A1A1A"></icon>
   </view>
 </view>

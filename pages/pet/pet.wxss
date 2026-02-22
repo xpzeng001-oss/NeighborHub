@@ -1,0 +1,169 @@
+/* pages/pet/pet.wxss */
+.page { background: #f5f6fa; min-height: 100vh; display: flex; flex-direction: column; }
+
+.pet-tabs {
+  display: flex;
+  background: #fff;
+  padding: 0 24rpx;
+  gap: 8rpx;
+}
+.pet-tab {
+  padding: 24rpx 28rpx;
+  font-size: 28rpx;
+  color: #888;
+  position: relative;
+}
+.pet-tab.active {
+  color: #1A1A1A;
+  font-weight: 600;
+}
+.pet-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40rpx;
+  height: 6rpx;
+  background: #C8FF00;
+  border-radius: 3rpx;
+}
+
+.scroll-content { flex: 1; height: 0; }
+.pet-list { padding: 16rpx 24rpx; }
+
+.pet-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+}
+
+/* 类型标签 */
+.card-type {
+  display: inline-flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+  margin-bottom: 16rpx;
+}
+.type-need { background: rgba(232, 89, 12, 0.08); color: #E8590C; }
+.type-offer { background: rgba(200, 255, 0, 0.15); color: #7A9900; }
+.type-social { background: rgba(99, 102, 241, 0.08); color: #6366F1; }
+
+/* 用户信息 */
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+.avatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
+  background: #f0f0f0;
+}
+.user-info { flex: 1; }
+.user-name { font-size: 28rpx; font-weight: 500; color: #333; display: block; }
+.user-building { font-size: 22rpx; color: #999; }
+.time { font-size: 22rpx; color: #bbb; }
+
+/* 内容 */
+.card-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #222;
+  display: block;
+  margin-bottom: 12rpx;
+}
+.card-desc {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+  display: block;
+}
+
+/* 信息行 */
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  margin-top: 16rpx;
+}
+.info-text { font-size: 24rpx; color: #888; }
+.reward {
+  font-size: 28rpx;
+  color: #E8590C;
+  font-weight: 600;
+}
+
+/* 标签 */
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 16rpx;
+}
+.pet-tag {
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 6rpx;
+  background: #f5f6fa;
+  color: #666;
+}
+
+/* 底部 */
+.card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #f5f5f5;
+}
+.response-count { font-size: 24rpx; color: #999; }
+.card-actions { display: flex; gap: 12rpx; }
+
+.btn-contact {
+  height: 60rpx;
+  line-height: 60rpx;
+  padding: 0 28rpx;
+  font-size: 24rpx;
+  background: #fff;
+  color: #1A1A1A;
+  border: 2rpx solid #1A1A1A;
+  border-radius: 30rpx;
+}
+.btn-contact::after { border: none; }
+
+.btn-respond {
+  height: 60rpx;
+  line-height: 60rpx;
+  padding: 0 28rpx;
+  font-size: 24rpx;
+  background: #1A1A1A;
+  color: #fff;
+  border: none;
+  border-radius: 30rpx;
+}
+.btn-respond::after { border: none; }
+
+/* 浮动按钮 */
+.fab-btn {
+  position: fixed;
+  right: 40rpx;
+  bottom: 60rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: #C8FF00;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 30rpx rgba(200, 255, 0, 0.35);
+}

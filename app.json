@@ -8,7 +8,8 @@
     "pages/forumDetail/forumDetail",
     "pages/help/help",
     "pages/rental/rental",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/pet/pet"
   ],
   "window": {
     "navigationBarBackgroundColor": "#ffffff",
@@ -20,7 +21,7 @@
   "tabBar": {
     "custom": true,
     "color": "#999999",
-    "selectedColor": "#E6A023",
+    "selectedColor": "#1A1A1A",
     "backgroundColor": "#ffffff",
     "borderStyle": "white",
     "list": [

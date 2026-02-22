@@ -4,10 +4,10 @@ App({
     openid: '',
     currentCommunity: {
       id: 'c001',
-      name: '仁恒河滨花园'
+      name: '仁恒峦山美地'
     },
     communities: [
-      { id: 'c001', name: '仁恒河滨花园' },
+      { id: 'c001', name: '仁恒峦山美地' },
       { id: 'c002', name: '万科城市花园' },
       { id: 'c003', name: '绿地海珀外滩' }
     ],

@@ -1,58 +1,54 @@
 <!--pages/index/index.wxml-->
 <view class="page">
-  <!-- 顶部搜索栏 + 小区选择 -->
-  <view class="header">
-    <view class="community-select" bindtap="onCommunityTap">
-      <text class="community-name">{{currentCommunity}}</text>
-      <text class="arrow">▾</text>
+  <!-- 顶部渐变区域（含banner） -->
+  <view class="top-gradient" style="padding-top: {{statusBarHeight}}px;">
+    <view class="header">
+      <view class="community-select" bindtap="onCommunityTap">
+        <text class="community-name">{{currentCommunity}}</text>
+        <text class="arrow">▾</text>
+      </view>
+      <view class="search-bar" bindtap="goSearch">
+        <icon name="search" size="32" color="#888"></icon>
+        <text class="search-placeholder">搜索闲置好物...</text>
+      </view>
     </view>
-    <view class="search-bar" bindtap="goSearch">
-      <icon name="search" size="32" color="#bbb"></icon>
-      <text class="search-placeholder">搜索闲置好物...</text>
-    </view>
-  </view>
-
-  <scroll-view scroll-y class="scroll-content" refresher-enabled="{{true}}" bindrefresherrefresh="onRefresh" refresher-triggered="{{isRefreshing}}">
     <!-- 广告轮播 -->
     <view class="banner-wrap">
       <swiper class="banner-swiper" indicator-dots autoplay interval="4000" circular>
         <swiper-item wx:for="{{banners}}" wx:key="id">
-          <view class="banner-item" style="background: {{item.bg}};">
-            <view class="banner-content">
-              <text class="banner-title">{{item.title}}</text>
-              <text class="banner-desc">{{item.desc}}</text>
-            </view>
-            <icon name="{{item.iconName}}" size="96" color="rgba(255,255,255,0.85)"></icon>
-          </view>
+          <image class="banner-img" src="{{item.image}}" mode="aspectFill"></image>
         </swiper-item>
       </swiper>
     </view>
+  </view>
+
+  <scroll-view scroll-y class="scroll-content" refresher-enabled="{{true}}" bindrefresherrefresh="onRefresh" refresher-triggered="{{isRefreshing}}">
 
     <!-- 快捷入口 -->
     <view class="quick-entry">
       <view class="entry-item" bindtap="goForum">
-        <view class="entry-icon" style="background:#FFF8E8;">
-          <icon name="message-circle" size="44" color="#E6A023"></icon>
+        <view class="entry-icon" style="background:#F5FFD6;">
+          <icon name="message-circle" size="44" color="#7A9900"></icon>
         </view>
         <text class="entry-label">楼里事儿</text>
       </view>
       <view class="entry-item" bindtap="goHelp">
-        <view class="entry-icon" style="background:#FFF3D6;">
-          <icon name="handshake" size="44" color="#E6A023"></icon>
+        <view class="entry-icon" style="background:#EFFFB8;">
+          <icon name="handshake" size="44" color="#7A9900"></icon>
         </view>
         <text class="entry-label">邻里帮忙</text>
       </view>
       <view class="entry-item" bindtap="goRental">
-        <view class="entry-icon" style="background:#FFEDD0;">
-          <icon name="home" size="44" color="#E6A023"></icon>
+        <view class="entry-icon" style="background:#E8FF9E;">
+          <icon name="home" size="44" color="#7A9900"></icon>
         </view>
         <text class="entry-label">房屋租赁</text>
       </view>
-      <view class="entry-item" bindtap="goFree">
-        <view class="entry-icon" style="background:#FFF0DB;">
-          <icon name="gift" size="44" color="#E6A023"></icon>
+      <view class="entry-item" bindtap="goPet">
+        <view class="entry-icon" style="background:#F0FFCC;">
+          <icon name="paw-print" size="44" color="#7A9900"></icon>
         </view>
-        <text class="entry-label">免费自取</text>
+        <text class="entry-label">宠物喂养</text>
       </view>
     </view>
 
@@ -76,7 +72,7 @@
         <view class="category-item {{activeCategory === item.id ? 'active' : ''}}"
               wx:for="{{categories}}" wx:key="id"
               bindtap="onCategoryChange" data-id="{{item.id}}">
-          <icon name="{{item.iconName}}" size="36" color="{{activeCategory === item.id ? '#E6A023' : '#888'}}"></icon>
+          <icon name="{{item.iconName}}" size="36" color="{{activeCategory === item.id ? '#7A9900' : '#888'}}"></icon>
           <text class="cat-name">{{item.name}}</text>
         </view>
       </view>
@@ -127,6 +123,7 @@
     </view>
 
     <view class="load-more" wx:if="{{!hasMore}}">— 没有更多了 —</view>
+    <view style="height: 160rpx;"></view>
   </scroll-view>
 </view>
 
@@ -144,7 +141,7 @@
             wx:for="{{communities}}" wx:key="id"
             bindtap="selectCommunity" data-item="{{item}}">
         <text>{{item.name}}</text>
-        <icon wx:if="{{item.name === currentCommunity}}" name="check" size="32" color="#E6A023"></icon>
+        <icon wx:if="{{item.name === currentCommunity}}" name="check" size="32" color="#7A9900"></icon>
       </view>
     </view>
   </view>

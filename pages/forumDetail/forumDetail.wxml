@@ -55,7 +55,7 @@
     <input class="comment-input" placeholder="说说你的看法..." bindinput="onCommentInput" value="{{commentText}}"/>
     <view class="bar-actions">
       <view class="like-btn" bindtap="onLike">
-        <icon name="thumbs-up" size="40" color="{{isLiked ? '#E6A023' : '#999'}}" filled="{{isLiked}}"></icon>
+        <icon name="thumbs-up" size="40" color="{{isLiked ? '#C8FF00' : '#999'}}" filled="{{isLiked}}"></icon>
       </view>
       <button class="send-btn" bindtap="onSend">发送</button>
     </view>

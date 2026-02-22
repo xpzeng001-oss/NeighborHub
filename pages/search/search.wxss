@@ -12,7 +12,7 @@
 .search-input-wrap icon { margin-right: 12rpx; }
 .search-input { flex: 1; font-size: 28rpx; }
 .clear-btn { font-size: 28rpx; color: #ccc; padding: 8rpx; }
-.cancel-btn { font-size: 28rpx; color: #E6A023; flex-shrink: 0; }
+.cancel-btn { font-size: 28rpx; color: #1A1A1A; flex-shrink: 0; }
 
 .history-section, .hot-section { background: #fff; margin-top: 16rpx; padding: 28rpx; }
 .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20rpx; }
@@ -44,5 +44,5 @@
 .result-info { flex: 1; padding: 20rpx 24rpx; display: flex; flex-direction: column; justify-content: center; }
 .result-title { font-size: 28rpx; font-weight: 500; color: #333; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 .result-price { font-size: 34rpx; color: #fa5151; font-weight: 700; margin-top: 12rpx; }
-.result-price.free { font-size: 28rpx; color: #E6A023; }
+.result-price.free { font-size: 28rpx; color: #7A9900; }
 .result-meta { font-size: 22rpx; color: #bbb; margin-top: 8rpx; }
