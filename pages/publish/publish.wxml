@@ -21,8 +21,10 @@
   </view>
 
   <scroll-view scroll-y class="form-scroll">
-    <!-- 发布商品表单 -->
+
+    <!-- 发布商品/免费表单（整体 wx:if 包裹，修复字段对所有类型可见的 bug） -->
     <view wx:if="{{publishType === 'product' || publishType === 'free'}}">
+
       <!-- 图片上传 -->
       <view class="form-section">
         <view class="upload-area">
@@ -49,12 +51,12 @@
         </view>
       </view>
 
-      <!-- 分类 -->
+      <!-- 分类（显示 categoryName，存储 category id） -->
       <view class="form-section">
         <view class="form-item" bindtap="showCategoryPicker">
           <text class="form-label">分类</text>
           <view class="form-value">
-            <text class="{{form.category ? '' : 'placeholder'}}">{{form.category || '选择分类'}}</text>
+            <text class="{{form.categoryName ? '' : 'placeholder'}}">{{form.categoryName || '选择分类'}}</text>
             <text class="form-arrow">›</text>
           </view>
         </view>
@@ -103,6 +105,7 @@
           </view>
         </view>
       </view>
+
     </view>
 
     <!-- 发帖表单 -->
