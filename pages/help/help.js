@@ -1,5 +1,5 @@
 // pages/help/help.js
-const { mockHelps } = require('../../utils/mockData');
+const api = require('../../utils/api');
 const { formatTime } = require('../../utils/util');
 
 Page({
@@ -7,14 +7,17 @@ Page({
     helps: []
   },
 
-  onLoad() {
-    const helps = mockHelps.map(h => ({
-      ...h,
-      timeAgo: formatTime(new Date(h.createdAt))
-    }));
-    // 紧急优先
-    helps.sort((a, b) => (b.isUrgent ? 1 : 0) - (a.isUrgent ? 1 : 0));
-    this.setData({ helps });
+  async onLoad() {
+    try {
+      const data = await api.getHelps();
+      const helps = (data.list || []).map(h => ({
+        ...h,
+        timeAgo: formatTime(new Date(h.createdAt))
+      }));
+      this.setData({ helps });
+    } catch (err) {
+      console.log('加载帮忙列表失败', err);
+    }
   },
 
   onHelp(e) {

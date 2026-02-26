@@ -27,32 +27,24 @@
     <!-- 快捷入口 -->
     <view class="quick-entry">
       <view class="entry-item" bindtap="goForum">
-        <view class="entry-icon" style="background:#F5FFD6;">
-          <icon name="message-circle" size="44" color="#7A9900"></icon>
-        </view>
+        <text class="entry-emoji">💬</text>
         <text class="entry-label">楼里事儿</text>
       </view>
       <view class="entry-item" bindtap="goHelp">
-        <view class="entry-icon" style="background:#EFFFB8;">
-          <icon name="handshake" size="44" color="#7A9900"></icon>
-        </view>
+        <text class="entry-emoji">🤝</text>
         <text class="entry-label">邻里帮忙</text>
       </view>
       <view class="entry-item" bindtap="goRental">
-        <view class="entry-icon" style="background:#E8FF9E;">
-          <icon name="home" size="44" color="#7A9900"></icon>
-        </view>
+        <text class="entry-emoji">🏠</text>
         <text class="entry-label">房屋租赁</text>
       </view>
       <view class="entry-item" bindtap="goPet">
-        <view class="entry-icon" style="background:#F0FFCC;">
-          <icon name="paw-print" size="44" color="#7A9900"></icon>
-        </view>
+        <text class="entry-emoji">🐾</text>
         <text class="entry-label">宠物喂养</text>
       </view>
     </view>
 
-    <!-- 内容Tab -->
+    <!-- 内容Tab + 分类筛选 -->
     <view class="tab-bar-wrap">
       <scroll-view scroll-x class="tab-scroll">
         <view class="tab-list">
@@ -64,19 +56,17 @@
           </view>
         </view>
       </scroll-view>
-    </view>
-
-    <!-- 分类筛选（闲置物品tab下） -->
-    <scroll-view scroll-x class="category-scroll" wx:if="{{activeTab === 0}}">
-      <view class="category-list">
-        <view class="category-item {{activeCategory === item.id ? 'active' : ''}}"
-              wx:for="{{categories}}" wx:key="id"
-              bindtap="onCategoryChange" data-id="{{item.id}}">
-          <icon name="{{item.iconName}}" size="36" color="{{activeCategory === item.id ? '#7A9900' : '#888'}}"></icon>
-          <text class="cat-name">{{item.name}}</text>
+      <!-- 分类筛选（闲置物品tab下） -->
+      <scroll-view scroll-x class="category-scroll" wx:if="{{activeTab === 0}}">
+        <view class="category-list">
+          <view class="capsule-tab {{activeCategory === item.id ? 'active' : ''}}"
+                wx:for="{{categories}}" wx:key="id"
+                bindtap="onCategoryChange" data-id="{{item.id}}">
+            <text>{{item.name}}</text>
+          </view>
         </view>
-      </view>
-    </scroll-view>
+      </scroll-view>
+    </view>
 
     <!-- 商品瀑布流 -->
     <view class="product-grid">

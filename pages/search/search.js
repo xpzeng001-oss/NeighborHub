@@ -1,5 +1,5 @@
 // pages/search/search.js
-const { mockProducts } = require('../../utils/mockData');
+const api = require('../../utils/api');
 
 Page({
   data: {
@@ -22,7 +22,7 @@ Page({
     }
   },
 
-  onSearch() {
+  async onSearch() {
     const keyword = this.data.keyword.trim();
     if (!keyword) return;
 
@@ -35,12 +35,12 @@ Page({
     wx.setStorageSync('searchHistory', history);
 
     // 搜索
-    const results = mockProducts.filter(p => 
-      p.title.includes(keyword) || 
-      p.description.includes(keyword) || 
-      p.category.includes(keyword)
-    );
-    this.setData({ results, searched: true });
+    try {
+      const data = await api.getProducts({ keyword });
+      this.setData({ results: data.list || [], searched: true });
+    } catch (err) {
+      this.setData({ results: [], searched: true });
+    }
   },
 
   onHistoryTap(e) {

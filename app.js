@@ -1,7 +1,7 @@
 App({
   globalData: {
     userInfo: null,
-    openid: '',
+    token: '',
     currentCommunity: {
       id: 'c001',
       name: '仁恒峦山美地'
@@ -11,15 +11,17 @@ App({
       { id: 'c002', name: '万科城市花园' },
       { id: 'c003', name: '绿地海珀外滩' }
     ],
-    baseUrl: '', // 后端API地址
+    baseUrl: 'http://10.10.10.15:3000', // 本地开发用局域网IP，部署时改为真实域名
     version: '1.0.0'
   },
 
   onLaunch() {
-    // 检查登录状态
+    // 恢复登录状态
     const userInfo = wx.getStorageSync('userInfo');
-    if (userInfo) {
+    const token = wx.getStorageSync('token');
+    if (userInfo && token) {
       this.globalData.userInfo = userInfo;
+      this.globalData.token = token;
     }
     // 检查小程序更新
     this.checkUpdate();
@@ -44,21 +46,43 @@ App({
     }
   },
 
-  // 模拟登录
+  // 微信登录 -> 服务器认证 -> JWT
   login(callback) {
-    wx.getUserProfile({
-      desc: '用于完善用户信息',
-      success: (res) => {
-        const userInfo = res.userInfo;
-        userInfo.openid = 'mock_openid_' + Date.now();
-        userInfo.credit_score = 100;
-        userInfo.building = '';
-        this.globalData.userInfo = userInfo;
-        wx.setStorageSync('userInfo', userInfo);
-        callback && callback(userInfo);
-      },
-      fail: () => {
-        wx.showToast({ title: '授权失败', icon: 'none' });
+    wx.login({
+      success: (loginRes) => {
+        wx.getUserProfile({
+          desc: '用于完善用户信息',
+          success: (profileRes) => {
+            const { nickName, avatarUrl } = profileRes.userInfo;
+            wx.request({
+              url: this.globalData.baseUrl + '/api/auth/login',
+              method: 'POST',
+              data: {
+                code: loginRes.code,
+                nickName,
+                avatarUrl
+              },
+              success: (res) => {
+                if (res.data.code === 0) {
+                  const { token, userInfo } = res.data.data;
+                  this.globalData.token = token;
+                  this.globalData.userInfo = userInfo;
+                  wx.setStorageSync('token', token);
+                  wx.setStorageSync('userInfo', userInfo);
+                  callback && callback(userInfo);
+                } else {
+                  wx.showToast({ title: res.data.message || '登录失败', icon: 'none' });
+                }
+              },
+              fail: () => {
+                wx.showToast({ title: '网络错误', icon: 'none' });
+              }
+            });
+          },
+          fail: () => {
+            wx.showToast({ title: '授权失败', icon: 'none' });
+          }
+        });
       }
     });
   }

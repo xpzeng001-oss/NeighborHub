@@ -1,5 +1,5 @@
 // pages/detail/detail.js
-const { mockProducts } = require('../../utils/mockData');
+const api = require('../../utils/api');
 const { formatTime } = require('../../utils/util');
 
 Page({
@@ -10,16 +10,19 @@ Page({
     timeAgo: ''
   },
 
-  onLoad(options) {
+  async onLoad(options) {
     const id = options.id;
-    const product = mockProducts.find(p => p.id === id) || mockProducts[0];
-    // 模拟增加浏览量
-    product.viewCount += 1;
-    this.setData({
-      product,
-      timeAgo: formatTime(new Date(product.createdAt))
-    });
-    wx.setNavigationBarTitle({ title: product.title.substring(0, 10) + '...' });
+    try {
+      const product = await api.getProduct(id);
+      this.setData({
+        product,
+        isFav: product.isFavorited || false,
+        timeAgo: formatTime(new Date(product.createdAt))
+      });
+      wx.setNavigationBarTitle({ title: product.title.substring(0, 10) + '...' });
+    } catch (err) {
+      wx.showToast({ title: '加载失败', icon: 'none' });
+    }
   },
 
   previewImage(e) {
@@ -30,12 +33,17 @@ Page({
     });
   },
 
-  toggleFav() {
-    this.setData({ isFav: !this.data.isFav });
-    wx.showToast({
-      title: this.data.isFav ? '已收藏' : '已取消收藏',
-      icon: 'none'
-    });
+  async toggleFav() {
+    try {
+      const data = await api.toggleFavorite(this.data.product.id);
+      this.setData({ isFav: data.isFavorited });
+      wx.showToast({
+        title: data.isFavorited ? '已收藏' : '已取消收藏',
+        icon: 'none'
+      });
+    } catch (err) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+    }
   },
 
   onChat() {
@@ -46,12 +54,17 @@ Page({
     wx.showModal({
       title: '想要这个宝贝',
       content: '将通知卖家您对此商品感兴趣，是否继续？',
-      success: (res) => {
+      success: async (res) => {
         if (res.confirm) {
-          const product = this.data.product;
-          product.wantCount += 1;
-          this.setData({ product });
-          wx.showToast({ title: '已通知卖家', icon: 'success' });
+          try {
+            const data = await api.wantProduct(this.data.product.id);
+            const product = this.data.product;
+            product.wantCount = data.wantCount;
+            this.setData({ product });
+            wx.showToast({ title: '已通知卖家', icon: 'success' });
+          } catch (err) {
+            wx.showToast({ title: '请先登录', icon: 'none' });
+          }
         }
       }
     });
@@ -60,15 +73,13 @@ Page({
   onReport() {
     wx.showActionSheet({
       itemList: ['虚假商品', '欺诈行为', '广告骚扰', '违规内容', '其他'],
-      success: (res) => {
+      success: () => {
         wx.showToast({ title: '举报已提交', icon: 'success' });
       }
     });
   },
 
-  onShare() {
-    // 触发分享
-  },
+  onShare() {},
 
   onShareAppMessage() {
     return {

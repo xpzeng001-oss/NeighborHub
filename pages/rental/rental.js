@@ -1,11 +1,16 @@
 // pages/rental/rental.js
-const { mockRentals } = require('../../utils/mockData');
+const api = require('../../utils/api');
 
 Page({
   data: { rentals: [] },
 
-  onLoad() {
-    this.setData({ rentals: mockRentals });
+  async onLoad() {
+    try {
+      const data = await api.getRentals();
+      this.setData({ rentals: data.list || [] });
+    } catch (err) {
+      console.log('加载租赁列表失败', err);
+    }
   },
 
   onContact(e) {

@@ -1,6 +1,14 @@
 // pages/publish/publish.js
-const { categories, conditions } = require('../../utils/mockData');
-const { generateId } = require('../../utils/util');
+const api = require('../../utils/api');
+
+const categories = [
+  { id: 'digital', name: '数码' }, { id: 'furniture', name: '家具' },
+  { id: 'appliance', name: '家电' }, { id: 'baby', name: '母婴' },
+  { id: 'sports', name: '运动' }, { id: 'clothing', name: '服饰' },
+  { id: 'books', name: '图书' }, { id: 'tools', name: '工具' },
+  { id: 'other', name: '其他' }
+];
+const conditions = ['全新', '九五新', '九成新', '八成新', '有使用痕迹'];
 
 Page({
   data: {
@@ -70,7 +78,7 @@ Page({
   },
 
   showCategoryPicker() {
-    const names = categories.filter(c => c.id !== 'all').map(c => c.name);
+    const names = categories.map(c => c.name);
     wx.showActionSheet({
       itemList: names,
       success: (res) => {
@@ -108,7 +116,7 @@ Page({
     });
   },
 
-  onPublish() {
+  async onPublish() {
     const { form, publishType, imageList } = this.data;
 
     if (!form.title.trim()) {
@@ -127,13 +135,49 @@ Page({
     }
 
     wx.showLoading({ title: '发布中...' });
-    // 模拟发布
-    setTimeout(() => {
+
+    try {
+      // 上传图片
+      let imageUrls = [];
+      if (imageList.length > 0) {
+        imageUrls = await api.uploadImages(imageList);
+      }
+
+      if (publishType === 'product' || publishType === 'free') {
+        await api.createProduct({
+          title: form.title,
+          price: publishType === 'free' ? 0 : Number(form.price),
+          originalPrice: Number(form.originalPrice) || 0,
+          isFree: publishType === 'free',
+          category: form.category,
+          condition: form.condition,
+          images: imageUrls,
+          description: form.description,
+          tradeMethod: form.tradeMethod
+        });
+      } else if (publishType === 'post') {
+        await api.createPost({
+          category: form.postCategory,
+          title: form.title,
+          content: form.description,
+          images: imageUrls
+        });
+      } else if (publishType === 'help') {
+        await api.createHelp({
+          title: form.title,
+          description: form.description,
+          isUrgent: form.isUrgent
+        });
+      }
+
       wx.hideLoading();
       wx.showToast({ title: '发布成功！', icon: 'success' });
       setTimeout(() => {
         wx.switchTab({ url: '/pages/index/index' });
       }, 1500);
-    }, 1000);
+    } catch (err) {
+      wx.hideLoading();
+      wx.showToast({ title: '发布失败，请先登录', icon: 'none' });
+    }
   }
 });

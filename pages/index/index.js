@@ -1,7 +1,25 @@
 // pages/index/index.js
 const app = getApp();
-const { mockProducts, mockBanners, categories } = require('../../utils/mockData');
-const { formatTime } = require('../../utils/util');
+const api = require('../../utils/api');
+
+const categories = [
+  { id: 'all', name: '全部' },
+  { id: 'digital', name: '数码' },
+  { id: 'furniture', name: '家具' },
+  { id: 'appliance', name: '家电' },
+  { id: 'baby', name: '母婴' },
+  { id: 'sports', name: '运动' },
+  { id: 'clothing', name: '服饰' },
+  { id: 'books', name: '图书' },
+  { id: 'tools', name: '工具' },
+  { id: 'other', name: '其他' }
+];
+
+const catMap = {
+  'digital': '数码', 'furniture': '家具', 'appliance': '家电',
+  'baby': '母婴', 'sports': '运动', 'clothing': '服饰',
+  'books': '图书', 'tools': '工具', 'other': '其他'
+};
 
 Page({
   data: {
@@ -41,46 +59,42 @@ Page({
     }
   },
 
+
   // 加载商品数据
-  loadProducts() {
-    let products = [...mockProducts];
-    const tab = this.data.activeTab;
+  async loadProducts() {
+    try {
+      const params = { page: 1, pageSize: 20 };
+      const tab = this.data.activeTab;
 
-    // 按tab筛选
-    if (tab === 1) {
-      products = products.filter(p => p.isFree);
-    } else if (tab === 2) {
-      products.sort((a, b) => b.createdAt - a.createdAt);
-    } else if (tab === 3) {
-      products.sort((a, b) => b.viewCount - a.viewCount);
-    }
+      // Tab 筛选
+      if (tab === 1) params.isFree = '1';
+      if (tab === 2) params.sort = 'new';
+      if (tab === 3) params.sort = 'hot';
 
-    // 按分类筛选
-    if (this.data.activeCategory !== 'all') {
-      const catMap = {
-        'digital': '数码', 'furniture': '家具', 'appliance': '家电',
-        'baby': '母婴', 'sports': '运动', 'clothing': '服饰',
-        'books': '图书', 'tools': '工具'
-      };
-      const catName = catMap[this.data.activeCategory];
-      if (catName) {
-        products = products.filter(p => p.category === catName);
+      // 分类筛选
+      if (this.data.activeCategory !== 'all') {
+        params.category = catMap[this.data.activeCategory] || '';
       }
+
+      const data = await api.getProducts(params);
+      const products = data.list || [];
+
+      // 分配瀑布流左右列
+      const left = [], right = [];
+      products.forEach((item, index) => {
+        if (index % 2 === 0) left.push(item);
+        else right.push(item);
+      });
+
+      this.setData({
+        products,
+        leftProducts: left,
+        rightProducts: right,
+        hasMore: products.length >= 20
+      });
+    } catch (err) {
+      console.log('加载商品失败', err);
     }
-
-    // 分配瀑布流左右列
-    const left = [], right = [];
-    products.forEach((item, index) => {
-      if (index % 2 === 0) left.push(item);
-      else right.push(item);
-    });
-
-    this.setData({
-      products,
-      leftProducts: left,
-      rightProducts: right,
-      hasMore: false
-    });
   },
 
   // Tab切换
@@ -98,13 +112,11 @@ Page({
   },
 
   // 下拉刷新
-  onRefresh() {
+  async onRefresh() {
     this.setData({ isRefreshing: true });
-    setTimeout(() => {
-      this.loadProducts();
-      this.setData({ isRefreshing: false });
-      wx.showToast({ title: '刷新成功', icon: 'none' });
-    }, 800);
+    await this.loadProducts();
+    this.setData({ isRefreshing: false });
+    wx.showToast({ title: '刷新成功', icon: 'none' });
   },
 
   // 小区选择
