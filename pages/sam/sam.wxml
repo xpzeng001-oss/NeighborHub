@@ -1,0 +1,81 @@
+<!--pages/sam/sam.wxml-->
+<view class="page">
+  <!-- 分类Tab -->
+  <view class="sam-tabs">
+    <view class="sam-tab {{activeTab === index ? 'active' : ''}}"
+          wx:for="{{tabs}}" wx:key="index"
+          bindtap="switchTab" data-index="{{index}}">
+      {{item}}
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="scroll-content">
+    <view class="order-list">
+      <view class="order-card" wx:for="{{filteredList}}" wx:key="id">
+        <!-- 状态标签 -->
+        <view class="card-status status-{{item.status}}">
+          <text>{{item.status === 'open' ? '拼单中' : item.status === 'full' ? '已成团' : '已截止'}}</text>
+        </view>
+
+        <!-- 发起人 -->
+        <view class="card-header">
+          <image class="avatar" src="{{item.userAvatar}}" mode="aspectFill"></image>
+          <view class="user-info">
+            <text class="user-name">{{item.userName}}</text>
+            <text class="user-building">{{item.building}}</text>
+          </view>
+          <text class="time">{{item.createdAt}}</text>
+        </view>
+
+        <!-- 内容 -->
+        <text class="card-title">{{item.title}}</text>
+        <text class="card-desc line-clamp-2">{{item.description}}</text>
+
+        <!-- 拼单信息 -->
+        <view class="info-section">
+          <view class="info-row">
+            <text class="info-label">截止时间</text>
+            <text class="info-value">{{item.deadline}}</text>
+          </view>
+          <view class="info-row">
+            <text class="info-label">取货方式</text>
+            <text class="info-value">{{item.pickupMethod}}</text>
+          </view>
+          <view class="info-row" wx:if="{{item.minAmount}}">
+            <text class="info-label">起拼金额</text>
+            <text class="info-value highlight">¥{{item.minAmount}}</text>
+          </view>
+        </view>
+
+        <!-- 参与人数进度 -->
+        <view class="progress-section">
+          <view class="progress-bar">
+            <view class="progress-fill" style="width: {{item.currentCount / item.targetCount * 100}}%"></view>
+          </view>
+          <text class="progress-text">{{item.currentCount}}/{{item.targetCount}}人参与</text>
+        </view>
+
+        <!-- 底部操作 -->
+        <view class="card-bottom">
+          <view class="participant-avatars">
+            <image class="p-avatar" wx:for="{{item.participants}}" wx:key="*this" wx:for-item="p" src="{{p}}"></image>
+          </view>
+          <button class="btn-join" bindtap="onJoin" data-id="{{item.id}}"
+                  disabled="{{item.status !== 'open'}}">
+            {{item.status === 'open' ? '我要拼单' : item.status === 'full' ? '已成团' : '已截止'}}
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{filteredList.length === 0}}">
+      <text class="empty-emoji">🛒</text>
+      <text class="empty-text">暂无拼单，快来发起吧</text>
+    </view>
+  </scroll-view>
+
+  <!-- 发起拼单按钮 -->
+  <view class="fab-btn" bindtap="goPublish">
+    <text class="fab-icon">+</text>
+  </view>
+</view>

@@ -157,6 +157,9 @@ Page({
   goPet() {
     wx.navigateTo({ url: '/pages/pet/pet' });
   },
+  goSam() {
+    wx.navigateTo({ url: '/pages/sam/sam' });
+  },
 
   onShareAppMessage() {
     return {

@@ -93,31 +93,35 @@
   flex: 1;
   display: flex;
   gap: 16rpx;
+  min-width: 0;
 }
 .btn-chat {
   flex: 1;
-  height: 76rpx;
-  line-height: 76rpx;
-  text-align: center;
-  font-size: 28rpx;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
   background: #fff;
   color: #1A1A1A;
   border: 2rpx solid #1A1A1A;
-  border-radius: 40rpx;
+  border-radius: 36rpx;
   padding: 0;
+  margin: 0;
 }
 .btn-chat::after { border: none; }
 .btn-want {
-  flex: 1;
-  height: 76rpx;
-  line-height: 76rpx;
+  flex: 1.5;
+  height: 72rpx;
+  line-height: 72rpx;
   text-align: center;
-  font-size: 28rpx;
+  font-size: 26rpx;
   background: #1A1A1A;
   color: #fff;
   border: none;
-  border-radius: 40rpx;
+  border-radius: 36rpx;
   padding: 0;
+  margin: 0;
   font-weight: 500;
 }
 .btn-want::after { border: none; }

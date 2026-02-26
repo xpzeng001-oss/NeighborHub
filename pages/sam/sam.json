@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "山姆拼单",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
+}

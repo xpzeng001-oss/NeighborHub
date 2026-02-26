@@ -42,6 +42,10 @@
         <text class="entry-emoji">🐾</text>
         <text class="entry-label">宠物喂养</text>
       </view>
+      <view class="entry-item" bindtap="goSam">
+        <text class="entry-emoji">🛒</text>
+        <text class="entry-label">山姆拼单</text>
+      </view>
     </view>
 
     <!-- 内容Tab + 分类筛选 -->
