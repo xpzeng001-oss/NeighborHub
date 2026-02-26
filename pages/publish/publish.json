@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "发布",
+  "navigationStyle": "custom",
   "usingComponents": {
     "icon": "/components/icon/icon"
   }

@@ -11,7 +11,7 @@ App({
       { id: 'c002', name: '万科城市花园' },
       { id: 'c003', name: '绿地海珀外滩' }
     ],
-    baseUrl: 'https://xckjsoft.cn/neighborhub-api', // 本地开发用局域网IP，部署时改为真实域名
+    baseUrl: 'https://xckjsoft.cn/neighborhub-api', // 生产环境域名
     version: '1.0.0'
   },
 

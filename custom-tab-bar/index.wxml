@@ -9,13 +9,13 @@
         <icon name="message-circle" size="42" color="#BBBBBB"></icon>
       </view>
 
-      <view class="pill-item {{selected === 2 ? 'active' : ''}}" bindtap="switchTab" data-path="/pages/mine/mine" data-index="2">
+      <view class="pill-item {{selected === 1 ? 'active' : ''}}" bindtap="switchTab" data-path="/pages/mine/mine" data-index="1">
         <icon name="user" size="42" color="{{selected === 2 ? '#1A1A1A' : '#BBBBBB'}}" filled="{{selected === 2}}"></icon>
       </view>
     </view>
 
     <!-- 右侧发布按钮 -->
-    <view class="publish-fab" bindtap="switchTab" data-path="/pages/publish/publish" data-index="1">
+    <view class="publish-fab" bindtap="goPage" data-path="/pages/publish/publish">
       <icon name="plus" size="48" color="#ffffff"></icon>
     </view>
   </view>

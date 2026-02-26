@@ -53,13 +53,15 @@
 
       <!-- 分类（显示 categoryName，存储 category id） -->
       <view class="form-section">
-        <view class="form-item" bindtap="showCategoryPicker">
-          <text class="form-label">分类</text>
-          <view class="form-value">
-            <text class="{{form.categoryName ? '' : 'placeholder'}}">{{form.categoryName || '选择分类'}}</text>
-            <text class="form-arrow">›</text>
+        <picker range="{{categoryNames}}" bindchange="onCategoryChange">
+          <view class="form-item">
+            <text class="form-label">分类</text>
+            <view class="form-value">
+              <text class="{{form.categoryName ? '' : 'placeholder'}}">{{form.categoryName || '选择分类'}}</text>
+              <text class="form-arrow">›</text>
+            </view>
           </view>
-        </view>
+        </picker>
       </view>
 
       <!-- 价格（非免费） -->

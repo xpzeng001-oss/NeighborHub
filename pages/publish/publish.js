@@ -19,6 +19,7 @@ Page({
   data: {
     publishType: 'product',
     imageList: [],
+    categoryNames: categories.map(c => c.name),
     form: {
       title: '',
       category: '',       // 存 id，如 'digital'
@@ -34,9 +35,6 @@ Page({
   },
 
   onShow() {
-    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({ selected: 1 });
-    }
   },
 
   switchType(e) {
@@ -88,17 +86,11 @@ Page({
     this.setData({ imageList: list });
   },
 
-  // fix: 保存分类 id 和显示名称
-  showCategoryPicker() {
-    const names = categories.map(c => c.name);
-    wx.showActionSheet({
-      itemList: names,
-      success: (res) => {
-        this.setData({
-          'form.category': categories[res.tapIndex].id,
-          'form.categoryName': categories[res.tapIndex].name
-        });
-      }
+  onCategoryChange(e) {
+    const index = e.detail.value;
+    this.setData({
+      'form.category': categories[index].id,
+      'form.categoryName': categories[index].name
     });
   },
 

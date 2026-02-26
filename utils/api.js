@@ -13,12 +13,20 @@ const request = (options) => {
         ...(options.header || {})
       },
       success(res) {
-        if (res.data.code === 0) { resolve(res.data.data); }
-        else if (res.data.code === 401) {
-          wx.removeStorageSync('token'); wx.removeStorageSync('userInfo');
-          app.globalData.userInfo = null; app.globalData.token = '';
-          wx.showToast({ title: '请重新登录', icon: 'none' }); reject(res.data);
-        } else { wx.showToast({ title: res.data.message || '请求失败', icon: 'none' }); reject(res.data); }
+        try {
+          if (res.data && res.data.code === 0) {
+            resolve(res.data.data);
+          } else if (res.data && res.data.code === 401) {
+            wx.removeStorageSync('token'); wx.removeStorageSync('userInfo');
+            app.globalData.userInfo = null; app.globalData.token = '';
+            wx.showToast({ title: '请重新登录', icon: 'none' }); reject(res.data);
+          } else {
+            wx.showToast({ title: (res.data && res.data.message) || '请求失败', icon: 'none' });
+            reject(res.data || { message: '请求失败' });
+          }
+        } catch (e) {
+          reject({ message: '响应解析失败' });
+        }
       },
       fail(err) { wx.showToast({ title: '网络错误', icon: 'none' }); reject(err); }
     });
@@ -33,9 +41,13 @@ const uploadImage = (filePath) => {
       filePath, name: 'file',
       header: token ? { Authorization: 'Bearer ' + token } : {},
       success(res) {
-        const data = typeof res.data === 'string' ? JSON.parse(res.data) : res.data;
-        if (data.code === 0) { resolve(data.data.url); }
-        else { wx.showToast({ title: data.message || '上传失败', icon: 'none' }); reject(new Error(data.message)); }
+        try {
+          const data = typeof res.data === 'string' ? JSON.parse(res.data) : res.data;
+          if (data.code === 0) { resolve(data.data.url); }
+          else { wx.showToast({ title: data.message || '上传失败', icon: 'none' }); reject(new Error(data.message)); }
+        } catch (e) {
+          reject({ message: '上传响应解析失败' });
+        }
       },
       fail(err) { wx.showToast({ title: '图片上传失败', icon: 'none' }); reject(err); }
     });
