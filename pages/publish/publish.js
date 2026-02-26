@@ -2,12 +2,17 @@
 const api = require('../../utils/api');
 
 const categories = [
-  { id: 'digital', name: '数码' }, { id: 'furniture', name: '家具' },
-  { id: 'appliance', name: '家电' }, { id: 'baby', name: '母婴' },
-  { id: 'sports', name: '运动' }, { id: 'clothing', name: '服饰' },
-  { id: 'books', name: '图书' }, { id: 'tools', name: '工具' },
+  { id: 'digital', name: '数码' },
+  { id: 'furniture', name: '家具' },
+  { id: 'appliance', name: '家电' },
+  { id: 'baby', name: '母婴' },
+  { id: 'sports', name: '运动' },
+  { id: 'clothing', name: '服饰' },
+  { id: 'books', name: '图书' },
+  { id: 'tools', name: '工具' },
   { id: 'other', name: '其他' }
 ];
+
 const conditions = ['全新', '九五新', '九成新', '八成新', '有使用痕迹'];
 
 Page({
@@ -16,7 +21,8 @@ Page({
     imageList: [],
     form: {
       title: '',
-      category: '',
+      category: '',       // 存 id，如 'digital'
+      categoryName: '',   // 存显示名，如 '数码'
       price: '',
       originalPrice: '',
       condition: '',
@@ -39,9 +45,16 @@ Page({
       publishType: type,
       imageList: [],
       form: {
-        title: '', category: '', price: '', originalPrice: '',
-        condition: '', description: '', tradeMethod: '',
-        postCategory: '', isUrgent: false
+        title: '',
+        category: '',
+        categoryName: '',
+        price: '',
+        originalPrice: '',
+        condition: '',
+        description: '',
+        tradeMethod: '',
+        postCategory: '',
+        isUrgent: false
       }
     });
   },
@@ -63,9 +76,7 @@ Page({
       sourceType: ['album', 'camera'],
       success: (res) => {
         const newImages = res.tempFiles.map(f => f.tempFilePath);
-        this.setData({
-          imageList: [...this.data.imageList, ...newImages]
-        });
+        this.setData({ imageList: [...this.data.imageList, ...newImages] });
       }
     });
   },
@@ -77,12 +88,16 @@ Page({
     this.setData({ imageList: list });
   },
 
+  // fix: 保存分类 id 和显示名称
   showCategoryPicker() {
     const names = categories.map(c => c.name);
     wx.showActionSheet({
       itemList: names,
       success: (res) => {
-        this.setData({ 'form.category': names[res.tapIndex] });
+        this.setData({
+          'form.category': categories[res.tapIndex].id,
+          'form.categoryName': categories[res.tapIndex].name
+        });
       }
     });
   },
@@ -119,25 +134,34 @@ Page({
   async onPublish() {
     const { form, publishType, imageList } = this.data;
 
+    // fix: 先检查登录状态，避免无意义 loading
+    const token = wx.getStorageSync('token');
+    if (!token) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
+
+    // 基础校验
     if (!form.title.trim()) {
       wx.showToast({ title: '请输入标题', icon: 'none' });
       return;
     }
-
     if ((publishType === 'product' || publishType === 'free') && imageList.length === 0) {
       wx.showToast({ title: '请上传至少一张图片', icon: 'none' });
       return;
     }
-
     if (publishType === 'product' && !form.price) {
       wx.showToast({ title: '请输入价格', icon: 'none' });
       return;
     }
+    // fix: 发帖必须选分类
+    if (publishType === 'post' && !form.postCategory) {
+      wx.showToast({ title: '请选择帖子分类', icon: 'none' });
+      return;
+    }
 
     wx.showLoading({ title: '发布中...' });
-
     try {
-      // 上传图片
       let imageUrls = [];
       if (imageList.length > 0) {
         imageUrls = await api.uploadImages(imageList);
@@ -177,7 +201,11 @@ Page({
       }, 1500);
     } catch (err) {
       wx.hideLoading();
-      wx.showToast({ title: '发布失败，请先登录', icon: 'none' });
+      // fix: 显示真实错误信息
+      const msg = (err && err.message && err.message.length <= 12)
+        ? err.message
+        : '发布失败，请重试';
+      wx.showToast({ title: msg, icon: 'none' });
     }
   }
 });
