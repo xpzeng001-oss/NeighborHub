@@ -17,6 +17,7 @@ const conditions = ['全新', '九五新', '九成新', '八成新', '有使用�
 
 Page({
   data: {
+    statusBarHeight: 44,
     publishType: 'product',
     imageList: [],
     categoryNames: categories.map(c => c.name),
@@ -34,7 +35,16 @@ Page({
     }
   },
 
+  onLoad() {
+    const sysInfo = wx.getSystemInfoSync();
+    this.setData({ statusBarHeight: sysInfo.statusBarHeight || 44 });
+  },
+
   onShow() {
+  },
+
+  goBack() {
+    wx.navigateBack();
   },
 
   switchType(e) {

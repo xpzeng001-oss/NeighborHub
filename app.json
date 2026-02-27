@@ -10,7 +10,9 @@
     "pages/rental/rental",
     "pages/search/search",
     "pages/pet/pet",
-    "pages/sam/sam"
+    "pages/sam/sam",
+    "pages/chat/chat",
+    "pages/chatDetail/chatDetail"
   ],
   "window": {
     "navigationBarBackgroundColor": "#ffffff",

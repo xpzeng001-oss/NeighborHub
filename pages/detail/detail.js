@@ -47,7 +47,18 @@ Page({
   },
 
   onChat() {
-    wx.showToast({ title: '私信功能开发中', icon: 'none' });
+    const token = wx.getStorageSync('token');
+    if (!token) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
+    const p = this.data.product;
+    if (!p.userId) return;
+    wx.navigateTo({
+      url: '/pages/chatDetail/chatDetail?targetUserId=' + p.userId +
+        '&nickName=' + encodeURIComponent(p.userName || '') +
+        '&avatarUrl=' + encodeURIComponent(p.userAvatar || '')
+    });
   },
 
   onWant() {

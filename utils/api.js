@@ -88,6 +88,14 @@ const updateUser    = (id, data) => request({ url: '/api/users/' + id, method: '
 const getUserStats  = (id)       => request({ url: '/api/users/' + id + '/stats' });
 const getBanners    = ()         => request({ url: '/api/banners' });
 
+// Chat
+const getConversations    = ()         => request({ url: '/api/chat/conversations' });
+const createConversation  = (data)     => request({ url: '/api/chat/conversations', method: 'POST', data });
+const getMessages         = (id, params) => request({ url: '/api/chat/conversations/' + id + '/messages', data: params });
+const sendMessage         = (id, data) => request({ url: '/api/chat/conversations/' + id + '/messages', method: 'POST', data });
+const markConversationRead = (id)      => request({ url: '/api/chat/conversations/' + id + '/read', method: 'PUT' });
+const getUnreadCount      = ()         => request({ url: '/api/chat/unread' });
+
 module.exports = {
   login,
   getProducts, getProduct, createProduct, updateProduct, deleteProduct, wantProduct, toggleFavorite,
@@ -97,5 +105,6 @@ module.exports = {
   getPets, createPet,
   getUser, updateUser, getUserStats,
   getBanners,
-  uploadImage, uploadImages
+  uploadImage, uploadImages,
+  getConversations, createConversation, getMessages, sendMessage, markConversationRead, getUnreadCount
 };

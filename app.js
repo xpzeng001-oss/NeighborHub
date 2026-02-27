@@ -50,39 +50,31 @@ App({
   login(callback) {
     wx.login({
       success: (loginRes) => {
-        wx.getUserProfile({
-          desc: '用于完善用户信息',
-          success: (profileRes) => {
-            const { nickName, avatarUrl } = profileRes.userInfo;
-            wx.request({
-              url: this.globalData.baseUrl + '/api/auth/login',
-              method: 'POST',
-              data: {
-                code: loginRes.code,
-                nickName,
-                avatarUrl
-              },
-              success: (res) => {
-                if (res.data.code === 0) {
-                  const { token, userInfo } = res.data.data;
-                  this.globalData.token = token;
-                  this.globalData.userInfo = userInfo;
-                  wx.setStorageSync('token', token);
-                  wx.setStorageSync('userInfo', userInfo);
-                  callback && callback(userInfo);
-                } else {
-                  wx.showToast({ title: res.data.message || '登录失败', icon: 'none' });
-                }
-              },
-              fail: () => {
-                wx.showToast({ title: '网络错误', icon: 'none' });
-              }
-            });
+        wx.request({
+          url: this.globalData.baseUrl + '/api/auth/login',
+          method: 'POST',
+          data: {
+            code: loginRes.code
+          },
+          success: (res) => {
+            if (res.data.code === 0) {
+              const { token, userInfo } = res.data.data;
+              this.globalData.token = token;
+              this.globalData.userInfo = userInfo;
+              wx.setStorageSync('token', token);
+              wx.setStorageSync('userInfo', userInfo);
+              callback && callback(userInfo);
+            } else {
+              wx.showToast({ title: res.data.message || '登录失败', icon: 'none' });
+            }
           },
           fail: () => {
-            wx.showToast({ title: '授权失败', icon: 'none' });
+            wx.showToast({ title: '网络错误', icon: 'none' });
           }
         });
+      },
+      fail: () => {
+        wx.showToast({ title: '登录失败', icon: 'none' });
       }
     });
   }

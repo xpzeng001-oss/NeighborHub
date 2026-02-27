@@ -1,5 +1,16 @@
 <!--pages/publish/publish.wxml-->
 <view class="page">
+  <!-- 自定义导航栏 -->
+  <view class="custom-nav-wrap">
+    <view style="height: {{statusBarHeight}}px;"></view>
+    <view class="custom-nav-bar">
+      <view class="nav-back" bindtap="goBack">
+        <view class="nav-arrow"></view>
+      </view>
+      <view class="nav-title">发布</view>
+    </view>
+  </view>
+
   <!-- 发布类型选择 -->
   <view class="type-tabs">
     <view class="type-tab {{publishType === 'product' ? 'active' : ''}}" bindtap="switchType" data-type="product">
@@ -173,7 +184,7 @@
       </view>
     </view>
 
-    <view style="height: 160rpx;"></view>
+    <view style="height: 260rpx;"></view>
   </scroll-view>
 
   <!-- 底部发布按钮 -->

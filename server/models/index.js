@@ -8,6 +8,8 @@ const Rental = require('./Rental');
 const PetPost = require('./PetPost');
 const Favorite = require('./Favorite');
 const Banner = require('./Banner');
+const Conversation = require('./Conversation');
+const Message = require('./Message');
 
 // User <-> Product
 User.hasMany(Product, { foreignKey: 'user_id' });
@@ -41,6 +43,17 @@ PetPost.belongsTo(User, { foreignKey: 'user_id' });
 User.belongsToMany(Product, { through: Favorite, foreignKey: 'user_id', otherKey: 'product_id', as: 'FavoriteProducts' });
 Product.belongsToMany(User, { through: Favorite, foreignKey: 'product_id', otherKey: 'user_id', as: 'FavoritedBy' });
 
+// Conversation <-> Message
+Conversation.hasMany(Message, { foreignKey: 'conversation_id' });
+Message.belongsTo(Conversation, { foreignKey: 'conversation_id' });
+
+// User <-> Conversation
+Conversation.belongsTo(User, { foreignKey: 'user_a_id', as: 'UserA' });
+Conversation.belongsTo(User, { foreignKey: 'user_b_id', as: 'UserB' });
+
+// User <-> Message
+Message.belongsTo(User, { foreignKey: 'sender_id', as: 'Sender' });
+
 module.exports = {
   sequelize,
   User,
@@ -51,5 +64,7 @@ module.exports = {
   Rental,
   PetPost,
   Favorite,
-  Banner
+  Banner,
+  Conversation,
+  Message
 };

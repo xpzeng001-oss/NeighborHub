@@ -1,6 +1,40 @@
 /* pages/publish/publish.wxss */
 .page { height: 100vh; display: flex; flex-direction: column; background: #f5f6fa; }
 
+.custom-nav-wrap {
+  background: #fff;
+}
+.custom-nav-bar {
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.nav-back {
+  width: 88rpx;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.nav-arrow {
+  width: 20rpx;
+  height: 20rpx;
+  border-left: 4rpx solid #333;
+  border-bottom: 4rpx solid #333;
+  transform: rotate(45deg);
+}
+.nav-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+}
+
 .type-tabs {
   display: flex;
   background: #fff;

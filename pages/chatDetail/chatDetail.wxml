@@ -1,0 +1,53 @@
+<!--pages/chatDetail/chatDetail.wxml-->
+<view class="page">
+  <!-- 消息列表 -->
+  <scroll-view
+    scroll-y
+    class="message-list"
+    scroll-into-view="{{scrollToView}}"
+    scroll-with-animation>
+
+    <view class="msg-item {{item.senderId === myUserId ? 'msg-right' : 'msg-left'}}"
+      wx:for="{{messages}}" wx:key="id">
+      <!-- 对方头像 -->
+      <image
+        wx:if="{{item.senderId !== myUserId}}"
+        class="msg-avatar"
+        src="{{targetAvatarUrl || '/images/avatar-placeholder.png'}}"
+        mode="aspectFill">
+      </image>
+
+      <!-- 消息气泡 -->
+      <view class="msg-bubble {{item.senderId === myUserId ? 'bubble-mine' : 'bubble-other'}}">
+        <text>{{item.content}}</text>
+      </view>
+
+      <!-- 自己头像 -->
+      <image
+        wx:if="{{item.senderId === myUserId}}"
+        class="msg-avatar"
+        src="{{item.senderAvatar || '/images/avatar-placeholder.png'}}"
+        mode="aspectFill">
+      </image>
+    </view>
+
+    <view id="msg-bottom"></view>
+  </scroll-view>
+
+  <!-- 底部输入栏 -->
+  <view class="input-bar safe-bottom">
+    <input
+      class="msg-input"
+      placeholder="输入消息..."
+      value="{{inputValue}}"
+      bindinput="onInputChange"
+      bindconfirm="onSend"
+      confirm-type="send"
+      adjust-position="{{true}}"
+      cursor-spacing="20"
+    />
+    <view class="send-btn {{inputValue ? 'active' : ''}}" bindtap="onSend">
+      <text>发送</text>
+    </view>
+  </view>
+</view>

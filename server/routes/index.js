@@ -10,5 +10,6 @@ router.use('/upload',   require('./upload'));
 router.use('/users',    require('./users'));
 router.use('/banners',  require('./banners'));
 router.use('/cos',      require('./cos'));   // COS 临时凭证
+router.use('/chat',     require('./chat'));
 
 module.exports = router;
