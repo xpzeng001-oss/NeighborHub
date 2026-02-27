@@ -5,14 +5,14 @@
       <view class="pill-item {{selected === 0 ? 'active' : ''}}" bindtap="switchTab" data-path="/pages/index/index" data-index="0">
         <icon name="home" size="42" color="{{selected === 0 ? '#1A1A1A' : '#BBBBBB'}}" filled="{{selected === 0}}"></icon>
       </view>
-      <view class="pill-item msg-pill" bindtap="goPage" data-path="/pages/chat/chat">
-        <icon name="message-circle" size="42" color="#BBBBBB"></icon>
+      <view class="pill-item msg-pill {{selected === 1 ? 'active' : ''}}" bindtap="switchTab" data-path="/pages/chat/chat" data-index="1">
+        <icon name="message-circle" size="42" color="{{selected === 1 ? '#1A1A1A' : '#BBBBBB'}}" filled="{{selected === 1}}"></icon>
         <view class="unread-badge" wx:if="{{unreadCount > 0}}">
           <text>{{unreadCount > 99 ? '99+' : unreadCount}}</text>
         </view>
       </view>
 
-      <view class="pill-item {{selected === 1 ? 'active' : ''}}" bindtap="switchTab" data-path="/pages/mine/mine" data-index="1">
+      <view class="pill-item {{selected === 2 ? 'active' : ''}}" bindtap="switchTab" data-path="/pages/mine/mine" data-index="2">
         <icon name="user" size="42" color="{{selected === 2 ? '#1A1A1A' : '#BBBBBB'}}" filled="{{selected === 2}}"></icon>
       </view>
     </view>
