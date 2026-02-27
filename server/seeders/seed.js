@@ -14,21 +14,21 @@ async function seed() {
 
     // ==================== 用户 ====================
     const users = await User.bulkCreate([
-      { openid: 'seed_u001', nick_name: '小王妈妈', avatar_url: 'https://picsum.photos/seed/avatar_mama/200/200', building: '3栋1单元', credit_score: 180, is_verified: true },
-      { openid: 'seed_u002', nick_name: '老张', avatar_url: 'https://picsum.photos/seed/avatar_zhang/200/200', building: '7栋2单元', credit_score: 220, is_verified: true },
-      { openid: 'seed_u003', nick_name: '数码小哥', avatar_url: 'https://picsum.photos/seed/avatar_digi/200/200', building: '12栋', credit_score: 150, is_verified: true },
-      { openid: 'seed_u004', nick_name: '爱做饭的李姐', avatar_url: 'https://picsum.photos/seed/avatar_lijie/200/200', building: '5栋3单元', credit_score: 195, is_verified: true },
-      { openid: 'seed_u005', nick_name: '健身达人阿凯', avatar_url: 'https://picsum.photos/seed/avatar_fitness/200/200', building: '9栋1单元', credit_score: 160, is_verified: true },
-      { openid: 'seed_u006', nick_name: '6栋王大姐', avatar_url: 'https://picsum.photos/seed/avatar_wang6/200/200', building: '6栋1单元', credit_score: 210, is_verified: true },
-      { openid: 'seed_u007', nick_name: '遛狗小分队队长', avatar_url: 'https://picsum.photos/seed/avatar_dogwalk/200/200', building: '8栋', credit_score: 175, is_verified: true },
-      { openid: 'seed_u008', nick_name: '新搬来的小陈', avatar_url: 'https://picsum.photos/seed/avatar_chen/200/200', building: '2栋', credit_score: 100, is_verified: true },
-      { openid: 'seed_u009', nick_name: '10栋小赵', avatar_url: 'https://picsum.photos/seed/avatar_zhao/200/200', building: '10栋2单元', credit_score: 135, is_verified: true },
-      { openid: 'seed_u010', nick_name: '物业管理处', avatar_url: 'https://picsum.photos/seed/avatar_prop/200/200', building: '', credit_score: 300, is_verified: true },
-      { openid: 'seed_u011', nick_name: '房东刘先生', avatar_url: 'https://picsum.photos/seed/avatar_landlord/200/200', building: '8栋', credit_score: 140, is_verified: true },
-      { openid: 'seed_u012', nick_name: '合租小伙伴小美', avatar_url: 'https://picsum.photos/seed/avatar_xiaomei/200/200', building: '2栋', credit_score: 110, is_verified: true },
-      { openid: 'seed_u013', nick_name: '退休周叔', avatar_url: 'https://picsum.photos/seed/avatar_zhoushu/200/200', building: '1栋', credit_score: 250, is_verified: true },
-      { openid: 'seed_u014', nick_name: '程序员小林', avatar_url: 'https://picsum.photos/seed/avatar_coder/200/200', building: '12栋3单元', credit_score: 120, is_verified: true },
-      { openid: 'seed_u015', nick_name: '瑜伽姐姐', avatar_url: 'https://picsum.photos/seed/avatar_yoga/200/200', building: '5栋1单元', credit_score: 165, is_verified: true }
+      { openid: 'seed_u001', nick_name: '小王妈妈', avatar_url: '', building: '3栋1单元', credit_score: 180, is_verified: true },
+      { openid: 'seed_u002', nick_name: '老张', avatar_url: '', building: '7栋2单元', credit_score: 220, is_verified: true },
+      { openid: 'seed_u003', nick_name: '数码小哥', avatar_url: '', building: '12栋', credit_score: 150, is_verified: true },
+      { openid: 'seed_u004', nick_name: '爱做饭的李姐', avatar_url: '', building: '5栋3单元', credit_score: 195, is_verified: true },
+      { openid: 'seed_u005', nick_name: '健身达人阿凯', avatar_url: '', building: '9栋1单元', credit_score: 160, is_verified: true },
+      { openid: 'seed_u006', nick_name: '6栋王大姐', avatar_url: '', building: '6栋1单元', credit_score: 210, is_verified: true },
+      { openid: 'seed_u007', nick_name: '遛狗小分队队长', avatar_url: '', building: '8栋', credit_score: 175, is_verified: true },
+      { openid: 'seed_u008', nick_name: '新搬来的小陈', avatar_url: '', building: '2栋', credit_score: 100, is_verified: true },
+      { openid: 'seed_u009', nick_name: '10栋小赵', avatar_url: '', building: '10栋2单元', credit_score: 135, is_verified: true },
+      { openid: 'seed_u010', nick_name: '物业管理处', avatar_url: '', building: '', credit_score: 300, is_verified: true },
+      { openid: 'seed_u011', nick_name: '房东刘先生', avatar_url: '', building: '8栋', credit_score: 140, is_verified: true },
+      { openid: 'seed_u012', nick_name: '合租小伙伴小美', avatar_url: '', building: '2栋', credit_score: 110, is_verified: true },
+      { openid: 'seed_u013', nick_name: '退休周叔', avatar_url: '', building: '1栋', credit_score: 250, is_verified: true },
+      { openid: 'seed_u014', nick_name: '程序员小林', avatar_url: '', building: '12栋3单元', credit_score: 120, is_verified: true },
+      { openid: 'seed_u015', nick_name: '瑜伽姐姐', avatar_url: '', building: '5栋1单元', credit_score: 165, is_verified: true }
     ]);
 
     console.log(`Created ${users.length} users.`);

@@ -21,7 +21,7 @@
 
         <!-- 帖子头部 -->
         <view class="post-header">
-          <image class="post-avatar" src="{{item.userAvatar}}" mode="aspectFill"></image>
+          <image class="post-avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
           <view class="post-user">
             <text class="post-username">{{item.userName}}</text>
             <text class="post-time">{{item.timeAgo}}</text>

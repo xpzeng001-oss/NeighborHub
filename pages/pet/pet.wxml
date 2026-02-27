@@ -20,7 +20,7 @@
 
         <!-- 用户信息 -->
         <view class="card-header">
-          <image class="avatar" src="{{item.userAvatar}}" mode="aspectFill"></image>
+          <image class="avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
           <view class="user-info">
             <text class="user-name">{{item.userName}}</text>
             <text class="user-building">{{item.building}}</text>

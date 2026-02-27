@@ -38,7 +38,7 @@
     <!-- 卖家信息 -->
     <view class="section seller-section" bindtap="viewSeller">
       <view class="seller-left">
-        <image class="seller-avatar" src="{{product.userAvatar}}" mode="aspectFill"></image>
+        <image class="seller-avatar" src="{{product.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
         <view class="seller-info">
           <text class="seller-name">{{product.userName}}</text>
           <text class="seller-building">{{product.building}}</text>

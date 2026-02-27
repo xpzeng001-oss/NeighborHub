@@ -4,7 +4,7 @@
     <view class="post-detail">
       <!-- 头部 -->
       <view class="post-header">
-        <image class="post-avatar" src="{{post.userAvatar}}" mode="aspectFill"></image>
+        <image class="post-avatar" src="{{post.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
         <view class="post-user">
           <text class="post-username">{{post.userName}}</text>
           <text class="post-time">{{post.timeAgo}}</text>

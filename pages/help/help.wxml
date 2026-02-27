@@ -5,7 +5,7 @@
       <view class="help-card" wx:for="{{helps}}" wx:key="id">
         <view class="help-header">
           <view class="help-user">
-            <image class="help-avatar" src="{{item.userAvatar}}" mode="aspectFill"></image>
+            <image class="help-avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
             <view>
               <text class="help-name">{{item.userName}}</text>
               <text class="help-building">{{item.building}}</text>
