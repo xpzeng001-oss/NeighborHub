@@ -39,6 +39,6 @@
   </scroll-view>
 
   <view class="fab-btn" bindtap="goPublish">
-    <icon name="life-buoy" size="44" color="#fff"></icon>
+    <icon name="pencil" size="44" color="#fff"></icon>
   </view>
 </view>

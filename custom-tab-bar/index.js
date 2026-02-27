@@ -41,7 +41,8 @@ Component({
           if (res.data && res.data.code === 0 && res.data.data) {
             this.setData({ unreadCount: res.data.data.count || 0 });
           }
-        }
+        },
+        fail: () => {}
       });
     }
   }

@@ -11,7 +11,7 @@ Page({
     isRefreshing: false
   },
 
-  onLoad() {
+  onShow() {
     this.loadPosts();
   },
 
@@ -30,7 +30,8 @@ Page({
       }));
       this.setData({ posts, filteredPosts: posts });
     } catch (err) {
-      console.log('加载帖子失败', err);
+      console.error('加载帖子失败', err);
+      wx.showToast({ title: '加载失败，请下拉刷新', icon: 'none' });
     }
   },
 
@@ -51,6 +52,13 @@ Page({
   },
 
   goPublish() {
-    wx.switchTab({ url: '/pages/publish/publish' });
+    const app = getApp();
+    if (!app.globalData.userInfo) {
+      app.login(() => {
+        wx.navigateTo({ url: '/pages/forumPublish/forumPublish' });
+      });
+      return;
+    }
+    wx.navigateTo({ url: '/pages/forumPublish/forumPublish' });
   }
 });

@@ -160,10 +160,10 @@
   bottom: 60rpx;
   width: 100rpx;
   height: 100rpx;
-  background: #C8FF00;
+  background: #1A1A1A;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8rpx 30rpx rgba(200, 255, 0, 0.35);
+  box-shadow: 0 8rpx 30rpx rgba(26, 26, 26, 0.3);
 }

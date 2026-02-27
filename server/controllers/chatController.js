@@ -109,8 +109,8 @@ exports.getMessages = async (req, res, next) => {
     const list = (afterId ? rows : rows.reverse()).map(m => ({
       id: m.id,
       senderId: m.sender_id,
-      senderName: m.Sender.nick_name,
-      senderAvatar: m.Sender.avatar_url,
+      senderName: m.Sender ? m.Sender.nick_name : '匿名用户',
+      senderAvatar: m.Sender ? m.Sender.avatar_url : '',
       content: m.content,
       isRead: m.is_read,
       createdAt: m.created_at

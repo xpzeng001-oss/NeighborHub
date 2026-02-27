@@ -11,5 +11,7 @@ router.use('/users',    require('./users'));
 router.use('/banners',  require('./banners'));
 router.use('/cos',      require('./cos'));   // COS 临时凭证
 router.use('/chat',     require('./chat'));
+router.use('/reports',  require('./reports'));
+router.use('/feedbacks', require('./feedbacks'));
 
 module.exports = router;

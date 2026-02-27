@@ -54,17 +54,17 @@
     <view class="menu-group">
       <view class="menu-title">我的交易</view>
       <view class="menu-item" bindtap="goMyPublish">
-        <icon name="package" size="36" color="#C8FF00" class="menu-icon-wrap"></icon>
+        <icon name="package" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">我的发布</text>
         <text class="menu-arrow">›</text>
       </view>
       <view class="menu-item" bindtap="goMyFav">
-        <icon name="heart" size="36" color="#C8FF00" class="menu-icon-wrap"></icon>
+        <icon name="heart" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">我的收藏</text>
         <text class="menu-arrow">›</text>
       </view>
-      <view class="menu-item">
-        <icon name="handshake" size="36" color="#C8FF00" class="menu-icon-wrap"></icon>
+      <view class="menu-item" bindtap="goMyHelp">
+        <icon name="handshake" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">我的帮忙</text>
         <text class="menu-arrow">›</text>
       </view>
@@ -72,24 +72,26 @@
 
     <view class="menu-group">
       <view class="menu-title">账户设置</view>
-      <view class="menu-item" bindtap="goVerify">
-        <icon name="home" size="36" color="#C8FF00" class="menu-icon-wrap"></icon>
-        <text class="menu-text">楼栋认证</text>
-        <view class="menu-right">
-          <text class="verify-status {{isVerified ? 'verified' : ''}}">{{isVerified ? '已认证' : '未认证'}}</text>
-          <text class="menu-arrow">›</text>
+      <picker range="{{buildings}}" bindchange="onBuildingChange">
+        <view class="menu-item">
+          <icon name="home" size="36" color="#333" class="menu-icon-wrap"></icon>
+          <text class="menu-text">楼栋认证</text>
+          <view class="menu-right">
+            <text class="verify-status {{isVerified ? 'verified' : ''}}">{{isVerified ? userInfo.building : '未认证'}}</text>
+            <text class="menu-arrow">›</text>
+          </view>
         </view>
-      </view>
-      <view class="menu-item">
-        <icon name="star" size="36" color="#C8FF00" class="menu-icon-wrap"></icon>
+      </picker>
+      <view class="menu-item" bindtap="goCredit">
+        <icon name="star" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">我的信用</text>
         <view class="menu-right">
           <text class="credit-level">{{creditLevel}}</text>
           <text class="menu-arrow">›</text>
         </view>
       </view>
-      <view class="menu-item">
-        <icon name="alert-triangle" size="36" color="#C8FF00" class="menu-icon-wrap"></icon>
+      <view class="menu-item" bindtap="goReport">
+        <icon name="alert-triangle" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">举报记录</text>
         <text class="menu-arrow">›</text>
       </view>
@@ -97,19 +99,29 @@
 
     <view class="menu-group">
       <view class="menu-title">其他</view>
-      <view class="menu-item" bindtap="onShare">
-        <icon name="share" size="36" color="#C8FF00" class="menu-icon-wrap"></icon>
+      <button class="menu-item share-btn" open-type="share">
+        <icon name="share" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">分享给邻居</text>
         <text class="menu-arrow">›</text>
-      </view>
-      <view class="menu-item">
-        <icon name="lightbulb" size="36" color="#C8FF00" class="menu-icon-wrap"></icon>
+      </button>
+      <view class="menu-item" bindtap="goFeedback">
+        <icon name="lightbulb" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">意见反馈</text>
         <text class="menu-arrow">›</text>
       </view>
-      <view class="menu-item">
-        <icon name="clipboard" size="36" color="#C8FF00" class="menu-icon-wrap"></icon>
+      <view class="menu-item" bindtap="goAbout">
+        <icon name="clipboard" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">关于我们</text>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 管理入口（仅管理员可见） -->
+    <view class="menu-group" wx:if="{{isAdmin}}">
+      <view class="menu-title">管理</view>
+      <view class="menu-item" bindtap="goFeedbackList">
+        <icon name="message-circle" size="36" color="#333" class="menu-icon-wrap"></icon>
+        <text class="menu-text">用户反馈</text>
         <text class="menu-arrow">›</text>
       </view>
     </view>

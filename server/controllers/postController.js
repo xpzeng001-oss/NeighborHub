@@ -18,8 +18,8 @@ exports.list = async (req, res, next) => {
     const list = rows.map(p => ({
       id: p.id,
       userId: p.user_id,
-      userName: p.User.nick_name,
-      userAvatar: p.User.avatar_url,
+      userName: p.User ? p.User.nick_name : '匿名用户',
+      userAvatar: p.User ? p.User.avatar_url : '',
       category: p.category,
       title: p.title,
       content: p.content,
@@ -58,8 +58,8 @@ exports.detail = async (req, res, next) => {
       data: {
         id: post.id,
         userId: post.user_id,
-        userName: post.User.nick_name,
-        userAvatar: post.User.avatar_url,
+        userName: post.User ? post.User.nick_name : '匿名用户',
+        userAvatar: post.User ? post.User.avatar_url : '',
         category: post.category,
         title: post.title,
         content: post.content,

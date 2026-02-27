@@ -1,0 +1,42 @@
+<!--pages/credit/credit.wxml-->
+<view class="page">
+  <!-- 信用分卡片 -->
+  <view class="score-card">
+    <text class="score-num">{{score}}</text>
+    <text class="score-label">信用分</text>
+    <view class="level-badge" style="background: {{levelColor}};">
+      <text>{{level}}</text>
+    </view>
+  </view>
+
+  <!-- 信用等级说明 -->
+  <view class="section">
+    <view class="section-title">信用等级</view>
+    <view class="level-row">
+      <view class="level-item">
+        <text class="level-range">0-119</text>
+        <text class="level-name" style="color: #999;">新住户</text>
+      </view>
+      <view class="level-item">
+        <text class="level-range">120-199</text>
+        <text class="level-name" style="color: #52c41a;">活跃邻居</text>
+      </view>
+      <view class="level-item">
+        <text class="level-range">200+</text>
+        <text class="level-name" style="color: #faad14;">金牌邻居</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 积分规则 -->
+  <view class="section">
+    <view class="section-title">积分规则</view>
+    <view class="rule-item" wx:for="{{rules}}" wx:key="action">
+      <view class="rule-left">
+        <text class="rule-action">{{item.action}}</text>
+        <text class="rule-desc">{{item.desc}}</text>
+      </view>
+      <text class="rule-point {{item.point.indexOf('-') >= 0 ? 'minus' : 'plus'}}">{{item.point}}</text>
+    </view>
+  </view>
+</view>

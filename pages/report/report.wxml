@@ -1,0 +1,22 @@
+<!--pages/report/report.wxml-->
+<view class="page">
+  <!-- 空状态 -->
+  <view class="empty" wx:if="{{!loading && list.length === 0}}">
+    <icon name="alert-triangle" size="80" color="#ddd"></icon>
+    <text class="empty-text">暂无举报记录</text>
+    <text class="empty-hint">您可以在商品详情页中进行举报</text>
+  </view>
+
+  <!-- 举报列表 -->
+  <view wx:else>
+    <view class="report-item" wx:for="{{list}}" wx:key="id">
+      <view class="report-header">
+        <text class="report-type">举报{{item.typeText}}</text>
+        <text class="report-status {{item.status}}">{{item.statusText}}</text>
+      </view>
+      <text class="report-reason">原因：{{item.reason}}</text>
+      <text class="report-desc" wx:if="{{item.description}}">{{item.description}}</text>
+      <text class="report-time">{{item.createdAt}}</text>
+    </view>
+  </view>
+</view>

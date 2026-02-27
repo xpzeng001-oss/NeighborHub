@@ -1,0 +1,44 @@
+<!--pages/about/about.wxml-->
+<view class="page">
+  <!-- 应用信息 -->
+  <view class="app-header">
+    <view class="app-logo-text">邻</view>
+    <text class="app-name">邻里市集</text>
+    <text class="app-version">v1.0.0</text>
+  </view>
+
+  <!-- 简介 -->
+  <view class="section">
+    <view class="section-title">应用简介</view>
+    <text class="desc">邻里市集是一个专为小区居民打造的闲置物品交易与互助平台。在这里，您可以与邻居交换闲置好物、发起求助、参与社区论坛，让邻里关系更加温暖。</text>
+  </view>
+
+  <!-- 功能特点 -->
+  <view class="section">
+    <view class="section-title">功能特点</view>
+    <view class="feature-item" wx:for="{{features}}" wx:key="title">
+      <text class="feature-icon">{{item.icon}}</text>
+      <view class="feature-info">
+        <text class="feature-title">{{item.title}}</text>
+        <text class="feature-desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 联系我们 -->
+  <view class="section">
+    <view class="section-title">联系我们</view>
+    <view class="contact-row">
+      <text class="contact-label">客服邮箱</text>
+      <text class="contact-value" selectable>zengxu0116@gmail.com</text>
+    </view>
+    <view class="contact-row">
+      <text class="contact-label">反馈建议</text>
+      <text class="contact-value link" bindtap="goFeedback">前往意见反馈</text>
+    </view>
+  </view>
+
+  <view class="footer">
+    <text class="copyright">Copyright 2026 邻里市集</text>
+  </view>
+</view>

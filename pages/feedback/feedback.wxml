@@ -1,0 +1,32 @@
+<!--pages/feedback/feedback.wxml-->
+<view class="page">
+  <!-- 反馈类型 -->
+  <view class="section">
+    <view class="section-title">反馈类型</view>
+    <view class="type-list">
+      <view class="type-item {{type === '功能建议' ? 'active' : ''}}" bindtap="onTypeChange" data-type="功能建议">功能建议</view>
+      <view class="type-item {{type === 'Bug反馈' ? 'active' : ''}}" bindtap="onTypeChange" data-type="Bug反馈">Bug反馈</view>
+      <view class="type-item {{type === '其他' ? 'active' : ''}}" bindtap="onTypeChange" data-type="其他">其他</view>
+    </view>
+  </view>
+
+  <!-- 反馈内容 -->
+  <view class="section">
+    <view class="section-title">反馈内容</view>
+    <textarea class="content-input" placeholder="请详细描述您的建议或遇到的问题..." maxlength="500" bindinput="onContentInput" value="{{content}}"></textarea>
+    <view class="word-count">{{content.length}}/500</view>
+  </view>
+
+  <!-- 联系方式 -->
+  <view class="section">
+    <view class="section-title">联系方式 <text class="optional">（选填）</text></view>
+    <input class="contact-input" placeholder="手机号或微信号，方便我们联系您" bindinput="onContactInput" value="{{contact}}" />
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="btn-wrap">
+    <button class="submit-btn {{submitting ? 'disabled' : ''}}" bindtap="onSubmit" disabled="{{submitting}}">
+      {{submitting ? '提交中...' : '提交反馈'}}
+    </button>
+  </view>
+</view>

@@ -99,3 +99,13 @@
 .verify-status { font-size: 24rpx; color: #ff976a; }
 .verify-status.verified { color: #7A9900; }
 .credit-level { font-size: 24rpx; color: #7A9900; }
+
+/* 分享按钮重置 */
+.share-btn {
+  background: transparent;
+  padding: 28rpx 30rpx;
+  margin: 0;
+  line-height: inherit;
+  text-align: left;
+}
+.share-btn::after { border: none; }

@@ -3,8 +3,13 @@ const { Op } = require('sequelize');
 
 exports.list = async (req, res, next) => {
   try {
-    const { page = 1, pageSize = 10, category, isFree, sort, keyword, communityId } = req.query;
-    const where = { status: 'selling' };
+    const { page = 1, pageSize = 10, category, isFree, sort, keyword, communityId, userId } = req.query;
+    const where = {};
+    if (userId) {
+      where.user_id = Number(userId);
+    } else {
+      where.status = 'selling';
+    }
 
     if (category && category !== '全部') where.category = category;
     if (isFree === '1') where.is_free = true;
@@ -202,6 +207,45 @@ exports.toggleFavorite = async (req, res, next) => {
       await Favorite.create({ user_id: userId, product_id: productId });
       res.json({ code: 0, data: { isFavorited: true } });
     }
+  } catch (err) {
+    next(err);
+  }
+};
+
+// GET /favorites - 我的收藏列表
+exports.myFavorites = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const { page = 1, pageSize = 20 } = req.query;
+
+    const { rows, count } = await Favorite.findAndCountAll({
+      where: { user_id: userId },
+      include: [{
+        model: Product,
+        include: [{ model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] }]
+      }],
+      order: [['id', 'DESC']],
+      limit: Number(pageSize),
+      offset: (Number(page) - 1) * Number(pageSize)
+    });
+
+    const list = rows.filter(f => f.Product).map(f => {
+      const p = f.Product;
+      return {
+        id: p.id,
+        userId: p.user_id,
+        userName: p.User.nick_name,
+        userAvatar: p.User.avatar_url,
+        title: p.title,
+        price: Number(p.price),
+        isFree: p.is_free,
+        images: p.images || [],
+        status: p.status,
+        createdAt: p.created_at
+      };
+    });
+
+    res.json({ code: 0, data: { list, total: count, page: Number(page) } });
   } catch (err) {
     next(err);
   }

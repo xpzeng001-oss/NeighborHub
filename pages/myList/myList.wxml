@@ -1,0 +1,47 @@
+<!--pages/myList/myList.wxml-->
+<view class="page">
+  <!-- 空状态 -->
+  <view class="empty" wx:if="{{!loading && list.length === 0}}">
+    <icon name="package" size="80" color="#ddd"></icon>
+    <text class="empty-text" wx:if="{{type === 'publish'}}">还没有发布过商品</text>
+    <text class="empty-text" wx:elif="{{type === 'favorite'}}">还没有收藏商品</text>
+    <text class="empty-text" wx:else>还没有帮忙记录</text>
+  </view>
+
+  <!-- 商品列表（发布/收藏） -->
+  <view wx:if="{{type === 'publish' || type === 'favorite'}}">
+    <view class="product-item" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+      <image class="product-img" src="{{item.images[0] || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+      <view class="product-info">
+        <text class="product-title">{{item.title}}</text>
+        <view class="product-bottom">
+          <text class="product-price" wx:if="{{!item.isFree}}">¥{{item.price}}</text>
+          <text class="product-free" wx:else>免费送</text>
+          <text class="product-status {{item.status === 'sold' ? 'sold' : ''}}">{{item.status === 'sold' ? '已售出' : '在售'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 帮忙列表 -->
+  <view wx:if="{{type === 'help'}}">
+    <view class="help-item" wx:for="{{list}}" wx:key="id">
+      <view class="help-header">
+        <text class="help-title">{{item.title}}</text>
+        <text class="help-tag {{item.isUrgent ? 'urgent' : ''}}">{{item.isUrgent ? '紧急' : '一般'}}</text>
+      </view>
+      <text class="help-desc">{{item.description}}</text>
+      <view class="help-footer">
+        <text class="help-status {{item.status === 'fulfilled' ? 'done' : ''}}">{{item.status === 'fulfilled' ? '已完成' : '进行中'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view class="loading-more" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+  <view class="loading-more" wx:if="{{!hasMore && list.length > 0}}">
+    <text>没有更多了</text>
+  </view>
+</view>

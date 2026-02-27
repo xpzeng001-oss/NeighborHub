@@ -26,25 +26,27 @@
 .help-deadline { font-size: 22rpx; color: #ff976a; }
 
 .help-actions { display: flex; gap: 16rpx; margin-top: 20rpx; }
+.btn-help, .btn-contact {
+  flex: 1; height: 72rpx; line-height: 72rpx; text-align: center;
+  font-size: 26rpx; border-radius: 36rpx;
+  padding: 0; margin: 0;
+  box-sizing: border-box;
+}
 .btn-help {
-  flex: 1; height: 68rpx; line-height: 68rpx; text-align: center;
-  background: #1A1A1A;
-  color: #fff; font-size: 26rpx; border-radius: 34rpx; border: none;
+  background: #1A1A1A; color: #fff; border: none;
 }
 .btn-help::after { border: none; }
 .btn-contact {
-  flex: 1; height: 68rpx; line-height: 68rpx; text-align: center;
-  background: #fff; color: #1A1A1A; font-size: 26rpx; border: 2rpx solid #1A1A1A;
-  border-radius: 34rpx;
+  background: #fff; color: #1A1A1A; border: 2rpx solid #1A1A1A;
 }
 .btn-contact::after { border: none; }
 
 .fab-btn {
   position: fixed; right: 40rpx; bottom: 60rpx;
   width: 100rpx; height: 100rpx;
-  background: #C62828;
+  background: #1A1A1A;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 44rpx;
-  box-shadow: 0 8rpx 30rpx rgba(198, 40, 40, 0.3);
+  box-shadow: 0 8rpx 30rpx rgba(26, 26, 26, 0.3);
 }

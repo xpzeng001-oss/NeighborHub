@@ -87,6 +87,15 @@ const getUser       = (id)       => request({ url: '/api/users/' + id });
 const updateUser    = (id, data) => request({ url: '/api/users/' + id, method: 'PUT', data });
 const getUserStats  = (id)       => request({ url: '/api/users/' + id + '/stats' });
 const getBanners    = ()         => request({ url: '/api/banners' });
+const getMyFavorites = (params)  => request({ url: '/api/products/favorites', data: params });
+
+// Reports
+const getReports      = (params)  => request({ url: '/api/reports', data: params });
+const createReport    = (data)    => request({ url: '/api/reports', method: 'POST', data });
+
+// Feedbacks
+const getFeedbacks    = (params)  => request({ url: '/api/feedbacks', data: params });
+const createFeedback  = (data)    => request({ url: '/api/feedbacks', method: 'POST', data });
 
 // Chat
 const getConversations    = ()         => request({ url: '/api/chat/conversations' });
@@ -104,7 +113,7 @@ module.exports = {
   getRentals, createRental,
   getPets, createPet,
   getUser, updateUser, getUserStats,
-  getBanners,
+  getBanners, getMyFavorites, getReports, createReport, getFeedbacks, createFeedback,
   uploadImage, uploadImages,
   getConversations, createConversation, getMessages, sendMessage, markConversationRead, getUnreadCount
 };

@@ -2,9 +2,10 @@ const { HelpRequest, User } = require('../models');
 
 exports.list = async (req, res, next) => {
   try {
-    const { page = 1, pageSize = 20, communityId } = req.query;
+    const { page = 1, pageSize = 20, communityId, userId } = req.query;
     const where = {};
     if (communityId) where.community_id = communityId;
+    if (userId) where.user_id = Number(userId);
 
     const { rows, count } = await HelpRequest.findAndCountAll({
       where,

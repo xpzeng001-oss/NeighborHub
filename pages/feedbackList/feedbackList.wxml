@@ -1,0 +1,27 @@
+<!--pages/feedbackList/feedbackList.wxml-->
+<view class="page">
+  <scroll-view scroll-y class="scroll-content" bindscrolltolower="loadMore">
+    <view class="feedback-item" wx:for="{{list}}" wx:key="id">
+      <view class="fb-header">
+        <text class="fb-type type-{{item.type === 'Bug反馈' ? 'bug' : item.type === '功能建议' ? 'feature' : 'other'}}">{{item.type}}</text>
+        <text class="fb-time">{{item.createdAt}}</text>
+      </view>
+      <text class="fb-content">{{item.content}}</text>
+      <view class="fb-footer">
+        <text class="fb-user">{{item.userName}}</text>
+        <text class="fb-contact" wx:if="{{item.contact}}">{{item.contact}}</text>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{!loading && list.length === 0}}">
+      <text class="empty-text">暂无反馈</text>
+    </view>
+
+    <view class="load-tip" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+    <view class="load-tip" wx:if="{{!loading && noMore && list.length > 0}}">
+      <text>没有更多了</text>
+    </view>
+  </scroll-view>
+</view>

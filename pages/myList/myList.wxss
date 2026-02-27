@@ -1,0 +1,119 @@
+.page { min-height: 100vh; background: #f5f6fa; }
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 300rpx;
+  gap: 20rpx;
+}
+.empty-text { font-size: 28rpx; color: #bbb; }
+
+/* 商品列表 */
+.product-item {
+  display: flex;
+  padding: 24rpx 30rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+.product-item:active { background: #f8f8f8; }
+
+.product-img {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+  background: #f0f0f0;
+  margin-right: 24rpx;
+}
+
+.product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.product-title {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.product-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.product-price { font-size: 32rpx; color: #ff4d4f; font-weight: 600; }
+.product-free { font-size: 26rpx; color: #52c41a; font-weight: 500; }
+.product-status {
+  font-size: 22rpx;
+  color: #52c41a;
+  background: rgba(82, 196, 26, 0.1);
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+}
+.product-status.sold {
+  color: #999;
+  background: #f0f0f0;
+}
+
+/* 帮忙列表 */
+.help-item {
+  padding: 28rpx 30rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+.help-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+.help-title {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.help-tag {
+  font-size: 22rpx;
+  color: #999;
+  background: #f5f5f5;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+.help-tag.urgent {
+  color: #ff4d4f;
+  background: rgba(255, 77, 79, 0.1);
+}
+.help-desc {
+  font-size: 26rpx;
+  color: #999;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 12rpx;
+}
+.help-footer { display: flex; justify-content: flex-end; }
+.help-status {
+  font-size: 22rpx;
+  color: #faad14;
+}
+.help-status.done { color: #52c41a; }
+
+.loading-more {
+  text-align: center;
+  padding: 30rpx 0;
+  font-size: 24rpx;
+  color: #bbb;
+}

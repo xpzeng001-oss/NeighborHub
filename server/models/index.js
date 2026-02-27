@@ -10,6 +10,8 @@ const Favorite = require('./Favorite');
 const Banner = require('./Banner');
 const Conversation = require('./Conversation');
 const Message = require('./Message');
+const Report = require('./Report');
+const Feedback = require('./Feedback');
 
 // User <-> Product
 User.hasMany(Product, { foreignKey: 'user_id' });
@@ -43,6 +45,10 @@ PetPost.belongsTo(User, { foreignKey: 'user_id' });
 User.belongsToMany(Product, { through: Favorite, foreignKey: 'user_id', otherKey: 'product_id', as: 'FavoriteProducts' });
 Product.belongsToMany(User, { through: Favorite, foreignKey: 'product_id', otherKey: 'user_id', as: 'FavoritedBy' });
 
+// Favorite -> Product (for direct include query)
+Favorite.belongsTo(Product, { foreignKey: 'product_id' });
+Product.hasMany(Favorite, { foreignKey: 'product_id' });
+
 // Conversation <-> Message
 Conversation.hasMany(Message, { foreignKey: 'conversation_id' });
 Message.belongsTo(Conversation, { foreignKey: 'conversation_id' });
@@ -53,6 +59,14 @@ Conversation.belongsTo(User, { foreignKey: 'user_b_id', as: 'UserB' });
 
 // User <-> Message
 Message.belongsTo(User, { foreignKey: 'sender_id', as: 'Sender' });
+
+// User <-> Report
+User.hasMany(Report, { foreignKey: 'user_id' });
+Report.belongsTo(User, { foreignKey: 'user_id' });
+
+// User <-> Feedback
+User.hasMany(Feedback, { foreignKey: 'user_id' });
+Feedback.belongsTo(User, { foreignKey: 'user_id' });
 
 module.exports = {
   sequelize,
@@ -66,5 +80,7 @@ module.exports = {
   Favorite,
   Banner,
   Conversation,
-  Message
+  Message,
+  Report,
+  Feedback
 };

@@ -1,0 +1,46 @@
+<!--pages/forumPublish/forumPublish.wxml-->
+<view class="page">
+  <!-- 分类选择 -->
+  <view class="section">
+    <view class="section-title">选择分类</view>
+    <view class="category-list">
+      <view class="cat-item {{category === item ? 'active cat-' + catClassMap[item] : ''}}"
+            wx:for="{{categories}}" wx:key="*this"
+            bindtap="onCategoryTap" data-cat="{{item}}">
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 标题 -->
+  <view class="section">
+    <input class="title-input" placeholder="输入标题（必填）" maxlength="50" bindinput="onTitleInput" value="{{title}}" />
+  </view>
+
+  <!-- 内容 -->
+  <view class="section">
+    <textarea class="content-input" placeholder="分享你想说的..." maxlength="1000" bindinput="onContentInput" value="{{content}}"></textarea>
+    <view class="word-count">{{content.length}}/1000</view>
+  </view>
+
+  <!-- 图片上传 -->
+  <view class="section">
+    <view class="section-title">添加图片 <text class="optional">（选填，最多9张）</text></view>
+    <view class="image-list">
+      <view class="img-item" wx:for="{{images}}" wx:key="*this">
+        <image src="{{item}}" mode="aspectFill" class="img-preview"></image>
+        <view class="img-del" bindtap="onDelImage" data-index="{{index}}">×</view>
+      </view>
+      <view class="img-add" bindtap="onChooseImage" wx:if="{{images.length < 9}}">
+        <icon name="plus" size="48" color="#ccc"></icon>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="btn-wrap">
+    <button class="submit-btn {{submitting ? 'disabled' : ''}}" bindtap="onSubmit" disabled="{{submitting}}">
+      {{submitting ? '发布中...' : '发布帖子'}}
+    </button>
+  </view>
+</view>

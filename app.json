@@ -12,7 +12,14 @@
     "pages/pet/pet",
     "pages/sam/sam",
     "pages/chat/chat",
-    "pages/chatDetail/chatDetail"
+    "pages/chatDetail/chatDetail",
+    "pages/myList/myList",
+    "pages/credit/credit",
+    "pages/report/report",
+    "pages/feedback/feedback",
+    "pages/about/about",
+    "pages/forumPublish/forumPublish",
+    "pages/feedbackList/feedbackList"
   ],
   "window": {
     "navigationBarBackgroundColor": "#ffffff",
