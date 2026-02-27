@@ -1,0 +1,63 @@
+.page { background: #f5f6fa; min-height: 100vh; }
+
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 0 40rpx;
+}
+.avatar {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  border: 4rpx solid #eee;
+  background: #f0f0f0;
+}
+.avatar-hint {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 16rpx;
+}
+
+.form-section {
+  background: #fff;
+  margin: 0 24rpx;
+  border-radius: 16rpx;
+  padding: 0 30rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+}
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+.form-item:last-child { border-bottom: none; }
+.form-label {
+  font-size: 28rpx;
+  color: #333;
+  width: 120rpx;
+}
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+  text-align: right;
+}
+
+.btn-wrap {
+  padding: 60rpx 24rpx;
+}
+.btn-save {
+  background: #1A1A1A;
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: 600;
+  border-radius: 16rpx;
+  padding: 24rpx 0;
+  border: none;
+}
+.btn-save[disabled] {
+  background: #ccc;
+  color: #fff;
+}

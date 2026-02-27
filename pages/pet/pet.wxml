@@ -58,10 +58,8 @@
         <view class="card-bottom">
           <text class="response-count">{{item.responseCount}}人响应</text>
           <view class="card-actions">
-            <button class="btn-contact" bindtap="onContact" data-id="{{item.id}}">私信</button>
-            <button class="btn-respond" bindtap="onRespond" data-id="{{item.id}}">
-              {{item.type === 'need' ? '我来帮忙' : item.type === 'offer' ? '我需要' : '我要参加'}}
-            </button>
+            <view class="btn-contact" bindtap="onContact" data-id="{{item.id}}">私信</view>
+            <view class="btn-respond" bindtap="onRespond" data-id="{{item.id}}">{{item.type === 'need' ? '我来帮忙' : item.type === 'offer' ? '我需要' : '我要参加'}}</view>
           </view>
         </view>
       </view>

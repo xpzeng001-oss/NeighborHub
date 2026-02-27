@@ -17,7 +17,7 @@ exports.list = async (req, res, next) => {
     const list = rows.map(r => ({
       id: r.id,
       userId: r.user_id,
-      userName: r.User.nick_name,
+      userName: r.User ? r.User.nick_name : '匿名用户',
       building: r.building,
       title: r.title,
       roomType: r.room_type,

@@ -1,0 +1,18 @@
+<!--pages/settings/settings.wxml-->
+<view class="page">
+  <view class="avatar-section" bindtap="chooseAvatar">
+    <image class="avatar" src="{{avatarUrl || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+    <text class="avatar-hint">点击更换头像</text>
+  </view>
+
+  <view class="form-section">
+    <view class="form-item">
+      <text class="form-label">昵称</text>
+      <input class="form-input" value="{{nickName}}" bindinput="onNicknameInput" placeholder="请输入昵称" maxlength="20" />
+    </view>
+  </view>
+
+  <view class="btn-wrap">
+    <button class="btn-save" bindtap="onSave" disabled="{{saving}}">{{saving ? '保存中...' : '保存'}}</button>
+  </view>
+</view>

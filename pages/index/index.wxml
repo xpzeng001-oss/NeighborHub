@@ -2,7 +2,7 @@
 <view class="page">
   <!-- 顶部渐变区域（含banner） -->
   <view class="top-gradient" style="padding-top: {{statusBarHeight}}px;">
-    <view class="header">
+    <view class="header" style="height: {{headerHeight}}px; padding-right: {{menuWidth}}px;">
       <view class="community-select" bindtap="onCommunityTap">
         <text class="community-name">{{currentCommunity}}</text>
         <text class="arrow">▾</text>

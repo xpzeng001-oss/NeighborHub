@@ -8,7 +8,7 @@
 }
 .profile-bg {
   height: 200rpx;
-  background: #1A1A1A;
+  background: linear-gradient(180deg, #B8F04A 0%, #C8FF00 30%, #d9f5a0 70%, #f5f6fa 100%);
 }
 .profile-content {
   display: flex;

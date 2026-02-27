@@ -125,31 +125,30 @@
   margin-top: 20rpx;
   padding-top: 16rpx;
   border-top: 1rpx solid #f5f5f5;
+  overflow: hidden;
 }
-.response-count { font-size: 24rpx; color: #999; }
+.response-count { font-size: 24rpx; color: #999; white-space: nowrap; margin-right: 16rpx; }
 .card-actions { display: flex; gap: 12rpx; }
 
-.btn-contact {
+.btn-contact, .btn-respond {
+  width: 150rpx;
   height: 60rpx;
   line-height: 60rpx;
-  padding: 0 28rpx;
   font-size: 24rpx;
+  border-radius: 12rpx;
+  text-align: center;
+  white-space: nowrap;
+}
+.btn-contact {
   background: #fff;
   color: #1A1A1A;
   border: 2rpx solid #1A1A1A;
-  border-radius: 30rpx;
 }
 .btn-contact::after { border: none; }
-
 .btn-respond {
-  height: 60rpx;
-  line-height: 60rpx;
-  padding: 0 28rpx;
-  font-size: 24rpx;
   background: #1A1A1A;
   color: #fff;
   border: none;
-  border-radius: 30rpx;
 }
 .btn-respond::after { border: none; }
 

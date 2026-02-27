@@ -45,8 +45,12 @@ Page({
 
   onLoad() {
     const sysInfo = wx.getSystemInfoSync();
+    const menuRect = wx.getMenuButtonBoundingClientRect();
+    const menuRight = sysInfo.screenWidth - menuRect.right;
     this.setData({
-      statusBarHeight: sysInfo.statusBarHeight,
+      statusBarHeight: menuRect.top,
+      headerHeight: menuRect.height,
+      menuWidth: menuRect.width + menuRight,
       communities: app.globalData.communities,
       currentCommunity: app.globalData.currentCommunity.name
     });

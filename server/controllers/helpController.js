@@ -18,8 +18,8 @@ exports.list = async (req, res, next) => {
     const list = rows.map(h => ({
       id: h.id,
       userId: h.user_id,
-      userName: h.User.nick_name,
-      userAvatar: h.User.avatar_url,
+      userName: h.User ? h.User.nick_name : '匿名用户',
+      userAvatar: h.User ? h.User.avatar_url : '',
       building: h.building,
       title: h.title,
       description: h.description,

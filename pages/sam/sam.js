@@ -101,12 +101,20 @@ Page({
 
   onJoin(e) {
     if (!app.globalData.userInfo) {
-      app.login(() => {
-        wx.showToast({ title: '已报名拼单', icon: 'success' });
-      });
+      app.login(() => { this.onJoin(e); });
       return;
     }
-    wx.showToast({ title: '已报名拼单', icon: 'success' });
+    const id = e.currentTarget.dataset.id;
+    const list = this.data.filteredList.map(item => {
+      if (item.id === id) return { ...item, joined: true, currentCount: item.currentCount + 1 };
+      return item;
+    });
+    const orderList = this.data.orderList.map(item => {
+      if (item.id === id) return { ...item, joined: true, currentCount: item.currentCount + 1 };
+      return item;
+    });
+    this.setData({ filteredList: list, orderList });
+    wx.showToast({ title: '拼单成功', icon: 'success' });
   },
 
   goPublish() {

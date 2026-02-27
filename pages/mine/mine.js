@@ -83,6 +83,11 @@ Page({
     }
   },
 
+  goSettings() {
+    if (!this.data.userInfo) { this.onLogin(); return; }
+    wx.navigateTo({ url: '/pages/settings/settings' });
+  },
+
   goCredit() {
     wx.navigateTo({ url: '/pages/credit/credit' });
   },

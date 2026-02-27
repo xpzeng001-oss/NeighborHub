@@ -25,17 +25,23 @@
 .help-time { font-size: 22rpx; color: #ccc; }
 .help-deadline { font-size: 22rpx; color: #ff976a; }
 
-.help-actions { display: flex; gap: 16rpx; margin-top: 20rpx; }
+.help-actions { display: flex; gap: 16rpx; margin-top: 20rpx; justify-content: flex-end; }
 .btn-help, .btn-contact {
-  flex: 1; height: 72rpx; line-height: 72rpx; text-align: center;
-  font-size: 26rpx; border-radius: 36rpx;
-  padding: 0; margin: 0;
+  height: 68rpx; line-height: 68rpx; text-align: center;
+  font-size: 26rpx; border-radius: 12rpx;
+  padding: 0 36rpx !important; margin: 0 !important;
   box-sizing: border-box;
 }
 .btn-help {
   background: #1A1A1A; color: #fff; border: none;
 }
 .btn-help::after { border: none; }
+.btn-helped {
+  background: #e0e0e0; color: #999;
+}
+.btn-helped[disabled] {
+  background: #e0e0e0; color: #999;
+}
 .btn-contact {
   background: #fff; color: #1A1A1A; border: 2rpx solid #1A1A1A;
 }

@@ -18,9 +18,9 @@ exports.list = async (req, res, next) => {
     const list = rows.map(p => ({
       id: p.id,
       userId: p.user_id,
-      userName: p.User.nick_name,
-      userAvatar: p.User.avatar_url,
-      building: p.User.building,
+      userName: p.User ? p.User.nick_name : '匿名用户',
+      userAvatar: p.User ? p.User.avatar_url : '',
+      building: p.User ? p.User.building : '',
       type: p.type,
       petName: p.pet_name,
       petType: p.pet_type,

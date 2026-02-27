@@ -60,9 +60,9 @@
           <view class="participant-avatars">
             <image class="p-avatar" wx:for="{{item.participants}}" wx:key="*this" wx:for-item="p" src="{{p}}"></image>
           </view>
-          <button class="btn-join" bindtap="onJoin" data-id="{{item.id}}"
-                  disabled="{{item.status !== 'open'}}">
-            {{item.status === 'open' ? '我要拼单' : item.status === 'full' ? '已成团' : '已截止'}}
+          <button class="btn-join {{item.joined ? 'btn-joined' : ''}}" bindtap="onJoin" data-id="{{item.id}}"
+                  disabled="{{item.status !== 'open' || item.joined}}">
+            {{item.joined ? '已拼单' : item.status === 'open' ? '我要拼单' : item.status === 'full' ? '已成团' : '已截止'}}
           </button>
         </view>
       </view>

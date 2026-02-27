@@ -173,11 +173,14 @@
   background: #1A1A1A;
   color: #fff;
   border: none;
-  border-radius: 48rpx;
+  border-radius: 16rpx;
   height: 96rpx;
   line-height: 96rpx;
   font-size: 34rpx;
   font-weight: 600;
   text-align: center;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 .btn-publish::after { border: none; }

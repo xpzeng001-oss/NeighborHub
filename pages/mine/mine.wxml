@@ -5,8 +5,8 @@
     <view class="profile-card">
       <view class="profile-bg"></view>
       <view class="profile-content" wx:if="{{userInfo}}">
-        <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
-        <view class="user-info">
+        <image class="avatar" src="{{userInfo.avatarUrl || '/images/avatar-placeholder.png'}}" mode="aspectFill" bindtap="goSettings"></image>
+        <view class="user-info" bindtap="goSettings">
           <text class="nickname">{{userInfo.nickName}}</text>
           <view class="user-meta">
             <view style="display:inline-flex;align-items:center;gap:4rpx;">

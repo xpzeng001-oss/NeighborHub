@@ -19,7 +19,8 @@
     "pages/feedback/feedback",
     "pages/about/about",
     "pages/forumPublish/forumPublish",
-    "pages/feedbackList/feedbackList"
+    "pages/feedbackList/feedbackList",
+    "pages/settings/settings"
   ],
   "window": {
     "navigationBarBackgroundColor": "#ffffff",
