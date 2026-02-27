@@ -15,7 +15,6 @@ App({
     version: '1.0.0'
   },
 
-
   onLaunch() {
     // 恢复登录状态
     const userInfo = wx.getStorageSync('userInfo');
@@ -28,7 +27,6 @@ App({
     this.checkUpdate();
   },
 
-
   checkUpdate() {
     if (wx.canIUse('getUpdateManager')) {
       const updateManager = wx.getUpdateManager();
@@ -36,3 +34,56 @@ App({
         if (res.hasUpdate) {
           updateManager.onUpdateReady(() => {
             wx.showModal({
+              title: '更新提示',
+              content: '新版本已准备好，是否重启？',
+              success(res) {
+                if (res.confirm) updateManager.applyUpdate();
+              }
+            });
+          });
+        }
+      });
+    }
+  },
+
+  // 微信登录 -> 服务器认证 -> JWT
+  login(callback) {
+    wx.login({
+      success: (loginRes) => {
+        wx.getUserProfile({
+          desc: '用于完善用户信息',
+          success: (profileRes) => {
+            const { nickName, avatarUrl } = profileRes.userInfo;
+            wx.request({
+              url: this.globalData.baseUrl + '/api/auth/login',
+              method: 'POST',
+              data: {
+                code: loginRes.code,
+                nickName,
+                avatarUrl
+              },
+              success: (res) => {
+                if (res.data.code === 0) {
+                  const { token, userInfo } = res.data.data;
+                  this.globalData.token = token;
+                  this.globalData.userInfo = userInfo;
+                  wx.setStorageSync('token', token);
+                  wx.setStorageSync('userInfo', userInfo);
+                  callback && callback(userInfo);
+                } else {
+                  wx.showToast({ title: res.data.message || '登录失败', icon: 'none' });
+                }
+              },
+              fail: () => {
+                wx.showToast({ title: '网络错误', icon: 'none' });
+              }
+            });
+          },
+          fail: () => {
+            wx.showToast({ title: '授权失败', icon: 'none' });
+          }
+        });
+      }
+    });
+  }
+});
