@@ -99,11 +99,12 @@
 
     <view class="menu-group">
       <view class="menu-title">其他</view>
-      <button class="menu-item share-btn" open-type="share">
+      <view class="menu-item share-wrap">
         <icon name="share" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">分享给邻居</text>
         <text class="menu-arrow">›</text>
-      </button>
+        <button class="share-btn-hidden" open-type="share"></button>
+      </view>
       <view class="menu-item" bindtap="goFeedback">
         <icon name="lightbulb" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">意见反馈</text>

@@ -100,12 +100,14 @@
 .verify-status.verified { color: #7A9900; }
 .credit-level { font-size: 24rpx; color: #7A9900; }
 
-/* 分享按钮重置 */
-.share-btn {
-  background: transparent;
-  padding: 28rpx 30rpx;
-  margin: 0;
-  line-height: inherit;
-  text-align: left;
+/* 分享按钮 */
+.share-wrap { position: relative; }
+.share-btn-hidden {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
 }
-.share-btn::after { border: none; }
+.share-btn-hidden::after { border: none; }
