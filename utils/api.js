@@ -19,7 +19,7 @@ const request = (options) => {
           } else if (res.data && res.data.code === 401) {
             wx.removeStorageSync('token'); wx.removeStorageSync('userInfo');
             app.globalData.userInfo = null; app.globalData.token = '';
-            wx.showToast({ title: '请重新登录', icon: 'none' }); reject(res.data);
+            app.login(); reject(res.data);
           } else {
             wx.showToast({ title: (res.data && res.data.message) || '请求失败', icon: 'none' });
             reject(res.data || { message: '请求失败' });
