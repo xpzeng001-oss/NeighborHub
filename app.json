@@ -2,28 +2,90 @@
   "pages": [
     "pages/index/index",
     "pages/category/category",
-    "pages/publish/publish",
-    "pages/mine/mine",
-    "pages/detail/detail",
-    "pages/forum/forum",
-    "pages/forumDetail/forumDetail",
-    "pages/help/help",
-    "pages/rental/rental",
-    "pages/search/search",
-    "pages/pet/pet",
-    "pages/petDetail/petDetail",
-    "pages/sam/sam",
     "pages/chat/chat",
-    "pages/chatDetail/chatDetail",
-    "pages/myList/myList",
-    "pages/credit/credit",
-    "pages/report/report",
-    "pages/feedback/feedback",
-    "pages/about/about",
-    "pages/forumPublish/forumPublish",
-    "pages/feedbackList/feedbackList",
-    "pages/carpool/carpool",
-    "pages/settings/settings"
+    "pages/mine/mine"
+  ],
+  "subPackages": [
+    {
+      "root": "pages/detail",
+      "pages": ["detail"]
+    },
+    {
+      "root": "pages/publish",
+      "pages": ["publish"]
+    },
+    {
+      "root": "pages/search",
+      "pages": ["search"]
+    },
+    {
+      "root": "pages/forum",
+      "pages": ["forum"]
+    },
+    {
+      "root": "pages/forumDetail",
+      "pages": ["forumDetail"]
+    },
+    {
+      "root": "pages/forumPublish",
+      "pages": ["forumPublish"]
+    },
+    {
+      "root": "pages/help",
+      "pages": ["help"]
+    },
+    {
+      "root": "pages/rental",
+      "pages": ["rental"]
+    },
+    {
+      "root": "pages/pet",
+      "pages": ["pet"]
+    },
+    {
+      "root": "pages/petDetail",
+      "pages": ["petDetail"]
+    },
+    {
+      "root": "pages/sam",
+      "pages": ["sam"]
+    },
+    {
+      "root": "pages/carpool",
+      "pages": ["carpool"]
+    },
+    {
+      "root": "pages/chatDetail",
+      "pages": ["chatDetail"]
+    },
+    {
+      "root": "pages/myList",
+      "pages": ["myList"]
+    },
+    {
+      "root": "pages/credit",
+      "pages": ["credit"]
+    },
+    {
+      "root": "pages/report",
+      "pages": ["report"]
+    },
+    {
+      "root": "pages/feedback",
+      "pages": ["feedback"]
+    },
+    {
+      "root": "pages/feedbackList",
+      "pages": ["feedbackList"]
+    },
+    {
+      "root": "pages/about",
+      "pages": ["about"]
+    },
+    {
+      "root": "pages/settings",
+      "pages": ["settings"]
+    }
   ],
   "window": {
     "navigationBarBackgroundColor": "#ffffff",
