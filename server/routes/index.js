@@ -13,5 +13,6 @@ router.use('/cos',      require('./cos'));   // COS 临时凭证
 router.use('/chat',     require('./chat'));
 router.use('/reports',  require('./reports'));
 router.use('/feedbacks', require('./feedbacks'));
+router.use('/sams',      require('./sams'));
 
 module.exports = router;

@@ -3,7 +3,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 const {
   sequelize, User, Product, Post, Comment, HelpRequest,
   Rental, PetPost, Banner, Favorite, Conversation, Message,
-  Report, Feedback
+  Report, Feedback, SamOrder
 } = require('../models');
 
 async function seed() {
@@ -260,6 +260,15 @@ async function seed() {
     ]);
 
     console.log('Created feedbacks.');
+
+    // ==================== 山姆拼单 ====================
+    await SamOrder.bulkCreate([
+      { user_id: users[0].id, title: '本周六山姆拼单，满¥299包邮', description: '准备这周六去山姆采购，有需要的邻居可以一起拼单，主要买日用品和零食。', deadline: '本周五 18:00', pickup_method: '送货上门（3栋大堂）', min_amount: 50, target_count: 8, current_count: 5, status: 'open' },
+      { user_id: users[4].id, title: '山姆牛排拼团，A5和牛特价', description: '山姆APP上A5和牛在做活动，原价¥398/kg，活动价¥268/kg。有需要的邻居跟团，满5人下单。', deadline: '明天 12:00', pickup_method: '自提（6栋门口）', min_amount: 100, target_count: 5, current_count: 5, status: 'full' },
+      { user_id: users[2].id, title: '周日山姆日用品拼单', description: '周日计划去山姆，纸巾、洗衣液、零食等日用品都可以拼，帮跑腿费每单¥5。', deadline: '周六 20:00', pickup_method: '送货上门', min_amount: 30, target_count: 10, current_count: 3, status: 'open' }
+    ]);
+
+    console.log('Created sam orders.');
 
     // ==================== 轮播图 ====================
     await Banner.bulkCreate([

@@ -64,3 +64,16 @@ exports.create = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.respond = async (req, res, next) => {
+  try {
+    const pet = await PetPost.findByPk(req.params.id);
+    if (!pet) {
+      return res.status(404).json({ code: 404, message: '帖子不存在', data: null });
+    }
+    await pet.update({ response_count: pet.response_count + 1 });
+    res.json({ code: 0, data: { responseCount: pet.response_count } });
+  } catch (err) {
+    next(err);
+  }
+};

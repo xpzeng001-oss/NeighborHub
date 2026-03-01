@@ -12,6 +12,7 @@ const Conversation = require('./Conversation');
 const Message = require('./Message');
 const Report = require('./Report');
 const Feedback = require('./Feedback');
+const SamOrder = require('./SamOrder');
 
 // User <-> Product
 User.hasMany(Product, { foreignKey: 'user_id' });
@@ -68,6 +69,10 @@ Report.belongsTo(User, { foreignKey: 'user_id' });
 User.hasMany(Feedback, { foreignKey: 'user_id' });
 Feedback.belongsTo(User, { foreignKey: 'user_id' });
 
+// User <-> SamOrder
+User.hasMany(SamOrder, { foreignKey: 'user_id' });
+SamOrder.belongsTo(User, { foreignKey: 'user_id' });
+
 module.exports = {
   sequelize,
   User,
@@ -82,5 +87,6 @@ module.exports = {
   Conversation,
   Message,
   Report,
-  Feedback
+  Feedback,
+  SamOrder
 };

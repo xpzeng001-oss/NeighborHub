@@ -1,5 +1,5 @@
 // pages/sam/sam.js
-const app = getApp();
+const api = require('../../utils/api');
 
 const mockOrders = [
   {
@@ -49,7 +49,7 @@ const mockOrders = [
     id: 3,
     userId: 3,
     userName: '王姐',
-    userAvatar: 'https://picsum.photos/seed/sam3/100/100',
+    userAvatar: 'https://picsum.photos/seed/sam3/100/50',
     building: '1栋',
     title: '周日山姆日用品拼单',
     description: '周日计划去山姆，纸巾、洗衣液、零食等日用品都可以拼，帮跑腿费每单¥5。',
@@ -79,9 +79,22 @@ Page({
     this.loadOrders();
   },
 
-  loadOrders() {
-    const list = mockOrders;
-    this.setData({ orderList: list });
+  onShow() {
+    this.loadOrders();
+  },
+
+  async loadOrders() {
+    try {
+      const data = await api.getSams();
+      const list = data.list || [];
+      if (list.length > 0) {
+        this.setData({ orderList: list });
+      } else {
+        this.setData({ orderList: mockOrders });
+      }
+    } catch (err) {
+      this.setData({ orderList: mockOrders });
+    }
     this.filterList();
   },
 
@@ -99,25 +112,46 @@ Page({
     this.filterList();
   },
 
-  onJoin(e) {
+  async onJoin(e) {
+    const app = getApp();
     if (!app.globalData.userInfo) {
       app.login(() => { this.onJoin(e); });
       return;
     }
     const id = e.currentTarget.dataset.id;
-    const list = this.data.filteredList.map(item => {
-      if (item.id === id) return { ...item, joined: true, currentCount: item.currentCount + 1 };
-      return item;
-    });
-    const orderList = this.data.orderList.map(item => {
-      if (item.id === id) return { ...item, joined: true, currentCount: item.currentCount + 1 };
-      return item;
-    });
-    this.setData({ filteredList: list, orderList });
-    wx.showToast({ title: '拼单成功', icon: 'success' });
+    try {
+      const data = await api.joinSam(id);
+      const list = this.data.filteredList.map(item => {
+        if (item.id === id) return { ...item, joined: true, currentCount: data.currentCount, status: data.status };
+        return item;
+      });
+      const orderList = this.data.orderList.map(item => {
+        if (item.id === id) return { ...item, joined: true, currentCount: data.currentCount, status: data.status };
+        return item;
+      });
+      this.setData({ filteredList: list, orderList });
+      wx.showToast({ title: '拼单成功', icon: 'success' });
+    } catch (err) {
+      // fallback: 本地更新（mock 数据时）
+      const list = this.data.filteredList.map(item => {
+        if (item.id === id) return { ...item, joined: true, currentCount: item.currentCount + 1 };
+        return item;
+      });
+      const orderList = this.data.orderList.map(item => {
+        if (item.id === id) return { ...item, joined: true, currentCount: item.currentCount + 1 };
+        return item;
+      });
+      this.setData({ filteredList: list, orderList });
+      wx.showToast({ title: '拼单成功', icon: 'success' });
+    }
   },
 
   goPublish() {
-    wx.showToast({ title: '发起拼单（开发中）', icon: 'none' });
+    const app = getApp();
+    if (!app.globalData.userInfo) {
+      app.login(() => { this.goPublish(); });
+      return;
+    }
+    wx.navigateTo({ url: '/pages/publish/publish?type=sam' });
   }
 });

@@ -13,6 +13,10 @@ Page({
     this.loadPets();
   },
 
+  onShow() {
+    this.loadPets();
+  },
+
   async loadPets() {
     try {
       const typeMap = { 1: 'need', 2: 'offer', 3: 'social' };
@@ -35,14 +39,42 @@ Page({
   },
 
   onContact(e) {
-    wx.showToast({ title: '已发送私信', icon: 'none' });
+    const id = e.currentTarget.dataset.id;
+    const item = this.data.filteredList.find(p => p.id === id);
+    if (!item || !item.userId) return;
+    const app = getApp();
+    if (!app.globalData.userInfo) {
+      app.login(() => { this.onContact(e); });
+      return;
+    }
+    wx.navigateTo({
+      url: '/pages/chatDetail/chatDetail?targetUserId=' + item.userId +
+        '&nickName=' + encodeURIComponent(item.userName || '') +
+        '&avatarUrl=' + encodeURIComponent(item.userAvatar || '')
+    });
   },
 
-  onRespond(e) {
-    wx.showToast({ title: '已报名，等待对方确认', icon: 'none' });
+  async onRespond(e) {
+    const id = e.currentTarget.dataset.id;
+    const app = getApp();
+    if (!app.globalData.userInfo) {
+      app.login(() => { this.onRespond(e); });
+      return;
+    }
+    try {
+      const data = await api.respondPet(id);
+      const list = this.data.filteredList.map(item => {
+        if (item.id === id) return { ...item, responseCount: data.responseCount };
+        return item;
+      });
+      this.setData({ filteredList: list });
+      wx.showToast({ title: '已报名，等待对方确认', icon: 'success' });
+    } catch (err) {
+      wx.showToast({ title: '报名失败', icon: 'none' });
+    }
   },
 
   goPublish() {
-    wx.showToast({ title: '发布宠物喂养需求', icon: 'none' });
+    wx.navigateTo({ url: '/pages/publish/publish?type=pet' });
   }
 });

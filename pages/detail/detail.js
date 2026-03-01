@@ -90,7 +90,22 @@ Page({
     });
   },
 
-  onShare() {},
+  onShare() {
+    // 触发微信转发菜单（等同于右上角分享）
+    // 微信小程序中 button open-type="share" 才能主动触发
+    // 这里用 showShareMenu 确保分享菜单可用
+    wx.showShareMenu({ withShareTicket: true, menus: ['shareAppMessage', 'shareTimeline'] });
+  },
+
+  viewSeller() {
+    const p = this.data.product;
+    if (!p.userId) return;
+    wx.navigateTo({
+      url: '/pages/chatDetail/chatDetail?targetUserId=' + p.userId +
+        '&nickName=' + encodeURIComponent(p.userName || '') +
+        '&avatarUrl=' + encodeURIComponent(p.userAvatar || '')
+    });
+  },
 
   onShareAppMessage() {
     return {

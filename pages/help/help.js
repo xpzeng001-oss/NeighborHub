@@ -20,14 +20,24 @@ Page({
     }
   },
 
-  onHelp(e) {
+  async onHelp(e) {
     const id = e.currentTarget.dataset.id;
-    const helps = this.data.helps.map(h => {
-      if (h.id === id) return { ...h, responded: true };
-      return h;
-    });
-    this.setData({ helps });
-    wx.showToast({ title: '已响应，等待对方确认', icon: 'success' });
+    const app = getApp();
+    if (!app.globalData.userInfo) {
+      app.login(() => { this.onHelp(e); });
+      return;
+    }
+    try {
+      await api.respondHelp(id);
+      const helps = this.data.helps.map(h => {
+        if (h.id === id) return { ...h, responded: true, status: 'fulfilled' };
+        return h;
+      });
+      this.setData({ helps });
+      wx.showToast({ title: '已响应，等待对方确认', icon: 'success' });
+    } catch (err) {
+      wx.showToast({ title: '响应失败', icon: 'none' });
+    }
   },
 
   onContact(e) {

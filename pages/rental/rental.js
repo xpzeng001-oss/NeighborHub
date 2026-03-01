@@ -14,6 +14,18 @@ Page({
   },
 
   onContact(e) {
-    wx.showToast({ title: '联系功能开发中', icon: 'none' });
+    const id = e.currentTarget.dataset.id;
+    const item = this.data.rentals.find(r => r.id === id);
+    if (!item || !item.userId) return;
+    const app = getApp();
+    if (!app.globalData.userInfo) {
+      app.login(() => { this.onContact(e); });
+      return;
+    }
+    wx.navigateTo({
+      url: '/pages/chatDetail/chatDetail?targetUserId=' + item.userId +
+        '&nickName=' + encodeURIComponent(item.userName || '') +
+        '&avatarUrl=' + encodeURIComponent(item.userAvatar || '')
+    });
   }
 });

@@ -29,6 +29,14 @@
       <icon name="handshake" size="36" color="{{publishType === 'help' ? '#7A9900' : '#888'}}"></icon>
       <text>求帮忙</text>
     </view>
+    <view class="type-tab {{publishType === 'pet' ? 'active' : ''}}" bindtap="switchType" data-type="pet">
+      <icon name="paw-print" size="36" color="{{publishType === 'pet' ? '#7A9900' : '#888'}}"></icon>
+      <text>宠物喂养</text>
+    </view>
+    <view class="type-tab {{publishType === 'sam' ? 'active' : ''}}" bindtap="switchType" data-type="sam">
+      <icon name="shopping-cart" size="36" color="{{publishType === 'sam' ? '#7A9900' : '#888'}}"></icon>
+      <text>山姆拼单</text>
+    </view>
   </view>
 
   <scroll-view scroll-y class="form-scroll">
@@ -180,6 +188,128 @@
         <view class="form-item">
           <text class="form-label">是否紧急</text>
           <switch checked="{{form.isUrgent}}" bindchange="onUrgentChange" color="#C8FF00"/>
+        </view>
+      </view>
+    </view>
+
+    <!-- 山姆拼单表单 -->
+    <view wx:if="{{publishType === 'sam'}}">
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">标题</text>
+          <input class="form-input" placeholder="如：本周六山姆拼单" maxlength="30" bindinput="onInput" data-field="title" value="{{form.title}}"/>
+        </view>
+      </view>
+      <view class="form-section">
+        <view class="form-item-col">
+          <text class="form-label">详细描述</text>
+          <textarea class="form-textarea" placeholder="描述拼单内容、采购计划等..." maxlength="500" bindinput="onInput" data-field="description" value="{{form.description}}"/>
+        </view>
+      </view>
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">截止时间</text>
+          <input class="form-input" placeholder="如：本周五 18:00" maxlength="32" bindinput="onInput" data-field="samDeadline" value="{{form.samDeadline}}"/>
+        </view>
+      </view>
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">取货方式</text>
+          <input class="form-input" placeholder="如：送货上门、自提" maxlength="32" bindinput="onInput" data-field="samPickupMethod" value="{{form.samPickupMethod}}"/>
+        </view>
+      </view>
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">起拼金额</text>
+          <input class="form-input" type="digit" placeholder="可选" bindinput="onInput" data-field="samMinAmount" value="{{form.samMinAmount}}"/>
+          <text class="form-unit">元</text>
+        </view>
+        <view class="form-item">
+          <text class="form-label">目标人数</text>
+          <input class="form-input" type="number" placeholder="默认5人" bindinput="onInput" data-field="samTargetCount" value="{{form.samTargetCount}}"/>
+          <text class="form-unit">人</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 宠物喂养表单 -->
+    <view wx:if="{{publishType === 'pet'}}">
+      <!-- 宠物发布类型 -->
+      <view class="form-section">
+        <view class="form-item-col">
+          <text class="form-label">发布类型</text>
+          <view class="pet-type-selector">
+            <view class="pet-type-option {{form.petPostType === 'need' ? 'active type-need' : ''}}" bindtap="onPetTypeChange" data-type="need">
+              <icon name="paw-print" size="28" color="{{form.petPostType === 'need' ? '#E8590C' : '#888'}}"></icon>
+              <text>寻求喂养</text>
+            </view>
+            <view class="pet-type-option {{form.petPostType === 'offer' ? 'active type-offer' : ''}}" bindtap="onPetTypeChange" data-type="offer">
+              <icon name="heart" size="28" color="{{form.petPostType === 'offer' ? '#7A9900' : '#888'}}"></icon>
+              <text>可以帮喂</text>
+            </view>
+            <view class="pet-type-option {{form.petPostType === 'social' ? 'active type-social' : ''}}" bindtap="onPetTypeChange" data-type="social">
+              <icon name="sparkles" size="28" color="{{form.petPostType === 'social' ? '#6366F1' : '#888'}}"></icon>
+              <text>宠物社交</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 标题 -->
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">标题</text>
+          <input class="form-input" placeholder="简短描述你的需求" maxlength="30" bindinput="onInput" data-field="title" value="{{form.title}}"/>
+        </view>
+      </view>
+
+      <!-- 宠物名称 & 品种 -->
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">宠物名称</text>
+          <input class="form-input" placeholder="可选，如：小花" maxlength="16" bindinput="onInput" data-field="petName" value="{{form.petName}}"/>
+        </view>
+        <view class="form-item">
+          <text class="form-label">宠物品种</text>
+          <input class="form-input" placeholder="可选，如：英短蓝猫" maxlength="16" bindinput="onInput" data-field="petType" value="{{form.petType}}"/>
+        </view>
+      </view>
+
+      <!-- 日期范围（寻求喂养） -->
+      <view class="form-section" wx:if="{{form.petPostType === 'need'}}">
+        <view class="form-item">
+          <text class="form-label">日期范围</text>
+          <input class="form-input" placeholder="如：3月1日-3月7日" maxlength="32" bindinput="onInput" data-field="dateRange" value="{{form.dateRange}}"/>
+        </view>
+      </view>
+
+      <!-- 报酬（寻求喂养/可以帮喂） -->
+      <view class="form-section" wx:if="{{form.petPostType === 'need' || form.petPostType === 'offer'}}">
+        <view class="form-item">
+          <text class="form-label">报酬</text>
+          <input class="form-input" placeholder="如：200元/天 或 面议" maxlength="16" bindinput="onInput" data-field="reward" value="{{form.reward}}"/>
+        </view>
+      </view>
+
+      <!-- 详细描述 -->
+      <view class="form-section">
+        <view class="form-item-col">
+          <text class="form-label">详细描述</text>
+          <textarea class="form-textarea" placeholder="详细描述你的需求或服务..." maxlength="500" bindinput="onInput" data-field="description" value="{{form.description}}"/>
+        </view>
+      </view>
+
+      <!-- 标签 -->
+      <view class="form-section">
+        <view class="form-item-col">
+          <text class="form-label">标签</text>
+          <view class="tag-input-area">
+            <view class="tag-item" wx:for="{{form.petTags}}" wx:key="*this">
+              <text>{{item}}</text>
+              <view class="tag-remove" bindtap="removePetTag" data-index="{{index}}">×</view>
+            </view>
+            <input class="tag-input" placeholder="{{form.petTags.length >= 5 ? '最多5个标签' : '输入标签后按确认添加'}}" maxlength="8" bindinput="onTagInput" bindconfirm="addPetTag" value="{{tagInputValue}}" disabled="{{form.petTags.length >= 5}}"/>
+          </view>
         </view>
       </view>
     </view>

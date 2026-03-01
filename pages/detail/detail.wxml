@@ -81,10 +81,10 @@
         <icon name="heart" size="40" color="{{isFav ? '#fa5151' : '#888'}}" filled="{{isFav}}"></icon>
         <text class="bar-icon-label">{{isFav ? '已收藏' : '收藏'}}</text>
       </view>
-      <view class="bar-icon-item" bindtap="onShare">
+      <button class="bar-icon-item bar-share-btn" open-type="share">
         <icon name="share-2" size="40" color="#888"></icon>
         <text class="bar-icon-label">分享</text>
-      </view>
+      </button>
     </view>
     <view class="bar-right">
       <button class="btn-chat" bindtap="onChat">

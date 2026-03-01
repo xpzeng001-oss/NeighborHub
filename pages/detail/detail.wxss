@@ -89,6 +89,8 @@
 }
 .bar-icon { font-size: 40rpx; }
 .bar-icon-label { font-size: 20rpx; color: #888; margin-top: 2rpx; }
+.bar-share-btn { background: none; border: none; padding: 0; margin: 0; line-height: inherit; }
+.bar-share-btn::after { border: none; }
 .bar-right {
   flex: 1;
   display: flex;

@@ -21,6 +21,7 @@ Page({
     publishType: 'product',
     imageList: [],
     categoryNames: categories.map(c => c.name),
+    tagInputValue: '',
     form: {
       title: '',
       category: '',       // 存 id，如 'digital'
@@ -31,13 +32,29 @@ Page({
       description: '',
       tradeMethod: '',
       postCategory: '',
-      isUrgent: false
+      isUrgent: false,
+      petPostType: 'need',
+      petName: '',
+      petType: '',
+      dateRange: '',
+      reward: '',
+      petTags: [],
+      samDeadline: '',
+      samPickupMethod: '',
+      samMinAmount: '',
+      samTargetCount: ''
     }
   },
 
-  onLoad() {
+  onLoad(options) {
     const sysInfo = wx.getSystemInfoSync();
-    this.setData({ statusBarHeight: sysInfo.statusBarHeight || 44 });
+    const data = { statusBarHeight: sysInfo.statusBarHeight || 44 };
+    if (options.type === 'pet') {
+      data.publishType = 'pet';
+    } else if (options.type === 'sam') {
+      data.publishType = 'sam';
+    }
+    this.setData(data);
   },
 
   onShow() {
@@ -52,6 +69,7 @@ Page({
     this.setData({
       publishType: type,
       imageList: [],
+      tagInputValue: '',
       form: {
         title: '',
         category: '',
@@ -62,7 +80,17 @@ Page({
         description: '',
         tradeMethod: '',
         postCategory: '',
-        isUrgent: false
+        isUrgent: false,
+        petPostType: 'need',
+        petName: '',
+        petType: '',
+        dateRange: '',
+        reward: '',
+        petTags: [],
+        samDeadline: '',
+        samPickupMethod: '',
+        samMinAmount: '',
+        samTargetCount: ''
       }
     });
   },
@@ -123,6 +151,34 @@ Page({
     });
   },
 
+  onPetTypeChange(e) {
+    this.setData({ 'form.petPostType': e.currentTarget.dataset.type });
+  },
+
+  onTagInput(e) {
+    this.setData({ tagInputValue: e.detail.value });
+  },
+
+  addPetTag() {
+    const val = this.data.tagInputValue.trim();
+    if (!val) return;
+    const tags = this.data.form.petTags;
+    if (tags.length >= 5) return;
+    if (tags.indexOf(val) !== -1) {
+      wx.showToast({ title: '标签已存在', icon: 'none' });
+      return;
+    }
+    tags.push(val);
+    this.setData({ 'form.petTags': tags, tagInputValue: '' });
+  },
+
+  removePetTag(e) {
+    const index = e.currentTarget.dataset.index;
+    const tags = this.data.form.petTags;
+    tags.splice(index, 1);
+    this.setData({ 'form.petTags': tags });
+  },
+
   showPostCategoryPicker() {
     const cats = ['吐槽', '求助', '活动', '公告'];
     wx.showActionSheet({
@@ -156,9 +212,12 @@ Page({
       wx.showToast({ title: '请输入价格', icon: 'none' });
       return;
     }
-    // fix: 发帖必须选分类
     if (publishType === 'post' && !form.postCategory) {
       wx.showToast({ title: '请选择帖子分类', icon: 'none' });
+      return;
+    }
+    if (publishType === 'pet' && !form.petPostType) {
+      wx.showToast({ title: '请选择发布类型', icon: 'none' });
       return;
     }
 
@@ -194,12 +253,36 @@ Page({
           description: form.description,
           isUrgent: form.isUrgent
         });
+      } else if (publishType === 'pet') {
+        await api.createPet({
+          type: form.petPostType,
+          title: form.title,
+          description: form.description,
+          petName: form.petName,
+          petType: form.petType,
+          dateRange: form.dateRange,
+          reward: form.reward,
+          tags: form.petTags
+        });
+      } else if (publishType === 'sam') {
+        await api.createSam({
+          title: form.title,
+          description: form.description,
+          deadline: form.samDeadline,
+          pickupMethod: form.samPickupMethod,
+          minAmount: form.samMinAmount,
+          targetCount: form.samTargetCount
+        });
       }
 
       wx.hideLoading();
       wx.showToast({ title: '发布成功！', icon: 'success' });
       setTimeout(() => {
-        wx.switchTab({ url: '/pages/index/index' });
+        if (publishType === 'pet' || publishType === 'sam') {
+          wx.navigateBack();
+        } else {
+          wx.switchTab({ url: '/pages/index/index' });
+        }
       }, 1500);
     } catch (err) {
       wx.hideLoading();

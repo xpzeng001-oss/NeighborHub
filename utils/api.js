@@ -81,8 +81,12 @@ const createHelp    = (data)     => request({ url: '/api/helps', method: 'POST',
 const respondHelp   = (id)       => request({ url: '/api/helps/' + id + '/respond', method: 'POST' });
 const getRentals    = (params)   => request({ url: '/api/rentals', data: params });
 const createRental  = (data)     => request({ url: '/api/rentals', method: 'POST', data });
+const getSams       = (params)   => request({ url: '/api/sams', data: params });
+const createSam     = (data)     => request({ url: '/api/sams', method: 'POST', data });
+const joinSam       = (id)       => request({ url: '/api/sams/' + id + '/join', method: 'POST' });
 const getPets       = (params)   => request({ url: '/api/pets', data: params });
 const createPet     = (data)     => request({ url: '/api/pets', method: 'POST', data });
+const respondPet    = (id)       => request({ url: '/api/pets/' + id + '/respond', method: 'POST' });
 const getUser       = (id)       => request({ url: '/api/users/' + id });
 const updateUser    = (id, data) => request({ url: '/api/users/' + id, method: 'PUT', data });
 const getUserStats  = (id)       => request({ url: '/api/users/' + id + '/stats' });
@@ -111,7 +115,8 @@ module.exports = {
   getPosts, getPost, createPost, likePost, addComment,
   getHelps, createHelp, respondHelp,
   getRentals, createRental,
-  getPets, createPet,
+  getSams, createSam, joinSam,
+  getPets, createPet, respondPet,
   getUser, updateUser, getUserStats,
   getBanners, getMyFavorites, getReports, createReport, getFeedbacks, createFeedback,
   uploadImage, uploadImages,

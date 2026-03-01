@@ -4,5 +4,6 @@ const { auth } = require('../middleware/auth');
 
 router.get('/', petController.list);
 router.post('/', auth, petController.create);
+router.post('/:id/respond', auth, petController.respond);
 
 module.exports = router;
