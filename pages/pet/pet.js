@@ -74,6 +74,11 @@ Page({
     }
   },
 
+  goDetail(e) {
+    const id = e.currentTarget.dataset.id;
+    wx.navigateTo({ url: '/pages/petDetail/petDetail?id=' + id });
+  },
+
   goPublish() {
     wx.navigateTo({ url: '/pages/publish/publish?type=pet' });
   }

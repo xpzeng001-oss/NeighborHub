@@ -1,5 +1,5 @@
 /* pages/rental/rental.wxss */
-.page { background: #f5f6fa; min-height: 100vh; }
+.page { background: #F7F8F3; min-height: 100vh; }
 .scroll-content { height: 100vh; }
 
 .rental-list { padding: 20rpx 24rpx; }
@@ -21,14 +21,14 @@
 }
 .agent-tag {
   position: absolute; bottom: 16rpx; left: 16rpx;
-  background: rgba(255,151,106,0.9); color: #fff;
+  background: rgba(232, 136, 60,0.9); color: #fff;
   font-size: 22rpx; padding: 6rpx 16rpx; border-radius: 8rpx;
 }
 
 .rental-info { padding: 24rpx 28rpx; }
-.rental-title { font-size: 32rpx; font-weight: 600; color: #222; display: block; margin-bottom: 12rpx; }
+.rental-title { font-size: 32rpx; font-weight: 600; color: #1A1A1A; display: block; margin-bottom: 12rpx; }
 .rental-meta { display: flex; align-items: center; gap: 8rpx; margin-bottom: 12rpx; }
-.meta-item { font-size: 24rpx; color: #888; }
+.meta-item { font-size: 24rpx; color: #AAAAAA; }
 .meta-dot { font-size: 24rpx; color: #ddd; }
 .rental-desc { font-size: 26rpx; color: #666; line-height: 1.5; }
 
@@ -36,16 +36,16 @@
   display: flex; align-items: baseline; gap: 16rpx; margin-top: 16rpx;
 }
 .rent-price { display: flex; align-items: baseline; }
-.rent-num { font-size: 40rpx; color: #fa5151; font-weight: 700; }
-.rent-unit { font-size: 24rpx; color: #fa5151; margin-left: 4rpx; }
-.deposit { font-size: 24rpx; color: #999; }
+.rent-num { font-size: 40rpx; color: #5B8C3E; font-weight: 700; }
+.rent-unit { font-size: 24rpx; color: #5B8C3E; margin-left: 4rpx; }
+.deposit { font-size: 24rpx; color: #AAAAAA; }
 
 .rental-actions { padding: 0 28rpx 24rpx; }
 .btn-contact-rental {
   width: 100%; height: 80rpx; line-height: 80rpx;
-  background: #1A1A1A;
+  background: #5B8C3E;
   color: #fff; font-size: 28rpx; border: none;
-  border-radius: 16rpx; font-weight: 500;
+  border-radius: 16rpx; font-weight: 600;
   padding: 0; margin: 0; box-sizing: border-box;
   text-align: center;
 }

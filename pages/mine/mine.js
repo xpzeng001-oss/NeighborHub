@@ -4,6 +4,7 @@ const api = require('../../utils/api');
 
 Page({
   data: {
+    statusBarHeight: 44,
     userInfo: null,
     isVerified: false,
     creditLevel: '新住户',
@@ -11,9 +12,14 @@ Page({
     buildings: ['1栋', '2栋', '3栋', '5栋', '6栋', '7栋', '8栋', '9栋', '10栋', '12栋']
   },
 
+  onLoad() {
+    const sysInfo = wx.getSystemInfoSync();
+    this.setData({ statusBarHeight: sysInfo.statusBarHeight });
+  },
+
   onShow() {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({ selected: 2 });
+      this.getTabBar().setData({ selected: 3 });
     }
     const userInfo = app.globalData.userInfo;
     if (userInfo) {

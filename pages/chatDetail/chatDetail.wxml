@@ -7,28 +7,20 @@
     scroll-into-view="{{scrollToView}}"
     scroll-with-animation>
 
-    <view class="msg-item {{item.senderId === myUserId ? 'msg-right' : 'msg-left'}}"
-      wx:for="{{messages}}" wx:key="id">
-      <!-- 对方头像 -->
-      <image
-        wx:if="{{item.senderId !== myUserId}}"
-        class="msg-avatar"
-        src="{{targetAvatarUrl || '/images/avatar-placeholder.png'}}"
-        mode="aspectFill">
-      </image>
-
-      <!-- 消息气泡 -->
-      <view class="msg-bubble {{item.senderId === myUserId ? 'bubble-mine' : 'bubble-other'}}">
+    <!-- 对方消息：头像在左 -->
+    <view class="msg-item msg-left" wx:for="{{messages}}" wx:key="id" wx:if="{{item.senderId !== myUserId}}">
+      <image class="msg-avatar" src="{{targetAvatarUrl || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+      <view class="msg-bubble bubble-other">
         <text>{{item.content}}</text>
       </view>
+    </view>
 
-      <!-- 自己头像 -->
-      <image
-        wx:if="{{item.senderId === myUserId}}"
-        class="msg-avatar"
-        src="{{item.senderAvatar || '/images/avatar-placeholder.png'}}"
-        mode="aspectFill">
-      </image>
+    <!-- 自己消息：头像在右 -->
+    <view class="msg-item msg-right" wx:for="{{messages}}" wx:key="id" wx:if="{{item.senderId === myUserId}}">
+      <view class="msg-bubble bubble-mine">
+        <text>{{item.content}}</text>
+      </view>
+      <image class="msg-avatar" src="{{item.senderAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
     </view>
 
     <view id="msg-bottom"></view>

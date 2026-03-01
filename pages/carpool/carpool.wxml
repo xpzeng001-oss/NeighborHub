@@ -1,0 +1,95 @@
+<!--pages/carpool/carpool.wxml-->
+<view class="page">
+  <!-- 分类Tab -->
+  <view class="cp-tabs">
+    <view class="cp-tab {{activeTab === index ? 'active' : ''}}"
+          wx:for="{{tabs}}" wx:key="index"
+          bindtap="switchTab" data-index="{{index}}">
+      {{item}}
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="scroll-content">
+    <view class="trip-list">
+      <view class="trip-card" wx:for="{{filteredList}}" wx:key="id">
+        <!-- 类型标签 -->
+        <view class="card-type type-{{item.type}}">
+          <icon name="{{item.type === 'offer' ? 'car' : 'map-pin'}}" size="24" color="{{item.type === 'offer' ? '#5B8C3E' : '#4A90D9'}}"></icon>
+          <text>{{item.type === 'offer' ? '有车带人' : '找车搭乘'}}</text>
+        </view>
+
+        <!-- 用户信息 -->
+        <view class="card-header">
+          <image class="avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+          <view class="user-info">
+            <text class="user-name">{{item.userName}}</text>
+            <text class="user-building">{{item.building}}</text>
+          </view>
+          <text class="time">{{item.createdAt}}</text>
+        </view>
+
+        <!-- 内容 -->
+        <text class="card-title">{{item.title}}</text>
+        <text class="card-desc line-clamp-2">{{item.description}}</text>
+
+        <!-- 路线信息 -->
+        <view class="route-section">
+          <view class="route-row">
+            <view class="route-dot dot-start"></view>
+            <text class="route-text">{{item.from}}</text>
+          </view>
+          <view class="route-line"></view>
+          <view class="route-row">
+            <view class="route-dot dot-end"></view>
+            <text class="route-text">{{item.to}}</text>
+          </view>
+        </view>
+
+        <!-- 详细信息 -->
+        <view class="info-section">
+          <view class="info-row">
+            <icon name="calendar" size="26" color="#AAAAAA"></icon>
+            <text class="info-text">{{item.date}} {{item.time}}</text>
+          </view>
+          <view class="info-row" wx:if="{{item.type === 'offer' && item.seats > 0}}">
+            <icon name="user" size="26" color="#AAAAAA"></icon>
+            <text class="info-text">剩余 {{item.seats - item.takenSeats}}/{{item.seats}} 座</text>
+          </view>
+          <view class="info-row">
+            <text class="fee">{{item.fee}}</text>
+          </view>
+        </view>
+
+        <!-- 底部操作 -->
+        <view class="card-bottom">
+          <view class="participant-avatars" wx:if="{{item.participants.length > 0}}">
+            <image class="p-avatar" wx:for="{{item.participants}}" wx:key="*this" wx:for-item="p" src="{{p}}"></image>
+            <text class="p-count">{{item.takenSeats}}人已拼</text>
+          </view>
+          <view class="participant-avatars" wx:else>
+            <text class="p-count">暂无人拼车</text>
+          </view>
+          <view class="card-actions">
+            <view class="btn-contact" catchtap="onContact" data-id="{{item.id}}">私信</view>
+            <view class="btn-join {{item.joined ? 'btn-joined' : ''}} {{item.status !== 'open' ? 'btn-disabled' : ''}}"
+                  catchtap="{{item.status === 'open' && !item.joined ? 'onJoin' : ''}}" data-id="{{item.id}}">
+              {{item.joined ? '已拼车' : item.status === 'open' ? (item.type === 'offer' ? '我要搭车' : '我可以带') : '已满座'}}
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{filteredList.length === 0}}">
+      <icon name="car" size="96" color="#ccc"></icon>
+      <text class="empty-text">暂无拼车信息，快来发布吧</text>
+    </view>
+
+    <view style="height: 180rpx;"></view>
+  </scroll-view>
+
+  <!-- 发布按钮 -->
+  <view class="fab-btn" bindtap="goPublish">
+    <icon name="pencil" size="44" color="#fff"></icon>
+  </view>
+</view>

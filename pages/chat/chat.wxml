@@ -1,5 +1,17 @@
 <!--pages/chat/chat.wxml-->
 <view class="page">
+  <!-- 自定义顶部 -->
+  <view style="height: {{statusBarHeight}}px; background: #F7F8F3;"></view>
+  <view class="page-header">
+    <text class="page-title">消息</text>
+  </view>
+
+  <!-- 未读消息提示 -->
+  <view class="unread-banner" wx:if="{{totalUnread > 0}}">
+    <icon name="bell" size="32" color="#E8883C" class="banner-icon-wrap"></icon>
+    <text class="banner-text">你有 <text class="banner-count">{{totalUnread}}</text> 条未读消息</text>
+  </view>
+
   <!-- 空状态 -->
   <view class="empty" wx:if="{{!loading && conversations.length === 0}}">
     <icon name="message-circle" size="80" color="#ddd"></icon>
@@ -7,8 +19,8 @@
   </view>
 
   <!-- 会话列表 -->
-  <scroll-view scroll-y class="conversation-list" wx:else>
-    <view class="conversation-item"
+  <scroll-view scroll-y class="conversation-list" wx:if="{{conversations.length > 0}}">
+    <view class="conversation-card"
       wx:for="{{conversations}}" wx:key="id"
       bindtap="goChat"
       data-id="{{item.id}}"
@@ -17,7 +29,7 @@
       data-avatar-url="{{item.targetUser.avatarUrl}}">
       <view class="avatar-wrap">
         <image class="avatar" src="{{item.targetUser.avatarUrl || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
-        <view class="unread-dot" wx:if="{{item.unreadCount > 0}}">
+        <view class="unread-badge" wx:if="{{item.unreadCount > 0}}">
           <text>{{item.unreadCount > 99 ? '99+' : item.unreadCount}}</text>
         </view>
       </view>
@@ -26,6 +38,7 @@
           <text class="conv-name">{{item.targetUser.nickName || '微信用户'}}</text>
           <text class="conv-time">{{item.lastMessageAt}}</text>
         </view>
+        <text class="conv-topic" wx:if="{{item.topic}}">关于: {{item.topic}}</text>
         <text class="conv-last">{{item.lastMessage || '暂无消息'}}</text>
       </view>
     </view>

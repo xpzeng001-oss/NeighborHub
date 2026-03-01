@@ -17,7 +17,9 @@
   <view class="section">
     <view class="section-title">功能特点</view>
     <view class="feature-item" wx:for="{{features}}" wx:key="title">
-      <text class="feature-icon">{{item.icon}}</text>
+      <view class="feature-icon-wrap" style="background: {{item.color}}15;">
+        <icon name="{{item.icon}}" size="36" color="{{item.color}}"></icon>
+      </view>
       <view class="feature-info">
         <text class="feature-title">{{item.title}}</text>
         <text class="feature-desc">{{item.desc}}</text>

@@ -1,0 +1,111 @@
+<view class="page">
+  <!-- 自定义导航栏 -->
+  <view style="height: {{statusBarHeight}}px;"></view>
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="goBack">
+      <icon name="arrow-left" size="36" color="#1A1A1A"></icon>
+    </view>
+    <text class="nav-title">详情</text>
+  </view>
+
+  <scroll-view scroll-y class="scroll-content" wx:if="{{detail}}">
+    <!-- 主卡片 -->
+    <view class="main-card">
+      <!-- 类型标签 -->
+      <view class="type-badge" style="background: rgba({{typeInfo.color === '#E8883C' ? '232,136,60' : typeInfo.color === '#5B8C3E' ? '91,140,62' : '139,109,176'}}, 0.08); color: {{typeInfo.color}};">
+        <icon name="{{typeInfo.icon}}" size="24" color="{{typeInfo.color}}"></icon>
+        <text>{{typeInfo.label}}</text>
+      </view>
+
+      <!-- 标题 -->
+      <text class="detail-title">{{detail.title}}</text>
+
+      <!-- 发布者 -->
+      <view class="author-row">
+        <image class="author-avatar" src="{{detail.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+        <view class="author-info">
+          <text class="author-name">{{detail.userName}}</text>
+          <text class="author-building">{{detail.building}}</text>
+        </view>
+        <text class="publish-time">{{detail.createdAt}}</text>
+      </view>
+
+      <!-- 描述 -->
+      <text class="detail-desc">{{detail.description}}</text>
+    </view>
+
+    <!-- 信息卡片 -->
+    <view class="info-card" wx:if="{{detail.dateRange || detail.eventTime || detail.reward || detail.availableTime}}">
+      <view class="info-item" wx:if="{{detail.dateRange}}">
+        <icon name="calendar" size="32" color="#5B8C3E"></icon>
+        <view class="info-content">
+          <text class="info-label">日期范围</text>
+          <text class="info-value">{{detail.dateRange}}</text>
+        </view>
+      </view>
+      <view class="info-item" wx:if="{{detail.eventTime}}">
+        <icon name="clock" size="32" color="#5B8C3E"></icon>
+        <view class="info-content">
+          <text class="info-label">活动时间</text>
+          <text class="info-value">{{detail.eventTime}}</text>
+        </view>
+      </view>
+      <view class="info-item" wx:if="{{detail.location}}">
+        <icon name="map-pin" size="32" color="#5B8C3E"></icon>
+        <view class="info-content">
+          <text class="info-label">地点</text>
+          <text class="info-value">{{detail.location}}</text>
+        </view>
+      </view>
+      <view class="info-item" wx:if="{{detail.reward}}">
+        <icon name="gift" size="32" color="#5B8C3E"></icon>
+        <view class="info-content">
+          <text class="info-label">报酬</text>
+          <text class="info-value reward-value">{{detail.reward}}</text>
+        </view>
+      </view>
+      <view class="info-item" wx:if="{{detail.availableTime}}">
+        <icon name="clock" size="32" color="#5B8C3E"></icon>
+        <view class="info-content">
+          <text class="info-label">可用时间</text>
+          <text class="info-value">{{detail.availableTime}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 标签 -->
+    <view class="tags-card" wx:if="{{detail.tags && detail.tags.length > 0}}">
+      <text class="pet-tag" wx:for="{{detail.tags}}" wx:key="*this">{{item}}</text>
+    </view>
+
+    <!-- 参与人员 -->
+    <view class="members-card">
+      <view class="members-header">
+        <text class="members-title">已报名</text>
+        <text class="members-count">{{detail.responseCount || 0}}人</text>
+      </view>
+      <view class="members-list" wx:if="{{respondents.length > 0}}">
+        <view class="member-item" wx:for="{{respondents}}" wx:key="id">
+          <image class="member-avatar" src="{{item.avatarUrl || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+          <text class="member-name">{{item.nickName}}</text>
+        </view>
+      </view>
+      <view class="members-empty" wx:else>
+        <text>暂无人报名，快来第一个吧</text>
+      </view>
+    </view>
+
+    <view style="height: 200rpx;"></view>
+  </scroll-view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar safe-bottom" wx:if="{{detail}}">
+    <view class="btn-msg" bindtap="onContact">
+      <icon name="message-circle" size="36" color="#1A1A1A"></icon>
+      <text>私信</text>
+    </view>
+    <view class="btn-action {{responded ? 'btn-disabled' : ''}}" bindtap="onRespond">
+      <text>{{responded ? '已报名' : btnText}}</text>
+    </view>
+  </view>
+</view>

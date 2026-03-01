@@ -11,10 +11,10 @@
 
   <scroll-view scroll-y class="scroll-content">
     <view class="pet-list">
-      <view class="pet-card" wx:for="{{filteredList}}" wx:key="id">
+      <view class="pet-card" wx:for="{{filteredList}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
         <!-- 类型标签 -->
         <view class="card-type type-{{item.type}}">
-          <icon name="{{item.type === 'need' ? 'paw-print' : item.type === 'offer' ? 'heart' : 'sparkles'}}" size="24" color="{{item.type === 'need' ? '#E8590C' : item.type === 'offer' ? '#7A9900' : '#6366F1'}}"></icon>
+          <icon name="{{item.type === 'need' ? 'paw-print' : item.type === 'offer' ? 'heart' : 'sparkles'}}" size="24" color="{{item.type === 'need' ? '#E8883C' : item.type === 'offer' ? '#5B8C3E' : '#8B6DB0'}}"></icon>
           <text>{{item.type === 'need' ? '寻求喂养' : item.type === 'offer' ? '可以帮喂' : '宠物活动'}}</text>
         </view>
 

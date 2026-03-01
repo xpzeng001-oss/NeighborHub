@@ -2,19 +2,19 @@
 page {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 28rpx;
-  color: #333;
-  background-color: #f5f6fa;
+  color: #1A1A1A;
+  background-color: #F7F8F3;
   line-height: 1.5;
   box-sizing: border-box;
 }
 
 /* ===== 色彩变量（通过class实现） ===== */
 .text-primary { color: #1A1A1A; }
-.text-secondary { color: #999; }
-.text-danger { color: #fa5151; }
-.text-warning { color: #ff976a; }
+.text-secondary { color: #AAAAAA; }
+.text-danger { color: #E8636F; }
+.text-warning { color: #E8883C; }
 .text-white { color: #fff; }
-.bg-primary { background-color: #C8FF00; }
+.bg-primary { background-color: #7CB342; }
 .bg-white { background-color: #fff; }
 
 /* ===== 布局工具 ===== */
@@ -108,26 +108,27 @@ page {
 /* ===== 标签 ===== */
 .tag {
   display: inline-block;
-  padding: 4rpx 16rpx;
-  border-radius: 6rpx;
+  padding: 8rpx 18rpx;
+  border-radius: 20rpx;
   font-size: 22rpx;
-  margin-right: 12rpx;
+  font-weight: 500;
+  margin-right: 0;
 }
 .tag-green {
-  background: rgba(200, 255, 0, 0.15);
-  color: #7A9900;
+  background: rgba(91, 140, 62, 0.15);
+  color: #5B8C3E;
 }
 .tag-orange {
-  background: rgba(255, 151, 106, 0.1);
-  color: #ff976a;
+  background: rgba(232, 136, 60, 0.1);
+  color: #E8883C;
 }
 .tag-blue {
-  background: rgba(16, 174, 255, 0.1);
-  color: #10aeff;
+  background: rgba(74, 144, 217, 0.1);
+  color: #4A90D9;
 }
 .tag-red {
-  background: rgba(250, 81, 81, 0.1);
-  color: #fa5151;
+  background: rgba(232, 99, 111, 0.1);
+  color: #E8636F;
 }
 
 /* ===== 分割线 ===== */
@@ -147,7 +148,7 @@ page {
 .load-more {
   text-align: center;
   padding: 30rpx;
-  color: #999;
+  color: #AAAAAA;
   font-size: 24rpx;
 }
 
@@ -163,6 +164,6 @@ page {
   margin-bottom: 24rpx;
 }
 .empty-state .text {
-  color: #999;
+  color: #AAAAAA;
   font-size: 28rpx;
 }

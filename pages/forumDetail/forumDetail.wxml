@@ -22,11 +22,11 @@
       <!-- 互动数据 -->
       <view class="post-stats">
         <view class="stat" style="display:inline-flex;align-items:center;gap:6rpx;">
-          <icon name="thumbs-up" size="28" color="#888"></icon>
+          <icon name="thumbs-up" size="28" color="#AAAAAA"></icon>
           <text>{{post.likeCount}}</text>
         </view>
         <view class="stat" style="display:inline-flex;align-items:center;gap:6rpx;">
-          <icon name="message-circle" size="28" color="#888"></icon>
+          <icon name="message-circle" size="28" color="#AAAAAA"></icon>
           <text>{{post.commentCount}}</text>
         </view>
       </view>
@@ -55,7 +55,7 @@
     <input class="comment-input" placeholder="说说你的看法..." bindinput="onCommentInput" value="{{commentText}}"/>
     <view class="bar-actions">
       <view class="like-btn" bindtap="onLike">
-        <icon name="thumbs-up" size="40" color="{{isLiked ? '#C8FF00' : '#999'}}" filled="{{isLiked}}"></icon>
+        <icon name="thumbs-up" size="40" color="{{isLiked ? '#7CB342' : '#999'}}" filled="{{isLiked}}"></icon>
       </view>
       <button class="send-btn" bindtap="onSend">发送</button>
     </view>

@@ -2,60 +2,68 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #f5f6fa;
+  background: #F7F8F3;
+  overflow-x: hidden;
 }
 
 /* 消息列表 */
 .message-list {
   flex: 1;
   height: 0;
-  padding: 20rpx 24rpx;
+  padding: 24rpx 32rpx;
+  padding-bottom: 140rpx;
 }
 
 .msg-item {
   display: flex;
-  align-items: flex-start;
-  margin-bottom: 28rpx;
+  align-items: flex-end;
+  margin-bottom: 32rpx;
 }
-.msg-right { flex-direction: row-reverse; }
+.msg-right { justify-content: flex-end; }
 
 .msg-avatar {
   width: 72rpx;
   height: 72rpx;
   border-radius: 50%;
   flex-shrink: 0;
-  background: #e0e0e0;
+  background: #EFF6E8;
 }
 
 .msg-bubble {
-  max-width: 500rpx;
-  padding: 20rpx 28rpx;
-  border-radius: 24rpx;
+  max-width: 480rpx;
+  padding: 22rpx 28rpx;
   font-size: 30rpx;
-  line-height: 1.5;
-  word-break: break-all;
+  line-height: 1.6;
+  word-wrap: break-word;
+  overflow: hidden;
 }
 .bubble-other {
   background: #fff;
-  color: #333;
+  color: #1A1A1A;
   margin-left: 16rpx;
-  border-top-left-radius: 6rpx;
+  border-radius: 4rpx 24rpx 24rpx 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
 }
 .bubble-mine {
-  background: #1A1A1A;
+  background: #5B8C3E;
   color: #fff;
   margin-right: 16rpx;
-  border-top-right-radius: 6rpx;
+  border-radius: 24rpx 4rpx 24rpx 24rpx;
 }
 
 /* 底部输入栏 */
 .input-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
-  padding: 16rpx 20rpx;
+  padding: 16rpx 32rpx;
   background: #fff;
-  border-top: 1rpx solid #eee;
+  box-shadow: 0 -2rpx 12rpx rgba(0,0,0,0.04);
   gap: 16rpx;
+  z-index: 10;
 }
 .safe-bottom {
   padding-bottom: calc(16rpx + constant(safe-area-inset-bottom));
@@ -64,18 +72,18 @@
 
 .msg-input {
   flex: 1;
-  height: 72rpx;
-  background: #f5f5f5;
-  border-radius: 36rpx;
+  height: 76rpx;
+  background: #F7F8F3;
+  border-radius: 16rpx;
   padding: 0 28rpx;
   font-size: 28rpx;
 }
 
 .send-btn {
   width: 120rpx;
-  height: 72rpx;
-  border-radius: 36rpx;
-  background: #ddd;
+  height: 76rpx;
+  border-radius: 16rpx;
+  background: #F5F5F0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -83,11 +91,11 @@
 }
 .send-btn text {
   font-size: 28rpx;
-  color: #999;
-  font-weight: 500;
+  color: #AAAAAA;
+  font-weight: 600;
 }
 .send-btn.active {
-  background: #1A1A1A;
+  background: #5B8C3E;
 }
 .send-btn.active text {
   color: #fff;

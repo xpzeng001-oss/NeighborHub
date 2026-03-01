@@ -1,5 +1,5 @@
 {
-  "navigationStyle": "custom",
+  "navigationBarTitleText": "拼车顺路",
   "usingComponents": {
     "icon": "/components/icon/icon"
   }

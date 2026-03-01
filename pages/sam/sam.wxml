@@ -69,7 +69,7 @@
     </view>
 
     <view class="empty-state" wx:if="{{filteredList.length === 0}}">
-      <text class="empty-emoji">🛒</text>
+      <icon name="shopping-cart" size="96" color="#ccc"></icon>
       <text class="empty-text">暂无拼单，快来发起吧</text>
     </view>
   </scroll-view>

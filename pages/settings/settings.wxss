@@ -1,4 +1,4 @@
-.page { background: #f5f6fa; min-height: 100vh; }
+.page { background: #F7F8F3; min-height: 100vh; }
 
 .avatar-section {
   display: flex;
@@ -15,7 +15,7 @@
 }
 .avatar-hint {
   font-size: 24rpx;
-  color: #999;
+  color: #AAAAAA;
   margin-top: 16rpx;
 }
 
@@ -35,13 +35,13 @@
 .form-item:last-child { border-bottom: none; }
 .form-label {
   font-size: 28rpx;
-  color: #333;
+  color: #1A1A1A;
   width: 120rpx;
 }
 .form-input {
   flex: 1;
   font-size: 28rpx;
-  color: #333;
+  color: #1A1A1A;
   text-align: right;
 }
 
@@ -49,7 +49,7 @@
   padding: 60rpx 24rpx;
 }
 .btn-save {
-  background: #1A1A1A;
+  background: #5B8C3E;
   color: #fff;
   font-size: 30rpx;
   font-weight: 600;

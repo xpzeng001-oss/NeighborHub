@@ -1,75 +1,50 @@
 <!--pages/index/index.wxml-->
 <view class="page">
-  <!-- 顶部渐变区域（含banner） -->
-  <view class="top-gradient" style="padding-top: {{statusBarHeight}}px;">
-    <view class="header" style="height: {{headerHeight}}px; padding-right: {{menuWidth}}px;">
-      <view class="community-select" bindtap="onCommunityTap">
-        <text class="community-name">{{currentCommunity}}</text>
-        <text class="arrow">▾</text>
-      </view>
-      <view class="search-bar" bindtap="goSearch">
-        <icon name="search" size="32" color="#888"></icon>
-        <text class="search-placeholder">搜索闲置好物...</text>
-      </view>
+  <!-- 状态栏占位 -->
+  <view style="height: {{statusBarHeight}}px;"></view>
+
+  <!-- 导航栏：小区选择，与胶囊按钮同行 -->
+  <view class="nav-header" style="height: {{navHeight}}px;">
+    <view class="community-select" bindtap="onCommunityTap">
+      <icon name="map-pin" size="32" color="#5B8C3E"></icon>
+      <text class="community-name">{{currentCommunity}}</text>
+      <icon name="caret-down" size="24" color="#999"></icon>
     </view>
-    <!-- 广告轮播 -->
-    <view class="banner-wrap">
-      <swiper class="banner-swiper" indicator-dots autoplay interval="4000" circular>
-        <swiper-item wx:for="{{banners}}" wx:key="id">
-          <image class="banner-img" src="{{item.image}}" mode="aspectFill"></image>
-        </swiper-item>
-      </swiper>
+  </view>
+
+  <!-- 搜索栏 -->
+  <view class="search-header">
+    <view class="search-input" bindtap="goSearch">
+      <icon name="search" size="32" color="#AAAAAA"></icon>
+      <text class="search-placeholder">搜索闲置物品、服务、求助...</text>
     </view>
   </view>
 
   <scroll-view scroll-y class="scroll-content" refresher-enabled="{{true}}" bindrefresherrefresh="onRefresh" refresher-triggered="{{isRefreshing}}">
 
-    <!-- 快捷入口 -->
-    <view class="quick-entry">
-      <view class="entry-item" bindtap="goForum">
-        <text class="entry-emoji">💬</text>
-        <text class="entry-label">楼里事儿</text>
-      </view>
-      <view class="entry-item" bindtap="goHelp">
-        <text class="entry-emoji">🤝</text>
-        <text class="entry-label">邻里帮忙</text>
-      </view>
-      <view class="entry-item" bindtap="goRental">
-        <text class="entry-emoji">🏠</text>
-        <text class="entry-label">房屋租赁</text>
-      </view>
-      <view class="entry-item" bindtap="goPet">
-        <text class="entry-emoji">🐾</text>
-        <text class="entry-label">宠物喂养</text>
-      </view>
-      <view class="entry-item" bindtap="goSam">
-        <text class="entry-emoji">🛒</text>
-        <text class="entry-label">山姆拼单</text>
-      </view>
-    </view>
+    <!-- Banner -->
+    <image class="banner-img" src="/images/banner-home.png" mode="aspectFill"></image>
 
-    <!-- 内容Tab + 分类筛选 -->
-    <view class="tab-bar-wrap">
-      <scroll-view scroll-x class="tab-scroll">
-        <view class="tab-list">
-          <view class="tab-item {{activeTab === index ? 'active' : ''}}"
-                wx:for="{{tabs}}" wx:key="index"
-                bindtap="onTabChange" data-index="{{index}}">
-            <text>{{item}}</text>
-            <view class="tab-line" wx:if="{{activeTab === index}}"></view>
-          </view>
+    <!-- 分类胶囊 -->
+    <scroll-view scroll-x class="type-scroll" enhanced show-scrollbar="{{false}}">
+      <view class="type-list">
+        <view class="type-pill {{activeType === item.id ? 'active' : ''}}"
+              wx:for="{{contentTypes}}" wx:key="id"
+              bindtap="onTypeChange" data-id="{{item.id}}">
+          <icon name="{{item.icon}}" size="28" color="{{activeType === item.id ? '#fff' : item.color}}"></icon>
+          <text>{{item.name}}</text>
         </view>
-      </scroll-view>
-      <!-- 分类筛选（闲置物品tab下） -->
-      <scroll-view scroll-x class="category-scroll" wx:if="{{activeTab === 0}}">
-        <view class="category-list">
-          <view class="capsule-tab {{activeCategory === item.id ? 'active' : ''}}"
-                wx:for="{{categories}}" wx:key="id"
-                bindtap="onCategoryChange" data-id="{{item.id}}">
-            <text>{{item.name}}</text>
-          </view>
-        </view>
-      </scroll-view>
+      </view>
+    </scroll-view>
+
+    <!-- 排序Tab -->
+    <view class="sort-bar">
+      <view class="sort-tab {{activeSort === index ? 'active' : ''}}"
+            wx:for="{{sortTabs}}" wx:key="index"
+            bindtap="onSortChange" data-index="{{index}}">
+        <text>{{item}}</text>
+        <view class="sort-line" wx:if="{{activeSort === index}}"></view>
+      </view>
     </view>
 
     <!-- 商品瀑布流 -->
@@ -135,7 +110,7 @@
             wx:for="{{communities}}" wx:key="id"
             bindtap="selectCommunity" data-item="{{item}}">
         <text>{{item.name}}</text>
-        <icon wx:if="{{item.name === currentCommunity}}" name="check" size="32" color="#7A9900"></icon>
+        <icon wx:if="{{item.name === currentCommunity}}" name="check" size="32" color="#5B8C3E"></icon>
       </view>
     </view>
   </view>

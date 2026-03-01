@@ -12,7 +12,7 @@
             </view>
           </view>
           <view class="urgent-tag" wx:if="{{item.isUrgent}}">
-            <icon name="flame" size="22" color="#fa5151"></icon>
+            <icon name="flame" size="22" color="#E8636F"></icon>
             <text> 紧急</text>
           </view>
         </view>

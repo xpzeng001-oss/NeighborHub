@@ -29,7 +29,7 @@
     <view class="image-list">
       <view class="img-item" wx:for="{{images}}" wx:key="*this">
         <image src="{{item}}" mode="aspectFill" class="img-preview"></image>
-        <view class="img-del" bindtap="onDelImage" data-index="{{index}}">×</view>
+        <view class="img-del" bindtap="onDelImage" data-index="{{index}}"><icon name="x" size="24" color="#fff"></icon></view>
       </view>
       <view class="img-add" bindtap="onChooseImage" wx:if="{{images.length < 9}}">
         <icon name="plus" size="48" color="#ccc"></icon>

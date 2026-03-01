@@ -19,7 +19,7 @@
         <text class="tag tag-green">{{product.condition}}</text>
         <text class="tag tag-blue">{{product.category}}</text>
         <view class="tag tag-orange" wx:if="{{product.isFree}}" style="display:inline-flex;align-items:center;gap:4rpx;">
-          <icon name="recycle" size="22" color="#ff976a"></icon>
+          <icon name="recycle" size="22" color="#E8883C"></icon>
           <text>环保</text>
         </view>
       </view>
@@ -44,7 +44,7 @@
           <text class="seller-building">{{product.building}}</text>
         </view>
       </view>
-      <text class="seller-arrow">›</text>
+      <icon name="caret-right" size="32" color="#ccc"></icon>
     </view>
 
     <!-- 数据统计 -->
@@ -78,20 +78,18 @@
   <view class="bottom-bar safe-bottom">
     <view class="bar-left">
       <view class="bar-icon-item" bindtap="toggleFav">
-        <icon name="heart" size="40" color="{{isFav ? '#fa5151' : '#888'}}" filled="{{isFav}}"></icon>
+        <icon name="heart" size="40" color="{{isFav ? '#E8636F' : '#AAAAAA'}}" filled="{{isFav}}"></icon>
         <text class="bar-icon-label">{{isFav ? '已收藏' : '收藏'}}</text>
       </view>
       <button class="bar-icon-item bar-share-btn" open-type="share">
-        <icon name="share-2" size="40" color="#888"></icon>
+        <icon name="share-2" size="40" color="#AAAAAA"></icon>
         <text class="bar-icon-label">分享</text>
       </button>
     </view>
     <view class="bar-right">
       <button class="btn-chat" bindtap="onChat">
-        <view style="display:inline-flex;align-items:center;gap:8rpx;">
-          <icon name="message-circle" size="28" color="#1A1A1A"></icon>
-          <text>私信</text>
-        </view>
+        <icon name="message-circle" size="28" color="#1A1A1A"></icon>
+        <text>私信</text>
       </button>
       <button class="btn-want" bindtap="onWant">我想要</button>
     </view>

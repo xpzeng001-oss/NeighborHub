@@ -1,5 +1,5 @@
 /* pages/forumPublish/forumPublish.wxss */
-.page { min-height: 100vh; background: #f5f6fa; }
+.page { min-height: 100vh; background: #F7F8F3; }
 
 .section {
   background: #fff;
@@ -11,10 +11,10 @@
 .section-title {
   font-size: 28rpx;
   font-weight: 600;
-  color: #333;
+  color: #1A1A1A;
   margin-bottom: 20rpx;
 }
-.optional { font-size: 24rpx; color: #999; font-weight: 400; }
+.optional { font-size: 24rpx; color: #AAAAAA; font-weight: 400; }
 
 /* 分类选择 */
 .category-list { display: flex; gap: 16rpx; }
@@ -24,21 +24,21 @@
   padding: 16rpx 0;
   font-size: 26rpx;
   color: #666;
-  background: #f5f6fa;
+  background: #F7F8F3;
   border-radius: 12rpx;
   border: 2rpx solid transparent;
 }
 .cat-item.active { font-weight: 600; }
-.cat-item.cat-announcement { background: rgba(250,81,81,0.1); color: #fa5151; border-color: rgba(250,81,81,0.3); }
-.cat-item.cat-complaint { background: rgba(255,151,106,0.1); color: #ff976a; border-color: rgba(255,151,106,0.3); }
-.cat-item.cat-question { background: rgba(16,174,255,0.1); color: #10aeff; border-color: rgba(16,174,255,0.3); }
-.cat-item.cat-activity { background: rgba(200,255,0,0.15); color: #7A9900; border-color: rgba(200,255,0,0.5); }
+.cat-item.cat-announcement { background: rgba(232, 99, 111,0.1); color: #E8636F; border-color: rgba(232, 99, 111,0.3); }
+.cat-item.cat-complaint { background: rgba(232, 136, 60,0.1); color: #E8883C; border-color: rgba(232, 136, 60,0.3); }
+.cat-item.cat-question { background: rgba(74, 144, 217,0.1); color: #4A90D9; border-color: rgba(74, 144, 217,0.3); }
+.cat-item.cat-activity { background: rgba(91, 140, 62,0.15); color: #5B8C3E; border-color: rgba(91, 140, 62,0.5); }
 
 /* 标题输入 */
 .title-input {
   font-size: 30rpx;
   font-weight: 600;
-  color: #333;
+  color: #1A1A1A;
   padding: 8rpx 0;
 }
 
@@ -47,7 +47,7 @@
   width: 100%;
   height: 240rpx;
   font-size: 28rpx;
-  color: #333;
+  color: #1A1A1A;
   padding: 0;
   box-sizing: border-box;
 }
@@ -79,7 +79,7 @@
 .img-add {
   width: 200rpx;
   height: 200rpx;
-  background: #f8f8fa;
+  background: #F5F5F0;
   border: 2rpx dashed #ddd;
   border-radius: 12rpx;
   display: flex;
@@ -90,7 +90,7 @@
 /* 提交按钮 */
 .btn-wrap { padding: 40rpx 24rpx; }
 .submit-btn {
-  background: #1A1A1A;
+  background: #5B8C3E;
   color: #fff;
   font-size: 30rpx;
   font-weight: 600;

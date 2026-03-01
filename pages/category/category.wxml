@@ -1,0 +1,40 @@
+<!--pages/category/category.wxml-->
+<view class="page">
+  <view style="height: {{statusBarHeight}}px;"></view>
+  <view class="page-header">
+    <text class="page-title">分类</text>
+  </view>
+
+  <!-- 分类卡片网格 -->
+  <view class="cat-grid">
+    <view class="cat-card" wx:for="{{categories}}" wx:key="id" bindtap="goPage" data-url="{{item.url}}">
+      <view class="cat-icon" style="background: {{item.tint}};">
+        <icon name="{{item.icon}}" size="40" color="{{item.color}}"></icon>
+      </view>
+      <text class="cat-name">{{item.name}}</text>
+      <text class="cat-count">{{item.count}}条信息</text>
+    </view>
+  </view>
+
+  <!-- 社区数据 -->
+  <view class="stats-card">
+    <view class="stats-header">
+      <icon name="star" size="32" color="#D4A04A"></icon>
+      <text class="stats-title">社区数据</text>
+    </view>
+    <view class="stats-row">
+      <view class="stat-item">
+        <text class="stat-value" style="color: #5B8C3E;">{{stats.activeUsers}}</text>
+        <text class="stat-label">活跃住户</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value" style="color: #4A90D9;">{{stats.monthlyTrades}}</text>
+        <text class="stat-label">本月交易</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value" style="color: #5B8C3E;">{{stats.rating}}</text>
+        <text class="stat-label">好评率</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -22,8 +22,8 @@ Page({
     const score = userInfo.creditScore || userInfo.credit_score || 100;
     let level = '新住户';
     let levelColor = '#999';
-    if (score >= 200) { level = '金牌邻居'; levelColor = '#faad14'; }
-    else if (score >= 120) { level = '活跃邻居'; levelColor = '#52c41a'; }
+    if (score >= 200) { level = '金牌邻居'; levelColor = '#D4A04A'; }
+    else if (score >= 120) { level = '活跃邻居'; levelColor = '#5B8C3E'; }
 
     this.setData({ score, level, levelColor });
   }

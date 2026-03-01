@@ -84,7 +84,11 @@ const createRental  = (data)     => request({ url: '/api/rentals', method: 'POST
 const getSams       = (params)   => request({ url: '/api/sams', data: params });
 const createSam     = (data)     => request({ url: '/api/sams', method: 'POST', data });
 const joinSam       = (id)       => request({ url: '/api/sams/' + id + '/join', method: 'POST' });
+const getCarpools   = (params)   => request({ url: '/api/carpools', data: params });
+const createCarpool = (data)     => request({ url: '/api/carpools', method: 'POST', data });
+const joinCarpool   = (id)       => request({ url: '/api/carpools/' + id + '/join', method: 'POST' });
 const getPets       = (params)   => request({ url: '/api/pets', data: params });
+const getPetDetail  = (id)       => request({ url: '/api/pets/' + id });
 const createPet     = (data)     => request({ url: '/api/pets', method: 'POST', data });
 const respondPet    = (id)       => request({ url: '/api/pets/' + id + '/respond', method: 'POST' });
 const getUser       = (id)       => request({ url: '/api/users/' + id });
@@ -116,7 +120,8 @@ module.exports = {
   getHelps, createHelp, respondHelp,
   getRentals, createRental,
   getSams, createSam, joinSam,
-  getPets, createPet, respondPet,
+  getCarpools, createCarpool, joinCarpool,
+  getPets, getPetDetail, createPet, respondPet,
   getUser, updateUser, getUserStats,
   getBanners, getMyFavorites, getReports, createReport, getFeedbacks, createFeedback,
   uploadImage, uploadImages,

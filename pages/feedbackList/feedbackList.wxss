@@ -1,5 +1,5 @@
 /* pages/feedbackList/feedbackList.wxss */
-.page { min-height: 100vh; background: #f5f6fa; }
+.page { min-height: 100vh; background: #F7F8F3; }
 .scroll-content { height: 100vh; }
 
 .feedback-item {
@@ -22,14 +22,14 @@
   padding: 6rpx 16rpx;
   border-radius: 8rpx;
 }
-.type-feature { background: rgba(200,255,0,0.15); color: #7A9900; }
-.type-bug { background: rgba(250,81,81,0.1); color: #fa5151; }
-.type-other { background: rgba(0,0,0,0.05); color: #999; }
-.fb-time { font-size: 22rpx; color: #bbb; }
+.type-feature { background: rgba(91, 140, 62,0.15); color: #5B8C3E; }
+.type-bug { background: rgba(232, 99, 111,0.1); color: #E8636F; }
+.type-other { background: rgba(0,0,0,0.05); color: #AAAAAA; }
+.fb-time { font-size: 22rpx; color: #AAAAAA; }
 
 .fb-content {
   font-size: 28rpx;
-  color: #333;
+  color: #1A1A1A;
   line-height: 1.7;
   display: block;
   margin-bottom: 16rpx;
@@ -40,17 +40,17 @@
   justify-content: space-between;
   align-items: center;
   padding-top: 16rpx;
-  border-top: 1rpx solid #f5f5f5;
+  border-top: 1rpx solid #F5F5F0;
 }
-.fb-user { font-size: 24rpx; color: #999; }
-.fb-contact { font-size: 24rpx; color: #10aeff; }
+.fb-user { font-size: 24rpx; color: #AAAAAA; }
+.fb-contact { font-size: 24rpx; color: #4A90D9; }
 
 .empty-state {
   display: flex;
   justify-content: center;
   padding: 120rpx 0;
 }
-.empty-text { font-size: 28rpx; color: #999; }
+.empty-text { font-size: 28rpx; color: #AAAAAA; }
 
 .load-tip {
   text-align: center;

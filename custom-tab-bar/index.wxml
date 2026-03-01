@@ -1,25 +1,30 @@
-<view class="tab-bar-wrap safe-bottom">
-  <view class="tab-bar-inner">
-    <!-- 左侧胶囊导航 -->
-    <view class="tab-pill">
-      <view class="pill-item {{selected === 0 ? 'active' : ''}}" bindtap="switchTab" data-path="/pages/index/index" data-index="0">
-        <icon name="home" size="42" color="{{selected === 0 ? '#1A1A1A' : '#BBBBBB'}}" filled="{{selected === 0}}"></icon>
-      </view>
-      <view class="pill-item msg-pill {{selected === 1 ? 'active' : ''}}" bindtap="switchTab" data-path="/pages/chat/chat" data-index="1">
-        <icon name="message-circle" size="42" color="{{selected === 1 ? '#1A1A1A' : '#BBBBBB'}}" filled="{{selected === 1}}"></icon>
-        <view class="unread-badge" wx:if="{{unreadCount > 0}}">
-          <text>{{unreadCount > 99 ? '99+' : unreadCount}}</text>
-        </view>
-      </view>
+<view class="tab-bar safe-bottom">
+  <view class="tab-item {{selected === 0 ? 'active' : ''}}" bindtap="switchTab" data-path="/pages/index/index" data-index="0">
+    <icon name="home" size="44" color="{{selected === 0 ? '#5B8C3E' : '#BBBBBB'}}" filled="{{selected === 0}}"></icon>
+    <text>首页</text>
+  </view>
 
-      <view class="pill-item {{selected === 2 ? 'active' : ''}}" bindtap="switchTab" data-path="/pages/mine/mine" data-index="2">
-        <icon name="user" size="42" color="{{selected === 2 ? '#1A1A1A' : '#BBBBBB'}}" filled="{{selected === 2}}"></icon>
-      </view>
-    </view>
+  <view class="tab-item {{selected === 1 ? 'active' : ''}}" bindtap="switchTab" data-path="/pages/category/category" data-index="1">
+    <icon name="storefront" size="44" color="{{selected === 1 ? '#5B8C3E' : '#BBBBBB'}}" filled="{{selected === 1}}"></icon>
+    <text>广场</text>
+  </view>
 
-    <!-- 右侧发布按钮 -->
-    <view class="publish-fab" bindtap="goPage" data-path="/pages/publish/publish">
-      <icon name="plus" size="48" color="#ffffff"></icon>
+  <view class="tab-center" bindtap="goPage" data-path="/pages/publish/publish">
+    <view class="fab-btn">
+      <icon name="plus" size="52" color="#fff"></icon>
     </view>
+  </view>
+
+  <view class="tab-item msg-tab {{selected === 2 ? 'active' : ''}}" bindtap="switchTab" data-path="/pages/chat/chat" data-index="2">
+    <icon name="message-circle" size="44" color="{{selected === 2 ? '#5B8C3E' : '#BBBBBB'}}" filled="{{selected === 2}}"></icon>
+    <text>消息</text>
+    <view class="unread-badge" wx:if="{{unreadCount > 0}}">
+      <text>{{unreadCount > 99 ? '99+' : unreadCount}}</text>
+    </view>
+  </view>
+
+  <view class="tab-item {{selected === 3 ? 'active' : ''}}" bindtap="switchTab" data-path="/pages/mine/mine" data-index="3">
+    <icon name="user" size="44" color="{{selected === 3 ? '#5B8C3E' : '#BBBBBB'}}" filled="{{selected === 3}}"></icon>
+    <text>我的</text>
   </view>
 </view>

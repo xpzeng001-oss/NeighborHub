@@ -1,9 +1,9 @@
 <!--pages/mine/mine.wxml-->
 <view class="page">
   <scroll-view scroll-y class="scroll-content">
+    <view style="height: {{statusBarHeight}}px;"></view>
     <!-- 用户信息卡片 -->
     <view class="profile-card">
-      <view class="profile-bg"></view>
       <view class="profile-content" wx:if="{{userInfo}}">
         <image class="avatar" src="{{userInfo.avatarUrl || '/images/avatar-placeholder.png'}}" mode="aspectFill" bindtap="goSettings"></image>
         <view class="user-info" bindtap="goSettings">
@@ -36,10 +36,6 @@
         <text class="stat-num">{{stats.published}}</text>
         <text class="stat-label">发布</text>
       </view>
-      <view class="stat-item" bindtap="goMyFav">
-        <text class="stat-num">{{stats.favorites}}</text>
-        <text class="stat-label">收藏</text>
-      </view>
       <view class="stat-item">
         <text class="stat-num">{{stats.sold}}</text>
         <text class="stat-label">已售</text>
@@ -56,17 +52,17 @@
       <view class="menu-item" bindtap="goMyPublish">
         <icon name="package" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">我的发布</text>
-        <text class="menu-arrow">›</text>
+        <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
       </view>
       <view class="menu-item" bindtap="goMyFav">
         <icon name="heart" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">我的收藏</text>
-        <text class="menu-arrow">›</text>
+        <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
       </view>
       <view class="menu-item" bindtap="goMyHelp">
         <icon name="handshake" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">我的帮忙</text>
-        <text class="menu-arrow">›</text>
+        <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
       </view>
     </view>
 
@@ -78,7 +74,7 @@
           <text class="menu-text">楼栋认证</text>
           <view class="menu-right">
             <text class="verify-status {{isVerified ? 'verified' : ''}}">{{isVerified ? userInfo.building : '未认证'}}</text>
-            <text class="menu-arrow">›</text>
+            <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
           </view>
         </view>
       </picker>
@@ -87,13 +83,13 @@
         <text class="menu-text">我的信用</text>
         <view class="menu-right">
           <text class="credit-level">{{creditLevel}}</text>
-          <text class="menu-arrow">›</text>
+          <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
         </view>
       </view>
       <view class="menu-item" bindtap="goReport">
         <icon name="alert-triangle" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">举报记录</text>
-        <text class="menu-arrow">›</text>
+        <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
       </view>
     </view>
 
@@ -102,18 +98,18 @@
       <view class="menu-item share-wrap">
         <icon name="share" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">分享给邻居</text>
-        <text class="menu-arrow">›</text>
+        <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
         <button class="share-btn-hidden" open-type="share"></button>
       </view>
       <view class="menu-item" bindtap="goFeedback">
         <icon name="lightbulb" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">意见反馈</text>
-        <text class="menu-arrow">›</text>
+        <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
       </view>
       <view class="menu-item" bindtap="goAbout">
         <icon name="clipboard" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">关于我们</text>
-        <text class="menu-arrow">›</text>
+        <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
       </view>
     </view>
 
@@ -123,7 +119,7 @@
       <view class="menu-item" bindtap="goFeedbackList">
         <icon name="message-circle" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">用户反馈</text>
-        <text class="menu-arrow">›</text>
+        <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
       </view>
     </view>
 

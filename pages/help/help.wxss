@@ -1,58 +1,90 @@
 /* pages/help/help.wxss */
-.page { background: #f5f6fa; min-height: 100vh; }
+.page { background: #F7F8F3; min-height: 100vh; }
 .scroll-content { height: 100vh; }
 
-.help-list { padding: 20rpx 24rpx; }
+.help-list { padding: 16rpx 32rpx; }
 .help-card {
   background: #fff;
-  border-radius: 16rpx;
-  padding: 28rpx;
-  margin-bottom: 16rpx;
+  border-radius: 20rpx;
+  padding: 32rpx;
+  margin-bottom: 20rpx;
   box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
 }
 
-.help-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20rpx; }
+/* 头部：头像 + 名称 + 紧急标签 */
+.help-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24rpx; }
 .help-user { display: flex; align-items: center; gap: 16rpx; }
-.help-avatar { width: 72rpx; height: 72rpx; border-radius: 50%; background: #f0f0f0; }
-.help-name { font-size: 28rpx; font-weight: 500; color: #333; display: block; }
-.help-building { font-size: 22rpx; color: #999; }
-.urgent-tag { font-size: 22rpx; color: #fa5151; background: rgba(250,81,81,0.08); padding: 6rpx 16rpx; border-radius: 8rpx; font-weight: 500; display: inline-flex; align-items: center; gap: 2rpx; }
+.help-avatar { width: 72rpx; height: 72rpx; border-radius: 50%; background: #F7F8F3; }
+.help-name { font-size: 28rpx; font-weight: 600; color: #1A1A1A; display: block; }
+.help-building { font-size: 22rpx; color: #AAAAAA; }
+.urgent-tag {
+  font-size: 22rpx;
+  color: #E8636F;
+  background: rgba(232, 99, 111, 0.08);
+  padding: 8rpx 18rpx;
+  border-radius: 20rpx;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4rpx;
+}
 
-.help-title { font-size: 32rpx; font-weight: 600; color: #222; display: block; margin-bottom: 12rpx; }
-.help-desc { font-size: 26rpx; color: #666; line-height: 1.6; display: block; }
+/* 内容 */
+.help-title { font-size: 32rpx; font-weight: 700; color: #1A1A1A; display: block; margin-bottom: 12rpx; line-height: 1.4; }
+.help-desc { font-size: 26rpx; color: #AAAAAA; line-height: 1.7; display: block; }
 
-.help-footer { display: flex; justify-content: space-between; margin-top: 20rpx; }
-.help-time { font-size: 22rpx; color: #ccc; }
-.help-deadline { font-size: 22rpx; color: #ff976a; }
+/* 时间 + 截止 */
+.help-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20rpx; }
+.help-time { font-size: 22rpx; color: #AAAAAA; }
+.help-deadline {
+  font-size: 22rpx;
+  color: #E8883C;
+  background: rgba(232, 136, 60, 0.08);
+  padding: 6rpx 16rpx;
+  border-radius: 16rpx;
+}
 
-.help-actions { display: flex; gap: 16rpx; margin-top: 20rpx; justify-content: flex-end; }
+/* 操作按钮 */
+.help-actions { display: flex; gap: 16rpx; margin-top: 24rpx; }
 .btn-help, .btn-contact {
-  height: 68rpx; line-height: 68rpx; text-align: center;
-  font-size: 26rpx; border-radius: 12rpx;
-  padding: 0 36rpx !important; margin: 0 !important;
+  flex: 1;
+  height: 72rpx; line-height: 72rpx; text-align: center;
+  font-size: 26rpx; font-weight: 600; border-radius: 16rpx;
+  padding: 0 !important; margin: 0 !important;
   box-sizing: border-box;
 }
 .btn-help {
-  background: #1A1A1A; color: #fff; border: none;
+  background: #5B8C3E; color: #fff; border: none;
 }
 .btn-help::after { border: none; }
 .btn-helped {
-  background: #e0e0e0; color: #999;
+  background: #F5F5F0; color: #AAAAAA;
 }
 .btn-helped[disabled] {
-  background: #e0e0e0; color: #999;
+  background: #F5F5F0; color: #AAAAAA;
 }
 .btn-contact {
-  background: #fff; color: #1A1A1A; border: 2rpx solid #1A1A1A;
+  background: #F7F8F3; color: #1A1A1A; border: none;
 }
 .btn-contact::after { border: none; }
 
-.fab-btn {
-  position: fixed; right: 40rpx; bottom: 60rpx;
-  width: 100rpx; height: 100rpx;
-  background: #1A1A1A;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 44rpx;
-  box-shadow: 0 8rpx 30rpx rgba(26, 26, 26, 0.3);
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 300rpx;
+  gap: 20rpx;
 }
+.empty-state .text { font-size: 28rpx; color: #AAAAAA; }
+
+/* 发布按钮 */
+.fab-btn {
+  position: fixed; right: 40rpx; bottom: 120rpx;
+  width: 100rpx; height: 100rpx;
+  background: linear-gradient(135deg, #7CB342 0%, #5B8C3E 100%);
+  border-radius: 28rpx;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(91, 140, 62, 0.4);
+}
+.fab-btn:active { opacity: 0.85; }

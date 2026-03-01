@@ -1,5 +1,5 @@
 /* pages/feedback/feedback.wxss */
-.page { min-height: 100vh; background: #f5f6fa; }
+.page { min-height: 100vh; background: #F7F8F3; }
 
 .section {
   background: #fff;
@@ -11,10 +11,10 @@
 .section-title {
   font-size: 28rpx;
   font-weight: 600;
-  color: #333;
+  color: #1A1A1A;
   margin-bottom: 20rpx;
 }
-.optional { font-size: 24rpx; color: #999; font-weight: 400; }
+.optional { font-size: 24rpx; color: #AAAAAA; font-weight: 400; }
 
 .type-list { display: flex; gap: 16rpx; }
 .type-item {
@@ -23,14 +23,14 @@
   padding: 16rpx 0;
   font-size: 26rpx;
   color: #666;
-  background: #f5f6fa;
+  background: #F7F8F3;
   border-radius: 12rpx;
   border: 2rpx solid transparent;
 }
 .type-item.active {
   color: #1A1A1A;
-  background: #f0ffe0;
-  border-color: #C8FF00;
+  background: #EFF6E8;
+  border-color: #7CB342;
   font-weight: 600;
 }
 
@@ -38,7 +38,7 @@
   width: 100%;
   height: 240rpx;
   font-size: 28rpx;
-  color: #333;
+  color: #1A1A1A;
   padding: 0;
   box-sizing: border-box;
 }
@@ -51,13 +51,13 @@
 
 .contact-input {
   font-size: 28rpx;
-  color: #333;
+  color: #1A1A1A;
   padding: 16rpx 0;
 }
 
 .btn-wrap { padding: 40rpx 24rpx; }
 .submit-btn {
-  background: #1A1A1A;
+  background: #5B8C3E;
   color: #fff;
   font-size: 30rpx;
   font-weight: 600;

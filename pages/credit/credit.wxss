@@ -1,4 +1,4 @@
-.page { min-height: 100vh; background: #f5f6fa; }
+.page { min-height: 100vh; background: #F7F8F3; }
 
 .score-card {
   display: flex;
@@ -9,7 +9,7 @@
   color: #fff;
 }
 .score-num { font-size: 96rpx; font-weight: 700; line-height: 1; }
-.score-label { font-size: 26rpx; color: #aaa; margin-top: 8rpx; }
+.score-label { font-size: 26rpx; color: #AAAAAA; margin-top: 8rpx; }
 .level-badge {
   margin-top: 24rpx;
   padding: 8rpx 32rpx;
@@ -25,7 +25,7 @@
 .section-title {
   font-size: 30rpx;
   font-weight: 600;
-  color: #333;
+  color: #1A1A1A;
   margin-bottom: 24rpx;
 }
 
@@ -36,11 +36,11 @@
   flex-direction: column;
   align-items: center;
   padding: 20rpx 0;
-  background: #f8f8fa;
+  background: #F5F5F0;
   border-radius: 12rpx;
   gap: 8rpx;
 }
-.level-range { font-size: 24rpx; color: #999; }
+.level-range { font-size: 24rpx; color: #AAAAAA; }
 .level-name { font-size: 26rpx; font-weight: 600; }
 
 .rule-item {
@@ -48,12 +48,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 20rpx 0;
-  border-bottom: 1rpx solid #f5f5f5;
+  border-bottom: 1rpx solid #F5F5F0;
 }
 .rule-item:last-child { border-bottom: none; }
 .rule-left { display: flex; flex-direction: column; gap: 6rpx; }
-.rule-action { font-size: 28rpx; color: #333; }
-.rule-desc { font-size: 22rpx; color: #999; }
+.rule-action { font-size: 28rpx; color: #1A1A1A; }
+.rule-desc { font-size: 22rpx; color: #AAAAAA; }
 .rule-point { font-size: 30rpx; font-weight: 600; }
-.rule-point.plus { color: #52c41a; }
-.rule-point.minus { color: #ff4d4f; }
+.rule-point.plus { color: #5B8C3E; }
+.rule-point.minus { color: #E8636F; }
