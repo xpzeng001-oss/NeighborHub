@@ -82,8 +82,12 @@ const respondHelp   = (id)       => request({ url: '/api/helps/' + id + '/respon
 const getRentals    = (params)   => request({ url: '/api/rentals', data: params });
 const createRental  = (data)     => request({ url: '/api/rentals', method: 'POST', data });
 const getSams       = (params)   => request({ url: '/api/sams', data: params });
+const getSamDetail  = (id)       => request({ url: '/api/sams/' + id });
 const createSam     = (data)     => request({ url: '/api/sams', method: 'POST', data });
 const joinSam       = (id)       => request({ url: '/api/sams/' + id + '/join', method: 'POST' });
+const updateShoppingList  = (id, data)          => request({ url: '/api/sams/' + id + '/shopping-list', method: 'PUT', data });
+const postSamUpdate       = (id, data)          => request({ url: '/api/sams/' + id + '/updates', method: 'POST', data });
+const updatePickupStatus  = (id, userId, data)  => request({ url: '/api/sams/' + id + '/participants/' + userId + '/pickup', method: 'PUT', data });
 const getCarpools   = (params)   => request({ url: '/api/carpools', data: params });
 const createCarpool = (data)     => request({ url: '/api/carpools', method: 'POST', data });
 const joinCarpool   = (id)       => request({ url: '/api/carpools/' + id + '/join', method: 'POST' });
@@ -119,7 +123,7 @@ module.exports = {
   getPosts, getPost, createPost, likePost, addComment,
   getHelps, createHelp, respondHelp,
   getRentals, createRental,
-  getSams, createSam, joinSam,
+  getSams, getSamDetail, createSam, joinSam, updateShoppingList, postSamUpdate, updatePickupStatus,
   getCarpools, createCarpool, joinCarpool,
   getPets, getPetDetail, createPet, respondPet,
   getUser, updateUser, getUserStats,

@@ -1,0 +1,213 @@
+<view class="page">
+  <!-- 自定义导航栏 -->
+  <view style="height: {{statusBarHeight}}px;"></view>
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="goBack">
+      <icon name="arrow-left" size="36" color="#1A1A1A"></icon>
+    </view>
+    <text class="nav-title">拼单详情</text>
+  </view>
+
+  <scroll-view scroll-y class="scroll-content" wx:if="{{detail}}">
+    <!-- 主卡片：状态 + 标题 + 发起人 + 描述 -->
+    <view class="main-card">
+      <view class="status-badge status-{{statusInfo.cls}}">
+        <text>{{statusInfo.label}}</text>
+      </view>
+      <text class="detail-title">{{detail.title}}</text>
+      <view class="author-row">
+        <image class="author-avatar" src="{{detail.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+        <view class="author-info">
+          <text class="author-name">{{detail.userName}}</text>
+          <text class="author-building">{{detail.building}}</text>
+        </view>
+        <text class="publish-time">{{detail.createdAt}}</text>
+      </view>
+      <text class="detail-desc">{{detail.description}}</text>
+    </view>
+
+    <!-- 信息卡片 -->
+    <view class="info-card">
+      <view class="info-item" wx:if="{{detail.deadline}}">
+        <icon name="clock" size="32" color="#A47764"></icon>
+        <view class="info-content">
+          <text class="info-label">截止时间</text>
+          <text class="info-value">{{detail.deadline}}</text>
+        </view>
+      </view>
+      <view class="info-item" wx:if="{{detail.pickupMethod}}">
+        <icon name="map-pin" size="32" color="#A47764"></icon>
+        <view class="info-content">
+          <text class="info-label">取货方式</text>
+          <text class="info-value">{{detail.pickupMethod}}</text>
+        </view>
+      </view>
+      <view class="info-item" wx:if="{{detail.minAmount}}">
+        <icon name="tag" size="32" color="#A47764"></icon>
+        <view class="info-content">
+          <text class="info-label">起拼金额</text>
+          <text class="info-value highlight-value">¥{{detail.minAmount}}</text>
+        </view>
+      </view>
+      <view class="progress-row">
+        <view class="progress-bar">
+          <view class="progress-fill" style="width: {{detail.currentCount / detail.targetCount * 100}}%"></view>
+        </view>
+        <text class="progress-text">{{detail.currentCount}}/{{detail.targetCount}}人参与</text>
+      </view>
+    </view>
+
+    <!-- 进度更新（时间线） -->
+    <view class="section-card" wx:if="{{updates.length > 0 || isOrganizer}}">
+      <view class="section-header">
+        <text class="section-title">进度更新</text>
+        <view class="section-action" bindtap="openUpdateModal" wx:if="{{isOrganizer}}">
+          <icon name="plus" size="24" color="#A47764"></icon>
+          <text>发布更新</text>
+        </view>
+      </view>
+      <view class="timeline" wx:if="{{updates.length > 0}}">
+        <view class="timeline-item" wx:for="{{updates}}" wx:key="id">
+          <view class="timeline-dot"></view>
+          <view class="timeline-body">
+            <view class="timeline-tag" wx:if="{{item.statusTag}}">
+              {{item.statusTag === 'purchasing' ? '采购中' : item.statusTag === 'arrived' ? '已到货' : item.statusTag === 'ready_pickup' ? '可取货' : ''}}
+            </view>
+            <text class="timeline-text">{{item.content}}</text>
+            <text class="timeline-time">{{item.createdAt}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="empty-hint" wx:else>
+        <text>暂无更新</text>
+      </view>
+    </view>
+
+    <!-- 参与成员 -->
+    <view class="section-card">
+      <view class="section-header">
+        <view class="section-header-left">
+          <text class="section-title">参与成员</text>
+          <text class="section-count">{{participants.length}}人</text>
+        </view>
+        <view class="section-action" bindtap="toggleAggregatedList" wx:if="{{isOrganizer && participants.length > 0}}">
+          <icon name="clipboard" size="24" color="#A47764"></icon>
+          <text>{{showAggregatedList ? '收起清单' : '查看清单'}}</text>
+        </view>
+      </view>
+
+      <!-- 简洁视图：头像列表 -->
+      <view class="members-list" wx:if="{{participants.length > 0 && !showAggregatedList}}">
+        <view class="member-item" wx:for="{{participants}}" wx:key="userId">
+          <view class="member-avatar-wrap">
+            <image class="member-avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+            <view class="pickup-dot picked" wx:if="{{item.pickupStatus === 'picked_up'}}"></view>
+          </view>
+          <text class="member-name">{{item.userName}}</text>
+        </view>
+      </view>
+
+      <!-- 汇总清单视图（团长） -->
+      <view class="agg-list" wx:if="{{showAggregatedList}}">
+        <view class="agg-item" wx:for="{{participants}}" wx:key="userId">
+          <view class="agg-header">
+            <image class="agg-avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+            <view class="agg-info">
+              <text class="agg-name">{{item.userName}}</text>
+              <text class="agg-building">{{item.building}}</text>
+            </view>
+            <view class="pickup-toggle {{item.pickupStatus === 'picked_up' ? 'picked' : ''}}"
+                  bindtap="togglePickup" data-user-id="{{item.userId}}" data-status="{{item.pickupStatus}}">
+              <icon name="check" size="24" color="{{item.pickupStatus === 'picked_up' ? '#fff' : '#AAAAAA'}}"></icon>
+              <text>{{item.pickupStatus === 'picked_up' ? '已取货' : '未取货'}}</text>
+            </view>
+          </view>
+          <view class="agg-content" wx:if="{{item.shoppingList}}">
+            <text>{{item.shoppingList}}</text>
+          </view>
+          <view class="agg-empty" wx:else>
+            <text>未提交清单</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="empty-hint" wx:if="{{participants.length === 0}}">
+        <text>暂无人参与，快来第一个吧</text>
+      </view>
+    </view>
+
+    <!-- 我的采购清单（已参与时显示） -->
+    <view class="section-card" wx:if="{{isJoined}}">
+      <view class="section-header">
+        <text class="section-title">我的采购清单</text>
+        <view class="section-action" bindtap="openListModal">
+          <icon name="pencil" size="24" color="#A47764"></icon>
+          <text>{{myShoppingList ? '编辑' : '填写'}}</text>
+        </view>
+      </view>
+      <view class="my-list-content" wx:if="{{myShoppingList}}">
+        <text>{{myShoppingList}}</text>
+      </view>
+      <view class="empty-hint" wx:else>
+        <text>点击右上角填写你想买的东西</text>
+      </view>
+    </view>
+
+    <view style="height: 200rpx;"></view>
+  </scroll-view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar safe-bottom" wx:if="{{detail}}">
+    <!-- 非团长：私信按钮 -->
+    <view class="btn-msg" bindtap="onContact" wx:if="{{!isOrganizer}}">
+      <icon name="message-circle" size="36" color="#1A1A1A"></icon>
+      <text>私信</text>
+    </view>
+    <!-- 非团长 + 未加入 + 拼单中：加入按钮 -->
+    <view class="btn-action" bindtap="onJoin" wx:if="{{!isOrganizer && !isJoined && detail.status === 'open'}}">
+      <text>我要拼单</text>
+    </view>
+    <!-- 非团长 + 已加入：已拼单（禁用）+ 填写清单 -->
+    <view class="btn-action btn-disabled" wx:if="{{!isOrganizer && isJoined}}">
+      <text>已拼单</text>
+    </view>
+    <view class="btn-action btn-secondary" bindtap="openListModal" wx:if="{{isJoined && !isOrganizer}}">
+      <text>{{myShoppingList ? '修改清单' : '填写清单'}}</text>
+    </view>
+    <!-- 团长：发布进度更新 -->
+    <view class="btn-action" bindtap="openUpdateModal" wx:if="{{isOrganizer}}">
+      <text>发布进度更新</text>
+    </view>
+  </view>
+
+  <!-- 弹窗：采购清单 -->
+  <view class="modal-mask" wx:if="{{showListModal}}" bindtap="closeListModal">
+    <view class="modal-content" catchtap="">
+      <text class="modal-title">我的采购清单</text>
+      <textarea class="modal-textarea" placeholder="写下你想买的东西，如：\n- 瑞士卷 x2\n- A5和牛 1kg\n- 可颂 x3"
+                value="{{listInput}}" bindinput="onListInput" maxlength="500" auto-height />
+      <view class="modal-actions">
+        <view class="modal-btn cancel" bindtap="closeListModal">取消</view>
+        <view class="modal-btn confirm" bindtap="submitShoppingList">提交</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 弹窗：进度更新（团长） -->
+  <view class="modal-mask" wx:if="{{showUpdateModal}}" bindtap="closeUpdateModal">
+    <view class="modal-content" catchtap="">
+      <text class="modal-title">发布进度更新</text>
+      <view class="update-tags">
+        <view class="update-tag {{updateTag === 'purchasing' ? 'active' : ''}}" bindtap="selectUpdateTag" data-tag="purchasing">采购中</view>
+        <view class="update-tag {{updateTag === 'arrived' ? 'active' : ''}}" bindtap="selectUpdateTag" data-tag="arrived">已到货</view>
+        <view class="update-tag {{updateTag === 'ready_pickup' ? 'active' : ''}}" bindtap="selectUpdateTag" data-tag="ready_pickup">可取货</view>
+      </view>
+      <textarea class="modal-textarea" placeholder="如：已经到山姆，正在采购中..."
+                value="{{updateInput}}" bindinput="onUpdateInput" maxlength="256" auto-height />
+      <view class="modal-actions">
+        <view class="modal-btn cancel" bindtap="closeUpdateModal">取消</view>
+        <view class="modal-btn confirm" bindtap="submitUpdate">发布</view>
+      </view>
+    </view>
+  </view>
+</view>

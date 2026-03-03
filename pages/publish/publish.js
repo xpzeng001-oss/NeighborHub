@@ -303,7 +303,7 @@ Page({
           tags: form.petTags
         });
       } else if (publishType === 'sam') {
-        await api.createSam({
+        const samResult = await api.createSam({
           title: form.title,
           description: form.description,
           deadline: form.samDeadline,
@@ -311,6 +311,17 @@ Page({
           minAmount: form.samMinAmount,
           targetCount: form.samTargetCount
         });
+        wx.hideLoading();
+        wx.showToast({ title: '发布成功！', icon: 'success' });
+        setTimeout(() => {
+          const newId = samResult && samResult.id;
+          if (newId) {
+            wx.redirectTo({ url: '/pages/samDetail/samDetail?id=' + newId });
+          } else {
+            wx.navigateBack();
+          }
+        }, 1500);
+        return;
       } else if (publishType === 'carpool') {
         await api.createCarpool({
           type: form.carpoolType,
