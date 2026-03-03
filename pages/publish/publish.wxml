@@ -7,19 +7,19 @@
       <view class="nav-back" bindtap="goBack">
         <icon name="arrow-left" size="36" color="#1A1A1A"></icon>
       </view>
-      <view class="nav-title">发布</view>
+      <view class="nav-title">{{lockedType ? (publishType === 'carpool' ? '发布拼车' : publishType === 'pet' ? '发布宠物喂养' : publishType === 'sam' ? '发布山姆拼单' : publishType === 'help' ? '发布求帮忙' : publishType === 'post' ? '发布帖子' : publishType === 'free' ? '发布免费送' : '发布') : '发布'}}</view>
     </view>
   </view>
 
-  <!-- 发布类型选择 -->
-  <scroll-view scroll-x class="type-scroll" enhanced show-scrollbar="{{false}}">
+  <!-- 发布类型选择（从子页面进入时隐藏） -->
+  <scroll-view scroll-x class="type-scroll" enhanced show-scrollbar="{{false}}" wx:if="{{!lockedType}}">
     <view class="type-tabs">
       <view class="type-tab {{publishType === 'product' ? 'active' : ''}}" bindtap="switchType" data-type="product">
-        <icon name="package" size="28" color="{{publishType === 'product' ? '#fff' : '#5B8C3E'}}"></icon>
+        <icon name="package" size="28" color="{{publishType === 'product' ? '#fff' : '#A47764'}}"></icon>
         <text>闲置物品</text>
       </view>
       <view class="type-tab {{publishType === 'free' ? 'active' : ''}}" bindtap="switchType" data-type="free">
-        <icon name="gift" size="28" color="{{publishType === 'free' ? '#fff' : '#E8883C'}}"></icon>
+        <icon name="gift" size="28" color="{{publishType === 'free' ? '#fff' : '#C59A84'}}"></icon>
         <text>免费送</text>
       </view>
       <view class="type-tab {{publishType === 'post' ? 'active' : ''}}" bindtap="switchType" data-type="post">
@@ -176,7 +176,7 @@
       <view class="form-section">
         <view class="form-item">
           <text class="form-label">是否紧急</text>
-          <switch checked="{{form.isUrgent}}" bindchange="onUrgentChange" color="#7CB342"/>
+          <switch checked="{{form.isUrgent}}" bindchange="onUrgentChange" color="#A47764"/>
         </view>
       </view>
     </view>
@@ -233,7 +233,7 @@
               <text>寻求喂养</text>
             </view>
             <view class="pet-type-option {{form.petPostType === 'offer' ? 'active type-offer' : ''}}" bindtap="onPetTypeChange" data-type="offer">
-              <icon name="heart" size="28" color="{{form.petPostType === 'offer' ? '#5B8C3E' : '#888'}}"></icon>
+              <icon name="heart" size="28" color="{{form.petPostType === 'offer' ? '#A47764' : '#888'}}"></icon>
               <text>可以帮喂</text>
             </view>
             <view class="pet-type-option {{form.petPostType === 'social' ? 'active type-social' : ''}}" bindtap="onPetTypeChange" data-type="social">
@@ -299,6 +299,89 @@
             </view>
             <input class="tag-input" placeholder="{{form.petTags.length >= 5 ? '最多5个标签' : '输入标签后按确认添加'}}" maxlength="8" bindinput="onTagInput" bindconfirm="addPetTag" value="{{tagInputValue}}" disabled="{{form.petTags.length >= 5}}"/>
           </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 拼车顺路表单 -->
+    <view wx:if="{{publishType === 'carpool'}}">
+      <!-- 拼车类型 -->
+      <view class="form-section">
+        <view class="form-item-col">
+          <text class="form-label">拼车类型</text>
+          <view class="pet-type-selector">
+            <view class="pet-type-option {{form.carpoolType === 'offer' ? 'active type-offer' : ''}}" bindtap="onCarpoolTypeChange" data-type="offer">
+              <icon name="car" size="28" color="{{form.carpoolType === 'offer' ? '#A47764' : '#888'}}"></icon>
+              <text>有车带人</text>
+            </view>
+            <view class="pet-type-option {{form.carpoolType === 'seek' ? 'active type-need' : ''}}" bindtap="onCarpoolTypeChange" data-type="seek">
+              <icon name="map-pin" size="28" color="{{form.carpoolType === 'seek' ? '#E8883C' : '#888'}}"></icon>
+              <text>找车搭乘</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 标题 -->
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">标题</text>
+          <input class="form-input" placeholder="简短描述拼车信息" maxlength="30" bindinput="onInput" data-field="title" value="{{form.title}}"/>
+        </view>
+      </view>
+
+      <!-- 路线 -->
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">出发地</text>
+          <input class="form-input" placeholder="如：翡翠湾小区" maxlength="30" bindinput="onInput" data-field="carpoolFrom" value="{{form.carpoolFrom}}"/>
+        </view>
+        <view class="form-item">
+          <text class="form-label">目的地</text>
+          <input class="form-input" placeholder="如：南站高铁站" maxlength="30" bindinput="onInput" data-field="carpoolTo" value="{{form.carpoolTo}}"/>
+        </view>
+      </view>
+
+      <!-- 日期时间 -->
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">出发日期</text>
+          <picker mode="date" bindchange="onInput" data-field="carpoolDate" value="{{form.carpoolDate}}">
+            <view class="form-value">
+              <text class="{{form.carpoolDate ? '' : 'placeholder'}}">{{form.carpoolDate || '选择日期'}}</text>
+              <icon name="caret-right" size="28" color="#ccc"></icon>
+            </view>
+          </picker>
+        </view>
+        <view class="form-item">
+          <text class="form-label">出发时间</text>
+          <picker mode="time" bindchange="onInput" data-field="carpoolTime" value="{{form.carpoolTime}}">
+            <view class="form-value">
+              <text class="{{form.carpoolTime ? '' : 'placeholder'}}">{{form.carpoolTime || '选择时间'}}</text>
+              <icon name="caret-right" size="28" color="#ccc"></icon>
+            </view>
+          </picker>
+        </view>
+      </view>
+
+      <!-- 座位数 & 费用 -->
+      <view class="form-section">
+        <view class="form-item" wx:if="{{form.carpoolType === 'offer'}}">
+          <text class="form-label">空余座位</text>
+          <input class="form-input" type="number" placeholder="可搭乘人数" bindinput="onInput" data-field="carpoolSeats" value="{{form.carpoolSeats}}"/>
+          <text class="form-unit">座</text>
+        </view>
+        <view class="form-item">
+          <text class="form-label">费用</text>
+          <input class="form-input" placeholder="如：每人¥20 或 免费" maxlength="20" bindinput="onInput" data-field="carpoolFee" value="{{form.carpoolFee}}"/>
+        </view>
+      </view>
+
+      <!-- 详细描述 -->
+      <view class="form-section">
+        <view class="form-item-col">
+          <text class="form-label">详细描述</text>
+          <textarea class="form-textarea" placeholder="描述路线、时间安排等详细信息..." maxlength="500" bindinput="onInput" data-field="description" value="{{form.description}}"/>
         </view>
       </view>
     </view>

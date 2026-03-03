@@ -3,7 +3,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 
 /* 导航栏 */
@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   padding: 0 32rpx;
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 .community-select {
   display: inline-flex;
@@ -31,7 +31,7 @@
 /* 搜索栏 */
 .search-header {
   padding: 28rpx 32rpx 24rpx;
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 .search-input {
   display: flex;
@@ -77,7 +77,7 @@
   align-items: center;
   gap: 8rpx;
   padding: 14rpx 24rpx;
-  background: #EFF6E8;
+  background: #F3E8DA;
   border-radius: 32rpx;
   flex-shrink: 0;
 }
@@ -88,8 +88,8 @@
   white-space: nowrap;
 }
 .type-pill.active {
-  background: #5B8C3E;
-  border-color: #5B8C3E;
+  background: #A47764;
+  border-color: #A47764;
 }
 .type-pill.active text {
   color: #fff;
@@ -121,7 +121,7 @@
   transform: translateX(-50%);
   width: 32rpx;
   height: 6rpx;
-  background: #5B8C3E;
+  background: #A47764;
   border-radius: 3rpx;
 }
 
@@ -155,7 +155,7 @@
   position: absolute;
   top: 12rpx;
   left: 12rpx;
-  background: #E8636F;
+  background: #C59A84;
   color: #fff;
   font-size: 20rpx;
   padding: 4rpx 14rpx;
@@ -182,12 +182,12 @@
 }
 .price {
   font-size: 34rpx;
-  color: #5B8C3E;
+  color: #A47764;
   font-weight: 700;
 }
 .free-price {
   font-size: 28rpx;
-  color: #5B8C3E;
+  color: #C59A84;
 }
 .original-price {
   font-size: 22rpx;
@@ -250,7 +250,7 @@
   font-size: 30rpx;
 }
 .community-option.selected {
-  background: rgba(91, 140, 62, 0.1);
-  color: #5B8C3E;
+  background: rgba(164, 119, 100, 0.1);
+  color: #A47764;
   font-weight: 500;
 }

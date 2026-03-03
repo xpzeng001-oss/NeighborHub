@@ -3,9 +3,9 @@ const app = getApp();
 const api = require('../../utils/api');
 
 const contentTypes = [
-  { id: 'all', name: '全部', icon: 'squares-four', color: '#5B8C3E' },
-  { id: 'product', name: '闲置物品', icon: 'clipboard', color: '#5B8C3E' },
-  { id: 'free', name: '免费送', icon: 'gift', color: '#E8883C' },
+  { id: 'all', name: '全部', icon: 'squares-four', color: '#A47764' },
+  { id: 'product', name: '闲置物品', icon: 'clipboard', color: '#A47764' },
+  { id: 'free', name: '免费送', icon: 'gift', color: '#C59A84' },
   { id: 'new', name: '最新发布', icon: 'clock', color: '#4A90D9' }
 ];
 

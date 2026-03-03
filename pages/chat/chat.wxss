@@ -1,7 +1,7 @@
 /* pages/chat/chat.wxss — 暖色卡片风格 */
 .page {
   min-height: 100vh;
-  background: #F7F8F3;
+  background: #FBF5EC;
   overflow-x: hidden;
   box-sizing: border-box;
 }
@@ -9,7 +9,7 @@
 /* 大标题 */
 .page-header {
   padding: 20rpx 36rpx 24rpx;
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 .page-title {
   font-size: 48rpx;
@@ -23,9 +23,9 @@
   align-items: center;
   margin: 0 28rpx 20rpx;
   padding: 20rpx 28rpx;
-  background: #EFF6E8;
+  background: #F3E8DA;
   border-radius: 16rpx;
-  border: 1rpx solid #D4E8BE;
+  border: 1rpx solid #E3D5BF;
 }
 .banner-icon-wrap {
   margin-right: 12rpx;
@@ -33,7 +33,7 @@
 }
 .banner-text {
   font-size: 26rpx;
-  color: #5B8C3E;
+  color: #A47764;
 }
 .banner-count {
   font-weight: 700;
@@ -72,7 +72,7 @@
   overflow: hidden;
 }
 .conversation-card:active {
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 
 /* 头像 */
@@ -85,7 +85,7 @@
   width: 88rpx;
   height: 88rpx;
   border-radius: 50%;
-  background: #EFF6E8;
+  background: #F3E8DA;
 }
 
 /* 未读角标 */

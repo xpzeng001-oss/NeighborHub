@@ -1,5 +1,5 @@
 /* pages/help/help.wxss */
-.page { background: #F7F8F3; min-height: 100vh; }
+.page { background: #FBF5EC; min-height: 100vh; }
 .scroll-content { height: 100vh; }
 
 .help-list { padding: 16rpx 32rpx; }
@@ -14,7 +14,7 @@
 /* 头部：头像 + 名称 + 紧急标签 */
 .help-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24rpx; }
 .help-user { display: flex; align-items: center; gap: 16rpx; }
-.help-avatar { width: 72rpx; height: 72rpx; border-radius: 50%; background: #F7F8F3; }
+.help-avatar { width: 72rpx; height: 72rpx; border-radius: 50%; background: #FBF5EC; }
 .help-name { font-size: 28rpx; font-weight: 600; color: #1A1A1A; display: block; }
 .help-building { font-size: 22rpx; color: #AAAAAA; }
 .urgent-tag {
@@ -54,17 +54,17 @@
   box-sizing: border-box;
 }
 .btn-help {
-  background: #5B8C3E; color: #fff; border: none;
+  background: #A47764; color: #fff; border: none;
 }
 .btn-help::after { border: none; }
 .btn-helped {
-  background: #F5F5F0; color: #AAAAAA;
+  background: #E3D5BF; color: #AAAAAA;
 }
 .btn-helped[disabled] {
-  background: #F5F5F0; color: #AAAAAA;
+  background: #E3D5BF; color: #AAAAAA;
 }
 .btn-contact {
-  background: #F7F8F3; color: #1A1A1A; border: none;
+  background: #FBF5EC; color: #1A1A1A; border: none;
 }
 .btn-contact::after { border: none; }
 
@@ -82,9 +82,9 @@
 .fab-btn {
   position: fixed; right: 40rpx; bottom: 120rpx;
   width: 100rpx; height: 100rpx;
-  background: linear-gradient(135deg, #7CB342 0%, #5B8C3E 100%);
+  background: linear-gradient(135deg, #C59A84 0%, #A47764 100%);
   border-radius: 28rpx;
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 8rpx 24rpx rgba(91, 140, 62, 0.4);
+  box-shadow: 0 8rpx 24rpx rgba(164, 119, 100, 0.4);
 }
 .fab-btn:active { opacity: 0.85; }

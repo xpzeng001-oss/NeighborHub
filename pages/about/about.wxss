@@ -1,5 +1,5 @@
 /* pages/about/about.wxss */
-.page { min-height: 100vh; background: #F7F8F3; }
+.page { min-height: 100vh; background: #FBF5EC; }
 
 .app-header {
   display: flex;
@@ -12,7 +12,7 @@
   width: 128rpx;
   height: 128rpx;
   border-radius: 28rpx;
-  background: #7CB342;
+  background: #A47764;
   color: #1A1A1A;
   font-size: 64rpx;
   font-weight: 700;
@@ -55,7 +55,7 @@
   display: flex;
   align-items: center;
   padding: 20rpx 0;
-  border-bottom: 1rpx solid #F5F5F0;
+  border-bottom: 1rpx solid #E3D5BF;
 }
 .feature-item:last-child { border-bottom: none; }
 .feature-icon-wrap {
@@ -77,12 +77,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 20rpx 0;
-  border-bottom: 1rpx solid #F5F5F0;
+  border-bottom: 1rpx solid #E3D5BF;
 }
 .contact-row:last-child { border-bottom: none; }
 .contact-label { font-size: 28rpx; color: #1A1A1A; }
 .contact-value { font-size: 28rpx; color: #AAAAAA; }
-.contact-value.link { color: #5B8C3E; }
+.contact-value.link { color: #A47764; }
 
 .footer {
   text-align: center;

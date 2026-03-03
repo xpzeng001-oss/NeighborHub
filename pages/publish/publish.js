@@ -19,6 +19,7 @@ Page({
   data: {
     statusBarHeight: 44,
     publishType: 'product',
+    lockedType: false,    // 从子页面进入时锁定类型，隐藏 tab 栏
     imageList: [],
     categoryNames: categories.map(c => c.name),
     tagInputValue: '',
@@ -42,17 +43,24 @@ Page({
       samDeadline: '',
       samPickupMethod: '',
       samMinAmount: '',
-      samTargetCount: ''
+      samTargetCount: '',
+      carpoolType: 'offer',
+      carpoolFrom: '',
+      carpoolTo: '',
+      carpoolDate: '',
+      carpoolTime: '',
+      carpoolSeats: '',
+      carpoolFee: ''
     }
   },
 
   onLoad(options) {
     const sysInfo = wx.getSystemInfoSync();
     const data = { statusBarHeight: sysInfo.statusBarHeight || 44 };
-    if (options.type === 'pet') {
-      data.publishType = 'pet';
-    } else if (options.type === 'sam') {
-      data.publishType = 'sam';
+    const validTypes = ['product', 'free', 'post', 'help', 'pet', 'sam', 'carpool'];
+    if (options.type && validTypes.indexOf(options.type) !== -1) {
+      data.publishType = options.type;
+      data.lockedType = true;
     }
     this.setData(data);
   },
@@ -65,6 +73,7 @@ Page({
   },
 
   switchType(e) {
+    if (this.data.lockedType) return;
     const type = e.currentTarget.dataset.type;
     this.setData({
       publishType: type,
@@ -90,7 +99,14 @@ Page({
         samDeadline: '',
         samPickupMethod: '',
         samMinAmount: '',
-        samTargetCount: ''
+        samTargetCount: '',
+        carpoolType: 'offer',
+        carpoolFrom: '',
+        carpoolTo: '',
+        carpoolDate: '',
+        carpoolTime: '',
+        carpoolSeats: '',
+        carpoolFee: ''
       }
     });
   },
@@ -179,6 +195,10 @@ Page({
     this.setData({ 'form.petTags': tags });
   },
 
+  onCarpoolTypeChange(e) {
+    this.setData({ 'form.carpoolType': e.currentTarget.dataset.type });
+  },
+
   showPostCategoryPicker() {
     const cats = ['吐槽', '求助', '活动', '公告'];
     wx.showActionSheet({
@@ -219,6 +239,24 @@ Page({
     if (publishType === 'pet' && !form.petPostType) {
       wx.showToast({ title: '请选择发布类型', icon: 'none' });
       return;
+    }
+    if (publishType === 'carpool') {
+      if (!form.carpoolFrom.trim()) {
+        wx.showToast({ title: '请输入出发地', icon: 'none' });
+        return;
+      }
+      if (!form.carpoolTo.trim()) {
+        wx.showToast({ title: '请输入目的地', icon: 'none' });
+        return;
+      }
+      if (!form.carpoolDate) {
+        wx.showToast({ title: '请选择出发日期', icon: 'none' });
+        return;
+      }
+      if (!form.carpoolTime) {
+        wx.showToast({ title: '请选择出发时间', icon: 'none' });
+        return;
+      }
     }
 
     wx.showLoading({ title: '发布中...' });
@@ -273,12 +311,24 @@ Page({
           minAmount: form.samMinAmount,
           targetCount: form.samTargetCount
         });
+      } else if (publishType === 'carpool') {
+        await api.createCarpool({
+          type: form.carpoolType,
+          title: form.title,
+          description: form.description,
+          from: form.carpoolFrom,
+          to: form.carpoolTo,
+          date: form.carpoolDate,
+          time: form.carpoolTime,
+          seats: Number(form.carpoolSeats) || 0,
+          fee: form.carpoolFee
+        });
       }
 
       wx.hideLoading();
       wx.showToast({ title: '发布成功！', icon: 'success' });
       setTimeout(() => {
-        if (publishType === 'pet' || publishType === 'sam') {
+        if (this.data.lockedType) {
           wx.navigateBack();
         } else {
           wx.switchTab({ url: '/pages/index/index' });

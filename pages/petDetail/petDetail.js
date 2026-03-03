@@ -3,7 +3,7 @@ const api = require('../../utils/api');
 
 const typeMap = {
   need: { label: '寻求喂养', icon: 'paw-print', color: '#E8883C' },
-  offer: { label: '可以帮喂', icon: 'heart', color: '#5B8C3E' },
+  offer: { label: '可以帮喂', icon: 'heart', color: '#A47764' },
   social: { label: '宠物活动', icon: 'sparkles', color: '#8B6DB0' }
 };
 

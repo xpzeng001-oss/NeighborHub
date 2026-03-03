@@ -1,4 +1,4 @@
-.page { min-height: 100vh; background: #F7F8F3; }
+.page { min-height: 100vh; background: #FBF5EC; }
 
 .score-card {
   display: flex;
@@ -36,7 +36,7 @@
   flex-direction: column;
   align-items: center;
   padding: 20rpx 0;
-  background: #F5F5F0;
+  background: #E3D5BF;
   border-radius: 12rpx;
   gap: 8rpx;
 }
@@ -48,12 +48,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 20rpx 0;
-  border-bottom: 1rpx solid #F5F5F0;
+  border-bottom: 1rpx solid #E3D5BF;
 }
 .rule-item:last-child { border-bottom: none; }
 .rule-left { display: flex; flex-direction: column; gap: 6rpx; }
 .rule-action { font-size: 28rpx; color: #1A1A1A; }
 .rule-desc { font-size: 22rpx; color: #AAAAAA; }
 .rule-point { font-size: 30rpx; font-weight: 600; }
-.rule-point.plus { color: #5B8C3E; }
+.rule-point.plus { color: #A47764; }
 .rule-point.minus { color: #E8636F; }

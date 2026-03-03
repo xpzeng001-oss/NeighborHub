@@ -1,9 +1,9 @@
 /* pages/publish/publish.wxss */
-.page { height: 100vh; display: flex; flex-direction: column; background: #F7F8F3; }
+.page { height: 100vh; display: flex; flex-direction: column; background: #FBF5EC; }
 
 /* 导航栏 */
 .custom-nav-wrap {
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 .custom-nav-bar {
   height: 88rpx;
@@ -44,7 +44,7 @@
   align-items: center;
   gap: 8rpx;
   padding: 14rpx 24rpx;
-  background: #EFF6E8;
+  background: #F3E8DA;
   border-radius: 32rpx;
   flex-shrink: 0;
 }
@@ -55,7 +55,7 @@
   white-space: nowrap;
 }
 .type-tab.active {
-  background: #5B8C3E;
+  background: #A47764;
 }
 .type-tab.active text {
   color: #fff;
@@ -77,7 +77,7 @@
   display: flex;
   align-items: center;
   padding: 28rpx 0;
-  border-bottom: 1rpx solid #F5F5F0;
+  border-bottom: 1rpx solid #E3D5BF;
 }
 .form-item:last-child { border-bottom: none; }
 
@@ -146,7 +146,7 @@
   justify-content: center;
 }
 .add-btn {
-  background: #F7F8F3;
+  background: #FBF5EC;
   border: 2rpx dashed #CCCCCC;
   display: flex;
   flex-direction: column;
@@ -165,11 +165,11 @@
   padding: 16rpx 32rpx;
   padding-bottom: calc(16rpx + constant(safe-area-inset-bottom));
   padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 .btn-publish {
   width: 100%;
-  background: linear-gradient(135deg, #7CB342 0%, #5B8C3E 100%);
+  background: linear-gradient(135deg, #C59A84 0%, #A47764 100%);
   color: #fff;
   border: none;
   border-radius: 16rpx;
@@ -181,7 +181,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  box-shadow: 0 6rpx 20rpx rgba(91, 140, 62, 0.3);
+  box-shadow: 0 6rpx 20rpx rgba(164, 119, 100, 0.3);
 }
 .btn-publish::after { border: none; }
 
@@ -198,7 +198,7 @@
   gap: 8rpx;
   padding: 20rpx 0;
   border-radius: 16rpx;
-  background: #F7F8F3;
+  background: #FBF5EC;
   font-size: 24rpx;
   color: #AAAAAA;
 }
@@ -208,8 +208,8 @@
   font-weight: 500;
 }
 .pet-type-option.active.type-offer {
-  background: rgba(91, 140, 62, 0.1);
-  color: #5B8C3E;
+  background: rgba(164, 119, 100, 0.1);
+  color: #A47764;
   font-weight: 500;
 }
 .pet-type-option.active.type-social {
@@ -228,11 +228,11 @@
 .tag-item {
   display: flex;
   align-items: center;
-  background: #EFF6E8;
+  background: #F3E8DA;
   border-radius: 8rpx;
   padding: 8rpx 16rpx;
   font-size: 24rpx;
-  color: #5B8C3E;
+  color: #A47764;
   gap: 8rpx;
 }
 .tag-remove {

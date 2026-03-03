@@ -1,12 +1,12 @@
 /* pages/carpool/carpool.wxss */
-.page { background: #F7F8F3; min-height: 100vh; display: flex; flex-direction: column; }
+.page { background: #FBF5EC; min-height: 100vh; display: flex; flex-direction: column; }
 
 /* 分类Tab */
 .cp-tabs {
   display: flex;
   padding: 0 32rpx;
   gap: 8rpx;
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 .cp-tab {
   padding: 24rpx 28rpx;
@@ -26,7 +26,7 @@
   transform: translateX(-50%);
   width: 40rpx;
   height: 6rpx;
-  background: #5B8C3E;
+  background: #A47764;
   border-radius: 3rpx;
 }
 
@@ -52,7 +52,7 @@
   font-weight: 500;
   margin-bottom: 16rpx;
 }
-.type-offer { background: #EFF6E8; color: #5B8C3E; }
+.type-offer { background: #F3E8DA; color: #A47764; }
 .type-seek { background: rgba(74, 144, 217, 0.08); color: #4A90D9; }
 
 /* 用户信息 */
@@ -66,7 +66,7 @@
   height: 64rpx;
   border-radius: 50%;
   margin-right: 16rpx;
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 .user-info { flex: 1; }
 .user-name { font-size: 28rpx; font-weight: 600; color: #1A1A1A; display: block; }
@@ -93,7 +93,7 @@
 .route-section {
   margin-top: 20rpx;
   padding: 20rpx 24rpx;
-  background: #F7F8F3;
+  background: #FBF5EC;
   border-radius: 16rpx;
 }
 .route-row {
@@ -106,7 +106,7 @@
   height: 16rpx;
   border-radius: 50%;
 }
-.dot-start { background: #5B8C3E; }
+.dot-start { background: #A47764; }
 .dot-end { background: #4A90D9; }
 .route-line {
   width: 2rpx;
@@ -137,7 +137,7 @@
 .info-text { font-size: 24rpx; color: #AAAAAA; }
 .fee {
   font-size: 26rpx;
-  color: #5B8C3E;
+  color: #A47764;
   font-weight: 700;
 }
 
@@ -148,7 +148,7 @@
   justify-content: space-between;
   margin-top: 24rpx;
   padding-top: 20rpx;
-  border-top: 1rpx solid #F5F5F0;
+  border-top: 1rpx solid #E3D5BF;
 }
 .participant-avatars {
   display: flex;
@@ -160,7 +160,7 @@
   border-radius: 50%;
   margin-right: -10rpx;
   border: 3rpx solid #fff;
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 .p-count {
   font-size: 22rpx;
@@ -180,21 +180,21 @@
   white-space: nowrap;
 }
 .btn-contact {
-  background: #F7F8F3;
+  background: #FBF5EC;
   color: #1A1A1A;
   border: none;
 }
 .btn-join {
-  background: #5B8C3E;
+  background: #A47764;
   color: #fff;
   border: none;
 }
 .btn-joined {
-  background: #EFF6E8;
-  color: #5B8C3E;
+  background: #F3E8DA;
+  color: #A47764;
 }
 .btn-disabled {
-  background: #F5F5F0;
+  background: #E3D5BF;
   color: #AAAAAA;
 }
 
@@ -218,11 +218,11 @@
   bottom: 120rpx;
   width: 100rpx;
   height: 100rpx;
-  background: linear-gradient(135deg, #7CB342 0%, #5B8C3E 100%);
+  background: linear-gradient(135deg, #C59A84 0%, #A47764 100%);
   border-radius: 28rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8rpx 24rpx rgba(91, 140, 62, 0.4);
+  box-shadow: 0 8rpx 24rpx rgba(164, 119, 100, 0.4);
 }
 .fab-btn:active { opacity: 0.85; }

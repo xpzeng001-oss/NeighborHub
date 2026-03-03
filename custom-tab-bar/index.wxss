@@ -35,7 +35,7 @@
 }
 
 .tab-item.active text {
-  color: #5B8C3E;
+  color: #A47764;
   font-weight: 600;
 }
 
@@ -51,13 +51,13 @@
 .fab-btn {
   width: 96rpx;
   height: 96rpx;
-  background: linear-gradient(135deg, #7CB342 0%, #5B8C3E 100%);
+  background: linear-gradient(135deg, #C59A84 0%, #A47764 100%);
   border-radius: 24rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 36rpx;
-  box-shadow: 0 8rpx 24rpx rgba(91, 140, 62, 0.4);
+  box-shadow: 0 8rpx 24rpx rgba(164, 119, 100, 0.4);
 }
 
 .fab-btn:active {

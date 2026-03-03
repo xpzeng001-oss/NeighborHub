@@ -12,7 +12,7 @@
     <!-- 主卡片 -->
     <view class="main-card">
       <!-- 类型标签 -->
-      <view class="type-badge" style="background: rgba({{typeInfo.color === '#E8883C' ? '232,136,60' : typeInfo.color === '#5B8C3E' ? '91,140,62' : '139,109,176'}}, 0.08); color: {{typeInfo.color}};">
+      <view class="type-badge" style="background: rgba({{typeInfo.color === '#E8883C' ? '232,136,60' : typeInfo.color === '#A47764' ? '164, 119, 100' : '139,109,176'}}, 0.08); color: {{typeInfo.color}};">
         <icon name="{{typeInfo.icon}}" size="24" color="{{typeInfo.color}}"></icon>
         <text>{{typeInfo.label}}</text>
       </view>
@@ -37,35 +37,35 @@
     <!-- 信息卡片 -->
     <view class="info-card" wx:if="{{detail.dateRange || detail.eventTime || detail.reward || detail.availableTime}}">
       <view class="info-item" wx:if="{{detail.dateRange}}">
-        <icon name="calendar" size="32" color="#5B8C3E"></icon>
+        <icon name="calendar" size="32" color="#A47764"></icon>
         <view class="info-content">
           <text class="info-label">日期范围</text>
           <text class="info-value">{{detail.dateRange}}</text>
         </view>
       </view>
       <view class="info-item" wx:if="{{detail.eventTime}}">
-        <icon name="clock" size="32" color="#5B8C3E"></icon>
+        <icon name="clock" size="32" color="#A47764"></icon>
         <view class="info-content">
           <text class="info-label">活动时间</text>
           <text class="info-value">{{detail.eventTime}}</text>
         </view>
       </view>
       <view class="info-item" wx:if="{{detail.location}}">
-        <icon name="map-pin" size="32" color="#5B8C3E"></icon>
+        <icon name="map-pin" size="32" color="#A47764"></icon>
         <view class="info-content">
           <text class="info-label">地点</text>
           <text class="info-value">{{detail.location}}</text>
         </view>
       </view>
       <view class="info-item" wx:if="{{detail.reward}}">
-        <icon name="gift" size="32" color="#5B8C3E"></icon>
+        <icon name="gift" size="32" color="#A47764"></icon>
         <view class="info-content">
           <text class="info-label">报酬</text>
           <text class="info-value reward-value">{{detail.reward}}</text>
         </view>
       </view>
       <view class="info-item" wx:if="{{detail.availableTime}}">
-        <icon name="clock" size="32" color="#5B8C3E"></icon>
+        <icon name="clock" size="32" color="#A47764"></icon>
         <view class="info-content">
           <text class="info-label">可用时间</text>
           <text class="info-value">{{detail.availableTime}}</text>

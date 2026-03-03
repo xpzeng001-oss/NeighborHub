@@ -1,5 +1,5 @@
 /* pages/feedbackList/feedbackList.wxss */
-.page { min-height: 100vh; background: #F7F8F3; }
+.page { min-height: 100vh; background: #FBF5EC; }
 .scroll-content { height: 100vh; }
 
 .feedback-item {
@@ -22,7 +22,7 @@
   padding: 6rpx 16rpx;
   border-radius: 8rpx;
 }
-.type-feature { background: rgba(91, 140, 62,0.15); color: #5B8C3E; }
+.type-feature { background: rgba(164, 119, 100,0.15); color: #A47764; }
 .type-bug { background: rgba(232, 99, 111,0.1); color: #E8636F; }
 .type-other { background: rgba(0,0,0,0.05); color: #AAAAAA; }
 .fb-time { font-size: 22rpx; color: #AAAAAA; }
@@ -40,7 +40,7 @@
   justify-content: space-between;
   align-items: center;
   padding-top: 16rpx;
-  border-top: 1rpx solid #F5F5F0;
+  border-top: 1rpx solid #E3D5BF;
 }
 .fb-user { font-size: 24rpx; color: #AAAAAA; }
 .fb-contact { font-size: 24rpx; color: #4A90D9; }

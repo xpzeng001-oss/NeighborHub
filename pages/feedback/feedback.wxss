@@ -1,5 +1,5 @@
 /* pages/feedback/feedback.wxss */
-.page { min-height: 100vh; background: #F7F8F3; }
+.page { min-height: 100vh; background: #FBF5EC; }
 
 .section {
   background: #fff;
@@ -23,14 +23,14 @@
   padding: 16rpx 0;
   font-size: 26rpx;
   color: #666;
-  background: #F7F8F3;
+  background: #FBF5EC;
   border-radius: 12rpx;
   border: 2rpx solid transparent;
 }
 .type-item.active {
   color: #1A1A1A;
-  background: #EFF6E8;
-  border-color: #7CB342;
+  background: #F3E8DA;
+  border-color: #A47764;
   font-weight: 600;
 }
 
@@ -57,7 +57,7 @@
 
 .btn-wrap { padding: 40rpx 24rpx; }
 .submit-btn {
-  background: #5B8C3E;
+  background: #A47764;
   color: #fff;
   font-size: 30rpx;
   font-weight: 600;

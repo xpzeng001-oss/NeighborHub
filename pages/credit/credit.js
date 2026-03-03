@@ -23,7 +23,7 @@ Page({
     let level = '新住户';
     let levelColor = '#999';
     if (score >= 200) { level = '金牌邻居'; levelColor = '#D4A04A'; }
-    else if (score >= 120) { level = '活跃邻居'; levelColor = '#5B8C3E'; }
+    else if (score >= 120) { level = '活跃邻居'; levelColor = '#A47764'; }
 
     this.setData({ score, level, levelColor });
   }

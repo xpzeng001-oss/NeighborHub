@@ -19,7 +19,7 @@
       </view>
       <view class="level-item">
         <text class="level-range">120-199</text>
-        <text class="level-name" style="color: #5B8C3E;">活跃邻居</text>
+        <text class="level-name" style="color: #A47764;">活跃邻居</text>
       </view>
       <view class="level-item">
         <text class="level-range">200+</text>

@@ -91,13 +91,13 @@
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "邻里市集",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#f5f5f5",
+    "backgroundColor": "#FBF5EC",
     "backgroundTextStyle": "dark"
   },
   "tabBar": {
     "custom": true,
     "color": "#999999",
-    "selectedColor": "#1A1A1A",
+    "selectedColor": "#A47764",
     "backgroundColor": "#ffffff",
     "borderStyle": "white",
     "list": [

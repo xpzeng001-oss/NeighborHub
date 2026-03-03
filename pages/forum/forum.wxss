@@ -1,5 +1,5 @@
 /* pages/forum/forum.wxss */
-.page { background: #F7F8F3; min-height: 100vh; display: flex; flex-direction: column; }
+.page { background: #FBF5EC; min-height: 100vh; display: flex; flex-direction: column; }
 
 .forum-tabs {
   display: flex;
@@ -25,7 +25,7 @@
   transform: translateX(-50%);
   width: 40rpx;
   height: 6rpx;
-  background: #7CB342;
+  background: #A47764;
   border-radius: 3rpx;
 }
 
@@ -65,7 +65,7 @@
 .tag-announcement { background: rgba(232, 99, 111, 0.1); color: #E8636F; }
 .tag-complaint { background: rgba(232, 136, 60, 0.1); color: #E8883C; }
 .tag-question { background: rgba(74, 144, 217, 0.1); color: #4A90D9; }
-.tag-activity { background: rgba(91, 140, 62, 0.15); color: #5B8C3E; }
+.tag-activity { background: rgba(164, 119, 100, 0.15); color: #A47764; }
 
 .post-title {
   font-size: 30rpx;
@@ -85,7 +85,7 @@
   gap: 40rpx;
   margin-top: 20rpx;
   padding-top: 16rpx;
-  border-top: 1rpx solid #F5F5F0;
+  border-top: 1rpx solid #E3D5BF;
 }
 .footer-item { font-size: 24rpx; color: #AAAAAA; display: inline-flex; align-items: center; gap: 6rpx; }
 .top-badge { display: inline-flex; align-items: center; gap: 4rpx; }
@@ -97,11 +97,11 @@
   bottom: 60rpx;
   width: 100rpx;
   height: 100rpx;
-  background: linear-gradient(135deg, #7CB342 0%, #5B8C3E 100%);
+  background: linear-gradient(135deg, #C59A84 0%, #A47764 100%);
   border-radius: 28rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 44rpx;
-  box-shadow: 0 8rpx 24rpx rgba(91, 140, 62, 0.4);
+  box-shadow: 0 8rpx 24rpx rgba(164, 119, 100, 0.4);
 }

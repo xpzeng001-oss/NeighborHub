@@ -14,7 +14,7 @@
       <view class="trip-card" wx:for="{{filteredList}}" wx:key="id">
         <!-- 类型标签 -->
         <view class="card-type type-{{item.type}}">
-          <icon name="{{item.type === 'offer' ? 'car' : 'map-pin'}}" size="24" color="{{item.type === 'offer' ? '#5B8C3E' : '#4A90D9'}}"></icon>
+          <icon name="{{item.type === 'offer' ? 'car' : 'map-pin'}}" size="24" color="{{item.type === 'offer' ? '#A47764' : '#4A90D9'}}"></icon>
           <text>{{item.type === 'offer' ? '有车带人' : '找车搭乘'}}</text>
         </view>
 

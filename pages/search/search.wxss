@@ -1,5 +1,5 @@
 /* pages/search/search.wxss */
-.page { background: #F7F8F3; min-height: 100vh; }
+.page { background: #FBF5EC; min-height: 100vh; }
 
 .search-header {
   display: flex; align-items: center; padding: 16rpx 24rpx;
@@ -7,7 +7,7 @@
 }
 .search-input-wrap {
   flex: 1; display: flex; align-items: center;
-  background: #F7F8F3; border-radius: 36rpx; padding: 0 24rpx; height: 72rpx;
+  background: #FBF5EC; border-radius: 36rpx; padding: 0 24rpx; height: 72rpx;
 }
 .search-input-wrap icon { margin-right: 12rpx; }
 .search-input { flex: 1; font-size: 28rpx; }
@@ -21,16 +21,16 @@
 
 .history-tags { display: flex; flex-wrap: wrap; gap: 16rpx; }
 .history-tag {
-  background: #F7F8F3; padding: 12rpx 24rpx; border-radius: 24rpx;
+  background: #FBF5EC; padding: 12rpx 24rpx; border-radius: 24rpx;
   font-size: 26rpx; color: #666;
 }
 
 .hot-section .section-title { margin-bottom: 20rpx; }
 .hot-list { }
-.hot-item { display: flex; align-items: center; padding: 20rpx 0; gap: 20rpx; border-bottom: 1rpx solid #F5F5F0; font-size: 28rpx; color: #1A1A1A; }
+.hot-item { display: flex; align-items: center; padding: 20rpx 0; gap: 20rpx; border-bottom: 1rpx solid #E3D5BF; font-size: 28rpx; color: #1A1A1A; }
 .hot-item:last-child { border-bottom: none; }
 .hot-rank { width: 40rpx; text-align: center; font-size: 26rpx; color: #AAAAAA; font-weight: 600; }
-.hot-rank.top { color: #5B8C3E; }
+.hot-rank.top { color: #A47764; }
 
 .results { padding: 0 24rpx; }
 .result-count { font-size: 24rpx; color: #AAAAAA; padding: 20rpx 0; }
@@ -43,6 +43,6 @@
 .result-img { width: 220rpx; height: 220rpx; flex-shrink: 0; }
 .result-info { flex: 1; padding: 20rpx 24rpx; display: flex; flex-direction: column; justify-content: center; }
 .result-title { font-size: 28rpx; font-weight: 500; color: #1A1A1A; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
-.result-price { font-size: 34rpx; color: #5B8C3E; font-weight: 700; margin-top: 12rpx; }
-.result-price.free { font-size: 28rpx; color: #5B8C3E; }
+.result-price { font-size: 34rpx; color: #A47764; font-weight: 700; margin-top: 12rpx; }
+.result-price.free { font-size: 28rpx; color: #C59A84; }
 .result-meta { font-size: 22rpx; color: #AAAAAA; margin-top: 8rpx; }

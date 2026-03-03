@@ -1,4 +1,4 @@
-.page { height: 100vh; display: flex; flex-direction: column; background: #F7F8F3; }
+.page { height: 100vh; display: flex; flex-direction: column; background: #FBF5EC; }
 
 /* 导航栏 */
 .nav-bar {
@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 .nav-back {
   width: 88rpx;
@@ -64,13 +64,13 @@
   align-items: center;
   margin-bottom: 24rpx;
   padding-bottom: 24rpx;
-  border-bottom: 1rpx solid #F5F5F0;
+  border-bottom: 1rpx solid #E3D5BF;
 }
 .author-avatar {
   width: 72rpx;
   height: 72rpx;
   border-radius: 50%;
-  background: #F7F8F3;
+  background: #FBF5EC;
   margin-right: 16rpx;
 }
 .author-info { flex: 1; }
@@ -99,13 +99,13 @@
   align-items: center;
   gap: 16rpx;
   padding: 16rpx 0;
-  border-bottom: 1rpx solid #F5F5F0;
+  border-bottom: 1rpx solid #E3D5BF;
 }
 .info-item:last-child { border-bottom: none; }
 .info-content { flex: 1; }
 .info-label { font-size: 22rpx; color: #AAAAAA; display: block; margin-bottom: 4rpx; }
 .info-value { font-size: 28rpx; color: #1A1A1A; font-weight: 500; }
-.reward-value { color: #5B8C3E; font-weight: 700; }
+.reward-value { color: #A47764; font-weight: 700; }
 
 /* 标签 */
 .tags-card {
@@ -122,8 +122,8 @@
   font-size: 24rpx;
   padding: 10rpx 20rpx;
   border-radius: 20rpx;
-  background: #EFF6E8;
-  color: #5B8C3E;
+  background: #F3E8DA;
+  color: #A47764;
 }
 
 /* 参与人员 */
@@ -141,7 +141,7 @@
   margin-bottom: 24rpx;
 }
 .members-title { font-size: 30rpx; font-weight: 700; color: #1A1A1A; }
-.members-count { font-size: 26rpx; color: #5B8C3E; font-weight: 600; }
+.members-count { font-size: 26rpx; color: #A47764; font-weight: 600; }
 
 .members-list {
   display: flex;
@@ -158,7 +158,7 @@
   width: 80rpx;
   height: 80rpx;
   border-radius: 50%;
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 .member-name { font-size: 22rpx; color: #AAAAAA; max-width: 80rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
@@ -191,7 +191,7 @@
   gap: 8rpx;
   height: 84rpx;
   padding: 0 36rpx;
-  background: #F7F8F3;
+  background: #FBF5EC;
   border-radius: 16rpx;
 }
 .btn-msg text { font-size: 26rpx; color: #1A1A1A; font-weight: 500; }
@@ -201,7 +201,7 @@
   height: 84rpx;
   line-height: 84rpx;
   text-align: center;
-  background: #5B8C3E;
+  background: #A47764;
   border-radius: 16rpx;
   font-size: 30rpx;
   font-weight: 600;
@@ -209,7 +209,7 @@
 }
 .btn-action:active { opacity: 0.85; }
 .btn-disabled {
-  background: #F5F5F0;
+  background: #E3D5BF;
   color: #AAAAAA;
 }
 .btn-disabled:active { opacity: 1; }

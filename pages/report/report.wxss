@@ -1,4 +1,4 @@
-.page { min-height: 100vh; background: #F7F8F3; }
+.page { min-height: 100vh; background: #FBF5EC; }
 
 .empty {
   display: flex;
@@ -28,7 +28,7 @@
   border-radius: 20rpx;
 }
 .report-status.pending { color: #D4A04A; background: rgba(212, 160, 74, 0.1); }
-.report-status.resolved { color: #5B8C3E; background: rgba(91, 140, 62, 0.1); }
+.report-status.resolved { color: #A47764; background: rgba(164, 119, 100, 0.1); }
 .report-status.rejected { color: #AAAAAA; background: #f0f0f0; }
 
 .report-reason { font-size: 28rpx; color: #666; display: block; }

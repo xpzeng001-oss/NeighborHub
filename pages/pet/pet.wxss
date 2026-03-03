@@ -1,12 +1,12 @@
 /* pages/pet/pet.wxss */
-.page { background: #F7F8F3; min-height: 100vh; display: flex; flex-direction: column; }
+.page { background: #FBF5EC; min-height: 100vh; display: flex; flex-direction: column; }
 
 /* 分类Tab */
 .pet-tabs {
   display: flex;
   padding: 0 32rpx;
   gap: 8rpx;
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 .pet-tab {
   padding: 24rpx 28rpx;
@@ -26,7 +26,7 @@
   transform: translateX(-50%);
   width: 40rpx;
   height: 6rpx;
-  background: #5B8C3E;
+  background: #A47764;
   border-radius: 3rpx;
 }
 
@@ -53,7 +53,7 @@
   margin-bottom: 16rpx;
 }
 .type-need { background: rgba(232, 136, 60, 0.08); color: #E8883C; }
-.type-offer { background: #EFF6E8; color: #5B8C3E; }
+.type-offer { background: #F3E8DA; color: #A47764; }
 .type-social { background: rgba(139, 109, 176, 0.08); color: #8B6DB0; }
 
 /* 用户信息 */
@@ -67,7 +67,7 @@
   height: 64rpx;
   border-radius: 50%;
   margin-right: 16rpx;
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 .user-info { flex: 1; }
 .user-name { font-size: 28rpx; font-weight: 600; color: #1A1A1A; display: block; }
@@ -100,7 +100,7 @@
 .info-text { font-size: 24rpx; color: #AAAAAA; }
 .reward {
   font-size: 28rpx;
-  color: #5B8C3E;
+  color: #A47764;
   font-weight: 700;
 }
 
@@ -115,8 +115,8 @@
   font-size: 22rpx;
   padding: 8rpx 18rpx;
   border-radius: 20rpx;
-  background: #EFF6E8;
-  color: #5B8C3E;
+  background: #F3E8DA;
+  color: #A47764;
 }
 
 /* 底部 */
@@ -126,7 +126,7 @@
   justify-content: space-between;
   margin-top: 24rpx;
   padding-top: 20rpx;
-  border-top: 1rpx solid #F5F5F0;
+  border-top: 1rpx solid #E3D5BF;
   overflow: hidden;
 }
 .response-count { font-size: 24rpx; color: #AAAAAA; white-space: nowrap; margin-right: 16rpx; }
@@ -143,13 +143,13 @@
   white-space: nowrap;
 }
 .btn-contact {
-  background: #F7F8F3;
+  background: #FBF5EC;
   color: #1A1A1A;
   border: none;
 }
 .btn-contact::after { border: none; }
 .btn-respond {
-  background: #5B8C3E;
+  background: #A47764;
   color: #fff;
   border: none;
 }
@@ -162,11 +162,11 @@
   bottom: 120rpx;
   width: 100rpx;
   height: 100rpx;
-  background: linear-gradient(135deg, #7CB342 0%, #5B8C3E 100%);
+  background: linear-gradient(135deg, #C59A84 0%, #A47764 100%);
   border-radius: 28rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8rpx 24rpx rgba(91, 140, 62, 0.4);
+  box-shadow: 0 8rpx 24rpx rgba(164, 119, 100, 0.4);
 }
 .fab-btn:active { opacity: 0.85; }

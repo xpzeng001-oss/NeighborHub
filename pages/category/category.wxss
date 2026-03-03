@@ -1,7 +1,7 @@
 /* pages/category/category.wxss */
 .page {
   min-height: 100vh;
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 
 .page-header {
@@ -32,7 +32,7 @@
   box-sizing: border-box;
 }
 .cat-card:active {
-  background: #F7F8F3;
+  background: #FBF5EC;
 }
 .cat-icon {
   width: 72rpx;
