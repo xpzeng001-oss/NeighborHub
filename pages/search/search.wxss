@@ -1,5 +1,5 @@
 /* pages/search/search.wxss */
-.page { background: #FBF5EC; min-height: 100vh; }
+.page { background: #FEFCFA; min-height: 100vh; }
 
 .search-header {
   display: flex; align-items: center; padding: 16rpx 24rpx;
@@ -7,7 +7,7 @@
 }
 .search-input-wrap {
   flex: 1; display: flex; align-items: center;
-  background: #FBF5EC; border-radius: 36rpx; padding: 0 24rpx; height: 72rpx;
+  background: #FEFCFA; border-radius: 36rpx; padding: 0 24rpx; height: 72rpx;
 }
 .search-input-wrap icon { margin-right: 12rpx; }
 .search-input { flex: 1; font-size: 28rpx; }
@@ -21,7 +21,7 @@
 
 .history-tags { display: flex; flex-wrap: wrap; gap: 16rpx; }
 .history-tag {
-  background: #FBF5EC; padding: 12rpx 24rpx; border-radius: 24rpx;
+  background: #FEFCFA; padding: 12rpx 24rpx; border-radius: 24rpx;
   font-size: 26rpx; color: #666;
 }
 

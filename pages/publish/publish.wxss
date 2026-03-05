@@ -1,9 +1,9 @@
 /* pages/publish/publish.wxss */
-.page { height: 100vh; display: flex; flex-direction: column; background: #FBF5EC; }
+.page { height: 100vh; display: flex; flex-direction: column; background: #FEFCFA; }
 
 /* 导航栏 */
 .custom-nav-wrap {
-  background: #FBF5EC;
+  background: #FEFCFA;
 }
 .custom-nav-bar {
   height: 88rpx;
@@ -145,14 +145,15 @@
   align-items: center;
   justify-content: center;
 }
-.add-btn {
-  background: #FBF5EC;
-  border: 2rpx dashed #CCCCCC;
+.image-item.add-btn {
+  background: transparent;
+  border: 2rpx dashed #ccc;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 8rpx;
+  overflow: visible;
 }
 .add-text { font-size: 22rpx; color: #AAAAAA; }
 
@@ -165,11 +166,11 @@
   padding: 16rpx 32rpx;
   padding-bottom: calc(16rpx + constant(safe-area-inset-bottom));
   padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
-  background: #FBF5EC;
+  background: #FEFCFA;
 }
 .btn-publish {
   width: 100%;
-  background: linear-gradient(135deg, #C59A84 0%, #A47764 100%);
+  background: linear-gradient(135deg, #A47764 0%, #A47764 100%);
   color: #fff;
   border: none;
   border-radius: 16rpx;
@@ -198,7 +199,7 @@
   gap: 8rpx;
   padding: 20rpx 0;
   border-radius: 16rpx;
-  background: #FBF5EC;
+  background: #FEFCFA;
   font-size: 24rpx;
   color: #AAAAAA;
 }

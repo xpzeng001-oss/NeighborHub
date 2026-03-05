@@ -1,12 +1,12 @@
 /* pages/carpool/carpool.wxss */
-.page { background: #FBF5EC; min-height: 100vh; display: flex; flex-direction: column; }
+.page { background: #FEFCFA; min-height: 100vh; display: flex; flex-direction: column; }
 
 /* 分类Tab */
 .cp-tabs {
   display: flex;
   padding: 0 32rpx;
   gap: 8rpx;
-  background: #FBF5EC;
+  background: #FEFCFA;
 }
 .cp-tab {
   padding: 24rpx 28rpx;
@@ -66,7 +66,7 @@
   height: 64rpx;
   border-radius: 50%;
   margin-right: 16rpx;
-  background: #FBF5EC;
+  background: #FEFCFA;
 }
 .user-info { flex: 1; }
 .user-name { font-size: 28rpx; font-weight: 600; color: #1A1A1A; display: block; }
@@ -93,7 +93,7 @@
 .route-section {
   margin-top: 20rpx;
   padding: 20rpx 24rpx;
-  background: #FBF5EC;
+  background: #FEFCFA;
   border-radius: 16rpx;
 }
 .route-row {
@@ -160,7 +160,7 @@
   border-radius: 50%;
   margin-right: -10rpx;
   border: 3rpx solid #fff;
-  background: #FBF5EC;
+  background: #FEFCFA;
 }
 .p-count {
   font-size: 22rpx;
@@ -180,7 +180,7 @@
   white-space: nowrap;
 }
 .btn-contact {
-  background: #FBF5EC;
+  background: #FEFCFA;
   color: #1A1A1A;
   border: none;
 }

@@ -1,5 +1,5 @@
 /* pages/forum/forum.wxss */
-.page { background: #FBF5EC; min-height: 100vh; display: flex; flex-direction: column; }
+.page { background: #FEFCFA; min-height: 100vh; display: flex; flex-direction: column; }
 
 .forum-tabs {
   display: flex;

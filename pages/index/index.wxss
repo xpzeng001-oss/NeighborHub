@@ -3,7 +3,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #FBF5EC;
+  background: #FEFCFA;
 }
 
 /* 导航栏 */
@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   padding: 0 32rpx;
-  background: #FBF5EC;
+  background: #FEFCFA;
 }
 .community-select {
   display: inline-flex;
@@ -31,7 +31,7 @@
 /* 搜索栏 */
 .search-header {
   padding: 28rpx 32rpx 24rpx;
-  background: #FBF5EC;
+  background: #FEFCFA;
 }
 .search-input {
   display: flex;
@@ -77,13 +77,13 @@
   align-items: center;
   gap: 8rpx;
   padding: 14rpx 24rpx;
-  background: #F3E8DA;
+  background: #F5F0EA;
   border-radius: 32rpx;
   flex-shrink: 0;
 }
 .type-pill text {
   font-size: 26rpx;
-  color: #1A1A1A;
+  color: #666;
   font-weight: 500;
   white-space: nowrap;
 }

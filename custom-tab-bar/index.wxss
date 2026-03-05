@@ -57,7 +57,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 36rpx;
-  box-shadow: 0 8rpx 24rpx rgba(164, 119, 100, 0.4);
+  box-shadow: 0 6rpx 20rpx rgba(212, 137, 106, 0.3);
 }
 
 .fab-btn:active {

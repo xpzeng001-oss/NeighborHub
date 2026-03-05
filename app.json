@@ -95,7 +95,7 @@
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "邻里市集",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#FBF5EC",
+    "backgroundColor": "#FEFCFA",
     "backgroundTextStyle": "dark"
   },
   "tabBar": {

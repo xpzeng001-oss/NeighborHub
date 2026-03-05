@@ -1,5 +1,5 @@
 /* pages/rental/rental.wxss */
-.page { background: #FBF5EC; min-height: 100vh; }
+.page { background: #FEFCFA; min-height: 100vh; }
 .scroll-content { height: 100vh; }
 
 .rental-list { padding: 20rpx 24rpx; }

@@ -1,4 +1,4 @@
-.page { height: 100vh; display: flex; flex-direction: column; background: #FBF5EC; }
+.page { height: 100vh; display: flex; flex-direction: column; background: #FEFCFA; }
 
 /* 导航栏 */
 .nav-bar {
@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  background: #FBF5EC;
+  background: #FEFCFA;
 }
 .nav-back {
   width: 88rpx;
@@ -70,7 +70,7 @@
   width: 72rpx;
   height: 72rpx;
   border-radius: 50%;
-  background: #FBF5EC;
+  background: #FEFCFA;
   margin-right: 16rpx;
 }
 .author-info { flex: 1; }
@@ -158,7 +158,7 @@
   width: 80rpx;
   height: 80rpx;
   border-radius: 50%;
-  background: #FBF5EC;
+  background: #FEFCFA;
 }
 .member-name { font-size: 22rpx; color: #AAAAAA; max-width: 80rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
@@ -191,7 +191,7 @@
   gap: 8rpx;
   height: 84rpx;
   padding: 0 36rpx;
-  background: #FBF5EC;
+  background: #FEFCFA;
   border-radius: 16rpx;
 }
 .btn-msg text { font-size: 26rpx; color: #1A1A1A; font-weight: 500; }

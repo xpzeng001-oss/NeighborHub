@@ -1,4 +1,4 @@
-.page { background: #FBF5EC; min-height: 100vh; }
+.page { background: #FEFCFA; min-height: 100vh; }
 
 .avatar-section {
   display: flex;

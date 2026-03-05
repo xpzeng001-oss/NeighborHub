@@ -1,5 +1,5 @@
 /* pages/detail/detail.wxss */
-.page { height: 100vh; display: flex; flex-direction: column; background: #FBF5EC; }
+.page { height: 100vh; display: flex; flex-direction: column; background: #FEFCFA; }
 .scroll-content { flex: 1; height: 0; }
 
 .image-swiper { height: 600rpx; background: #eee; }
@@ -62,7 +62,7 @@
   justify-content: space-between;
 }
 .seller-left { display: flex; align-items: center; }
-.seller-avatar { width: 80rpx; height: 80rpx; border-radius: 50%; margin-right: 20rpx; background: #FBF5EC; }
+.seller-avatar { width: 80rpx; height: 80rpx; border-radius: 50%; margin-right: 20rpx; background: #FEFCFA; }
 .seller-info { display: flex; flex-direction: column; }
 .seller-name { font-size: 28rpx; font-weight: 600; color: #1A1A1A; }
 .seller-building { font-size: 22rpx; color: #AAAAAA; margin-top: 4rpx; }
@@ -137,7 +137,7 @@
   gap: 8rpx;
   font-size: 28rpx;
   font-weight: 500;
-  background: #FBF5EC;
+  background: #FEFCFA;
   color: #1A1A1A;
   border: none;
   border-radius: 16rpx;

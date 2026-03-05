@@ -1,7 +1,7 @@
 /* pages/chat/chat.wxss — 暖色卡片风格 */
 .page {
   min-height: 100vh;
-  background: #FBF5EC;
+  background: #FEFCFA;
   overflow-x: hidden;
   box-sizing: border-box;
 }
@@ -9,7 +9,7 @@
 /* 大标题 */
 .page-header {
   padding: 20rpx 36rpx 24rpx;
-  background: #FBF5EC;
+  background: #FEFCFA;
 }
 .page-title {
   font-size: 48rpx;
@@ -72,7 +72,7 @@
   overflow: hidden;
 }
 .conversation-card:active {
-  background: #FBF5EC;
+  background: #FEFCFA;
 }
 
 /* 头像 */

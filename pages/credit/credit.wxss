@@ -1,4 +1,4 @@
-.page { min-height: 100vh; background: #FBF5EC; }
+.page { min-height: 100vh; background: #FEFCFA; }
 
 .score-card {
   display: flex;

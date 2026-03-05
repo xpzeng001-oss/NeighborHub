@@ -1,4 +1,4 @@
-.page { min-height: 100vh; background: #FBF5EC; padding: 16rpx 0; }
+.page { min-height: 100vh; background: #FEFCFA; padding: 16rpx 0; }
 
 .empty {
   display: flex;
@@ -18,14 +18,14 @@
   border-radius: 16rpx;
   box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
 }
-.product-item:active { background: #FBF5EC; }
+.product-item:active { background: #FEFCFA; }
 
 .product-img {
   width: 180rpx;
   height: 180rpx;
   border-radius: 12rpx;
   flex-shrink: 0;
-  background: #FBF5EC;
+  background: #FEFCFA;
   margin-right: 24rpx;
 }
 
@@ -91,7 +91,7 @@
 .help-tag {
   font-size: 22rpx;
   color: #AAAAAA;
-  background: #FBF5EC;
+  background: #FEFCFA;
   padding: 6rpx 18rpx;
   border-radius: 20rpx;
   flex-shrink: 0;

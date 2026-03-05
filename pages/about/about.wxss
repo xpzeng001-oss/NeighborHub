@@ -1,5 +1,5 @@
 /* pages/about/about.wxss */
-.page { min-height: 100vh; background: #FBF5EC; }
+.page { min-height: 100vh; background: #FEFCFA; }
 
 .app-header {
   display: flex;

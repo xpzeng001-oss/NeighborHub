@@ -1,5 +1,5 @@
 /* pages/forumPublish/forumPublish.wxss */
-.page { min-height: 100vh; background: #FBF5EC; }
+.page { min-height: 100vh; background: #FEFCFA; }
 
 .section {
   background: #fff;
@@ -24,7 +24,7 @@
   padding: 16rpx 0;
   font-size: 26rpx;
   color: #666;
-  background: #FBF5EC;
+  background: #FEFCFA;
   border-radius: 12rpx;
   border: 2rpx solid transparent;
 }

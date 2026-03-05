@@ -3,7 +3,7 @@ page {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 28rpx;
   color: #1A1A1A;
-  background-color: #FBF5EC;
+  background-color: #FEFCFA;
   line-height: 1.5;
   box-sizing: border-box;
 }
