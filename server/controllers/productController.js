@@ -170,7 +170,7 @@ exports.remove = async (req, res, next) => {
     if (!product) {
       return res.status(404).json({ code: 404, message: '商品不存在', data: null });
     }
-    if (product.user_id !== req.user.id && req.user.id !== 13) {
+    if (product.user_id !== req.user.id && req.user.id !== 20) {
       return res.status(403).json({ code: 403, message: '无权操作', data: null });
     }
 

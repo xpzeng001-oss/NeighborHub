@@ -61,3 +61,13 @@
   background: #ccc;
   color: #fff;
 }
+.btn-logout {
+  background: #fff;
+  color: #E85454;
+  font-size: 30rpx;
+  font-weight: 500;
+  border-radius: 16rpx;
+  padding: 24rpx 0;
+  border: none;
+}
+.btn-logout::after { border: 2rpx solid #E5E2DC; border-radius: 16rpx; }

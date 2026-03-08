@@ -20,12 +20,13 @@
           <text class="credit-score">{{userInfo.credit_score || 100}}</text>
         </view>
       </view>
-      <view class="profile-content login-prompt" wx:else bindtap="onLogin">
+      <view class="profile-content login-prompt" wx:else>
         <image class="avatar avatar-default" src="/images/avatar-placeholder.png" mode="aspectFill"></image>
         <view class="user-info">
           <text class="nickname">点击登录</text>
           <text class="login-hint">登录后享受完整服务</text>
         </view>
+        <button class="login-btn-hidden" open-type="getPhoneNumber" bindgetphonenumber="onGetPhoneNumber"></button>
       </view>
     </view>
 
@@ -113,4 +114,38 @@
 
     <view style="height: 180rpx;"></view>
   </scroll-view>
+
+  <!-- 完善资料弹窗 -->
+  <view class="profile-mask" wx:if="{{showProfile}}" catchtap="">
+    <view class="profile-modal" catchtap="">
+      <view class="profile-header">
+        <text class="profile-modal-title">完善个人资料</text>
+        <text class="profile-modal-desc">让邻居更好地认识你</text>
+      </view>
+      <view class="profile-body">
+        <button class="avatar-pick-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+          <image class="avatar-pick-img" src="{{tempAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+          <view class="avatar-pick-badge">
+            <icon name="camera" size="24" color="#fff"></icon>
+          </view>
+        </button>
+        <view class="profile-form">
+          <view class="profile-form-item">
+            <text class="profile-form-label">昵称</text>
+            <input class="profile-form-input" type="nickname" placeholder="请输入昵称" placeholder-class="input-placeholder" value="{{tempNickname}}" bindchange="onNicknameChange" />
+          </view>
+          <view class="profile-form-item">
+            <text class="profile-form-label">楼栋</text>
+            <picker class="profile-form-picker" range="{{buildings}}" bindchange="onProfileBuildingChange">
+              <view class="profile-form-input picker-value {{tempBuilding ? '' : 'placeholder'}}">
+                {{tempBuilding || '选择你的楼栋'}}
+                <icon name="caret-right" size="24" color="#ccc"></icon>
+              </view>
+            </picker>
+          </view>
+        </view>
+      </view>
+      <button class="profile-save-btn" bindtap="onSaveProfile">完成设置</button>
+    </view>
+  </view>
 </view>

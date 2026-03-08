@@ -8,7 +8,12 @@ Page({
     userInfo: null,
     isVerified: false,
     creditLevel: '新住户',
-    buildings: ['1栋', '2栋', '3栋', '5栋', '6栋', '7栋', '8栋', '9栋', '10栋', '12栋']
+    buildings: ['1栋', '2栋', '3栋', '5栋', '6栋', '7栋', '8栋', '9栋', '10栋', '12栋'],
+    isAdmin: false,
+    showProfile: false,
+    tempAvatar: '',
+    tempNickname: '',
+    tempBuilding: ''
   },
 
   onLoad() {
@@ -21,6 +26,9 @@ Page({
       this.getTabBar().setData({ selected: 3 });
     }
     const userInfo = app.globalData.userInfo;
+    if (!userInfo && app._loginCallback) {
+      this.onQuickLogin();
+    }
     if (userInfo) {
       let creditLevel = '新住户';
       const score = userInfo.creditScore || userInfo.credit_score || 100;
@@ -31,15 +39,89 @@ Page({
         userInfo,
         isVerified: !!userInfo.building,
         creditLevel,
-        isAdmin: userInfo.id == 13
+        isAdmin: userInfo.id == 20
       });
     }
   },
 
   onLogin() {
-    app.login((userInfo) => {
-      this.setData({ userInfo });
+    // 其他页面调用 app.login() 跳转过来时，需要用户点击触发
+  },
+
+  onGetPhoneNumber(e) {
+    if (e.detail.errMsg !== 'getPhoneNumber:ok') return;
+    const phoneCode = e.detail.code;
+    wx.login({
+      success: (loginRes) => {
+        wx.request({
+          url: app.globalData.baseUrl + '/api/auth/login',
+          method: 'POST',
+          data: { code: loginRes.code, phoneCode },
+          success: (res) => {
+            if (res.data.code === 0) {
+              const { token, userInfo } = res.data.data;
+              app.globalData.token = token;
+              app.globalData.userInfo = userInfo;
+              wx.setStorageSync('token', token);
+              wx.setStorageSync('userInfo', userInfo);
+              this.setData({ userInfo, showProfile: true, tempAvatar: '', tempNickname: '' });
+              if (app._loginCallback) {
+                app._loginCallback(userInfo);
+                app._loginCallback = null;
+              }
+              this.onShow();
+            } else {
+              wx.showToast({ title: res.data.message || '登录失败', icon: 'none' });
+            }
+          },
+          fail: () => { wx.showToast({ title: '网络错误', icon: 'none' }); }
+        });
+      }
     });
+  },
+
+  onChooseAvatar(e) {
+    this.setData({ tempAvatar: e.detail.avatarUrl });
+  },
+
+  onNicknameChange(e) {
+    this.setData({ tempNickname: e.detail.value });
+  },
+
+  onProfileBuildingChange(e) {
+    this.setData({ tempBuilding: this.data.buildings[e.detail.value] });
+  },
+
+  async onSaveProfile() {
+    const { tempAvatar, tempNickname } = this.data;
+    const nickName = (tempNickname || '').trim();
+    if (!nickName) {
+      wx.showToast({ title: '请填写昵称', icon: 'none' });
+      return;
+    }
+    try {
+      let avatarUrl = tempAvatar;
+      // 如果是本地临时文件，先上传
+      if (avatarUrl && avatarUrl.startsWith('http://tmp') || avatarUrl && avatarUrl.startsWith('wxfile://')) {
+        avatarUrl = await api.uploadImage(avatarUrl);
+      }
+      const building = this.data.tempBuilding;
+      const updateData = { nickName, avatarUrl };
+      if (building) { updateData.building = building; updateData.isVerified = true; }
+      const updated = await api.updateUser(this.data.userInfo.id, updateData);
+      const userInfo = { ...this.data.userInfo, nickName: updated.nickName || nickName, avatarUrl: updated.avatarUrl || avatarUrl, building: updated.building || building, isVerified: !!building };
+      app.globalData.userInfo = userInfo;
+      wx.setStorageSync('userInfo', userInfo);
+      this.setData({ userInfo, showProfile: false });
+      wx.showToast({ title: '设置成功', icon: 'success' });
+    } catch (err) {
+      const building = this.data.tempBuilding;
+      const userInfo = { ...this.data.userInfo, nickName, avatarUrl: tempAvatar, building: building || this.data.userInfo.building, isVerified: !!building };
+      app.globalData.userInfo = userInfo;
+      wx.setStorageSync('userInfo', userInfo);
+      this.setData({ userInfo, showProfile: false });
+      wx.showToast({ title: '设置成功', icon: 'success' });
+    }
   },
 
   goMyPublish() {

@@ -47,35 +47,9 @@ App({
   },
 
   // 微信登录 -> 服务器认证 -> JWT
+  // 其他页面调用时跳转到 mine 页面触发登录弹窗
   login(callback) {
-    wx.login({
-      success: (loginRes) => {
-        wx.request({
-          url: this.globalData.baseUrl + '/api/auth/login',
-          method: 'POST',
-          data: {
-            code: loginRes.code
-          },
-          success: (res) => {
-            if (res.data.code === 0) {
-              const { token, userInfo } = res.data.data;
-              this.globalData.token = token;
-              this.globalData.userInfo = userInfo;
-              wx.setStorageSync('token', token);
-              wx.setStorageSync('userInfo', userInfo);
-              callback && callback(userInfo);
-            } else {
-              wx.showToast({ title: res.data.message || '登录失败', icon: 'none' });
-            }
-          },
-          fail: () => {
-            wx.showToast({ title: '网络错误', icon: 'none' });
-          }
-        });
-      },
-      fail: () => {
-        wx.showToast({ title: '登录失败', icon: 'none' });
-      }
-    });
+    this._loginCallback = callback;
+    wx.switchTab({ url: '/pages/mine/mine' });
   }
 });

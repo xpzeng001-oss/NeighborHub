@@ -35,6 +35,22 @@ Page({
     this.setData({ nickName: e.detail.value });
   },
 
+  onLogout() {
+    wx.showModal({
+      title: '提示',
+      content: '确定退出登录吗？',
+      success: (res) => {
+        if (res.confirm) {
+          app.globalData.userInfo = null;
+          app.globalData.token = '';
+          wx.removeStorageSync('token');
+          wx.removeStorageSync('userInfo');
+          wx.switchTab({ url: '/pages/mine/mine' });
+        }
+      }
+    });
+  },
+
   async onSave() {
     const { nickName, tempAvatarPath, saving } = this.data;
     if (saving) return;
