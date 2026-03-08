@@ -24,7 +24,7 @@
     </view>
     <view class="stats-row">
       <view class="stat-item">
-        <text class="stat-value" style="color: #A47764;">{{stats.activeUsers}}</text>
+        <text class="stat-value" style="color: #C67A52;">{{stats.activeUsers}}</text>
         <text class="stat-label">活跃住户</text>
       </view>
       <view class="stat-item">
@@ -32,7 +32,7 @@
         <text class="stat-label">本月交易</text>
       </view>
       <view class="stat-item">
-        <text class="stat-value" style="color: #A47764;">{{stats.rating}}</text>
+        <text class="stat-value" style="color: #C67A52;">{{stats.rating}}</text>
         <text class="stat-label">好评率</text>
       </view>
     </view>

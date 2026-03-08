@@ -3,9 +3,9 @@ const app = getApp();
 const api = require('../../utils/api');
 
 const contentTypes = [
-  { id: 'all', name: '全部', icon: 'squares-four', color: '#A47764' },
-  { id: 'product', name: '闲置物品', icon: 'clipboard', color: '#A47764' },
-  { id: 'free', name: '免费送', icon: 'gift', color: '#C59A84' },
+  { id: 'all', name: '全部', icon: 'squares-four', color: '#C67A52' },
+  { id: 'product', name: '闲置物品', icon: 'clipboard', color: '#C67A52' },
+  { id: 'free', name: '免费送', icon: 'gift', color: '#D49A78' },
   { id: 'new', name: '最新发布', icon: 'clock', color: '#4A90D9' }
 ];
 
@@ -18,7 +18,7 @@ Page({
     showCommunityPicker: false,
     contentTypes: contentTypes,
     activeType: 'all',
-    sortTabs: ['最新', '热门'],
+    sortTabs: ['最新', '最热', '免费'],
     activeSort: 0,
     products: [],
     leftProducts: [],

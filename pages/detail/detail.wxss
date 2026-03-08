@@ -11,9 +11,9 @@
   padding: 32rpx;
 }
 .price-row { display: flex; align-items: baseline; gap: 12rpx; }
-.price { font-size: 44rpx; color: #A47764; font-weight: 800; }
-.price.free { font-size: 36rpx; color: #C59A84; }
-.original { font-size: 24rpx; color: #AAAAAA; text-decoration: line-through; }
+.price { font-size: 44rpx; color: #C67A52; font-weight: 800; }
+.price.free { font-size: 36rpx; color: #D49A78; }
+.original { font-size: 24rpx; color: #9A9A9A; text-decoration: line-through; }
 .tags { display: flex; flex-wrap: wrap; gap: 10rpx; margin-top: 20rpx; }
 .tags .tag {
   display: inline-flex;
@@ -31,7 +31,7 @@
   font-weight: 700;
   margin-top: 24rpx;
   line-height: 1.5;
-  color: #1A1A1A;
+  color: #2C2C2C;
 }
 
 /* 内容区 */
@@ -43,7 +43,7 @@
 .section-title {
   font-size: 26rpx;
   font-weight: 700;
-  color: #1A1A1A;
+  color: #2C2C2C;
   margin-bottom: 16rpx;
   display: block;
 }
@@ -53,7 +53,7 @@
   line-height: 1.8;
 }
 .meta-row { margin-top: 20rpx; padding-top: 20rpx; border-top: 1rpx solid #E3D5BF; }
-.meta { font-size: 24rpx; color: #AAAAAA; }
+.meta { font-size: 24rpx; color: #9A9A9A; }
 
 /* 卖家卡片 */
 .seller-section {
@@ -64,8 +64,8 @@
 .seller-left { display: flex; align-items: center; }
 .seller-avatar { width: 80rpx; height: 80rpx; border-radius: 50%; margin-right: 20rpx; background: #FEFCFA; }
 .seller-info { display: flex; flex-direction: column; }
-.seller-name { font-size: 28rpx; font-weight: 600; color: #1A1A1A; }
-.seller-building { font-size: 22rpx; color: #AAAAAA; margin-top: 4rpx; }
+.seller-name { font-size: 28rpx; font-weight: 600; color: #2C2C2C; }
+.seller-building { font-size: 22rpx; color: #9A9A9A; margin-top: 4rpx; }
 
 /* 数据统计 */
 .stats-row {
@@ -73,8 +73,8 @@
   justify-content: space-around;
 }
 .stat-item { display: flex; flex-direction: column; align-items: center; }
-.stat-value { font-size: 32rpx; font-weight: 700; color: #1A1A1A; }
-.stat-label { font-size: 22rpx; color: #AAAAAA; margin-top: 6rpx; }
+.stat-value { font-size: 32rpx; font-weight: 700; color: #2C2C2C; }
+.stat-label { font-size: 22rpx; color: #9A9A9A; margin-top: 6rpx; }
 
 /* 举报 */
 .report-row {
@@ -111,7 +111,7 @@
   align-items: center;
   width: 64rpx;
 }
-.bar-icon-label { font-size: 18rpx; color: #AAAAAA; margin-top: 2rpx; }
+.bar-icon-label { font-size: 18rpx; color: #9A9A9A; margin-top: 2rpx; }
 .bar-share-btn {
   background: none !important;
   border: none !important;
@@ -138,7 +138,7 @@
   font-size: 28rpx;
   font-weight: 500;
   background: #FEFCFA;
-  color: #1A1A1A;
+  color: #2C2C2C;
   border: none;
   border-radius: 16rpx;
   padding: 0;
@@ -151,7 +151,7 @@
   line-height: 88rpx;
   text-align: center;
   font-size: 30rpx;
-  background: #A47764;
+  background: #C67A52;
   color: #fff;
   border: none;
   border-radius: 16rpx;

@@ -3,7 +3,7 @@ const api = require('../../utils/api');
 
 const typeMap = {
   need: { label: '寻求喂养', icon: 'paw-print', color: '#E8883C' },
-  offer: { label: '可以帮喂', icon: 'heart', color: '#A47764' },
+  offer: { label: '可以帮喂', icon: 'heart', color: '#C67A52' },
   social: { label: '宠物活动', icon: 'sparkles', color: '#8B6DB0' }
 };
 
@@ -20,7 +20,7 @@ Page({
     typeInfo: {},
     btnText: '',
     respondents: [],
-    responded: false
+    responded: false,
   },
 
   onLoad(options) {
@@ -42,34 +42,7 @@ Page({
         respondents: detail.respondents || []
       });
     } catch (err) {
-      console.log('加载详情失败，使用mock数据', err);
-      // Mock 数据用于验证页面
-      const mock = {
-        id: id,
-        type: 'need',
-        title: '春节出游，求靠谱猫咪寄养',
-        description: '1月25日-2月2日出去旅游，家里英短蓝猫需要人照顾，猫粮猫砂全提供。\n\n猫咪性格温顺，不挑食，每天喂两次猫粮、换一次水即可。需要每天铲一次猫砂。\n\n希望找有养猫经验的邻居，最好能每天拍照/视频反馈一下~',
-        userName: '小王妈妈',
-        userAvatar: '',
-        building: '3栋1单元',
-        userId: '1',
-        createdAt: '2小时前',
-        dateRange: '1月25日 - 2月2日',
-        reward: '200元/天',
-        tags: ['猫咪', '寄养', '春节'],
-        responseCount: 3,
-        respondents: [
-          { id: '2', nickName: '李阿姨', avatarUrl: '' },
-          { id: '3', nickName: '张小明', avatarUrl: '' },
-          { id: '4', nickName: '赵姐', avatarUrl: '' }
-        ]
-      };
-      this.setData({
-        detail: mock,
-        typeInfo: typeMap[mock.type],
-        btnText: btnTextMap[mock.type],
-        respondents: mock.respondents
-      });
+      wx.showToast({ title: '加载失败', icon: 'none' });
     }
   },
 

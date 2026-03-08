@@ -11,10 +11,10 @@
 .section-title {
   font-size: 28rpx;
   font-weight: 600;
-  color: #1A1A1A;
+  color: #2C2C2C;
   margin-bottom: 20rpx;
 }
-.optional { font-size: 24rpx; color: #AAAAAA; font-weight: 400; }
+.optional { font-size: 24rpx; color: #9A9A9A; font-weight: 400; }
 
 /* 分类选择 */
 .category-list { display: flex; gap: 16rpx; }
@@ -32,13 +32,13 @@
 .cat-item.cat-announcement { background: rgba(232, 99, 111,0.1); color: #E8636F; border-color: rgba(232, 99, 111,0.3); }
 .cat-item.cat-complaint { background: rgba(232, 136, 60,0.1); color: #E8883C; border-color: rgba(232, 136, 60,0.3); }
 .cat-item.cat-question { background: rgba(74, 144, 217,0.1); color: #4A90D9; border-color: rgba(74, 144, 217,0.3); }
-.cat-item.cat-activity { background: rgba(164, 119, 100,0.15); color: #A47764; border-color: rgba(164, 119, 100,0.5); }
+.cat-item.cat-activity { background: rgba(198, 122, 82,0.15); color: #C67A52; border-color: rgba(198, 122, 82,0.5); }
 
 /* 标题输入 */
 .title-input {
   font-size: 30rpx;
   font-weight: 600;
-  color: #1A1A1A;
+  color: #2C2C2C;
   padding: 8rpx 0;
 }
 
@@ -47,7 +47,7 @@
   width: 100%;
   height: 240rpx;
   font-size: 28rpx;
-  color: #1A1A1A;
+  color: #2C2C2C;
   padding: 0;
   box-sizing: border-box;
 }
@@ -90,7 +90,7 @@
 /* 提交按钮 */
 .btn-wrap { padding: 40rpx 24rpx; }
 .submit-btn {
-  background: #A47764;
+  background: #C67A52;
   color: #fff;
   font-size: 30rpx;
   font-weight: 600;

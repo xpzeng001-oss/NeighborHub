@@ -11,11 +11,11 @@
 .pet-tab {
   padding: 24rpx 28rpx;
   font-size: 28rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   position: relative;
 }
 .pet-tab.active {
-  color: #1A1A1A;
+  color: #2C2C2C;
   font-weight: 700;
 }
 .pet-tab.active::after {
@@ -26,7 +26,7 @@
   transform: translateX(-50%);
   width: 40rpx;
   height: 6rpx;
-  background: #A47764;
+  background: #C67A52;
   border-radius: 3rpx;
 }
 
@@ -53,7 +53,7 @@
   margin-bottom: 16rpx;
 }
 .type-need { background: rgba(232, 136, 60, 0.08); color: #E8883C; }
-.type-offer { background: #F3E8DA; color: #A47764; }
+.type-offer { background: #F3E8DA; color: #C67A52; }
 .type-social { background: rgba(139, 109, 176, 0.08); color: #8B6DB0; }
 
 /* 用户信息 */
@@ -70,22 +70,22 @@
   background: #FEFCFA;
 }
 .user-info { flex: 1; }
-.user-name { font-size: 28rpx; font-weight: 600; color: #1A1A1A; display: block; }
-.user-building { font-size: 22rpx; color: #AAAAAA; }
-.time { font-size: 22rpx; color: #AAAAAA; }
+.user-name { font-size: 28rpx; font-weight: 600; color: #2C2C2C; display: block; }
+.user-building { font-size: 22rpx; color: #9A9A9A; }
+.time { font-size: 22rpx; color: #9A9A9A; }
 
 /* 内容 */
 .card-title {
   font-size: 32rpx;
   font-weight: 700;
-  color: #1A1A1A;
+  color: #2C2C2C;
   display: block;
   margin-bottom: 12rpx;
   line-height: 1.4;
 }
 .card-desc {
   font-size: 26rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   line-height: 1.7;
   display: block;
 }
@@ -97,10 +97,10 @@
   gap: 8rpx;
   margin-top: 16rpx;
 }
-.info-text { font-size: 24rpx; color: #AAAAAA; }
+.info-text { font-size: 24rpx; color: #9A9A9A; }
 .reward {
   font-size: 28rpx;
-  color: #A47764;
+  color: #C67A52;
   font-weight: 700;
 }
 
@@ -116,7 +116,7 @@
   padding: 8rpx 18rpx;
   border-radius: 20rpx;
   background: #F3E8DA;
-  color: #A47764;
+  color: #C67A52;
 }
 
 /* 底部 */
@@ -129,7 +129,7 @@
   border-top: 1rpx solid #E3D5BF;
   overflow: hidden;
 }
-.response-count { font-size: 24rpx; color: #AAAAAA; white-space: nowrap; margin-right: 16rpx; }
+.response-count { font-size: 24rpx; color: #9A9A9A; white-space: nowrap; margin-right: 16rpx; }
 .card-actions { display: flex; gap: 12rpx; }
 
 .btn-contact, .btn-respond {
@@ -144,12 +144,12 @@
 }
 .btn-contact {
   background: #FEFCFA;
-  color: #1A1A1A;
+  color: #2C2C2C;
   border: none;
 }
 .btn-contact::after { border: none; }
 .btn-respond {
-  background: #A47764;
+  background: #C67A52;
   color: #fff;
   border: none;
 }
@@ -162,11 +162,11 @@
   bottom: 120rpx;
   width: 100rpx;
   height: 100rpx;
-  background: linear-gradient(135deg, #C59A84 0%, #A47764 100%);
+  background: linear-gradient(135deg, #D49A78 0%, #C67A52 100%);
   border-radius: 28rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8rpx 24rpx rgba(164, 119, 100, 0.4);
+  box-shadow: 0 8rpx 24rpx rgba(198, 122, 82, 0.4);
 }
 .fab-btn:active { opacity: 0.85; }

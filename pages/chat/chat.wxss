@@ -1,7 +1,7 @@
 /* pages/chat/chat.wxss — 暖色卡片风格 */
 .page {
   min-height: 100vh;
-  background: #FEFCFA;
+  background: linear-gradient(to bottom, #F0E4D8 0%, #FAF8F4 30%);
   overflow-x: hidden;
   box-sizing: border-box;
 }
@@ -9,12 +9,11 @@
 /* 大标题 */
 .page-header {
   padding: 20rpx 36rpx 24rpx;
-  background: #FEFCFA;
 }
 .page-title {
   font-size: 48rpx;
   font-weight: 700;
-  color: #1A1A1A;
+  color: #2C2C2C;
 }
 
 /* 未读消息横幅 */
@@ -33,7 +32,7 @@
 }
 .banner-text {
   font-size: 26rpx;
-  color: #A47764;
+  color: #C67A52;
 }
 .banner-count {
   font-weight: 700;
@@ -48,7 +47,7 @@
   padding-top: 300rpx;
   gap: 20rpx;
 }
-.empty-text { font-size: 28rpx; color: #AAAAAA; }
+.empty-text { font-size: 28rpx; color: #9A9A9A; }
 
 /* 会话列表 */
 .conversation-list {
@@ -66,8 +65,7 @@
   background: #fff;
   border-radius: 20rpx;
   margin-bottom: 20rpx;
-  border: 1rpx solid rgba(0, 0, 0, 0.04);
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.03);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.06);
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -122,7 +120,7 @@
 }
 .conv-name {
   font-size: 30rpx;
-  color: #1A1A1A;
+  color: #2C2C2C;
   font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -131,7 +129,7 @@
 }
 .conv-time {
   font-size: 24rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   flex-shrink: 0;
   max-width: 200rpx;
   overflow: hidden;
@@ -140,7 +138,7 @@
 }
 .conv-topic {
   font-size: 24rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

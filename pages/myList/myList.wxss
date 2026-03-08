@@ -7,7 +7,7 @@
   padding-top: 300rpx;
   gap: 20rpx;
 }
-.empty-text { font-size: 28rpx; color: #AAAAAA; }
+.empty-text { font-size: 28rpx; color: #9A9A9A; }
 
 /* 商品列表 */
 .product-item {
@@ -37,7 +37,7 @@
 }
 .product-title {
   font-size: 28rpx;
-  color: #1A1A1A;
+  color: #2C2C2C;
   font-weight: 500;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -50,18 +50,18 @@
   justify-content: space-between;
   align-items: center;
 }
-.product-price { font-size: 32rpx; color: #A47764; font-weight: 700; }
-.product-free { font-size: 26rpx; color: #C59A84; font-weight: 600; }
+.product-price { font-size: 32rpx; color: #C67A52; font-weight: 700; }
+.product-free { font-size: 26rpx; color: #D49A78; font-weight: 600; }
 .product-status {
   font-size: 22rpx;
-  color: #A47764;
+  color: #C67A52;
   background: #F3E8DA;
   padding: 6rpx 18rpx;
   border-radius: 20rpx;
   font-weight: 500;
 }
 .product-status.sold {
-  color: #AAAAAA;
+  color: #9A9A9A;
   background: #E3D5BF;
 }
 
@@ -81,7 +81,7 @@
 }
 .help-title {
   font-size: 30rpx;
-  color: #1A1A1A;
+  color: #2C2C2C;
   font-weight: 600;
   flex: 1;
   overflow: hidden;
@@ -90,7 +90,7 @@
 }
 .help-tag {
   font-size: 22rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   background: #FEFCFA;
   padding: 6rpx 18rpx;
   border-radius: 20rpx;
@@ -103,7 +103,7 @@
 }
 .help-desc {
   font-size: 26rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -117,11 +117,11 @@
   color: #D4A04A;
   font-weight: 500;
 }
-.help-status.done { color: #A47764; }
+.help-status.done { color: #C67A52; }
 
 .loading-more {
   text-align: center;
   padding: 30rpx 0;
   font-size: 24rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
 }

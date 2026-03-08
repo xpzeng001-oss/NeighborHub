@@ -8,7 +8,6 @@ Page({
     userInfo: null,
     isVerified: false,
     creditLevel: '新住户',
-    stats: { published: 0, favorites: 0, sold: 0, bought: 0 },
     buildings: ['1栋', '2栋', '3栋', '5栋', '6栋', '7栋', '8栋', '9栋', '10栋', '12栋']
   },
 
@@ -32,25 +31,14 @@ Page({
         userInfo,
         isVerified: !!userInfo.building,
         creditLevel,
-        isAdmin: userInfo.id === 1
+        isAdmin: userInfo.id == 13
       });
-      this.loadStats(userInfo.id);
-    }
-  },
-
-  async loadStats(userId) {
-    try {
-      const stats = await api.getUserStats(userId);
-      this.setData({ stats });
-    } catch (err) {
-      console.log('加载统计失败', err);
     }
   },
 
   onLogin() {
     app.login((userInfo) => {
       this.setData({ userInfo });
-      if (userInfo.id) this.loadStats(userInfo.id);
     });
   },
 
@@ -109,6 +97,10 @@ Page({
 
   goAbout() {
     wx.navigateTo({ url: '/pages/about/about' });
+  },
+
+  goAdmin() {
+    wx.navigateTo({ url: '/pages/admin/admin' });
   },
 
   goFeedbackList() {

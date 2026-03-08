@@ -14,5 +14,6 @@ router.use('/chat',     require('./chat'));
 router.use('/reports',  require('./reports'));
 router.use('/feedbacks', require('./feedbacks'));
 router.use('/sams',      require('./sams'));
+router.use('/carpools',  require('./carpools'));
 
 module.exports = router;

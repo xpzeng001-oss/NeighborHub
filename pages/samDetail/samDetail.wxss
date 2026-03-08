@@ -22,7 +22,7 @@
   text-align: center;
   font-size: 34rpx;
   font-weight: 700;
-  color: #1A1A1A;
+  color: #2C2C2C;
 }
 
 .scroll-content { flex: 1; height: 0; }
@@ -46,15 +46,15 @@
   font-weight: 500;
   margin-bottom: 20rpx;
 }
-.status-open { background: #F3E8DA; color: #A47764; }
+.status-open { background: #F3E8DA; color: #C67A52; }
 .status-full { background: rgba(139, 109, 176, 0.08); color: #8B6DB0; }
-.status-closed { background: #E3D5BF; color: #AAAAAA; }
+.status-closed { background: #E3D5BF; color: #9A9A9A; }
 
 .detail-title {
   display: block;
   font-size: 36rpx;
   font-weight: 700;
-  color: #1A1A1A;
+  color: #2C2C2C;
   line-height: 1.5;
   margin-bottom: 24rpx;
 }
@@ -75,9 +75,9 @@
   margin-right: 16rpx;
 }
 .author-info { flex: 1; }
-.author-name { font-size: 28rpx; font-weight: 600; color: #1A1A1A; display: block; }
-.author-building { font-size: 22rpx; color: #AAAAAA; }
-.publish-time { font-size: 22rpx; color: #AAAAAA; }
+.author-name { font-size: 28rpx; font-weight: 600; color: #2C2C2C; display: block; }
+.author-building { font-size: 22rpx; color: #9A9A9A; }
+.publish-time { font-size: 22rpx; color: #9A9A9A; }
 
 .detail-desc {
   display: block;
@@ -103,9 +103,9 @@
 }
 .info-item:last-of-type { border-bottom: none; }
 .info-content { flex: 1; }
-.info-label { font-size: 22rpx; color: #AAAAAA; display: block; margin-bottom: 4rpx; }
-.info-value { font-size: 28rpx; color: #1A1A1A; font-weight: 500; }
-.highlight-value { color: #A47764; font-weight: 700; }
+.info-label { font-size: 22rpx; color: #9A9A9A; display: block; margin-bottom: 4rpx; }
+.info-value { font-size: 28rpx; color: #2C2C2C; font-weight: 500; }
+.highlight-value { color: #C67A52; font-weight: 700; }
 
 /* 进度条 */
 .progress-row {
@@ -117,8 +117,8 @@
   border-top: 1rpx solid #E3D5BF;
 }
 .progress-bar { flex: 1; height: 12rpx; background: #F3E8DA; border-radius: 6rpx; overflow: hidden; }
-.progress-fill { height: 100%; background: linear-gradient(90deg, #C59A84, #A47764); border-radius: 6rpx; transition: width 0.3s; }
-.progress-text { font-size: 22rpx; color: #AAAAAA; flex-shrink: 0; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #D49A78, #C67A52); border-radius: 6rpx; transition: width 0.3s; }
+.progress-text { font-size: 22rpx; color: #9A9A9A; flex-shrink: 0; }
 
 /* 通用卡片区块 */
 .section-card {
@@ -139,18 +139,18 @@
   align-items: baseline;
   gap: 8rpx;
 }
-.section-title { font-size: 30rpx; font-weight: 700; color: #1A1A1A; }
-.section-count { font-size: 26rpx; color: #A47764; font-weight: 600; }
+.section-title { font-size: 30rpx; font-weight: 700; color: #2C2C2C; }
+.section-count { font-size: 26rpx; color: #C67A52; font-weight: 600; }
 .section-action {
   display: flex;
   align-items: center;
   gap: 4rpx;
   font-size: 24rpx;
-  color: #A47764;
+  color: #C67A52;
   font-weight: 500;
 }
 .empty-hint { padding: 12rpx 0; }
-.empty-hint text { font-size: 26rpx; color: #AAAAAA; }
+.empty-hint text { font-size: 26rpx; color: #9A9A9A; }
 
 /* 时间线 */
 .timeline { padding-left: 16rpx; }
@@ -173,7 +173,7 @@
   width: 18rpx;
   height: 18rpx;
   border-radius: 50%;
-  background: #A47764;
+  background: #C67A52;
   margin-top: 6rpx;
   flex-shrink: 0;
 }
@@ -183,13 +183,13 @@
   padding: 4rpx 12rpx;
   border-radius: 8rpx;
   background: #F3E8DA;
-  color: #A47764;
+  color: #C67A52;
   font-size: 20rpx;
   font-weight: 500;
   margin-bottom: 8rpx;
 }
-.timeline-text { display: block; font-size: 28rpx; color: #1A1A1A; line-height: 1.6; }
-.timeline-time { display: block; font-size: 22rpx; color: #AAAAAA; margin-top: 8rpx; }
+.timeline-text { display: block; font-size: 28rpx; color: #2C2C2C; line-height: 1.6; }
+.timeline-time { display: block; font-size: 22rpx; color: #9A9A9A; margin-top: 8rpx; }
 
 /* 参与成员 */
 .members-list {
@@ -218,7 +218,7 @@
   border: 3rpx solid #fff;
 }
 .pickup-dot.picked { background: #4CAF50; }
-.member-name { font-size: 22rpx; color: #AAAAAA; max-width: 80rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.member-name { font-size: 22rpx; color: #9A9A9A; max-width: 80rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* 汇总清单 */
 .agg-item {
@@ -237,15 +237,15 @@
   background: #FEFCFA;
 }
 .agg-info { flex: 1; }
-.agg-name { font-size: 28rpx; font-weight: 600; color: #1A1A1A; display: block; }
-.agg-building { font-size: 22rpx; color: #AAAAAA; }
+.agg-name { font-size: 28rpx; font-weight: 600; color: #2C2C2C; display: block; }
+.agg-building { font-size: 22rpx; color: #9A9A9A; }
 .pickup-toggle {
   display: flex; align-items: center; gap: 6rpx;
   padding: 10rpx 20rpx;
   border-radius: 28rpx;
   border: 2rpx solid #E3D5BF;
   font-size: 22rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
 }
 .pickup-toggle.picked {
   background: #4CAF50;
@@ -265,7 +265,7 @@
 .agg-empty {
   margin-top: 12rpx;
   font-size: 24rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
 }
 
 /* 我的采购清单 */
@@ -305,24 +305,24 @@
   background: #FEFCFA;
   border-radius: 16rpx;
 }
-.btn-msg text { font-size: 26rpx; color: #1A1A1A; font-weight: 500; }
+.btn-msg text { font-size: 26rpx; color: #2C2C2C; font-weight: 500; }
 .btn-action {
   flex: 1;
   height: 84rpx;
   line-height: 84rpx;
   text-align: center;
-  background: #A47764;
+  background: #C67A52;
   border-radius: 16rpx;
   font-size: 30rpx;
   font-weight: 600;
   color: #fff;
 }
 .btn-action:active { opacity: 0.85; }
-.btn-disabled { background: #E3D5BF; color: #AAAAAA; }
+.btn-disabled { background: #E3D5BF; color: #9A9A9A; }
 .btn-disabled:active { opacity: 1; }
 .btn-secondary {
   background: #FEFCFA;
-  color: #A47764;
+  color: #C67A52;
 }
 
 /* 弹窗 */
@@ -345,7 +345,7 @@
   display: block;
   font-size: 32rpx;
   font-weight: 700;
-  color: #1A1A1A;
+  color: #2C2C2C;
   text-align: center;
   margin-bottom: 28rpx;
 }
@@ -374,7 +374,7 @@
   font-weight: 600;
 }
 .modal-btn.cancel { background: #FEFCFA; color: #666; }
-.modal-btn.confirm { background: #A47764; color: #fff; }
+.modal-btn.confirm { background: #C67A52; color: #fff; }
 
 /* 进度标签选择 */
 .update-tags {
@@ -387,10 +387,10 @@
   border-radius: 20rpx;
   border: 2rpx solid #E3D5BF;
   font-size: 24rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
 }
 .update-tag.active {
   background: #F3E8DA;
-  border-color: #A47764;
-  color: #A47764;
+  border-color: #C67A52;
+  color: #C67A52;
 }

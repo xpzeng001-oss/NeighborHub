@@ -42,13 +42,13 @@
 }
 .bubble-other {
   background: #fff;
-  color: #1A1A1A;
+  color: #2C2C2C;
   margin-left: 16rpx;
   border-radius: 4rpx 24rpx 24rpx 24rpx;
   box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
 }
 .bubble-mine {
-  background: #A47764;
+  background: #C67A52;
   color: #fff;
   margin-right: 16rpx;
   border-radius: 24rpx 4rpx 24rpx 24rpx;
@@ -94,11 +94,11 @@
 }
 .send-btn text {
   font-size: 28rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   font-weight: 600;
 }
 .send-btn.active {
-  background: #A47764;
+  background: #C67A52;
 }
 .send-btn.active text {
   color: #fff;

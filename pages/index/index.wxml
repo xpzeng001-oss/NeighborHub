@@ -6,7 +6,7 @@
   <!-- 导航栏：小区选择，与胶囊按钮同行 -->
   <view class="nav-header" style="height: {{navHeight}}px;">
     <view class="community-select" bindtap="onCommunityTap">
-      <icon name="map-pin" size="32" color="#A47764"></icon>
+      <icon name="map-pin" size="32" color="#C67A52"></icon>
       <text class="community-name">{{currentCommunity}}</text>
       <icon name="caret-down" size="24" color="#999"></icon>
     </view>
@@ -31,7 +31,6 @@
         <view class="type-pill {{activeType === item.id ? 'active' : ''}}"
               wx:for="{{contentTypes}}" wx:key="id"
               bindtap="onTypeChange" data-id="{{item.id}}">
-          <icon name="{{item.icon}}" size="28" color="{{activeType === item.id ? '#fff' : item.color}}"></icon>
           <text>{{item.name}}</text>
         </view>
       </view>
@@ -110,7 +109,7 @@
             wx:for="{{communities}}" wx:key="id"
             bindtap="selectCommunity" data-item="{{item}}">
         <text>{{item.name}}</text>
-        <icon wx:if="{{item.name === currentCommunity}}" name="check" size="32" color="#A47764"></icon>
+        <icon wx:if="{{item.name === currentCommunity}}" name="check" size="32" color="#C67A52"></icon>
       </view>
     </view>
   </view>

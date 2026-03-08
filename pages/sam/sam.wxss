@@ -11,11 +11,11 @@
 .sam-tab {
   padding: 24rpx 28rpx;
   font-size: 28rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   position: relative;
 }
 .sam-tab.active {
-  color: #1A1A1A;
+  color: #2C2C2C;
   font-weight: 700;
 }
 .sam-tab.active::after {
@@ -26,7 +26,7 @@
   transform: translateX(-50%);
   width: 40rpx;
   height: 6rpx;
-  background: #A47764;
+  background: #C67A52;
   border-radius: 3rpx;
 }
 
@@ -51,9 +51,9 @@
   font-weight: 500;
   margin-bottom: 16rpx;
 }
-.status-open { background: #F3E8DA; color: #A47764; }
+.status-open { background: #F3E8DA; color: #C67A52; }
 .status-full { background: rgba(139, 109, 176, 0.08); color: #8B6DB0; }
-.status-closed { background: #E3D5BF; color: #AAAAAA; }
+.status-closed { background: #E3D5BF; color: #9A9A9A; }
 
 /* 用户信息 */
 .card-header {
@@ -69,22 +69,22 @@
   background: #FEFCFA;
 }
 .user-info { flex: 1; }
-.user-name { font-size: 28rpx; font-weight: 600; color: #1A1A1A; display: block; }
-.user-building { font-size: 22rpx; color: #AAAAAA; }
-.time { font-size: 22rpx; color: #AAAAAA; }
+.user-name { font-size: 28rpx; font-weight: 600; color: #2C2C2C; display: block; }
+.user-building { font-size: 22rpx; color: #9A9A9A; }
+.time { font-size: 22rpx; color: #9A9A9A; }
 
 /* 内容 */
 .card-title {
   font-size: 32rpx;
   font-weight: 700;
-  color: #1A1A1A;
+  color: #2C2C2C;
   display: block;
   margin-bottom: 12rpx;
   line-height: 1.4;
 }
 .card-desc {
   font-size: 26rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   line-height: 1.7;
   display: block;
 }
@@ -104,15 +104,15 @@
 }
 .info-label {
   font-size: 24rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
 }
 .info-value {
   font-size: 24rpx;
-  color: #1A1A1A;
+  color: #2C2C2C;
   font-weight: 500;
 }
 .info-value.highlight {
-  color: #A47764;
+  color: #C67A52;
   font-weight: 700;
 }
 
@@ -132,13 +132,13 @@
 }
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #C59A84, #A47764);
+  background: linear-gradient(90deg, #D49A78, #C67A52);
   border-radius: 6rpx;
   transition: width 0.3s;
 }
 .progress-text {
   font-size: 22rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   flex-shrink: 0;
 }
 
@@ -171,7 +171,7 @@
   margin-left: auto;
   font-size: 24rpx;
   font-weight: 600;
-  background: #A47764;
+  background: #C67A52;
   color: #fff;
   border: none;
   border-radius: 16rpx;
@@ -180,15 +180,15 @@
 .btn-join::after { border: none; }
 .btn-join[disabled] {
   background: #E3D5BF;
-  color: #AAAAAA;
+  color: #9A9A9A;
 }
 .btn-joined {
   background: #F3E8DA;
-  color: #A47764;
+  color: #C67A52;
 }
 .btn-joined[disabled] {
   background: #F3E8DA;
-  color: #A47764;
+  color: #C67A52;
 }
 
 /* 空状态 */
@@ -201,7 +201,7 @@
 }
 .empty-text {
   font-size: 28rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
 }
 
 /* 浮动按钮 */
@@ -211,11 +211,11 @@
   bottom: 120rpx;
   width: 100rpx;
   height: 100rpx;
-  background: linear-gradient(135deg, #C59A84 0%, #A47764 100%);
+  background: linear-gradient(135deg, #D49A78 0%, #C67A52 100%);
   border-radius: 28rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8rpx 24rpx rgba(164, 119, 100, 0.4);
+  box-shadow: 0 8rpx 24rpx rgba(198, 122, 82, 0.4);
 }
 .fab-btn:active { opacity: 0.85; }

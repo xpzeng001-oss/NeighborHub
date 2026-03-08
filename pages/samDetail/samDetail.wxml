@@ -29,21 +29,21 @@
     <!-- 信息卡片 -->
     <view class="info-card">
       <view class="info-item" wx:if="{{detail.deadline}}">
-        <icon name="clock" size="32" color="#A47764"></icon>
+        <icon name="clock" size="32" color="#C67A52"></icon>
         <view class="info-content">
           <text class="info-label">截止时间</text>
           <text class="info-value">{{detail.deadline}}</text>
         </view>
       </view>
       <view class="info-item" wx:if="{{detail.pickupMethod}}">
-        <icon name="map-pin" size="32" color="#A47764"></icon>
+        <icon name="map-pin" size="32" color="#C67A52"></icon>
         <view class="info-content">
           <text class="info-label">取货方式</text>
           <text class="info-value">{{detail.pickupMethod}}</text>
         </view>
       </view>
       <view class="info-item" wx:if="{{detail.minAmount}}">
-        <icon name="tag" size="32" color="#A47764"></icon>
+        <icon name="tag" size="32" color="#C67A52"></icon>
         <view class="info-content">
           <text class="info-label">起拼金额</text>
           <text class="info-value highlight-value">¥{{detail.minAmount}}</text>
@@ -62,7 +62,7 @@
       <view class="section-header">
         <text class="section-title">进度更新</text>
         <view class="section-action" bindtap="openUpdateModal" wx:if="{{isOrganizer}}">
-          <icon name="plus" size="24" color="#A47764"></icon>
+          <icon name="plus" size="24" color="#C67A52"></icon>
           <text>发布更新</text>
         </view>
       </view>
@@ -91,7 +91,7 @@
           <text class="section-count">{{participants.length}}人</text>
         </view>
         <view class="section-action" bindtap="toggleAggregatedList" wx:if="{{isOrganizer && participants.length > 0}}">
-          <icon name="clipboard" size="24" color="#A47764"></icon>
+          <icon name="clipboard" size="24" color="#C67A52"></icon>
           <text>{{showAggregatedList ? '收起清单' : '查看清单'}}</text>
         </view>
       </view>
@@ -141,7 +141,7 @@
       <view class="section-header">
         <text class="section-title">我的采购清单</text>
         <view class="section-action" bindtap="openListModal">
-          <icon name="pencil" size="24" color="#A47764"></icon>
+          <icon name="pencil" size="24" color="#C67A52"></icon>
           <text>{{myShoppingList ? '编辑' : '填写'}}</text>
         </view>
       </view>

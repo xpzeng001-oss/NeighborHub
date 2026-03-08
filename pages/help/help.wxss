@@ -15,8 +15,8 @@
 .help-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24rpx; }
 .help-user { display: flex; align-items: center; gap: 16rpx; }
 .help-avatar { width: 72rpx; height: 72rpx; border-radius: 50%; background: #FEFCFA; }
-.help-name { font-size: 28rpx; font-weight: 600; color: #1A1A1A; display: block; }
-.help-building { font-size: 22rpx; color: #AAAAAA; }
+.help-name { font-size: 28rpx; font-weight: 600; color: #2C2C2C; display: block; }
+.help-building { font-size: 22rpx; color: #9A9A9A; }
 .urgent-tag {
   font-size: 22rpx;
   color: #E8636F;
@@ -30,12 +30,12 @@
 }
 
 /* 内容 */
-.help-title { font-size: 32rpx; font-weight: 700; color: #1A1A1A; display: block; margin-bottom: 12rpx; line-height: 1.4; }
-.help-desc { font-size: 26rpx; color: #AAAAAA; line-height: 1.7; display: block; }
+.help-title { font-size: 32rpx; font-weight: 700; color: #2C2C2C; display: block; margin-bottom: 12rpx; line-height: 1.4; }
+.help-desc { font-size: 26rpx; color: #9A9A9A; line-height: 1.7; display: block; }
 
 /* 时间 + 截止 */
 .help-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20rpx; }
-.help-time { font-size: 22rpx; color: #AAAAAA; }
+.help-time { font-size: 22rpx; color: #9A9A9A; }
 .help-deadline {
   font-size: 22rpx;
   color: #E8883C;
@@ -54,17 +54,17 @@
   box-sizing: border-box;
 }
 .btn-help {
-  background: #A47764; color: #fff; border: none;
+  background: #C67A52; color: #fff; border: none;
 }
 .btn-help::after { border: none; }
 .btn-helped {
-  background: #E3D5BF; color: #AAAAAA;
+  background: #E3D5BF; color: #9A9A9A;
 }
 .btn-helped[disabled] {
-  background: #E3D5BF; color: #AAAAAA;
+  background: #E3D5BF; color: #9A9A9A;
 }
 .btn-contact {
-  background: #FEFCFA; color: #1A1A1A; border: none;
+  background: #FEFCFA; color: #2C2C2C; border: none;
 }
 .btn-contact::after { border: none; }
 
@@ -76,15 +76,15 @@
   padding-top: 300rpx;
   gap: 20rpx;
 }
-.empty-state .text { font-size: 28rpx; color: #AAAAAA; }
+.empty-state .text { font-size: 28rpx; color: #9A9A9A; }
 
 /* 发布按钮 */
 .fab-btn {
   position: fixed; right: 40rpx; bottom: 120rpx;
   width: 100rpx; height: 100rpx;
-  background: linear-gradient(135deg, #C59A84 0%, #A47764 100%);
+  background: linear-gradient(135deg, #D49A78 0%, #C67A52 100%);
   border-radius: 28rpx;
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 8rpx 24rpx rgba(164, 119, 100, 0.4);
+  box-shadow: 0 8rpx 24rpx rgba(198, 122, 82, 0.4);
 }
 .fab-btn:active { opacity: 0.85; }

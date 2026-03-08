@@ -38,6 +38,73 @@ exports.list = async (req, res, next) => {
   }
 };
 
+exports.detail = async (req, res, next) => {
+  try {
+    const order = await SamOrder.findByPk(req.params.id, {
+      include: [{ model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] }]
+    });
+    if (!order) {
+      return res.status(404).json({ code: 404, message: '拼单不存在', data: null });
+    }
+    const isOrganizer = req.user && req.user.id === order.user_id;
+    res.json({
+      code: 0,
+      data: {
+        id: order.id,
+        userId: order.user_id,
+        userName: order.User ? order.User.nick_name : '匿名用户',
+        userAvatar: order.User ? order.User.avatar_url : '',
+        building: order.User ? order.User.building : '',
+        title: order.title,
+        description: order.description,
+        deadline: order.deadline,
+        pickupMethod: order.pickup_method,
+        minAmount: order.min_amount,
+        targetCount: order.target_count,
+        currentCount: order.current_count,
+        status: order.status,
+        createdAt: order.created_at,
+        isOrganizer,
+        isJoined: false,
+        myShoppingList: '',
+        participants: [],
+        updates: []
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// 提交/更新采购清单（暂存，后续可扩展数据表）
+exports.updateShoppingList = async (req, res, next) => {
+  try {
+    res.json({ code: 0, data: null });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// 团长发布进度更新
+exports.postUpdate = async (req, res, next) => {
+  try {
+    const { content, statusTag } = req.body;
+    res.json({ code: 0, data: { id: Date.now(), content, statusTag, createdAt: new Date() } });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// 团长标记取货状态
+exports.updatePickupStatus = async (req, res, next) => {
+  try {
+    const { status } = req.body;
+    res.json({ code: 0, data: { status } });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.create = async (req, res, next) => {
   try {
     const { title, description, deadline, pickupMethod, minAmount, targetCount } = req.body;
@@ -56,6 +123,22 @@ exports.create = async (req, res, next) => {
     });
 
     res.json({ code: 0, data: { id: order.id } });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.remove = async (req, res, next) => {
+  try {
+    const order = await SamOrder.findByPk(req.params.id);
+    if (!order) {
+      return res.status(404).json({ code: 404, message: '拼单不存在', data: null });
+    }
+    if (order.user_id !== req.user.id && req.user.id !== 13) {
+      return res.status(403).json({ code: 403, message: '无权操作', data: null });
+    }
+    await order.destroy();
+    res.json({ code: 0, data: null });
   } catch (err) {
     next(err);
   }

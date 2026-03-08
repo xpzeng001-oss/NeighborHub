@@ -3,7 +3,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #FEFCFA;
+  background: linear-gradient(to bottom, #F0E4D8 0%, #FAF8F4 30%);
 }
 
 /* 导航栏 */
@@ -11,7 +11,6 @@
   display: flex;
   align-items: center;
   padding: 0 32rpx;
-  background: #FEFCFA;
 }
 .community-select {
   display: inline-flex;
@@ -19,33 +18,33 @@
   gap: 4rpx;
 }
 .community-name {
-  font-size: 30rpx;
-  color: #1A1A1A;
+  font-size: 34rpx;
+  color: #2C2C2C;
   font-weight: 600;
   max-width: 240rpx;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  letter-spacing: -0.5rpx;
 }
 
 /* 搜索栏 */
 .search-header {
-  padding: 28rpx 32rpx 24rpx;
-  background: #FEFCFA;
+  padding: 16rpx 32rpx 8rpx;
 }
 .search-input {
   display: flex;
   align-items: center;
-  height: 72rpx;
-  background: #fff;
-  border-radius: 16rpx;
-  border: 1rpx solid #e0e0e0;
-  padding: 0 24rpx;
+  height: 80rpx;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 0 28rpx;
   gap: 12rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.03);
 }
 .search-placeholder {
   font-size: 28rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
 }
 
 .scroll-content {
@@ -57,15 +56,16 @@
 .banner-img {
   display: block;
   width: calc(100% - 64rpx);
-  height: 240rpx;
+  height: 260rpx;
   margin: 20rpx 32rpx;
-  border-radius: 20rpx;
+  border-radius: 24rpx;
+  box-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.1);
 }
 
 /* 分类胶囊 */
 .type-scroll {
   white-space: nowrap;
-  padding: 16rpx 0;
+  padding: 20rpx 0;
 }
 .type-list {
   display: flex;
@@ -76,20 +76,23 @@
   display: flex;
   align-items: center;
   gap: 8rpx;
-  padding: 14rpx 24rpx;
-  background: #F5F0EA;
-  border-radius: 32rpx;
+  padding: 16rpx 32rpx;
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  border: 1rpx solid #E5E2DC;
   flex-shrink: 0;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.02);
 }
 .type-pill text {
-  font-size: 26rpx;
-  color: #666;
+  font-size: 28rpx;
+  color: #6B6B6B;
   font-weight: 500;
   white-space: nowrap;
 }
 .type-pill.active {
-  background: #A47764;
-  border-color: #A47764;
+  background: #C67A52;
+  border-color: #C67A52;
+  box-shadow: 0 8rpx 24rpx rgba(198, 122, 82, 0.25);
 }
 .type-pill.active text {
   color: #fff;
@@ -108,10 +111,10 @@
 }
 .sort-tab text {
   font-size: 28rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
 }
 .sort-tab.active text {
-  color: #1A1A1A;
+  color: #2C2C2C;
   font-weight: 700;
 }
 .sort-line {
@@ -121,10 +124,9 @@
   transform: translateX(-50%);
   width: 32rpx;
   height: 6rpx;
-  background: #A47764;
+  background: #C67A52;
   border-radius: 3rpx;
 }
-
 /* 商品瀑布流 */
 .product-grid {
   display: flex;
@@ -139,9 +141,9 @@
 }
 .product-card {
   background: #fff;
-  border-radius: 16rpx;
+  border-radius: 24rpx;
   overflow: hidden;
-  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+  box-shadow: 0 12rpx 40rpx rgba(0, 0, 0, 0.07);
 }
 .card-image {
   position: relative;
@@ -155,19 +157,20 @@
   position: absolute;
   top: 12rpx;
   left: 12rpx;
-  background: #C59A84;
+  background: #D49A78;
   color: #fff;
   font-size: 20rpx;
-  padding: 4rpx 14rpx;
-  border-radius: 6rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
   font-weight: 500;
 }
 .card-info {
   padding: 16rpx 20rpx 20rpx;
 }
 .product-title {
-  font-size: 26rpx;
-  color: #1A1A1A;
+  font-size: 28rpx;
+  color: #2C2C2C;
+  font-weight: 600;
   line-height: 1.4;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -177,21 +180,22 @@
 .price-row {
   display: flex;
   align-items: baseline;
+  justify-content: space-between;
   margin-top: 12rpx;
   gap: 10rpx;
 }
 .price {
   font-size: 34rpx;
-  color: #A47764;
+  color: #C67A52;
   font-weight: 700;
 }
 .free-price {
   font-size: 28rpx;
-  color: #C59A84;
+  color: #D49A78;
 }
 .original-price {
   font-size: 22rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   text-decoration: line-through;
 }
 .card-footer {
@@ -202,11 +206,19 @@
 }
 .seller-info {
   font-size: 22rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
 }
 .want-count {
   font-size: 22rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
+}
+
+/* 加载更多 */
+.load-more {
+  text-align: center;
+  padding: 32rpx;
+  font-size: 24rpx;
+  color: #9A9A9A;
 }
 
 /* 弹窗 */
@@ -237,7 +249,7 @@
 }
 .modal-close {
   font-size: 36rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   padding: 10rpx;
 }
 .community-list { }
@@ -250,7 +262,7 @@
   font-size: 30rpx;
 }
 .community-option.selected {
-  background: rgba(164, 119, 100, 0.1);
-  color: #A47764;
+  background: rgba(198, 122, 82, 0.1);
+  color: #C67A52;
   font-weight: 500;
 }

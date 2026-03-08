@@ -8,8 +8,8 @@
   align-items: flex-end;
   justify-content: space-around;
   height: 110rpx;
-  background: #fff;
-  box-shadow: 0 -2rpx 16rpx rgba(0, 0, 0, 0.05);
+  background: #FFFFFF;
+  border-top: 1rpx solid rgba(0, 0, 0, 0.04);
 }
 
 .safe-bottom {
@@ -32,16 +32,18 @@
   font-size: 20rpx;
   color: #BBBBBB;
   margin-top: 4rpx;
+  font-weight: 500;
 }
 
 .tab-item.active text {
-  color: #A47764;
+  color: #C67A52;
   font-weight: 600;
 }
 
 /* 中间发布按钮 */
 .tab-center {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   flex: 1;
@@ -49,19 +51,19 @@
 }
 
 .fab-btn {
-  width: 96rpx;
-  height: 96rpx;
-  background: linear-gradient(135deg, #C59A84 0%, #A47764 100%);
-  border-radius: 24rpx;
+  width: 80rpx;
+  height: 80rpx;
+  background: #C67A52;
+  border-radius: 16rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 36rpx;
-  box-shadow: 0 6rpx 20rpx rgba(212, 137, 106, 0.3);
+  box-shadow: 0 4rpx 20rpx rgba(198, 122, 82, 0.15);
 }
 
 .fab-btn:active {
   opacity: 0.85;
+  transform: scale(0.95);
 }
 
 /* 消息未读红点 */

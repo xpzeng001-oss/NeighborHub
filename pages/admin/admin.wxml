@@ -1,0 +1,41 @@
+<!--pages/admin/admin.wxml-->
+<view class="page">
+  <!-- Tab 切换 -->
+  <view class="tabs">
+    <view class="tab {{tab === 'product' ? 'active' : ''}}" bindtap="switchTab" data-tab="product">闲置</view>
+    <view class="tab {{tab === 'post' ? 'active' : ''}}" bindtap="switchTab" data-tab="post">论坛</view>
+    <view class="tab {{tab === 'pet' ? 'active' : ''}}" bindtap="switchTab" data-tab="pet">宠物</view>
+    <view class="tab {{tab === 'sam' ? 'active' : ''}}" bindtap="switchTab" data-tab="sam">拼单</view>
+  </view>
+
+  <!-- 列表 -->
+  <scroll-view scroll-y class="list-scroll" bindscrolltolower="loadMore">
+    <view class="empty" wx:if="{{!loading && list.length === 0}}">
+      <icon name="package" size="80" color="#ddd"></icon>
+      <text class="empty-text">暂无内容</text>
+    </view>
+
+    <view class="item" wx:for="{{list}}" wx:key="id">
+      <view class="item-main" bindtap="goDetail" data-id="{{item.id}}">
+        <image class="item-img" wx:if="{{item.images && item.images.length > 0}}" src="{{item.images[0]}}" mode="aspectFill"></image>
+        <view class="item-body">
+          <text class="item-title">{{item.title}}</text>
+          <view class="item-meta">
+            <text class="item-user">{{item.userName}}</text>
+            <text class="item-status" wx:if="{{item.status}}">{{item.status}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="item-delete" bindtap="onDelete" data-id="{{item.id}}" data-index="{{index}}">
+        <text class="delete-text">删除</text>
+      </view>
+    </view>
+
+    <view class="loading-more" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+    <view class="loading-more" wx:if="{{!hasMore && list.length > 0}}">
+      <text>没有更多了</text>
+    </view>
+  </scroll-view>
+</view>

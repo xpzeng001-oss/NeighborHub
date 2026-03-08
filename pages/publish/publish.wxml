@@ -15,11 +15,11 @@
   <scroll-view scroll-x class="type-scroll" enhanced show-scrollbar="{{false}}" wx:if="{{!lockedType}}">
     <view class="type-tabs">
       <view class="type-tab {{publishType === 'product' ? 'active' : ''}}" bindtap="switchType" data-type="product">
-        <icon name="package" size="28" color="{{publishType === 'product' ? '#fff' : '#A47764'}}"></icon>
+        <icon name="package" size="28" color="{{publishType === 'product' ? '#fff' : '#C67A52'}}"></icon>
         <text>闲置物品</text>
       </view>
       <view class="type-tab {{publishType === 'free' ? 'active' : ''}}" bindtap="switchType" data-type="free">
-        <icon name="gift" size="28" color="{{publishType === 'free' ? '#fff' : '#C59A84'}}"></icon>
+        <icon name="gift" size="28" color="{{publishType === 'free' ? '#fff' : '#D49A78'}}"></icon>
         <text>免费送</text>
       </view>
       <view class="type-tab {{publishType === 'post' ? 'active' : ''}}" bindtap="switchType" data-type="post">
@@ -176,7 +176,7 @@
       <view class="form-section">
         <view class="form-item">
           <text class="form-label">是否紧急</text>
-          <switch checked="{{form.isUrgent}}" bindchange="onUrgentChange" color="#A47764"/>
+          <switch checked="{{form.isUrgent}}" bindchange="onUrgentChange" color="#C67A52"/>
         </view>
       </view>
     </view>
@@ -233,7 +233,7 @@
               <text>寻求喂养</text>
             </view>
             <view class="pet-type-option {{form.petPostType === 'offer' ? 'active type-offer' : ''}}" bindtap="onPetTypeChange" data-type="offer">
-              <icon name="heart" size="28" color="{{form.petPostType === 'offer' ? '#A47764' : '#888'}}"></icon>
+              <icon name="heart" size="28" color="{{form.petPostType === 'offer' ? '#C67A52' : '#888'}}"></icon>
               <text>可以帮喂</text>
             </view>
             <view class="pet-type-option {{form.petPostType === 'social' ? 'active type-social' : ''}}" bindtap="onPetTypeChange" data-type="social">
@@ -311,7 +311,7 @@
           <text class="form-label">拼车类型</text>
           <view class="pet-type-selector">
             <view class="pet-type-option {{form.carpoolType === 'offer' ? 'active type-offer' : ''}}" bindtap="onCarpoolTypeChange" data-type="offer">
-              <icon name="car" size="28" color="{{form.carpoolType === 'offer' ? '#A47764' : '#888'}}"></icon>
+              <icon name="car" size="28" color="{{form.carpoolType === 'offer' ? '#C67A52' : '#888'}}"></icon>
               <text>有车带人</text>
             </view>
             <view class="pet-type-option {{form.carpoolType === 'seek' ? 'active type-need' : ''}}" bindtap="onCarpoolTypeChange" data-type="seek">

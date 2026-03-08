@@ -89,6 +89,10 @@
     {
       "root": "pages/settings",
       "pages": ["settings"]
+    },
+    {
+      "root": "pages/admin",
+      "pages": ["admin"]
     }
   ],
   "window": {
@@ -101,7 +105,7 @@
   "tabBar": {
     "custom": true,
     "color": "#999999",
-    "selectedColor": "#A47764",
+    "selectedColor": "#C67A52",
     "backgroundColor": "#ffffff",
     "borderStyle": "white",
     "list": [

@@ -40,6 +40,40 @@ exports.list = async (req, res, next) => {
   }
 };
 
+exports.detail = async (req, res, next) => {
+  try {
+    const pet = await PetPost.findByPk(req.params.id, {
+      include: [{ model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] }]
+    });
+    if (!pet) {
+      return res.status(404).json({ code: 404, message: '帖子不存在', data: null });
+    }
+    res.json({
+      code: 0,
+      data: {
+        id: pet.id,
+        userId: pet.user_id,
+        userName: pet.User ? pet.User.nick_name : '匿名用户',
+        userAvatar: pet.User ? pet.User.avatar_url : '',
+        building: pet.User ? pet.User.building : '',
+        type: pet.type,
+        petName: pet.pet_name,
+        petType: pet.pet_type,
+        title: pet.title,
+        description: pet.description,
+        dateRange: pet.date_range,
+        reward: pet.reward,
+        tags: pet.tags || [],
+        status: pet.status,
+        responseCount: pet.response_count,
+        createdAt: pet.created_at
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.create = async (req, res, next) => {
   try {
     const { type, petName, petType, title, description, dateRange, reward, tags } = req.body;
@@ -60,6 +94,22 @@ exports.create = async (req, res, next) => {
     });
 
     res.json({ code: 0, data: { id: pet.id } });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.remove = async (req, res, next) => {
+  try {
+    const pet = await PetPost.findByPk(req.params.id);
+    if (!pet) {
+      return res.status(404).json({ code: 404, message: '帖子不存在', data: null });
+    }
+    if (pet.user_id !== req.user.id && req.user.id !== 13) {
+      return res.status(403).json({ code: 403, message: '无权操作', data: null });
+    }
+    await pet.destroy();
+    res.json({ code: 0, data: null });
   } catch (err) {
     next(err);
   }

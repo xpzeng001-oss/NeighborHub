@@ -82,10 +82,25 @@ Page({
   },
 
   onReport() {
+    const token = wx.getStorageSync('token');
+    if (!token) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
+    const reasons = ['虚假商品', '欺诈行为', '广告骚扰', '违规内容', '其他'];
     wx.showActionSheet({
-      itemList: ['虚假商品', '欺诈行为', '广告骚扰', '违规内容', '其他'],
-      success: () => {
-        wx.showToast({ title: '举报已提交', icon: 'success' });
+      itemList: reasons,
+      success: async (res) => {
+        try {
+          await api.createReport({
+            targetType: 'product',
+            targetId: this.data.product.id,
+            reason: reasons[res.tapIndex]
+          });
+          wx.showToast({ title: '举报已提交', icon: 'success' });
+        } catch (err) {
+          wx.showToast({ title: '举报失败', icon: 'none' });
+        }
       }
     });
   },

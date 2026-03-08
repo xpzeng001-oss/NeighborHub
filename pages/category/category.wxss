@@ -1,7 +1,7 @@
 /* pages/category/category.wxss */
 .page {
   min-height: 100vh;
-  background: #FEFCFA;
+  background: linear-gradient(to bottom, #F0E4D8 0%, #FAF8F4 30%);
 }
 
 .page-header {
@@ -10,7 +10,8 @@
 .page-title {
   font-size: 48rpx;
   font-weight: 700;
-  color: #1A1A1A;
+  color: #2C2C2C;
+  letter-spacing: -1rpx;
 }
 
 /* 分类卡片网格 - 2列 */
@@ -28,7 +29,7 @@
   padding: 28rpx 28rpx 24rpx;
   background: #fff;
   border-radius: 20rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.06);
   box-sizing: border-box;
 }
 .cat-card:active {
@@ -45,13 +46,13 @@
 }
 .cat-name {
   font-size: 30rpx;
-  color: #1A1A1A;
+  color: #2C2C2C;
   font-weight: 700;
   margin-bottom: 6rpx;
 }
 .cat-count {
   font-size: 24rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
 }
 
 /* 社区数据卡片 */
@@ -60,7 +61,7 @@
   padding: 28rpx 32rpx 32rpx;
   background: #fff;
   border-radius: 20rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.06);
 }
 .stats-header {
   display: flex;
@@ -71,7 +72,7 @@
 .stats-title {
   font-size: 28rpx;
   font-weight: 700;
-  color: #1A1A1A;
+  color: #2C2C2C;
 }
 .stats-row {
   display: flex;
@@ -89,5 +90,5 @@
 }
 .stat-label {
   font-size: 22rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
 }

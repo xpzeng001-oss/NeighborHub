@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { User, Product, Favorite } = require('../models');
 
 exports.getProfile = async (req, res, next) => {
@@ -69,7 +70,7 @@ exports.getStats = async (req, res, next) => {
     const userId = req.params.id;
 
     const [published, favorites, sold] = await Promise.all([
-      Product.count({ where: { user_id: userId, status: ['selling', 'sold'] } }),
+      Product.count({ where: { user_id: userId, status: { [Op.in]: ['selling', 'sold'] } } }),
       Favorite.count({ where: { user_id: userId } }),
       Product.count({ where: { user_id: userId, status: 'sold' } })
     ]);

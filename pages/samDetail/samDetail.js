@@ -22,7 +22,7 @@ Page({
     showUpdateModal: false,
     updateInput: '',
     updateTag: '',
-    showAggregatedList: false
+    showAggregatedList: false,
   },
 
   onLoad(options) {
@@ -43,8 +43,7 @@ Page({
       const data = await api.getSamDetail(id);
       this.applyDetail(data);
     } catch (err) {
-      console.log('加载详情失败，使用mock数据', err);
-      this.loadMockData(id);
+      wx.showToast({ title: '加载失败', icon: 'none' });
     }
   },
 
@@ -58,41 +57,6 @@ Page({
       isJoined: data.isJoined || false,
       myShoppingList: data.myShoppingList || ''
     });
-  },
-
-  loadMockData(id) {
-    const currentUserId = app.globalData.userInfo ? app.globalData.userInfo.id : null;
-    const mock = {
-      id: id,
-      userId: 1,
-      userName: '张妈妈',
-      userAvatar: 'https://picsum.photos/seed/sam1/100/100',
-      building: '3栋',
-      title: '本周六山姆拼单，满¥299包邮',
-      description: '准备这周六去山姆采购，有需要的邻居可以一起拼单，主要买日用品和零食。清单可以群里商量。',
-      deadline: '本周五 18:00',
-      pickupMethod: '送货上门（3栋大堂）',
-      minAmount: 50,
-      targetCount: 8,
-      currentCount: 5,
-      status: 'open',
-      createdAt: '2小时前',
-      isOrganizer: currentUserId === 1,
-      isJoined: true,
-      myShoppingList: '- 瑞士卷 x2\n- 牛角包 x3\n- 牛奶 2L',
-      participants: [
-        { userId: 2, userName: '李阿姨', userAvatar: '', building: '3栋2单元', shoppingList: '- 洗衣液 x1\n- 厨房纸巾 x2', pickupStatus: 'pending' },
-        { userId: 3, userName: '张小明', userAvatar: '', building: '5栋', shoppingList: '- A5和牛 1kg\n- 三文鱼 500g', pickupStatus: 'picked_up' },
-        { userId: 4, userName: '赵姐', userAvatar: '', building: '3栋', shoppingList: '', pickupStatus: 'pending' },
-        { userId: 5, userName: '王叔叔', userAvatar: '', building: '1栋', shoppingList: '- 蓝莓 x3盒', pickupStatus: 'pending' },
-        { userId: 6, userName: '陈妈妈', userAvatar: '', building: '2栋', shoppingList: '- 可颂 x4\n- 曲奇 x2', pickupStatus: 'pending' }
-      ],
-      updates: [
-        { id: 1, content: '已出发去山姆，预计下午3点到', statusTag: 'purchasing', createdAt: '1小时前' },
-        { id: 2, content: '到店了，开始采购大家的清单', statusTag: 'purchasing', createdAt: '30分钟前' }
-      ]
-    };
-    this.applyDetail(mock);
   },
 
   goBack() { wx.navigateBack(); },

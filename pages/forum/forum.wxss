@@ -10,11 +10,11 @@
 .forum-tab {
   padding: 24rpx 28rpx;
   font-size: 28rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   position: relative;
 }
 .forum-tab.active {
-  color: #1A1A1A;
+  color: #2C2C2C;
   font-weight: 600;
 }
 .forum-tab.active::after {
@@ -25,7 +25,7 @@
   transform: translateX(-50%);
   width: 40rpx;
   height: 6rpx;
-  background: #A47764;
+  background: #C67A52;
   border-radius: 3rpx;
 }
 
@@ -52,10 +52,10 @@
   align-items: center;
   margin-bottom: 20rpx;
 }
-.post-avatar { width: 72rpx; height: 72rpx; border-radius: 50%; margin-right: 16rpx; background: #f0f0f0; }
+.post-avatar { width: 72rpx; height: 72rpx; border-radius: 50%; margin-right: 16rpx; background: #E5E2DC; }
 .post-user { flex: 1; }
-.post-username { font-size: 28rpx; color: #1A1A1A; font-weight: 500; display: block; }
-.post-time { font-size: 22rpx; color: #AAAAAA; }
+.post-username { font-size: 28rpx; color: #2C2C2C; font-weight: 500; display: block; }
+.post-time { font-size: 22rpx; color: #9A9A9A; }
 
 .category-tag {
   font-size: 22rpx;
@@ -65,12 +65,12 @@
 .tag-announcement { background: rgba(232, 99, 111, 0.1); color: #E8636F; }
 .tag-complaint { background: rgba(232, 136, 60, 0.1); color: #E8883C; }
 .tag-question { background: rgba(74, 144, 217, 0.1); color: #4A90D9; }
-.tag-activity { background: rgba(164, 119, 100, 0.15); color: #A47764; }
+.tag-activity { background: rgba(198, 122, 82, 0.15); color: #C67A52; }
 
 .post-title {
   font-size: 30rpx;
   font-weight: 600;
-  color: #1A1A1A;
+  color: #2C2C2C;
   display: block;
   margin-bottom: 12rpx;
 }
@@ -87,7 +87,7 @@
   padding-top: 16rpx;
   border-top: 1rpx solid #E3D5BF;
 }
-.footer-item { font-size: 24rpx; color: #AAAAAA; display: inline-flex; align-items: center; gap: 6rpx; }
+.footer-item { font-size: 24rpx; color: #9A9A9A; display: inline-flex; align-items: center; gap: 6rpx; }
 .top-badge { display: inline-flex; align-items: center; gap: 4rpx; }
 
 /* 浮动按钮 */
@@ -97,11 +97,11 @@
   bottom: 60rpx;
   width: 100rpx;
   height: 100rpx;
-  background: linear-gradient(135deg, #C59A84 0%, #A47764 100%);
+  background: linear-gradient(135deg, #D49A78 0%, #C67A52 100%);
   border-radius: 28rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 44rpx;
-  box-shadow: 0 8rpx 24rpx rgba(164, 119, 100, 0.4);
+  box-shadow: 0 8rpx 24rpx rgba(198, 122, 82, 0.4);
 }

@@ -63,11 +63,9 @@ const uploadImages = async (filePaths, onProgress) => {
   return urls;
 };
 
-const login         = (data)     => request({ url: '/api/auth/login', method: 'POST', data });
 const getProducts   = (params)   => request({ url: '/api/products', data: params });
 const getProduct    = (id)       => request({ url: '/api/products/' + id });
 const createProduct = (data)     => request({ url: '/api/products', method: 'POST', data });
-const updateProduct = (id, data) => request({ url: '/api/products/' + id, method: 'PUT', data });
 const deleteProduct = (id)       => request({ url: '/api/products/' + id, method: 'DELETE' });
 const wantProduct   = (id)       => request({ url: '/api/products/' + id + '/want', method: 'POST' });
 const toggleFavorite= (id)       => request({ url: '/api/products/' + id + '/favorite', method: 'POST' });
@@ -76,14 +74,15 @@ const getPost       = (id)       => request({ url: '/api/posts/' + id });
 const createPost    = (data)     => request({ url: '/api/posts', method: 'POST', data });
 const likePost      = (id)       => request({ url: '/api/posts/' + id + '/like', method: 'POST' });
 const addComment    = (id, data) => request({ url: '/api/posts/' + id + '/comment', method: 'POST', data });
+const deletePost    = (id)       => request({ url: '/api/posts/' + id, method: 'DELETE' });
 const getHelps      = (params)   => request({ url: '/api/helps', data: params });
 const createHelp    = (data)     => request({ url: '/api/helps', method: 'POST', data });
 const respondHelp   = (id)       => request({ url: '/api/helps/' + id + '/respond', method: 'POST' });
 const getRentals    = (params)   => request({ url: '/api/rentals', data: params });
-const createRental  = (data)     => request({ url: '/api/rentals', method: 'POST', data });
 const getSams       = (params)   => request({ url: '/api/sams', data: params });
 const getSamDetail  = (id)       => request({ url: '/api/sams/' + id });
 const createSam     = (data)     => request({ url: '/api/sams', method: 'POST', data });
+const deleteSam     = (id)       => request({ url: '/api/sams/' + id, method: 'DELETE' });
 const joinSam       = (id)       => request({ url: '/api/sams/' + id + '/join', method: 'POST' });
 const updateShoppingList  = (id, data)          => request({ url: '/api/sams/' + id + '/shopping-list', method: 'PUT', data });
 const postSamUpdate       = (id, data)          => request({ url: '/api/sams/' + id + '/updates', method: 'POST', data });
@@ -94,11 +93,9 @@ const joinCarpool   = (id)       => request({ url: '/api/carpools/' + id + '/joi
 const getPets       = (params)   => request({ url: '/api/pets', data: params });
 const getPetDetail  = (id)       => request({ url: '/api/pets/' + id });
 const createPet     = (data)     => request({ url: '/api/pets', method: 'POST', data });
+const deletePet     = (id)       => request({ url: '/api/pets/' + id, method: 'DELETE' });
 const respondPet    = (id)       => request({ url: '/api/pets/' + id + '/respond', method: 'POST' });
-const getUser       = (id)       => request({ url: '/api/users/' + id });
 const updateUser    = (id, data) => request({ url: '/api/users/' + id, method: 'PUT', data });
-const getUserStats  = (id)       => request({ url: '/api/users/' + id + '/stats' });
-const getBanners    = ()         => request({ url: '/api/banners' });
 const getMyFavorites = (params)  => request({ url: '/api/products/favorites', data: params });
 
 // Reports
@@ -115,19 +112,17 @@ const createConversation  = (data)     => request({ url: '/api/chat/conversation
 const getMessages         = (id, params) => request({ url: '/api/chat/conversations/' + id + '/messages', data: params });
 const sendMessage         = (id, data) => request({ url: '/api/chat/conversations/' + id + '/messages', method: 'POST', data });
 const markConversationRead = (id)      => request({ url: '/api/chat/conversations/' + id + '/read', method: 'PUT' });
-const getUnreadCount      = ()         => request({ url: '/api/chat/unread' });
 
 module.exports = {
-  login,
-  getProducts, getProduct, createProduct, updateProduct, deleteProduct, wantProduct, toggleFavorite,
-  getPosts, getPost, createPost, likePost, addComment,
+  getProducts, getProduct, createProduct, deleteProduct, wantProduct, toggleFavorite,
+  getPosts, getPost, createPost, deletePost, likePost, addComment,
   getHelps, createHelp, respondHelp,
-  getRentals, createRental,
-  getSams, getSamDetail, createSam, joinSam, updateShoppingList, postSamUpdate, updatePickupStatus,
+  getRentals,
+  getSams, getSamDetail, createSam, deleteSam, joinSam, updateShoppingList, postSamUpdate, updatePickupStatus,
   getCarpools, createCarpool, joinCarpool,
-  getPets, getPetDetail, createPet, respondPet,
-  getUser, updateUser, getUserStats,
-  getBanners, getMyFavorites, getReports, createReport, getFeedbacks, createFeedback,
+  getPets, getPetDetail, createPet, deletePet, respondPet,
+  updateUser,
+  getMyFavorites, getReports, createReport, getFeedbacks, createFeedback,
   uploadImage, uploadImages,
-  getConversations, createConversation, getMessages, sendMessage, markConversationRead, getUnreadCount
+  getConversations, createConversation, getMessages, sendMessage, markConversationRead
 };

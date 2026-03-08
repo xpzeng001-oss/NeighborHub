@@ -7,13 +7,13 @@
   padding-top: 300rpx;
   gap: 16rpx;
 }
-.empty-text { font-size: 28rpx; color: #AAAAAA; }
+.empty-text { font-size: 28rpx; color: #9A9A9A; }
 .empty-hint { font-size: 24rpx; color: #ddd; }
 
 .report-item {
   padding: 28rpx 30rpx;
   background: #fff;
-  border-bottom: 1rpx solid #f0f0f0;
+  border-bottom: 1rpx solid #E5E2DC;
 }
 .report-header {
   display: flex;
@@ -21,20 +21,20 @@
   align-items: center;
   margin-bottom: 12rpx;
 }
-.report-type { font-size: 30rpx; color: #1A1A1A; font-weight: 500; }
+.report-type { font-size: 30rpx; color: #2C2C2C; font-weight: 500; }
 .report-status {
   font-size: 22rpx;
   padding: 4rpx 16rpx;
   border-radius: 20rpx;
 }
 .report-status.pending { color: #D4A04A; background: rgba(212, 160, 74, 0.1); }
-.report-status.resolved { color: #A47764; background: rgba(164, 119, 100, 0.1); }
-.report-status.rejected { color: #AAAAAA; background: #f0f0f0; }
+.report-status.resolved { color: #C67A52; background: rgba(198, 122, 82, 0.1); }
+.report-status.rejected { color: #9A9A9A; background: #E5E2DC; }
 
 .report-reason { font-size: 28rpx; color: #666; display: block; }
 .report-desc {
   font-size: 26rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   display: block;
   margin-top: 8rpx;
 }

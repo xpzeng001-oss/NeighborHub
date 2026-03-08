@@ -11,11 +11,11 @@
 .cp-tab {
   padding: 24rpx 28rpx;
   font-size: 28rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   position: relative;
 }
 .cp-tab.active {
-  color: #1A1A1A;
+  color: #2C2C2C;
   font-weight: 700;
 }
 .cp-tab.active::after {
@@ -26,7 +26,7 @@
   transform: translateX(-50%);
   width: 40rpx;
   height: 6rpx;
-  background: #A47764;
+  background: #C67A52;
   border-radius: 3rpx;
 }
 
@@ -52,7 +52,7 @@
   font-weight: 500;
   margin-bottom: 16rpx;
 }
-.type-offer { background: #F3E8DA; color: #A47764; }
+.type-offer { background: #F3E8DA; color: #C67A52; }
 .type-seek { background: rgba(74, 144, 217, 0.08); color: #4A90D9; }
 
 /* 用户信息 */
@@ -69,22 +69,22 @@
   background: #FEFCFA;
 }
 .user-info { flex: 1; }
-.user-name { font-size: 28rpx; font-weight: 600; color: #1A1A1A; display: block; }
-.user-building { font-size: 22rpx; color: #AAAAAA; }
-.time { font-size: 22rpx; color: #AAAAAA; }
+.user-name { font-size: 28rpx; font-weight: 600; color: #2C2C2C; display: block; }
+.user-building { font-size: 22rpx; color: #9A9A9A; }
+.time { font-size: 22rpx; color: #9A9A9A; }
 
 /* 内容 */
 .card-title {
   font-size: 32rpx;
   font-weight: 700;
-  color: #1A1A1A;
+  color: #2C2C2C;
   display: block;
   margin-bottom: 12rpx;
   line-height: 1.4;
 }
 .card-desc {
   font-size: 26rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   line-height: 1.7;
   display: block;
 }
@@ -106,7 +106,7 @@
   height: 16rpx;
   border-radius: 50%;
 }
-.dot-start { background: #A47764; }
+.dot-start { background: #C67A52; }
 .dot-end { background: #4A90D9; }
 .route-line {
   width: 2rpx;
@@ -118,7 +118,7 @@
 }
 .route-text {
   font-size: 26rpx;
-  color: #1A1A1A;
+  color: #2C2C2C;
   font-weight: 500;
 }
 
@@ -134,10 +134,10 @@
   align-items: center;
   gap: 6rpx;
 }
-.info-text { font-size: 24rpx; color: #AAAAAA; }
+.info-text { font-size: 24rpx; color: #9A9A9A; }
 .fee {
   font-size: 26rpx;
-  color: #A47764;
+  color: #C67A52;
   font-weight: 700;
 }
 
@@ -164,7 +164,7 @@
 }
 .p-count {
   font-size: 22rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   margin-left: 16rpx;
 }
 
@@ -181,21 +181,21 @@
 }
 .btn-contact {
   background: #FEFCFA;
-  color: #1A1A1A;
+  color: #2C2C2C;
   border: none;
 }
 .btn-join {
-  background: #A47764;
+  background: #C67A52;
   color: #fff;
   border: none;
 }
 .btn-joined {
   background: #F3E8DA;
-  color: #A47764;
+  color: #C67A52;
 }
 .btn-disabled {
   background: #E3D5BF;
-  color: #AAAAAA;
+  color: #9A9A9A;
 }
 
 /* 空状态 */
@@ -208,7 +208,7 @@
 }
 .empty-text {
   font-size: 28rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
 }
 
 /* 浮动按钮 */
@@ -218,11 +218,11 @@
   bottom: 120rpx;
   width: 100rpx;
   height: 100rpx;
-  background: linear-gradient(135deg, #C59A84 0%, #A47764 100%);
+  background: linear-gradient(135deg, #D49A78 0%, #C67A52 100%);
   border-radius: 28rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8rpx 24rpx rgba(164, 119, 100, 0.4);
+  box-shadow: 0 8rpx 24rpx rgba(198, 122, 82, 0.4);
 }
 .fab-btn:active { opacity: 0.85; }

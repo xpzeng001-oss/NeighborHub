@@ -117,6 +117,22 @@ exports.like = async (req, res, next) => {
   }
 };
 
+exports.remove = async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.id);
+    if (!post) {
+      return res.status(404).json({ code: 404, message: '帖子不存在', data: null });
+    }
+    if (post.user_id !== req.user.id && req.user.id !== 13) {
+      return res.status(403).json({ code: 403, message: '无权操作', data: null });
+    }
+    await post.destroy();
+    res.json({ code: 0, data: null });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.addComment = async (req, res, next) => {
   try {
     const { content } = req.body;

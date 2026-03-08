@@ -12,8 +12,8 @@
   width: 128rpx;
   height: 128rpx;
   border-radius: 28rpx;
-  background: #A47764;
-  color: #1A1A1A;
+  background: #C67A52;
+  color: #2C2C2C;
   font-size: 64rpx;
   font-weight: 700;
   display: flex;
@@ -28,7 +28,7 @@
 }
 .app-version {
   font-size: 24rpx;
-  color: #AAAAAA;
+  color: #9A9A9A;
   margin-top: 8rpx;
 }
 
@@ -42,7 +42,7 @@
 .section-title {
   font-size: 30rpx;
   font-weight: 600;
-  color: #1A1A1A;
+  color: #2C2C2C;
   margin-bottom: 20rpx;
 }
 .desc {
@@ -69,8 +69,8 @@
   flex-shrink: 0;
 }
 .feature-info { flex: 1; }
-.feature-title { font-size: 28rpx; color: #1A1A1A; font-weight: 500; display: block; }
-.feature-desc { font-size: 24rpx; color: #AAAAAA; margin-top: 4rpx; display: block; }
+.feature-title { font-size: 28rpx; color: #2C2C2C; font-weight: 500; display: block; }
+.feature-desc { font-size: 24rpx; color: #9A9A9A; margin-top: 4rpx; display: block; }
 
 .contact-row {
   display: flex;
@@ -80,9 +80,9 @@
   border-bottom: 1rpx solid #E3D5BF;
 }
 .contact-row:last-child { border-bottom: none; }
-.contact-label { font-size: 28rpx; color: #1A1A1A; }
-.contact-value { font-size: 28rpx; color: #AAAAAA; }
-.contact-value.link { color: #A47764; }
+.contact-label { font-size: 28rpx; color: #2C2C2C; }
+.contact-value { font-size: 28rpx; color: #9A9A9A; }
+.contact-value.link { color: #C67A52; }
 
 .footer {
   text-align: center;

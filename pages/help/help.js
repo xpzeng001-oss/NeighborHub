@@ -50,7 +50,7 @@ Page({
       return;
     }
     wx.navigateTo({
-      url: '/pages/chatDetail/chatDetail?targetId=' + item.userId + '&targetName=' + encodeURIComponent(item.userName)
+      url: '/pages/chatDetail/chatDetail?targetUserId=' + item.userId + '&nickName=' + encodeURIComponent(item.userName || '') + '&avatarUrl=' + encodeURIComponent(item.userAvatar || '')
     });
   },
 
