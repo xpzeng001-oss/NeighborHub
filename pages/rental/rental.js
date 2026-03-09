@@ -4,7 +4,11 @@ const api = require('../../utils/api');
 Page({
   data: { rentals: [] },
 
-  async onLoad() {
+  onShow() {
+    this.loadData();
+  },
+
+  async loadData() {
     try {
       const data = await api.getRentals();
       this.setData({ rentals: data.list || [] });

@@ -7,7 +7,11 @@ Page({
     helps: []
   },
 
-  async onLoad() {
+  onShow() {
+    this.loadData();
+  },
+
+  async loadData() {
     try {
       const data = await api.getHelps();
       const helps = (data.list || []).map(h => ({
