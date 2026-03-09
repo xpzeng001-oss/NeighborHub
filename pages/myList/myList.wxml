@@ -1,15 +1,30 @@
 <!--pages/myList/myList.wxml-->
+<wxs module="helper">
+  module.exports.actualType = function(type, subType) {
+    return type === 'activity' ? subType : type;
+  }
+</wxs>
 <view class="page">
+  <!-- 分类Tab（我的参与） -->
+  <view class="sub-tabs" wx:if="{{type === 'activity'}}">
+    <view class="sub-tab {{subType === item.key ? 'active' : ''}}" wx:for="{{activityTabs}}" wx:key="key" bindtap="switchSubTab" data-key="{{item.key}}">
+      {{item.name}}
+    </view>
+  </view>
+
   <!-- 空状态 -->
   <view class="empty" wx:if="{{!loading && list.length === 0}}">
     <icon name="package" size="80" color="#ddd"></icon>
-    <text class="empty-text" wx:if="{{type === 'publish'}}">还没有发布过商品</text>
-    <text class="empty-text" wx:elif="{{type === 'favorite'}}">还没有收藏商品</text>
-    <text class="empty-text" wx:else>还没有帮忙记录</text>
+    <text class="empty-text" wx:if="{{helper.actualType(type, subType) === 'publish'}}">还没有发布过商品</text>
+    <text class="empty-text" wx:elif="{{helper.actualType(type, subType) === 'favorite'}}">还没有收藏商品</text>
+    <text class="empty-text" wx:elif="{{helper.actualType(type, subType) === 'sam'}}">还没有参与拼单</text>
+    <text class="empty-text" wx:elif="{{helper.actualType(type, subType) === 'carpool'}}">还没有参与拼车</text>
+    <text class="empty-text" wx:elif="{{helper.actualType(type, subType) === 'pet'}}">还没有宠物记录</text>
+    <text class="empty-text" wx:else>还没有记录</text>
   </view>
 
   <!-- 商品列表（发布/收藏） -->
-  <view wx:if="{{type === 'publish' || type === 'favorite'}}">
+  <view wx:if="{{helper.actualType(type, subType) === 'publish' || helper.actualType(type, subType) === 'favorite'}}">
     <view class="product-item" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
       <image class="product-img" src="{{item.images[0] || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
       <view class="product-info">
@@ -24,7 +39,7 @@
   </view>
 
   <!-- 帮忙列表 -->
-  <view wx:if="{{type === 'help'}}">
+  <view wx:if="{{helper.actualType(type, subType) === 'help'}}">
     <view class="help-item" wx:for="{{list}}" wx:key="id">
       <view class="help-header">
         <text class="help-title">{{item.title}}</text>
@@ -33,6 +48,50 @@
       <text class="help-desc">{{item.description}}</text>
       <view class="help-footer">
         <text class="help-status {{item.status === 'fulfilled' ? 'done' : ''}}">{{item.status === 'fulfilled' ? '已完成' : '进行中'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 拼单列表 -->
+  <view wx:if="{{helper.actualType(type, subType) === 'sam'}}">
+    <view class="general-item" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+      <view class="general-header">
+        <text class="general-title">{{item.title}}</text>
+        <text class="general-tag {{item.status === 'open' ? 'tag-open' : 'tag-done'}}">{{item.status === 'open' ? '拼单中' : item.status === 'full' ? '已成团' : '已结束'}}</text>
+      </view>
+      <text class="general-desc">{{item.description}}</text>
+      <view class="general-footer">
+        <text class="general-meta">{{item.currentCount || 0}}/{{item.targetCount || 5}}人</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 拼车列表 -->
+  <view wx:if="{{helper.actualType(type, subType) === 'carpool'}}">
+    <view class="general-item" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+      <view class="general-header">
+        <text class="general-title">{{item.title}}</text>
+        <text class="general-tag {{item.type === 'offer' ? 'tag-open' : 'tag-need'}}">{{item.type === 'offer' ? '有车带人' : '找车搭乘'}}</text>
+      </view>
+      <text class="general-desc">{{item.from}} → {{item.to}}</text>
+      <view class="general-footer">
+        <text class="general-meta">{{item.date}} {{item.time}}</text>
+        <text class="general-meta">{{item.fee || '免费'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 宠物列表 -->
+  <view wx:if="{{helper.actualType(type, subType) === 'pet'}}">
+    <view class="general-item" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+      <view class="general-header">
+        <text class="general-title">{{item.title}}</text>
+        <text class="general-tag {{item.type === 'need' ? 'tag-need' : item.type === 'offer' ? 'tag-open' : 'tag-social'}}">{{item.type === 'need' ? '寻求喂养' : item.type === 'offer' ? '可以帮喂' : '宠物社交'}}</text>
+      </view>
+      <text class="general-desc">{{item.description}}</text>
+      <view class="general-footer">
+        <text class="general-meta" wx:if="{{item.petName}}">{{item.petName}}</text>
+        <text class="general-meta">{{item.responseCount || 0}}人响应</text>
       </view>
     </view>
   </view>

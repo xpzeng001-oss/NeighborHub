@@ -139,6 +139,11 @@ Page({
     wx.navigateTo({ url: '/pages/myList/myList?type=help' });
   },
 
+  goMyActivity() {
+    if (!this.data.userInfo) { this.onLogin(); return; }
+    wx.navigateTo({ url: '/pages/myList/myList?type=activity' });
+  },
+
   async onBuildingChange(e) {
     if (!this.data.userInfo) { this.onLogin(); return; }
     const buildings = this.data.buildings;

@@ -43,9 +43,9 @@
         <text class="menu-text">我的收藏</text>
         <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
       </view>
-      <view class="menu-item" bindtap="goMyHelp">
-        <icon name="handshake" size="36" color="#333" class="menu-icon-wrap"></icon>
-        <text class="menu-text">我的帮忙</text>
+      <view class="menu-item" bindtap="goMyActivity">
+        <icon name="compass" size="36" color="#333" class="menu-icon-wrap"></icon>
+        <text class="menu-text">我的参与</text>
         <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
       </view>
     </view>

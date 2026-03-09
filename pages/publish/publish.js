@@ -23,6 +23,7 @@ Page({
     imageList: [],
     categoryNames: categories.map(c => c.name),
     tagInputValue: '',
+    today: '',
     form: {
       title: '',
       category: '',       // 存 id，如 'digital'
@@ -36,11 +37,11 @@ Page({
       isUrgent: false,
       petPostType: 'need',
       petName: '',
-      petType: '',
-      dateRange: '',
+      petStartDate: '',
+      petEndDate: '',
       reward: '',
-      petTags: [],
-      samDeadline: '',
+      samDeadlineDate: '',
+      samDeadlineTime: '',
       samPickupMethod: '',
       samMinAmount: '',
       samTargetCount: '',
@@ -56,7 +57,9 @@ Page({
 
   onLoad(options) {
     const sysInfo = wx.getSystemInfoSync();
-    const data = { statusBarHeight: sysInfo.statusBarHeight || 44 };
+    const now = new Date();
+    const y = now.getFullYear(), m = ('0' + (now.getMonth() + 1)).slice(-2), d = ('0' + now.getDate()).slice(-2);
+    const data = { statusBarHeight: sysInfo.statusBarHeight || 44, today: y + '-' + m + '-' + d };
     const validTypes = ['product', 'free', 'post', 'help', 'pet', 'sam', 'carpool'];
     if (options.type && validTypes.indexOf(options.type) !== -1) {
       data.publishType = options.type;
@@ -92,11 +95,11 @@ Page({
         isUrgent: false,
         petPostType: 'need',
         petName: '',
-        petType: '',
-        dateRange: '',
+        petStartDate: '',
+        petEndDate: '',
         reward: '',
-        petTags: [],
-        samDeadline: '',
+        samDeadlineDate: '',
+      samDeadlineTime: '',
         samPickupMethod: '',
         samMinAmount: '',
         samTargetCount: '',
@@ -193,6 +196,17 @@ Page({
     const tags = this.data.form.petTags;
     tags.splice(index, 1);
     this.setData({ 'form.petTags': tags });
+  },
+
+  onPetStartDate(e) {
+    this.setData({ 'form.petStartDate': e.detail.value });
+    if (this.data.form.petEndDate && this.data.form.petEndDate < e.detail.value) {
+      this.setData({ 'form.petEndDate': '' });
+    }
+  },
+
+  onPetEndDate(e) {
+    this.setData({ 'form.petEndDate': e.detail.value });
   },
 
   onCarpoolTypeChange(e) {
@@ -292,21 +306,23 @@ Page({
           isUrgent: form.isUrgent
         });
       } else if (publishType === 'pet') {
+        const dateRange = form.petStartDate && form.petEndDate
+          ? form.petStartDate + ' ~ ' + form.petEndDate
+          : form.petStartDate || '';
         await api.createPet({
           type: form.petPostType,
           title: form.title,
           description: form.description,
           petName: form.petName,
-          petType: form.petType,
-          dateRange: form.dateRange,
-          reward: form.reward,
-          tags: form.petTags
+          images: imageUrls,
+          dateRange,
+          reward: form.reward
         });
       } else if (publishType === 'sam') {
         const samResult = await api.createSam({
           title: form.title,
           description: form.description,
-          deadline: form.samDeadline,
+          deadline: (form.samDeadlineDate && form.samDeadlineTime) ? form.samDeadlineDate + ' ' + form.samDeadlineTime : form.samDeadlineDate || '',
           pickupMethod: form.samPickupMethod,
           minAmount: form.samMinAmount,
           targetCount: form.samTargetCount

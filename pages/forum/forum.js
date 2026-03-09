@@ -23,14 +23,17 @@ Page({
         params.category = this.data.forumTab;
       }
       const data = await api.getPosts(params);
+      console.log('[forum] API返回数据:', JSON.stringify(data).substring(0, 500));
+      console.log('[forum] list长度:', (data.list || []).length);
       const posts = (data.list || []).map(p => ({
         ...p,
         timeAgo: formatTime(new Date(p.createdAt)),
         categoryClass: catClassMap[p.category] || 'default'
       }));
       this.setData({ posts, filteredPosts: posts });
+      console.log('[forum] setData完成, filteredPosts长度:', this.data.filteredPosts.length);
     } catch (err) {
-      console.error('加载帖子失败', err);
+      console.error('[forum] 加载帖子失败', err);
       wx.showToast({ title: '加载失败，请下拉刷新', icon: 'none' });
     }
   },

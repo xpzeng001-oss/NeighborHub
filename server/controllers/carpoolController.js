@@ -1,11 +1,12 @@
-const { Carpool, User } = require('../models');
+const { Carpool, User, Conversation, Message } = require('../models');
 
 exports.list = async (req, res, next) => {
   try {
-    const { page = 1, pageSize = 20, type, communityId } = req.query;
+    const { page = 1, pageSize = 20, type, communityId, userId } = req.query;
     const where = {};
     if (type) where.type = type;
     if (communityId) where.community_id = communityId;
+    if (userId) where.user_id = Number(userId);
 
     const { rows, count } = await Carpool.findAndCountAll({
       where,
@@ -80,6 +81,29 @@ exports.join = async (req, res, next) => {
     const newTaken = carpool.taken_seats + 1;
     const newStatus = carpool.seats > 0 && newTaken >= carpool.seats ? 'full' : 'open';
     await carpool.update({ taken_seats: newTaken, status: newStatus });
+
+    // 自动通知车主/发起人
+    if (req.user.id !== carpool.user_id) {
+      try {
+        const joiner = await User.findByPk(req.user.id, { attributes: ['nick_name'] });
+        const joinerName = joiner ? joiner.nick_name : '用户';
+        const userAId = Math.min(req.user.id, carpool.user_id);
+        const userBId = Math.max(req.user.id, carpool.user_id);
+        const [conversation] = await Conversation.findOrCreate({
+          where: { user_a_id: userAId, user_b_id: userBId },
+          defaults: { user_a_id: userAId, user_b_id: userBId }
+        });
+        await Message.create({
+          conversation_id: conversation.id,
+          sender_id: req.user.id,
+          content: `${joinerName}加入了你的拼车「${carpool.title}」`
+        });
+        await conversation.update({ last_message_at: new Date() });
+      } catch (e) {
+        console.error('拼车通知发送失败:', e.message);
+      }
+    }
+
     res.json({ code: 0, data: { takenSeats: newTaken, status: newStatus } });
   } catch (err) {
     next(err);

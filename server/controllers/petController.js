@@ -2,10 +2,11 @@ const { PetPost, User } = require('../models');
 
 exports.list = async (req, res, next) => {
   try {
-    const { page = 1, pageSize = 20, type, communityId } = req.query;
+    const { page = 1, pageSize = 20, type, communityId, userId } = req.query;
     const where = {};
     if (type) where.type = type;
     if (communityId) where.community_id = communityId;
+    if (userId) where.user_id = Number(userId);
 
     const { rows, count } = await PetPost.findAndCountAll({
       where,

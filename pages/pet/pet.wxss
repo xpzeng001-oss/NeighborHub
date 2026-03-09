@@ -1,5 +1,5 @@
 /* pages/pet/pet.wxss */
-.page { background: #FEFCFA; min-height: 100vh; display: flex; flex-direction: column; }
+.page { background: #FEFCFA; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
 /* 分类Tab */
 .pet-tabs {

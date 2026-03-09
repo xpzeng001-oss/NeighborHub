@@ -1,11 +1,12 @@
-const { SamOrder, User } = require('../models');
+const { SamOrder, User, Conversation, Message } = require('../models');
 
 exports.list = async (req, res, next) => {
   try {
-    const { page = 1, pageSize = 20, status, communityId } = req.query;
+    const { page = 1, pageSize = 20, status, communityId, userId } = req.query;
     const where = {};
     if (status) where.status = status;
     if (communityId) where.community_id = communityId;
+    if (userId) where.user_id = Number(userId);
 
     const { rows, count } = await SamOrder.findAndCountAll({
       where,
@@ -156,6 +157,29 @@ exports.join = async (req, res, next) => {
     const newCount = order.current_count + 1;
     const newStatus = newCount >= order.target_count ? 'full' : 'open';
     await order.update({ current_count: newCount, status: newStatus });
+
+    // 自动通知团长
+    if (req.user.id !== order.user_id) {
+      try {
+        const joiner = await User.findByPk(req.user.id, { attributes: ['nick_name'] });
+        const joinerName = joiner ? joiner.nick_name : '用户';
+        const userAId = Math.min(req.user.id, order.user_id);
+        const userBId = Math.max(req.user.id, order.user_id);
+        const [conversation] = await Conversation.findOrCreate({
+          where: { user_a_id: userAId, user_b_id: userBId },
+          defaults: { user_a_id: userAId, user_b_id: userBId }
+        });
+        await Message.create({
+          conversation_id: conversation.id,
+          sender_id: req.user.id,
+          content: `${joinerName}加入了你的拼单「${order.title}」`
+        });
+        await conversation.update({ last_message_at: new Date() });
+      } catch (e) {
+        console.error('拼单通知发送失败:', e.message);
+      }
+    }
+
     res.json({ code: 0, data: { currentCount: newCount, status: newStatus } });
   } catch (err) {
     next(err);

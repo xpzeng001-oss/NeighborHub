@@ -1,10 +1,11 @@
-const app = getApp();
-
 const request = (options) => {
   return new Promise((resolve, reject) => {
+    const app = getApp();
     const token = wx.getStorageSync('token');
+    const fullUrl = app.globalData.baseUrl + options.url;
+    console.log('[API] 请求:', options.method || 'GET', fullUrl);
     wx.request({
-      url: app.globalData.baseUrl + options.url,
+      url: fullUrl,
       method: options.method || 'GET',
       data: options.data || {},
       header: {
@@ -13,6 +14,7 @@ const request = (options) => {
         ...(options.header || {})
       },
       success(res) {
+        console.log('[API] 响应:', fullUrl, 'statusCode:', res.statusCode, 'code:', res.data && res.data.code);
         try {
           if (res.data && res.data.code === 0) {
             resolve(res.data.data);
@@ -25,16 +27,21 @@ const request = (options) => {
             reject(res.data || { message: '请求失败' });
           }
         } catch (e) {
+          console.log('[API] 解析异常:', e.message);
           reject({ message: '响应解析失败' });
         }
       },
-      fail(err) { wx.showToast({ title: '网络错误', icon: 'none' }); reject(err); }
+      fail(err) {
+        console.log('[API] 请求失败:', fullUrl, JSON.stringify(err));
+        wx.showToast({ title: '网络错误', icon: 'none' }); reject(err);
+      }
     });
   });
 };
 
 const uploadImage = (filePath) => {
   return new Promise((resolve, reject) => {
+    const app = getApp();
     const token = wx.getStorageSync('token');
     wx.uploadFile({
       url: app.globalData.baseUrl + '/api/upload',

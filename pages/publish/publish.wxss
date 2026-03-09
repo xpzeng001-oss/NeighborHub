@@ -248,3 +248,15 @@
   color: #2C2C2C;
   height: 56rpx;
 }
+
+/* 日期范围选择器 */
+.date-range-picker {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12rpx;
+}
+.date-range-picker .date-text { font-size: 28rpx; color: #2C2C2C; }
+.date-range-picker .placeholder { font-size: 28rpx; color: #9A9A9A; }
+.date-separator { font-size: 26rpx; color: #9A9A9A; }

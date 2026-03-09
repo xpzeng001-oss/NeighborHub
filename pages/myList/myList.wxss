@@ -1,5 +1,35 @@
 .page { min-height: 100vh; background: #FEFCFA; padding: 16rpx 0; }
 
+/* 分类Tab */
+.sub-tabs {
+  display: flex;
+  background: #fff;
+  padding: 0 32rpx;
+  margin: 0 0 16rpx;
+  gap: 8rpx;
+}
+.sub-tab {
+  padding: 24rpx 28rpx;
+  font-size: 28rpx;
+  color: #9A9A9A;
+  position: relative;
+}
+.sub-tab.active {
+  color: #2C2C2C;
+  font-weight: 600;
+}
+.sub-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40rpx;
+  height: 6rpx;
+  background: #C67A52;
+  border-radius: 3rpx;
+}
+
 .empty {
   display: flex;
   flex-direction: column;
@@ -118,6 +148,59 @@
   font-weight: 500;
 }
 .help-status.done { color: #C67A52; }
+
+/* 通用列表项（拼单/拼车/宠物） */
+.general-item {
+  padding: 28rpx;
+  margin: 0 32rpx 16rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+}
+.general-item:active { background: #FEFCFA; }
+.general-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+.general-title {
+  font-size: 30rpx;
+  color: #2C2C2C;
+  font-weight: 600;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.general-tag {
+  font-size: 22rpx;
+  padding: 6rpx 18rpx;
+  border-radius: 20rpx;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+  font-weight: 500;
+}
+.tag-open { background: #F3E8DA; color: #C67A52; }
+.tag-done { background: #E3D5BF; color: #9A9A9A; }
+.tag-need { background: rgba(232, 136, 60, 0.1); color: #E8883C; }
+.tag-social { background: rgba(139, 109, 176, 0.1); color: #8B6DB0; }
+.general-desc {
+  font-size: 26rpx;
+  color: #9A9A9A;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.6;
+  margin-bottom: 12rpx;
+}
+.general-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.general-meta { font-size: 22rpx; color: #9A9A9A; }
 
 .loading-more {
   text-align: center;
