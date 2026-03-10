@@ -1,6 +1,30 @@
 const axios = require('axios');
 const wechatConfig = require('../config/wechat');
 
+// access_token 缓存
+let tokenCache = { token: null, expiresAt: 0 };
+
+exports.getAccessToken = async () => {
+  if (tokenCache.token && Date.now() < tokenCache.expiresAt) {
+    return tokenCache.token;
+  }
+  const { data } = await axios.get('https://api.weixin.qq.com/cgi-bin/token', {
+    params: {
+      grant_type: 'client_credential',
+      appid: wechatConfig.appId,
+      secret: wechatConfig.appSecret
+    }
+  });
+  if (data.errcode) {
+    throw new Error(data.errmsg || '获取access_token失败');
+  }
+  tokenCache = {
+    token: data.access_token,
+    expiresAt: Date.now() + (data.expires_in - 300) * 1000 // 提前5分钟过期
+  };
+  return tokenCache.token;
+};
+
 exports.code2Session = async (code) => {
   const { data } = await axios.get(wechatConfig.code2SessionUrl, {
     params: {
@@ -25,18 +49,7 @@ exports.code2Session = async (code) => {
 
 // 通过 phoneCode 获取用户手机号
 exports.getPhoneNumber = async (phoneCode) => {
-  // 先获取 access_token
-  const tokenRes = await axios.get('https://api.weixin.qq.com/cgi-bin/token', {
-    params: {
-      grant_type: 'client_credential',
-      appid: wechatConfig.appId,
-      secret: wechatConfig.appSecret
-    }
-  });
-  if (tokenRes.data.errcode) {
-    throw new Error(tokenRes.data.errmsg || '获取access_token失败');
-  }
-  const accessToken = tokenRes.data.access_token;
+  const accessToken = await exports.getAccessToken();
 
   // 用 phoneCode 换取手机号
   const { data } = await axios.post(
