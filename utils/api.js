@@ -113,6 +113,9 @@ const createReport    = (data)    => request({ url: '/api/reports', method: 'POS
 const getFeedbacks    = (params)  => request({ url: '/api/feedbacks', data: params });
 const createFeedback  = (data)    => request({ url: '/api/feedbacks', method: 'POST', data });
 
+// Stats
+const getCategoryCounts   = ()         => request({ url: '/api/stats/counts' });
+
 // Chat
 const getConversations    = ()         => request({ url: '/api/chat/conversations' });
 const createConversation  = (data)     => request({ url: '/api/chat/conversations', method: 'POST', data });
@@ -131,5 +134,6 @@ module.exports = {
   updateUser,
   getMyFavorites, getReports, createReport, getFeedbacks, createFeedback,
   uploadImage, uploadImages,
+  getCategoryCounts,
   getConversations, createConversation, getMessages, sendMessage, markConversationRead
 };

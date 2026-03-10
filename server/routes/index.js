@@ -15,5 +15,6 @@ router.use('/reports',  require('./reports'));
 router.use('/feedbacks', require('./feedbacks'));
 router.use('/sams',      require('./sams'));
 router.use('/carpools',  require('./carpools'));
+router.use('/stats',     require('./stats'));
 
 module.exports = router;
