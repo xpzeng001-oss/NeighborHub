@@ -1,5 +1,6 @@
 const axios = require('axios');
 const wechatService = require('./wechatService');
+const wechatConfig = require('../config/wechat');
 const { MediaCheck } = require('../models');
 
 /**
@@ -98,4 +99,38 @@ exports.checkImages = (openid, imageUrls, contentType, contentId) => {
   Promise.all(
     imageUrls.map(url => exports.mediaCheck(openid, url, contentType, contentId))
   ).catch(err => console.error('批量图片检测异常:', err.message));
+};
+
+/**
+ * 获取用户安全等级 (getUserRiskRank)
+ * risk_rank: 0=正常 1=可疑 2=有风险 3=危险 4=已封禁
+ * @param {string} openid    用户 openid
+ * @param {string} clientIp  用户客户端 IP
+ * @param {number} scene     场景值: 0=注册 1=营销
+ * @returns {Promise<{safe: boolean, riskRank: number}>}
+ */
+exports.getUserRiskRank = async (openid, clientIp, scene = 1) => {
+  try {
+    const accessToken = await wechatService.getAccessToken();
+    const { data } = await axios.post(
+      `https://api.weixin.qq.com/wxa/getuserriskrank?access_token=${accessToken}`,
+      {
+        appid: wechatConfig.appId,
+        openid,
+        scene,
+        client_ip: clientIp
+      }
+    );
+
+    if (data.errcode !== 0) {
+      console.error('getUserRiskRank API error:', data);
+      return { safe: true, riskRank: 0 };
+    }
+
+    // risk_rank >= 3 视为高风险，拦截操作
+    return { safe: data.risk_rank < 3, riskRank: data.risk_rank };
+  } catch (err) {
+    console.error('用户风险等级检测异常:', err.message);
+    return { safe: true, riskRank: 0 };
+  }
 };
