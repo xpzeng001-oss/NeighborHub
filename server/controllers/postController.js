@@ -1,4 +1,5 @@
 const { Post, Comment, User } = require('../models');
+const contentCheckService = require('../services/contentCheckService');
 
 exports.list = async (req, res, next) => {
   try {
@@ -97,6 +98,9 @@ exports.create = async (req, res, next) => {
       content: content || '',
       images: images || []
     });
+
+    // 异步图片安全检测
+    contentCheckService.checkImages(req.user.openid, images, 'post', post.id);
 
     res.json({ code: 0, data: { id: post.id } });
   } catch (err) {

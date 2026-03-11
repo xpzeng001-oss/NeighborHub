@@ -1,5 +1,6 @@
 const axios = require('axios');
 const wechatService = require('./wechatService');
+const { MediaCheck } = require('../models');
 
 /**
  * 微信内容安全文本检测 (msgSecCheck)
@@ -42,4 +43,59 @@ exports.textCheck = async (openid, content, scene = 2) => {
     // 异常时放行，避免阻塞用户
     return { pass: true, label: 0, errMsg: '' };
   }
+};
+
+/**
+ * 微信多媒体内容安全异步检测 (mediaCheckAsync)
+ * 异步检测图片，结果通过微信回调推送
+ * @param {string} openid       用户 openid
+ * @param {string} mediaUrl     图片 URL
+ * @param {string} contentType  内容类型: product, post, help, pet, sam, carpool
+ * @param {number} contentId    内容 ID
+ * @param {number} scene        场景值: 1=资料 2=评论 3=论坛 4=社交日志
+ */
+exports.mediaCheck = async (openid, mediaUrl, contentType, contentId, scene = 2) => {
+  try {
+    const accessToken = await wechatService.getAccessToken();
+    const { data } = await axios.post(
+      `https://api.weixin.qq.com/wxa/media_check_async?access_token=${accessToken}`,
+      {
+        openid,
+        media_url: mediaUrl,
+        media_type: 2, // 2=图片
+        version: 2,
+        scene
+      }
+    );
+
+    if (data.errcode !== 0) {
+      console.error('mediaCheckAsync API error:', data);
+      return;
+    }
+
+    // 记录 trace_id 与内容的映射关系
+    await MediaCheck.create({
+      trace_id: data.trace_id,
+      content_type: contentType,
+      content_id: contentId,
+      media_url: mediaUrl
+    });
+  } catch (err) {
+    console.error('图片安全检测异常:', err.message);
+  }
+};
+
+/**
+ * 批量提交图片检测（非阻塞）
+ * @param {string} openid
+ * @param {string[]} imageUrls
+ * @param {string} contentType
+ * @param {number} contentId
+ */
+exports.checkImages = (openid, imageUrls, contentType, contentId) => {
+  if (!openid || !imageUrls || imageUrls.length === 0) return;
+  // 异步执行，不阻塞主流程
+  Promise.all(
+    imageUrls.map(url => exports.mediaCheck(openid, url, contentType, contentId))
+  ).catch(err => console.error('批量图片检测异常:', err.message));
 };

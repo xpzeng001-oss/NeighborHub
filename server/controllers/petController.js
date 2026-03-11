@@ -1,4 +1,5 @@
 const { PetPost, User } = require('../models');
+const contentCheckService = require('../services/contentCheckService');
 
 exports.list = async (req, res, next) => {
   try {

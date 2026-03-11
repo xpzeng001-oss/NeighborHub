@@ -10,11 +10,9 @@ async function start() {
     await sequelize.authenticate();
     console.log('Database connected successfully.');
 
-    // 开发环境自动同步表结构
-    if (process.env.NODE_ENV === 'development') {
-      await sequelize.sync();
-      console.log('Database tables synced.');
-    }
+    // 同步表结构（自动创建新表，不修改已有表）
+    await sequelize.sync();
+    console.log('Database tables synced.');
 
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);

@@ -16,5 +16,6 @@ router.use('/feedbacks', require('./feedbacks'));
 router.use('/sams',      require('./sams'));
 router.use('/carpools',  require('./carpools'));
 router.use('/stats',     require('./stats'));
+router.use('/wechat',   require('./wechat'));
 
 module.exports = router;

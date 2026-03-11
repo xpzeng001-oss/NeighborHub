@@ -14,6 +14,7 @@ const Report = require('./Report');
 const Feedback = require('./Feedback');
 const SamOrder = require('./SamOrder');
 const Carpool = require('./Carpool');
+const MediaCheck = require('./MediaCheck');
 
 // User <-> Product
 User.hasMany(Product, { foreignKey: 'user_id' });
@@ -94,5 +95,6 @@ module.exports = {
   Report,
   Feedback,
   SamOrder,
-  Carpool
+  Carpool,
+  MediaCheck
 };

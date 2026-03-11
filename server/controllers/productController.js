@@ -1,5 +1,6 @@
 const { Product, User, Favorite } = require('../models');
 const { Op } = require('sequelize');
+const contentCheckService = require('../services/contentCheckService');
 
 exports.list = async (req, res, next) => {
   try {
@@ -133,6 +134,9 @@ exports.create = async (req, res, next) => {
       description: description || '',
       trade_method: tradeMethod || ''
     });
+
+    // 异步图片安全检测
+    contentCheckService.checkImages(req.user.openid, images, 'product', product.id);
 
     res.json({ code: 0, data: { id: product.id } });
   } catch (err) {
