@@ -13,10 +13,14 @@ async function auth(req, res, next) {
     req.user = { id: payload.id, openid: payload.openid };
 
     // Check if user is banned (lazy-require to avoid circular dependency)
-    const { User } = require('../models');
-    const userRecord = await User.findByPk(payload.id, { attributes: ['id', 'is_banned'] });
-    if (userRecord && userRecord.is_banned) {
-      return res.status(403).json({ code: 403, message: '账号已被封禁，如有疑问请联系管理员', data: null });
+    try {
+      const { User } = require('../models');
+      const userRecord = await User.findByPk(payload.id, { attributes: ['id', 'is_banned'] });
+      if (userRecord && userRecord.is_banned) {
+        return res.status(403).json({ code: 403, message: '账号已被封禁，如有疑问请联系管理员', data: null });
+      }
+    } catch (_) {
+      // is_banned column may not exist yet, skip check
     }
 
     next();

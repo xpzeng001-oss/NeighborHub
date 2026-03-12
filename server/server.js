@@ -11,13 +11,23 @@ async function start() {
     console.log('Database connected successfully.');
 
     // 同步表结构（自动创建新表 + 同步新字段）
-    await sequelize.sync({ alter: true });
-    console.log('Database tables synced.');
+    try {
+      await sequelize.sync({ alter: true });
+      console.log('Database tables synced.');
+    } catch (syncErr) {
+      console.error('sync({ alter: true }) failed, falling back to sync():', syncErr.message);
+      await sequelize.sync();
+      console.log('Database tables synced (fallback).');
+    }
 
     // 确保管理员账号
-    const { User } = require('./models');
-    await User.update({ role: 'admin' }, { where: { id: 20 } });
-    console.log('Admin user ensured.');
+    try {
+      const { User } = require('./models');
+      await User.update({ role: 'admin' }, { where: { id: 20 } });
+      console.log('Admin user ensured.');
+    } catch (e) {
+      console.error('Set admin failed:', e.message);
+    }
 
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);
