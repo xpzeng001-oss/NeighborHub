@@ -34,6 +34,10 @@ const Post = sequelize.define('Post', {
     type: DataTypes.INTEGER.UNSIGNED,
     defaultValue: 0
   },
+  status: {
+    type: DataTypes.STRING(16),
+    defaultValue: 'active'
+  },
   is_top: {
     type: DataTypes.BOOLEAN,
     defaultValue: false

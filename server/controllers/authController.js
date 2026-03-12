@@ -72,7 +72,8 @@ exports.login = async (req, res, next) => {
           avatarUrl: user.avatar_url,
           building: user.building,
           creditScore: user.credit_score,
-          isVerified: user.is_verified
+          isVerified: user.is_verified,
+          role: user.role
         }
       }
     });

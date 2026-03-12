@@ -3,7 +3,8 @@ const { Carpool, User, Conversation, Message } = require('../models');
 exports.list = async (req, res, next) => {
   try {
     const { page = 1, pageSize = 20, type, communityId, userId } = req.query;
-    const where = {};
+    const { Op } = require('sequelize');
+    const where = { status: { [Op.ne]: 'off' } };
     if (type) where.type = type;
     if (communityId) where.community_id = communityId;
     if (userId) where.user_id = Number(userId);

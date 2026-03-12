@@ -1,7 +1,7 @@
 const tokenService = require('../services/tokenService');
 
 // 必须登录
-function auth(req, res, next) {
+async function auth(req, res, next) {
   const header = req.headers.authorization;
   if (!header || !header.startsWith('Bearer ')) {
     return res.status(401).json({ code: 401, message: '未登录', data: null });
@@ -11,13 +11,21 @@ function auth(req, res, next) {
   try {
     const payload = tokenService.verify(token);
     req.user = { id: payload.id, openid: payload.openid };
+
+    // Check if user is banned (lazy-require to avoid circular dependency)
+    const { User } = require('../models');
+    const userRecord = await User.findByPk(payload.id, { attributes: ['id', 'is_banned'] });
+    if (userRecord && userRecord.is_banned) {
+      return res.status(403).json({ code: 403, message: '账号已被封禁，如有疑问请联系管理员', data: null });
+    }
+
     next();
   } catch (err) {
     return res.status(401).json({ code: 401, message: 'token已过期', data: null });
   }
 }
 
-// 可选登录（不报错，有 token 就解析）
+// 可选登录（不报错，有 token 就解析；不阻止封禁用户的读操作）
 function optionalAuth(req, res, next) {
   const header = req.headers.authorization;
   if (header && header.startsWith('Bearer ')) {

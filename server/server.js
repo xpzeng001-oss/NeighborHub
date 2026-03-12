@@ -10,9 +10,14 @@ async function start() {
     await sequelize.authenticate();
     console.log('Database connected successfully.');
 
-    // 同步表结构（自动创建新表，不修改已有表）
-    await sequelize.sync();
+    // 同步表结构（自动创建新表 + 同步新字段）
+    await sequelize.sync({ alter: true });
     console.log('Database tables synced.');
+
+    // 确保管理员账号
+    const { User } = require('./models');
+    await User.update({ role: 'admin' }, { where: { id: 20 } });
+    console.log('Admin user ensured.');
 
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);

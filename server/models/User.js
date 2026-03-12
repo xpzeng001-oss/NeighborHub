@@ -35,6 +35,15 @@ const User = sequelize.define('User', {
   is_verified: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
+  },
+  role: {
+    type: DataTypes.STRING(16),
+    defaultValue: 'user',
+    comment: 'user / admin'
+  },
+  is_banned: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   }
 }, {
   tableName: 'users'

@@ -123,6 +123,17 @@ const getMessages         = (id, params) => request({ url: '/api/chat/conversati
 const sendMessage         = (id, data) => request({ url: '/api/chat/conversations/' + id + '/messages', method: 'POST', data });
 const markConversationRead = (id)      => request({ url: '/api/chat/conversations/' + id + '/read', method: 'PUT' });
 
+// Admin APIs
+const getAdminStats = () => request({ url: '/api/admin/stats' });
+const getAdminReports = (params) => request({ url: '/api/admin/reports', data: params });
+const handleAdminReport = (id, data) => request({ url: '/api/admin/reports/' + id, method: 'PUT', data });
+const getAdminContent = (params) => request({ url: '/api/admin/content', data: params });
+const takedownContent = (type, id, data) => request({ url: '/api/admin/content/' + type + '/' + id + '/takedown', method: 'PUT', data });
+const restoreContent = (type, id) => request({ url: '/api/admin/content/' + type + '/' + id + '/restore', method: 'PUT' });
+const getAdminUsers = (params) => request({ url: '/api/admin/users', data: params });
+const banUser = (id, data) => request({ url: '/api/admin/users/' + id + '/ban', method: 'PUT', data });
+const unbanUser = (id) => request({ url: '/api/admin/users/' + id + '/unban', method: 'PUT' });
+
 module.exports = {
   getProducts, getProduct, createProduct, deleteProduct, wantProduct, toggleFavorite,
   getPosts, getPost, createPost, deletePost, likePost, addComment,
@@ -135,5 +146,7 @@ module.exports = {
   getMyFavorites, getReports, createReport, getFeedbacks, createFeedback,
   uploadImage, uploadImages,
   getCategoryCounts,
-  getConversations, createConversation, getMessages, sendMessage, markConversationRead
+  getConversations, createConversation, getMessages, sendMessage, markConversationRead,
+  getAdminStats, getAdminReports, handleAdminReport, getAdminContent, takedownContent, restoreContent,
+  getAdminUsers, banUser, unbanUser
 };

@@ -1,6 +1,46 @@
-.page { height: 100vh; display: flex; flex-direction: column; background: #FEFCFA; }
+/* pages/admin/admin.wxss */
+.page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #FEFCFA;
+}
 
-/* Tabs */
+/* ==================== Stats Bar ==================== */
+.stats-bar {
+  display: flex;
+  padding: 24rpx 24rpx 16rpx;
+  gap: 16rpx;
+  flex-shrink: 0;
+}
+.stat-card {
+  flex: 1;
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+  padding: 20rpx 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+.stat-num {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #2C2C2C;
+}
+.stat-num.stat-warn {
+  color: #C67A52;
+}
+.stat-num.stat-danger {
+  color: #E8636F;
+}
+.stat-label {
+  font-size: 22rpx;
+  color: #9A9A9A;
+}
+
+/* ==================== Tabs ==================== */
 .tabs {
   display: flex;
   background: #fff;
@@ -33,35 +73,297 @@
   border-radius: 3rpx;
 }
 
-/* List */
-.list-scroll { flex: 1; height: 0; padding: 16rpx 0; }
+/* ==================== List Scroll ==================== */
+.list-scroll {
+  flex: 1;
+  height: 0;
+  padding-bottom: 20rpx;
+}
 
+/* ==================== Filter Row ==================== */
+.filter-row {
+  display: flex;
+  padding: 20rpx 24rpx 8rpx;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+.filter-row-sub {
+  padding-top: 4rpx;
+  padding-bottom: 4rpx;
+}
+.filter-pill {
+  padding: 10rpx 24rpx;
+  font-size: 24rpx;
+  color: #9A9A9A;
+  background: #fff;
+  border-radius: 32rpx;
+  border: 1rpx solid #eee;
+}
+.filter-pill.active {
+  color: #C67A52;
+  background: #F3E8DA;
+  border-color: #C67A52;
+  font-weight: 600;
+}
+.filter-pill-sm {
+  padding: 6rpx 20rpx;
+  font-size: 22rpx;
+  color: #9A9A9A;
+  background: #fff;
+  border-radius: 24rpx;
+  border: 1rpx solid #eee;
+}
+.filter-pill-sm.active {
+  color: #C67A52;
+  background: #F3E8DA;
+  border-color: #C67A52;
+  font-weight: 600;
+}
+
+/* ==================== Empty State ==================== */
 .empty {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 200rpx;
+  padding-top: 160rpx;
   gap: 20rpx;
 }
-.empty-text { font-size: 28rpx; color: #9A9A9A; }
+.empty-text {
+  font-size: 28rpx;
+  color: #9A9A9A;
+}
 
-.item {
+/* ==================== Loading ==================== */
+.loading-more {
+  text-align: center;
+  padding: 30rpx 0;
+  font-size: 24rpx;
+  color: #9A9A9A;
+}
+
+/* ==================== Avatars ==================== */
+.avatar-xs {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #f0f0f0;
+}
+.avatar-sm {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #f0f0f0;
+}
+.avatar-md {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #f0f0f0;
+}
+
+/* ==================== Type Badges ==================== */
+.type-badge {
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  font-weight: 600;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+.type-badge.type-product {
+  color: #C67A52;
+  background: #F3E8DA;
+}
+.type-badge.type-post {
+  color: #5B8CDD;
+  background: #E3EDFA;
+}
+.type-badge.type-pet {
+  color: #E8963F;
+  background: #FBF0E0;
+}
+.type-badge.type-sam {
+  color: #7B61C4;
+  background: #EDE7F6;
+}
+.type-badge.type-carpool {
+  color: #4CAF50;
+  background: #E8F5E9;
+}
+.type-badge.type-help {
+  color: #E8636F;
+  background: #FCEAEC;
+}
+.type-badge.type-comment {
+  color: #9A9A9A;
+  background: #F5F5F5;
+}
+.type-badge.type-user {
+  color: #2C2C2C;
+  background: #F0F0F0;
+}
+
+/* ==================== Status Badges ==================== */
+.status-badge {
+  font-size: 20rpx;
+  padding: 4rpx 14rpx;
+  border-radius: 16rpx;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.status-badge.status-pending {
+  color: #C67A52;
+  background: #F3E8DA;
+}
+.status-badge.status-resolved {
+  color: #4CAF50;
+  background: #E8F5E9;
+}
+.status-badge.status-rejected {
+  color: #9A9A9A;
+  background: #F5F5F5;
+}
+.status-badge.status-active {
+  color: #4CAF50;
+  background: #E8F5E9;
+}
+.status-badge.status-off {
+  color: #E8636F;
+  background: #FCEAEC;
+}
+
+/* ==================== Buttons ==================== */
+.btn-action {
   display: flex;
   align-items: center;
-  margin: 0 24rpx 16rpx;
+  justify-content: center;
+  padding: 12rpx 28rpx;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+.btn-action.btn-sm {
+  padding: 8rpx 22rpx;
+  font-size: 24rpx;
+  border-radius: 10rpx;
+}
+.btn-action.btn-danger {
+  color: #fff;
+  background: #E8636F;
+}
+.btn-action.btn-danger:active {
+  background: #D4545F;
+}
+.btn-action.btn-success {
+  color: #fff;
+  background: #4CAF50;
+}
+.btn-action.btn-success:active {
+  background: #3D9141;
+}
+.btn-action.btn-gray {
+  color: #666;
+  background: #F0F0F0;
+}
+.btn-action.btn-gray:active {
+  background: #E0E0E0;
+}
+
+/* ==================== Report Card ==================== */
+.report-card {
+  margin: 16rpx 24rpx 0;
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+  overflow: hidden;
+  padding: 24rpx;
+}
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+.report-user {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+.report-username {
+  font-size: 26rpx;
+  color: #2C2C2C;
+  font-weight: 500;
+}
+.report-time {
+  font-size: 22rpx;
+  color: #9A9A9A;
+}
+.report-body {
+  margin-bottom: 16rpx;
+}
+.report-reason-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 8rpx;
+}
+.report-reason-label {
+  font-size: 24rpx;
+  color: #9A9A9A;
+  flex-shrink: 0;
+}
+.report-reason-text {
+  font-size: 24rpx;
+  color: #2C2C2C;
+  font-weight: 500;
+}
+.report-desc {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.report-target {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 16rpx;
+  background: #FEFCFA;
+  border-radius: 12rpx;
+  margin-bottom: 16rpx;
+}
+.report-target-title {
+  font-size: 24rpx;
+  color: #2C2C2C;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.report-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16rpx;
+}
+
+/* ==================== Content Card ==================== */
+.content-card {
+  margin: 16rpx 24rpx 0;
   background: #fff;
   border-radius: 16rpx;
   box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
   overflow: hidden;
 }
-.item-main {
-  flex: 1;
+.content-main {
   display: flex;
-  padding: 20rpx 24rpx;
-  min-width: 0;
+  padding: 20rpx 24rpx 12rpx;
 }
-.item-main:active { background: #FEFCFA; }
-.item-img {
+.content-thumb {
   width: 120rpx;
   height: 120rpx;
   border-radius: 12rpx;
@@ -69,57 +371,153 @@
   margin-right: 20rpx;
   background: #f5f5f5;
 }
-.item-body {
+.content-body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   min-width: 0;
+  gap: 8rpx;
 }
-.item-title {
+.content-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+.content-title {
   font-size: 28rpx;
   color: #2C2C2C;
   font-weight: 500;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.content-desc {
+  font-size: 24rpx;
+  color: #9A9A9A;
+  line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  line-height: 1.5;
 }
-.item-meta {
+.content-meta {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 8rpx;
 }
-.item-user { font-size: 24rpx; color: #9A9A9A; }
-.item-status {
-  font-size: 22rpx;
-  color: #C67A52;
-  background: #F3E8DA;
-  padding: 4rpx 14rpx;
-  border-radius: 16rpx;
-}
-
-.item-delete {
-  width: 100rpx;
+.content-user-info {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  border-left: 1rpx solid #f0f0f0;
-  align-self: stretch;
+  gap: 8rpx;
 }
-.item-delete:active { background: rgba(232,99,111,0.08); }
-.delete-text {
-  font-size: 24rpx;
-  color: #E8636F;
-  font-weight: 600;
+.content-username {
+  font-size: 22rpx;
+  color: #9A9A9A;
+}
+.content-time {
+  font-size: 22rpx;
+  color: #9A9A9A;
+}
+.content-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12rpx 24rpx 20rpx;
+  border-top: 1rpx solid #F5F5F5;
+}
+.content-actions {
+  display: flex;
+  gap: 12rpx;
 }
 
-.loading-more {
-  text-align: center;
-  padding: 30rpx 0;
+/* ==================== User Card ==================== */
+.user-card {
+  margin: 16rpx 24rpx 0;
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+  overflow: hidden;
+  padding: 24rpx;
+}
+.user-main {
+  display: flex;
+  gap: 20rpx;
+}
+.user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 8rpx;
+}
+.user-name-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+.user-name {
+  font-size: 28rpx;
+  color: #2C2C2C;
+  font-weight: 600;
+}
+.ban-badge {
+  font-size: 20rpx;
+  color: #fff;
+  background: #E8636F;
+  padding: 2rpx 12rpx;
+  border-radius: 8rpx;
+  font-weight: 600;
+}
+.user-building {
   font-size: 24rpx;
   color: #9A9A9A;
+}
+.user-stats {
+  display: flex;
+  gap: 24rpx;
+  margin-top: 8rpx;
+}
+.user-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+.user-stat-label {
+  font-size: 20rpx;
+  color: #9A9A9A;
+}
+.user-stat-value {
+  font-size: 24rpx;
+  color: #2C2C2C;
+  font-weight: 500;
+}
+.user-stat-value.violation-count {
+  color: #E8636F;
+  font-weight: 700;
+}
+.user-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16rpx;
+  gap: 12rpx;
+}
+
+/* ==================== Search Bar ==================== */
+.search-bar {
+  padding: 20rpx 24rpx 8rpx;
+}
+.search-input-wrap {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 32rpx;
+  padding: 12rpx 24rpx;
+  gap: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
+}
+.search-input {
+  flex: 1;
+  font-size: 26rpx;
+  color: #2C2C2C;
 }

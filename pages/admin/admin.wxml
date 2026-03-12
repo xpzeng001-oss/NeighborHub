@@ -1,41 +1,203 @@
 <!--pages/admin/admin.wxml-->
 <view class="page">
-  <!-- Tab 切换 -->
-  <view class="tabs">
-    <view class="tab {{tab === 'product' ? 'active' : ''}}" bindtap="switchTab" data-tab="product">闲置</view>
-    <view class="tab {{tab === 'post' ? 'active' : ''}}" bindtap="switchTab" data-tab="post">论坛</view>
-    <view class="tab {{tab === 'pet' ? 'active' : ''}}" bindtap="switchTab" data-tab="pet">宠物</view>
-    <view class="tab {{tab === 'sam' ? 'active' : ''}}" bindtap="switchTab" data-tab="sam">拼单</view>
+
+  <!-- ========== Stats Bar ========== -->
+  <view class="stats-bar">
+    <view class="stat-card">
+      <text class="stat-num {{stats.pendingReports > 0 ? 'stat-warn' : ''}}">{{stats.pendingReports || 0}}</text>
+      <text class="stat-label">待处理举报</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-num">{{stats.todayViolations || 0}}</text>
+      <text class="stat-label">今日违规</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-num {{stats.bannedUsers > 0 ? 'stat-danger' : ''}}">{{stats.bannedUsers || 0}}</text>
+      <text class="stat-label">已封禁用户</text>
+    </view>
   </view>
 
-  <!-- 列表 -->
-  <scroll-view scroll-y class="list-scroll" bindscrolltolower="loadMore">
-    <view class="empty" wx:if="{{!loading && list.length === 0}}">
+  <!-- ========== Main Tabs ========== -->
+  <view class="tabs">
+    <view class="tab {{tab === 'report' ? 'active' : ''}}" bindtap="switchTab" data-tab="report">举报处理</view>
+    <view class="tab {{tab === 'content' ? 'active' : ''}}" bindtap="switchTab" data-tab="content">内容管理</view>
+    <view class="tab {{tab === 'user' ? 'active' : ''}}" bindtap="switchTab" data-tab="user">用户管理</view>
+  </view>
+
+  <!-- ========== Reports Tab ========== -->
+  <scroll-view scroll-y class="list-scroll" bindscrolltolower="loadMore" wx:if="{{tab === 'report'}}">
+
+    <!-- Report Filters -->
+    <view class="filter-row">
+      <view class="filter-pill {{reportFilter === 'pending' ? 'active' : ''}}" bindtap="switchReportFilter" data-filter="pending">待处理</view>
+      <view class="filter-pill {{reportFilter === 'resolved' ? 'active' : ''}}" bindtap="switchReportFilter" data-filter="resolved">已处理</view>
+      <view class="filter-pill {{reportFilter === 'rejected' ? 'active' : ''}}" bindtap="switchReportFilter" data-filter="rejected">已驳回</view>
+      <view class="filter-pill {{reportFilter === 'all' ? 'active' : ''}}" bindtap="switchReportFilter" data-filter="all">全部</view>
+    </view>
+
+    <!-- Empty State -->
+    <view class="empty" wx:if="{{!loading && reportList.length === 0}}">
+      <icon name="package" size="80" color="#ddd"></icon>
+      <text class="empty-text">暂无举报</text>
+    </view>
+
+    <!-- Report List -->
+    <view class="report-card" wx:for="{{reportList}}" wx:key="id">
+      <!-- Reporter Info -->
+      <view class="report-header">
+        <view class="report-user">
+          <image class="avatar-sm" src="{{item.userAvatar}}" mode="aspectFill"></image>
+          <text class="report-username">{{item.userName}}</text>
+          <text class="report-time">{{item.timeText}}</text>
+        </view>
+        <view class="status-badge status-{{item.status}}" wx:if="{{item.status !== 'pending'}}">{{item.statusText}}</view>
+      </view>
+
+      <!-- Report Body -->
+      <view class="report-body">
+        <view class="report-reason-row">
+          <text class="report-reason-label">举报原因：</text>
+          <text class="report-reason-text">{{item.reason}}</text>
+        </view>
+        <view class="report-desc" wx:if="{{item.description}}">{{item.description}}</view>
+      </view>
+
+      <!-- Target Content -->
+      <view class="report-target">
+        <view class="type-badge type-{{item.targetType}}">{{item.targetTypeText}}</view>
+        <text class="report-target-title">{{item.targetTitle}}</text>
+      </view>
+
+      <!-- Actions (only for pending) -->
+      <view class="report-actions" wx:if="{{item.status === 'pending'}}">
+        <view class="btn-action btn-danger" bindtap="handleReport" data-id="{{item.id}}" data-index="{{index}}">
+          <text>处理举报</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="loading-more" wx:if="{{loading}}"><text>加载中...</text></view>
+    <view class="loading-more" wx:if="{{!reportHasMore && reportList.length > 0}}"><text>没有更多了</text></view>
+  </scroll-view>
+
+  <!-- ========== Content Tab ========== -->
+  <scroll-view scroll-y class="list-scroll" bindscrolltolower="loadMore" wx:if="{{tab === 'content'}}">
+
+    <!-- Content Type Filters -->
+    <view class="filter-row">
+      <view class="filter-pill {{contentType === 'all' ? 'active' : ''}}" bindtap="switchContentType" data-type="all">全部</view>
+      <view class="filter-pill {{contentType === 'product' ? 'active' : ''}}" bindtap="switchContentType" data-type="product">闲置</view>
+      <view class="filter-pill {{contentType === 'post' ? 'active' : ''}}" bindtap="switchContentType" data-type="post">论坛</view>
+      <view class="filter-pill {{contentType === 'pet' ? 'active' : ''}}" bindtap="switchContentType" data-type="pet">宠物</view>
+      <view class="filter-pill {{contentType === 'sam' ? 'active' : ''}}" bindtap="switchContentType" data-type="sam">拼单</view>
+      <view class="filter-pill {{contentType === 'carpool' ? 'active' : ''}}" bindtap="switchContentType" data-type="carpool">拼车</view>
+      <view class="filter-pill {{contentType === 'help' ? 'active' : ''}}" bindtap="switchContentType" data-type="help">互助</view>
+    </view>
+
+    <!-- Content Status Filters -->
+    <view class="filter-row filter-row-sub">
+      <view class="filter-pill-sm {{contentStatus === 'all' ? 'active' : ''}}" bindtap="switchContentStatus" data-status="all">全部</view>
+      <view class="filter-pill-sm {{contentStatus === 'active' ? 'active' : ''}}" bindtap="switchContentStatus" data-status="active">正常</view>
+      <view class="filter-pill-sm {{contentStatus === 'off' ? 'active' : ''}}" bindtap="switchContentStatus" data-status="off">已下架</view>
+    </view>
+
+    <!-- Empty State -->
+    <view class="empty" wx:if="{{!loading && contentList.length === 0}}">
       <icon name="package" size="80" color="#ddd"></icon>
       <text class="empty-text">暂无内容</text>
     </view>
 
-    <view class="item" wx:for="{{list}}" wx:key="id">
-      <view class="item-main" bindtap="goDetail" data-id="{{item.id}}">
-        <image class="item-img" wx:if="{{item.images && item.images.length > 0}}" src="{{item.images[0]}}" mode="aspectFill"></image>
-        <view class="item-body">
-          <text class="item-title">{{item.title}}</text>
-          <view class="item-meta">
-            <text class="item-user">{{item.userName}}</text>
-            <text class="item-status" wx:if="{{item.status}}">{{item.status}}</text>
+    <!-- Content List -->
+    <view class="content-card" wx:for="{{contentList}}" wx:key="id">
+      <view class="content-main">
+        <image class="content-thumb" wx:if="{{item.images && item.images.length > 0}}" src="{{item.images[0]}}" mode="aspectFill"></image>
+        <view class="content-body">
+          <view class="content-title-row">
+            <view class="type-badge type-{{item.type}}">{{item.typeText}}</view>
+            <text class="content-title">{{item.title}}</text>
+          </view>
+          <text class="content-desc">{{item.description}}</text>
+          <view class="content-meta">
+            <view class="content-user-info">
+              <image class="avatar-xs" wx:if="{{item.userAvatar}}" src="{{item.userAvatar}}" mode="aspectFill"></image>
+              <text class="content-username">{{item.userName}}</text>
+            </view>
+            <text class="content-time">{{item.timeText}}</text>
           </view>
         </view>
       </view>
-      <view class="item-delete" bindtap="onDelete" data-id="{{item.id}}" data-index="{{index}}">
-        <text class="delete-text">删除</text>
+      <view class="content-footer">
+        <view class="status-badge status-{{item.status === 'off' ? 'off' : 'active'}}">{{item.status === 'off' ? '已下架' : '正常'}}</view>
+        <view class="content-actions">
+          <view class="btn-action btn-danger btn-sm" wx:if="{{item.status !== 'off'}}" bindtap="takedownContent" data-type="{{item.type}}" data-id="{{item.id}}" data-index="{{index}}">
+            <text>下架</text>
+          </view>
+          <view class="btn-action btn-success btn-sm" wx:if="{{item.status === 'off'}}" bindtap="restoreContent" data-type="{{item.type}}" data-id="{{item.id}}" data-index="{{index}}">
+            <text>恢复</text>
+          </view>
+        </view>
       </view>
     </view>
 
-    <view class="loading-more" wx:if="{{loading}}">
-      <text>加载中...</text>
-    </view>
-    <view class="loading-more" wx:if="{{!hasMore && list.length > 0}}">
-      <text>没有更多了</text>
-    </view>
+    <view class="loading-more" wx:if="{{loading}}"><text>加载中...</text></view>
+    <view class="loading-more" wx:if="{{!contentHasMore && contentList.length > 0}}"><text>没有更多了</text></view>
   </scroll-view>
+
+  <!-- ========== Users Tab ========== -->
+  <scroll-view scroll-y class="list-scroll" bindscrolltolower="loadMore" wx:if="{{tab === 'user'}}">
+
+    <!-- Search Bar -->
+    <view class="search-bar">
+      <view class="search-input-wrap">
+        <icon name="search" size="32" color="#9A9A9A"></icon>
+        <input class="search-input" placeholder="搜索用户昵称" value="{{userKeyword}}" bindinput="searchUser" />
+      </view>
+    </view>
+
+    <!-- Empty State -->
+    <view class="empty" wx:if="{{!loading && userList.length === 0}}">
+      <icon name="package" size="80" color="#ddd"></icon>
+      <text class="empty-text">暂无用户</text>
+    </view>
+
+    <!-- User List -->
+    <view class="user-card" wx:for="{{userList}}" wx:key="id">
+      <view class="user-main">
+        <image class="avatar-md" src="{{item.avatarUrl}}" mode="aspectFill"></image>
+        <view class="user-info">
+          <view class="user-name-row">
+            <text class="user-name">{{item.nickName}}</text>
+            <view class="ban-badge" wx:if="{{item.isBanned}}">已封禁</view>
+          </view>
+          <text class="user-building" wx:if="{{item.building}}">{{item.building}}</text>
+          <view class="user-stats">
+            <view class="user-stat">
+              <text class="user-stat-label">信用分</text>
+              <text class="user-stat-value">{{item.creditScore || 100}}</text>
+            </view>
+            <view class="user-stat">
+              <text class="user-stat-label">违规次数</text>
+              <text class="user-stat-value {{item.violationCount > 0 ? 'violation-count' : ''}}">{{item.violationCount || 0}}</text>
+            </view>
+            <view class="user-stat">
+              <text class="user-stat-label">注册时间</text>
+              <text class="user-stat-value">{{item.timeText}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="user-actions">
+        <view class="btn-action btn-danger btn-sm" wx:if="{{!item.isBanned}}" bindtap="banUser" data-id="{{item.id}}" data-index="{{index}}">
+          <text>封禁</text>
+        </view>
+        <view class="btn-action btn-success btn-sm" wx:if="{{item.isBanned}}" bindtap="unbanUser" data-id="{{item.id}}" data-index="{{index}}">
+          <text>解封</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="loading-more" wx:if="{{loading}}"><text>加载中...</text></view>
+    <view class="loading-more" wx:if="{{!userHasMore && userList.length > 0}}"><text>没有更多了</text></view>
+  </scroll-view>
+
 </view>

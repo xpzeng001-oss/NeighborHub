@@ -3,7 +3,8 @@ const { HelpRequest, User } = require('../models');
 exports.list = async (req, res, next) => {
   try {
     const { page = 1, pageSize = 20, communityId, userId } = req.query;
-    const where = {};
+    const { Op } = require('sequelize');
+    const where = { status: { [Op.ne]: 'off' } };
     if (communityId) where.community_id = communityId;
     if (userId) where.user_id = Number(userId);
 

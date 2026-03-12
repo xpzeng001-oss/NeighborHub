@@ -39,7 +39,7 @@ Page({
         userInfo,
         isVerified: !!userInfo.building,
         creditLevel,
-        isAdmin: userInfo.id == 20
+        isAdmin: userInfo.role === 'admin' || userInfo.id == 20
       });
     }
   },

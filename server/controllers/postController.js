@@ -4,7 +4,7 @@ const contentCheckService = require('../services/contentCheckService');
 exports.list = async (req, res, next) => {
   try {
     const { page = 1, pageSize = 20, category, communityId } = req.query;
-    const where = {};
+    const where = { status: { [require('sequelize').Op.ne]: 'off' } };
     if (category) where.category = category;
     if (communityId) where.community_id = communityId;
 
@@ -50,7 +50,7 @@ exports.detail = async (req, res, next) => {
       ]
     });
 
-    if (!post) {
+    if (!post || post.status === 'off') {
       return res.status(404).json({ code: 404, message: '帖子不存在', data: null });
     }
 

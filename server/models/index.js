@@ -15,6 +15,7 @@ const Feedback = require('./Feedback');
 const SamOrder = require('./SamOrder');
 const Carpool = require('./Carpool');
 const MediaCheck = require('./MediaCheck');
+const Violation = require('./Violation');
 
 // User <-> Product
 User.hasMany(Product, { foreignKey: 'user_id' });
@@ -79,6 +80,10 @@ SamOrder.belongsTo(User, { foreignKey: 'user_id' });
 User.hasMany(Carpool, { foreignKey: 'user_id' });
 Carpool.belongsTo(User, { foreignKey: 'user_id' });
 
+// User <-> Violation
+User.hasMany(Violation, { foreignKey: 'user_id' });
+Violation.belongsTo(User, { foreignKey: 'user_id' });
+
 module.exports = {
   sequelize,
   User,
@@ -96,5 +101,6 @@ module.exports = {
   Feedback,
   SamOrder,
   Carpool,
-  MediaCheck
+  MediaCheck,
+  Violation
 };

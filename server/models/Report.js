@@ -32,10 +32,18 @@ const Report = sequelize.define('Report', {
     type: DataTypes.STRING(20),
     defaultValue: 'pending',
     comment: 'pending / resolved / rejected'
+  },
+  admin_note: {
+    type: DataTypes.TEXT,
+    defaultValue: ''
+  },
+  handled_by: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    comment: 'admin user id'
   }
 }, {
   tableName: 'reports',
-  updatedAt: false
+  updatedAt: true
 });
 
 module.exports = Report;
