@@ -6,12 +6,13 @@ const DEFAULT_NICKNAMES = [
   '快乐邻居', '阳光住户', '友善邻里', '温馨家人', '热心业主',
   '开心果', '小太阳', '好邻居', '暖心人', '微笑达人'
 ];
-const DEFAULT_AVATARS = [
-  'https://img.icons8.com/color/200/user-male-circle--v1.png',
-  'https://img.icons8.com/color/200/user-female-circle--v1.png',
-  'https://img.icons8.com/color/200/user-male-circle--v2.png',
-  'https://img.icons8.com/color/200/user-female-circle--v2.png'
-];
+// DiceBear 风格头像，用随机 seed 生成唯一头像
+const AVATAR_STYLES = ['fun-emoji', 'adventurer', 'avataaars', 'bottts', 'lorelei'];
+function generateDefaultAvatar() {
+  const style = AVATAR_STYLES[Math.floor(Math.random() * AVATAR_STYLES.length)];
+  const seed = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  return `https://api.dicebear.com/7.x/${style}/png?seed=${seed}&size=200`;
+}
 
 exports.login = async (req, res, next) => {
   try {
@@ -36,7 +37,7 @@ exports.login = async (req, res, next) => {
 
     // 随机默认昵称和头像
     const randomNick = DEFAULT_NICKNAMES[Math.floor(Math.random() * DEFAULT_NICKNAMES.length)];
-    const randomAvatar = DEFAULT_AVATARS[Math.floor(Math.random() * DEFAULT_AVATARS.length)];
+    const randomAvatar = generateDefaultAvatar();
 
     // 查找或创建用户
     let [user, created] = await User.findOrCreate({
