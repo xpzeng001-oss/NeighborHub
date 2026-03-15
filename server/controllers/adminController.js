@@ -10,7 +10,9 @@ const {
   SamOrder,
   Carpool,
   Report,
-  Violation
+  Violation,
+  Community,
+  CommunityApplication
 } = require('../models');
 
 // ── helper: map target_type string to Sequelize model ──
@@ -469,7 +471,85 @@ exports.unbanUser = async (req, res, next) => {
 };
 
 // ────────────────────────────────────────────────────────────
-// j) GET /admin/users/:id/violations
+// j) GET /admin/community-applications
+// ────────────────────────────────────────────────────────────
+exports.listCommunityApplications = async (req, res, next) => {
+  try {
+    const { status = 'pending', page = 1, pageSize = 20 } = req.query;
+    const where = {};
+    if (status !== 'all') where.status = status;
+
+    const { rows, count } = await CommunityApplication.findAndCountAll({
+      where,
+      include: [{ model: User, attributes: ['id', 'nick_name', 'avatar_url'] }],
+      order: [['created_at', 'DESC']],
+      limit: Number(pageSize),
+      offset: (Number(page) - 1) * Number(pageSize)
+    });
+
+    const list = rows.map(a => ({
+      id: a.id,
+      userId: a.user_id,
+      userName: a.User ? a.User.nick_name : '未知用户',
+      userAvatar: a.User ? a.User.avatar_url : '',
+      name: a.name,
+      address: a.address,
+      reason: a.reason,
+      contact: a.contact,
+      status: a.status,
+      adminNote: a.admin_note,
+      createdAt: a.created_at
+    }));
+
+    res.json({ code: 0, data: { list, total: count, page: Number(page) } });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ────────────────────────────────────────────────────────────
+// k) PUT /admin/community-applications/:id
+// ────────────────────────────────────────────────────────────
+exports.handleCommunityApplication = async (req, res, next) => {
+  try {
+    const { action, adminNote } = req.body;
+    if (!['approve', 'reject'].includes(action)) {
+      return res.status(400).json({ code: 400, message: 'action 必须为 approve 或 reject', data: null });
+    }
+
+    const application = await CommunityApplication.findByPk(req.params.id);
+    if (!application) {
+      return res.status(404).json({ code: 404, message: '申请不存在', data: null });
+    }
+    if (application.status !== 'pending') {
+      return res.status(400).json({ code: 400, message: '该申请已处理', data: null });
+    }
+
+    application.status = action === 'approve' ? 'approved' : 'rejected';
+    application.admin_note = adminNote || '';
+    application.handled_by = req.user.id;
+    await application.save();
+
+    // If approved, create the community
+    if (action === 'approve') {
+      await Community.findOrCreate({
+        where: { name: application.name },
+        defaults: {
+          name: application.name,
+          address: application.address,
+          status: 'active'
+        }
+      });
+    }
+
+    res.json({ code: 0, data: { id: application.id, status: application.status } });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ────────────────────────────────────────────────────────────
+// l) GET /admin/users/:id/violations
 // ────────────────────────────────────────────────────────────
 exports.userViolations = async (req, res, next) => {
   try {

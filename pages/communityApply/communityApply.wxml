@@ -1,0 +1,57 @@
+<!--pages/communityApply/communityApply.wxml-->
+<view class="page">
+  <view class="form-section">
+    <view class="section-title">小区信息</view>
+
+    <view class="form-item">
+      <text class="form-label">小区名称 <text class="required">*</text></text>
+      <input class="form-input" placeholder="请输入小区名称" value="{{name}}" bindinput="onNameInput" maxlength="30" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">小区地址</text>
+      <input class="form-input" placeholder="请输入详细地址（选填）" value="{{address}}" bindinput="onAddressInput" maxlength="100" />
+    </view>
+  </view>
+
+  <view class="form-section">
+    <view class="section-title">申请信息</view>
+
+    <view class="form-item">
+      <text class="form-label">申请理由</text>
+      <textarea class="form-textarea" placeholder="简单说明为什么想添加这个小区（选填）" value="{{reason}}" bindinput="onReasonInput" maxlength="200" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">联系方式</text>
+      <input class="form-input" placeholder="手机号或微信号，方便审核联系（选填）" value="{{contact}}" bindinput="onContactInput" maxlength="32" />
+    </view>
+  </view>
+
+  <view class="tip-box">
+    <icon name="info" size="28" color="#C67A52"></icon>
+    <text class="tip-text">提交后管理员将在1-3个工作日内审核，审核通过后小区将出现在选择列表中。</text>
+  </view>
+
+  <view class="btn-submit {{submitting ? 'disabled' : ''}}" bindtap="onSubmit">
+    <text>{{submitting ? '提交中...' : '提交申请'}}</text>
+  </view>
+
+  <!-- 我的申请记录 -->
+  <view class="my-apps" wx:if="{{myApplications.length > 0}}">
+    <view class="section-title">我的申请记录</view>
+    <view class="app-card" wx:for="{{myApplications}}" wx:key="id">
+      <view class="app-header">
+        <text class="app-name">{{item.name}}</text>
+        <view class="status-tag status-{{item.status}}">
+          <text>{{item.status === 'pending' ? '审核中' : item.status === 'approved' ? '已通过' : '已拒绝'}}</text>
+        </view>
+      </view>
+      <text class="app-address" wx:if="{{item.address}}">{{item.address}}</text>
+      <text class="app-note" wx:if="{{item.adminNote}}">审核备注：{{item.adminNote}}</text>
+      <text class="app-time">{{item.createdAt}}</text>
+    </view>
+  </view>
+
+  <view style="height: 60rpx;"></view>
+</view>

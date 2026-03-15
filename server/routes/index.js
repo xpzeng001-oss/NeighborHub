@@ -17,6 +17,7 @@ router.use('/sams',      require('./sams'));
 router.use('/carpools',  require('./carpools'));
 router.use('/stats',     require('./stats'));
 router.use('/wechat',   require('./wechat'));
+router.use('/communities', require('./communities'));
 router.use('/admin',    require('./admin'));
 
 module.exports = router;

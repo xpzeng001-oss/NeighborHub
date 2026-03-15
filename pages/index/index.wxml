@@ -112,5 +112,9 @@
         <icon wx:if="{{item.name === currentCommunity}}" name="check" size="32" color="#C67A52"></icon>
       </view>
     </view>
+    <view class="community-apply-btn" bindtap="goCommunityApply">
+      <icon name="plus-circle" size="32" color="#C67A52"></icon>
+      <text>找不到小区？申请入驻</text>
+    </view>
   </view>
 </view>

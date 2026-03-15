@@ -22,6 +22,7 @@
     <view class="tab {{tab === 'report' ? 'active' : ''}}" bindtap="switchTab" data-tab="report">举报处理</view>
     <view class="tab {{tab === 'content' ? 'active' : ''}}" bindtap="switchTab" data-tab="content">内容管理</view>
     <view class="tab {{tab === 'user' ? 'active' : ''}}" bindtap="switchTab" data-tab="user">用户管理</view>
+    <view class="tab {{tab === 'community' ? 'active' : ''}}" bindtap="switchTab" data-tab="community">小区入驻</view>
   </view>
 
   <!-- ========== Reports Tab ========== -->
@@ -198,6 +199,63 @@
 
     <view class="loading-more" wx:if="{{loading}}"><text>加载中...</text></view>
     <view class="loading-more" wx:if="{{!userHasMore && userList.length > 0}}"><text>没有更多了</text></view>
+  </scroll-view>
+
+  <!-- ========== Community Applications Tab ========== -->
+  <scroll-view scroll-y class="list-scroll" bindscrolltolower="loadMore" wx:if="{{tab === 'community'}}">
+
+    <!-- Filters -->
+    <view class="filter-row">
+      <view class="filter-pill {{communityFilter === 'pending' ? 'active' : ''}}" bindtap="switchCommunityFilter" data-filter="pending">待审核</view>
+      <view class="filter-pill {{communityFilter === 'approved' ? 'active' : ''}}" bindtap="switchCommunityFilter" data-filter="approved">已通过</view>
+      <view class="filter-pill {{communityFilter === 'rejected' ? 'active' : ''}}" bindtap="switchCommunityFilter" data-filter="rejected">已拒绝</view>
+      <view class="filter-pill {{communityFilter === 'all' ? 'active' : ''}}" bindtap="switchCommunityFilter" data-filter="all">全部</view>
+    </view>
+
+    <!-- Empty -->
+    <view class="empty" wx:if="{{!loading && communityList.length === 0}}">
+      <icon name="package" size="80" color="#ddd"></icon>
+      <text class="empty-text">暂无申请</text>
+    </view>
+
+    <!-- Application List -->
+    <view class="report-card" wx:for="{{communityList}}" wx:key="id">
+      <view class="report-header">
+        <view class="report-user">
+          <image class="avatar-sm" src="{{item.userAvatar}}" mode="aspectFill"></image>
+          <text class="report-username">{{item.userName}}</text>
+          <text class="report-time">{{item.timeText}}</text>
+        </view>
+        <view class="status-badge status-{{item.status}}" wx:if="{{item.status !== 'pending'}}">
+          {{item.status === 'approved' ? '已通过' : '已拒绝'}}
+        </view>
+      </view>
+
+      <view class="report-body">
+        <view class="report-reason-row">
+          <text class="report-reason-label">小区名称：</text>
+          <text class="report-reason-text">{{item.name}}</text>
+        </view>
+        <view class="report-reason-row" wx:if="{{item.address}}">
+          <text class="report-reason-label">地址：</text>
+          <text class="report-reason-text">{{item.address}}</text>
+        </view>
+        <view class="report-desc" wx:if="{{item.reason}}">申请理由：{{item.reason}}</view>
+        <view class="report-desc" wx:if="{{item.contact}}">联系方式：{{item.contact}}</view>
+      </view>
+
+      <view class="report-actions" wx:if="{{item.status === 'pending'}}">
+        <view class="btn-action btn-success btn-sm" bindtap="approveCommunity" data-id="{{item.id}}" data-index="{{index}}">
+          <text>通过</text>
+        </view>
+        <view class="btn-action btn-danger btn-sm" bindtap="rejectCommunity" data-id="{{item.id}}" data-index="{{index}}">
+          <text>拒绝</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="loading-more" wx:if="{{loading}}"><text>加载中...</text></view>
+    <view class="loading-more" wx:if="{{!communityHasMore && communityList.length > 0}}"><text>没有更多了</text></view>
   </scroll-view>
 
 </view>

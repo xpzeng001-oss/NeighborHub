@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "小区入驻申请",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
+}

@@ -235,6 +235,7 @@
   background: #fff;
   border-radius: 32rpx 32rpx 0 0;
   padding: 40rpx;
+  padding-bottom: calc(40rpx + env(safe-area-inset-bottom) + 120rpx);
   max-height: 60vh;
 }
 .modal-header {
@@ -263,6 +264,20 @@
 }
 .community-option.selected {
   background: rgba(198, 122, 82, 0.1);
+  color: #C67A52;
+  font-weight: 500;
+}
+.community-apply-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  padding: 28rpx 0 8rpx;
+  margin-top: 16rpx;
+  border-top: 1rpx solid #F0EDE8;
+}
+.community-apply-btn text {
+  font-size: 28rpx;
   color: #C67A52;
   font-weight: 500;
 }

@@ -69,6 +69,12 @@ Page({
     userHasMore: true,
     userKeyword: '',
 
+    // Community applications tab
+    communityFilter: 'pending',
+    communityList: [],
+    communityPage: 1,
+    communityHasMore: true,
+
     loading: false
   },
 
@@ -86,9 +92,12 @@ Page({
     } else if (tab === 'content') {
       this.setData({ contentPage: 1, contentList: [], contentHasMore: true });
       this.loadContent().then(() => wx.stopPullDownRefresh());
-    } else {
+    } else if (tab === 'user') {
       this.setData({ userPage: 1, userList: [], userHasMore: true });
       this.loadUsers().then(() => wx.stopPullDownRefresh());
+    } else if (tab === 'community') {
+      this.setData({ communityPage: 1, communityList: [], communityHasMore: true });
+      this.loadCommunityApplications().then(() => wx.stopPullDownRefresh());
     }
   },
 
@@ -102,6 +111,8 @@ Page({
       this.loadContent();
     } else if (tab === 'user' && this.data.userList.length === 0) {
       this.loadUsers();
+    } else if (tab === 'community' && this.data.communityList.length === 0) {
+      this.loadCommunityApplications();
     }
   },
 
@@ -386,6 +397,90 @@ Page({
     });
   },
 
+  // ==================== Community Applications ====================
+
+  async loadCommunityApplications() {
+    if (this.data.loading) return;
+    this.setData({ loading: true });
+    try {
+      const params = {
+        status: this.data.communityFilter,
+        page: this.data.communityPage,
+        pageSize: 20
+      };
+      const result = await api.getAdminCommunityApplications(params);
+      const newList = formatList(result.list, false);
+      this.setData({
+        communityList: this.data.communityPage === 1 ? newList : [...this.data.communityList, ...newList],
+        communityPage: this.data.communityPage + 1,
+        communityHasMore: newList.length >= 20,
+        loading: false
+      });
+    } catch (err) {
+      this.setData({ loading: false });
+    }
+  },
+
+  switchCommunityFilter(e) {
+    const filter = e.currentTarget.dataset.filter;
+    if (filter === this.data.communityFilter) return;
+    this.setData({
+      communityFilter: filter,
+      communityPage: 1,
+      communityList: [],
+      communityHasMore: true
+    });
+    this.loadCommunityApplications();
+  },
+
+  approveCommunity(e) {
+    const { id, index } = e.currentTarget.dataset;
+    wx.showModal({
+      title: '确认通过',
+      content: '通过后该小区将添加到小区列表中',
+      confirmColor: '#4CAF50',
+      confirmText: '通过',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            wx.showLoading({ title: '处理中...' });
+            await api.handleCommunityApplication(id, { action: 'approve' });
+            wx.hideLoading();
+            wx.showToast({ title: '已通过', icon: 'success' });
+            this.setData({ communityPage: 1, communityList: [], communityHasMore: true });
+            this.loadCommunityApplications();
+          } catch (err) {
+            wx.hideLoading();
+          }
+        }
+      }
+    });
+  },
+
+  rejectCommunity(e) {
+    const { id, index } = e.currentTarget.dataset;
+    wx.showModal({
+      title: '确认拒绝',
+      content: '确认拒绝该小区入驻申请？',
+      confirmColor: '#E8636F',
+      confirmText: '拒绝',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            wx.showLoading({ title: '处理中...' });
+            await api.handleCommunityApplication(id, { action: 'reject' });
+            wx.hideLoading();
+            wx.showToast({ title: '已拒绝', icon: 'success' });
+            this.setData({ communityPage: 1, communityList: [], communityHasMore: true });
+            this.loadCommunityApplications();
+          } catch (err) {
+            wx.hideLoading();
+          }
+        }
+      }
+    });
+  },
+
   // ==================== Common ====================
 
   loadMore() {
@@ -396,6 +491,8 @@ Page({
       this.loadContent();
     } else if (tab === 'user' && this.data.userHasMore && !this.data.loading) {
       this.loadUsers();
+    } else if (tab === 'community' && this.data.communityHasMore && !this.data.loading) {
+      this.loadCommunityApplications();
     }
   }
 });

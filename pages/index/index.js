@@ -38,6 +38,7 @@ Page({
       currentCommunity: app.globalData.currentCommunity.name
     });
     this.loadProducts();
+    this.loadCommunities();
   },
 
   onShow() {
@@ -121,6 +122,22 @@ Page({
     });
     this.loadProducts();
     wx.showToast({ title: '已切换至' + item.name, icon: 'none' });
+  },
+  goCommunityApply() {
+    this.setData({ showCommunityPicker: false });
+    wx.navigateTo({ url: '/pages/communityApply/communityApply' });
+  },
+  async loadCommunities() {
+    try {
+      const data = await api.getCommunities();
+      const list = data.list || [];
+      if (list.length > 0) {
+        app.globalData.communities = list;
+        this.setData({ communities: list });
+      }
+    } catch (err) {
+      // fallback to hardcoded list
+    }
   },
 
   // 导航

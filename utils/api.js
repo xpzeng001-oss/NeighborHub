@@ -113,6 +113,11 @@ const createReport    = (data)    => request({ url: '/api/reports', method: 'POS
 const getFeedbacks    = (params)  => request({ url: '/api/feedbacks', data: params });
 const createFeedback  = (data)    => request({ url: '/api/feedbacks', method: 'POST', data });
 
+// Communities
+const getCommunities           = ()       => request({ url: '/api/communities' });
+const applyCommunity           = (data)   => request({ url: '/api/communities/apply', method: 'POST', data });
+const getMyCommunityApplications = ()     => request({ url: '/api/communities/my-applications' });
+
 // Stats
 const getCategoryCounts   = ()         => request({ url: '/api/stats/counts' });
 
@@ -124,6 +129,10 @@ const sendMessage         = (id, data) => request({ url: '/api/chat/conversation
 const markConversationRead = (id)      => request({ url: '/api/chat/conversations/' + id + '/read', method: 'PUT' });
 
 // Admin APIs
+// Admin Community Applications
+const getAdminCommunityApplications = (params) => request({ url: '/api/admin/community-applications', data: params });
+const handleCommunityApplication = (id, data) => request({ url: '/api/admin/community-applications/' + id, method: 'PUT', data });
+
 const getAdminStats = () => request({ url: '/api/admin/stats' });
 const getAdminReports = (params) => request({ url: '/api/admin/reports', data: params });
 const handleAdminReport = (id, data) => request({ url: '/api/admin/reports/' + id, method: 'PUT', data });
@@ -147,6 +156,8 @@ module.exports = {
   uploadImage, uploadImages,
   getCategoryCounts,
   getConversations, createConversation, getMessages, sendMessage, markConversationRead,
+  getCommunities, applyCommunity, getMyCommunityApplications,
+  getAdminCommunityApplications, handleCommunityApplication,
   getAdminStats, getAdminReports, handleAdminReport, getAdminContent, takedownContent, restoreContent,
   getAdminUsers, banUser, unbanUser
 };
