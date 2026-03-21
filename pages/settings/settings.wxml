@@ -1,8 +1,11 @@
 <!--pages/settings/settings.wxml-->
 <view class="page">
-  <view class="avatar-section" bindtap="chooseAvatar">
-    <image class="avatar" src="{{avatarUrl || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
-    <text class="avatar-hint">切换默认头像</text>
+  <view class="avatar-section">
+    <image class="avatar" src="{{avatarUrl || '/images/avatar-placeholder.png'}}" mode="aspectFill" bindtap="choosePhoto"></image>
+    <view class="avatar-btns">
+      <text class="avatar-hint" bindtap="switchDefaultAvatar">切换默认头像</text>
+      <text class="avatar-hint upload" bindtap="choosePhoto">上传头像</text>
+    </view>
   </view>
 
   <view class="form-section">
@@ -10,6 +13,22 @@
       <text class="form-label">昵称</text>
       <input class="form-input" value="{{nickName}}" bindinput="onNicknameInput" placeholder="请输入昵称" maxlength="20" />
     </view>
+    <picker class="form-item" mode="selector" range="{{communities}}" range-key="name" value="{{communityIndex}}" bindchange="onCommunityChange">
+      <view class="form-item-inner">
+        <text class="form-label">小区</text>
+        <text class="form-value {{community ? '' : 'placeholder'}}">{{community || '请选择小区'}}</text>
+      </view>
+    </picker>
+    <picker class="form-item" mode="selector" range="{{buildings}}" value="{{buildingIndex}}" bindchange="onBuildingChange">
+      <view class="form-item-inner">
+        <text class="form-label">楼栋</text>
+        <text class="form-value {{building ? '' : 'placeholder'}}">{{building || '请选择楼栋'}}</text>
+      </view>
+    </picker>
+  </view>
+
+  <view class="apply-link" bindtap="goApplyCommunity">
+    <text>找不到小区？申请入驻</text>
   </view>
 
   <view class="btn-wrap">

@@ -5,54 +5,96 @@ Page({
   data: {
     avatarUrl: '',
     nickName: '',
+    community: '',
+    communityIndex: 0,
+    building: '',
+    buildingIndex: 0,
+    communities: [],
+    buildings: ['1栋', '2栋', '3栋', '5栋', '6栋', '7栋', '8栋', '9栋', '10栋', '12栋'],
     saving: false,
+    tempAvatarPath: '',
     avatarBase: '',
     avatarCount: 0,
     currentAvatarIndex: 0
   },
 
-  onLoad() {
+  async onLoad() {
+    const communities = app.globalData.communities || [];
+    this.setData({ communities });
+
     const userInfo = app.globalData.userInfo;
     if (userInfo) {
+      const community = userInfo.community || userInfo.communityName || '';
+      const building = userInfo.building || '';
+      const communityIndex = Math.max(0, communities.findIndex(c => c.name === community));
+      const buildingIndex = Math.max(0, this.data.buildings.indexOf(building));
+
       this.setData({
         avatarUrl: userInfo.avatarUrl || userInfo.avatar_url || '',
-        nickName: userInfo.nickName || userInfo.nick_name || ''
+        nickName: userInfo.nickName || userInfo.nick_name || '',
+        community,
+        communityIndex,
+        building,
+        buildingIndex
       });
     }
 
-    // 从 globalData 获取头像库配置
-    const config = app.globalData.avatarConfig;
-    if (config) {
-      let currentIndex = 0;
-      const avatarUrl = this.data.avatarUrl;
-      if (avatarUrl && avatarUrl.includes('/neighborhub/avatars/')) {
-        const match = avatarUrl.match(/\/(\d+)\.png$/);
-        if (match) currentIndex = parseInt(match[1], 10);
-      }
-      this.setData({
-        avatarBase: config.baseUrl,
-        avatarCount: config.count,
-        currentAvatarIndex: currentIndex
-      });
-    }
+    // 解析头像库配置
+    const FALLBACK_BASE = 'https://xpzeng-1318589271.cos.ap-guangzhou.myqcloud.com/neighborhub/avatars';
+    const avatarUrl = this.data.avatarUrl;
+    const match = avatarUrl && avatarUrl.match(/^(.+\/neighborhub\/avatars)\/(\d+)\.png$/);
+    this.setData({
+      avatarBase: match ? match[1] : FALLBACK_BASE,
+      avatarCount: 117,
+      currentAvatarIndex: match ? parseInt(match[2], 10) : 0
+    });
   },
 
-  chooseAvatar() {
+  // 点击头像 → 从手机相册选照片
+  choosePhoto() {
+    wx.chooseMedia({
+      count: 1,
+      mediaType: ['image'],
+      sourceType: ['album', 'camera'],
+      success: (res) => {
+        const tempPath = res.tempFiles[0].tempFilePath;
+        this.setData({ avatarUrl: tempPath, tempAvatarPath: tempPath });
+      }
+    });
+  },
+
+  // 点击"切换默认头像" → 循环切换服务器上的默认头像
+  switchDefaultAvatar() {
     const { avatarBase, avatarCount, currentAvatarIndex } = this.data;
     if (!avatarBase || !avatarCount) return;
 
-    // 循环切换到下一张
     const nextIndex = (currentAvatarIndex % avatarCount) + 1;
     const newUrl = `${avatarBase}/${nextIndex}.png`;
 
     this.setData({
       currentAvatarIndex: nextIndex,
-      avatarUrl: newUrl
+      avatarUrl: newUrl,
+      tempAvatarPath: ''  // 清除手机照片临时路径
     });
+  },
+
+  goApplyCommunity() {
+    wx.navigateTo({ url: '/pages/communityApply/communityApply' });
   },
 
   onNicknameInput(e) {
     this.setData({ nickName: e.detail.value });
+  },
+
+  onCommunityChange(e) {
+    const idx = e.detail.value;
+    const community = this.data.communities[idx];
+    this.setData({ communityIndex: idx, community: community.name });
+  },
+
+  onBuildingChange(e) {
+    const idx = e.detail.value;
+    this.setData({ buildingIndex: idx, building: this.data.buildings[idx] });
   },
 
   onLogout() {
@@ -72,7 +114,7 @@ Page({
   },
 
   async onSave() {
-    const { nickName, saving } = this.data;
+    const { nickName, tempAvatarPath, saving } = this.data;
     if (saving) return;
 
     if (!nickName.trim()) {
@@ -83,20 +125,31 @@ Page({
     this.setData({ saving: true });
 
     try {
-      const avatarUrl = this.data.avatarUrl;
+      let avatarUrl = this.data.avatarUrl;
+
+      // 如果选了手机照片，先上传到 COS
+      if (tempAvatarPath) {
+        avatarUrl = await api.uploadImage(tempAvatarPath);
+      }
+
+      const { community, building } = this.data;
       const userInfo = app.globalData.userInfo;
       const updated = await api.updateUser(userInfo.id, {
         nickName: nickName.trim(),
-        avatarUrl
+        avatarUrl,
+        building,
+        isVerified: !!building
       });
 
-      // 同步更新本地存储
       const newUserInfo = {
         ...userInfo,
         nickName: updated.nickName || nickName.trim(),
         nick_name: updated.nickName || nickName.trim(),
         avatarUrl: updated.avatarUrl || avatarUrl,
-        avatar_url: updated.avatarUrl || avatarUrl
+        avatar_url: updated.avatarUrl || avatarUrl,
+        community,
+        building: updated.building || building,
+        isVerified: !!building
       };
       app.globalData.userInfo = newUserInfo;
       wx.setStorageSync('userInfo', newUserInfo);

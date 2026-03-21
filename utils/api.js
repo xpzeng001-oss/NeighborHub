@@ -118,6 +118,9 @@ const getCommunities           = ()       => request({ url: '/api/communities' }
 const applyCommunity           = (data)   => request({ url: '/api/communities/apply', method: 'POST', data });
 const getMyCommunityApplications = ()     => request({ url: '/api/communities/my-applications' });
 
+// Avatar
+const getAvatarConfig     = ()         => request({ url: '/api/auth/avatar-config' });
+
 // Stats
 const getCategoryCounts   = ()         => request({ url: '/api/stats/counts' });
 
@@ -153,7 +156,7 @@ module.exports = {
   getPets, getPetDetail, createPet, deletePet, respondPet,
   updateUser,
   getMyFavorites, getReports, createReport, getFeedbacks, createFeedback,
-  uploadImage, uploadImages,
+  uploadImage, uploadImages, getAvatarConfig,
   getCategoryCounts,
   getConversations, createConversation, getMessages, sendMessage, markConversationRead,
   getCommunities, applyCommunity, getMyCommunityApplications,
