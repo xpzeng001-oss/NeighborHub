@@ -6,7 +6,9 @@ Page({
     avatarUrl: '',
     nickName: '',
     saving: false,
-    tempAvatarPath: ''
+    avatarBase: '',
+    avatarCount: 0,
+    currentAvatarIndex: 0
   },
 
   onLoad() {
@@ -17,17 +19,35 @@ Page({
         nickName: userInfo.nickName || userInfo.nick_name || ''
       });
     }
+
+    // 从 globalData 获取头像库配置
+    const config = app.globalData.avatarConfig;
+    if (config) {
+      let currentIndex = 0;
+      const avatarUrl = this.data.avatarUrl;
+      if (avatarUrl && avatarUrl.includes('/neighborhub/avatars/')) {
+        const match = avatarUrl.match(/\/(\d+)\.png$/);
+        if (match) currentIndex = parseInt(match[1], 10);
+      }
+      this.setData({
+        avatarBase: config.baseUrl,
+        avatarCount: config.count,
+        currentAvatarIndex: currentIndex
+      });
+    }
   },
 
   chooseAvatar() {
-    wx.chooseMedia({
-      count: 1,
-      mediaType: ['image'],
-      sourceType: ['album', 'camera'],
-      success: (res) => {
-        const tempPath = res.tempFiles[0].tempFilePath;
-        this.setData({ avatarUrl: tempPath, tempAvatarPath: tempPath });
-      }
+    const { avatarBase, avatarCount, currentAvatarIndex } = this.data;
+    if (!avatarBase || !avatarCount) return;
+
+    // 循环切换到下一张
+    const nextIndex = (currentAvatarIndex % avatarCount) + 1;
+    const newUrl = `${avatarBase}/${nextIndex}.png`;
+
+    this.setData({
+      currentAvatarIndex: nextIndex,
+      avatarUrl: newUrl
     });
   },
 
@@ -52,7 +72,7 @@ Page({
   },
 
   async onSave() {
-    const { nickName, tempAvatarPath, saving } = this.data;
+    const { nickName, saving } = this.data;
     if (saving) return;
 
     if (!nickName.trim()) {
@@ -63,13 +83,7 @@ Page({
     this.setData({ saving: true });
 
     try {
-      let avatarUrl = this.data.avatarUrl;
-
-      // 如果选了新头像，先上传到 COS
-      if (tempAvatarPath) {
-        avatarUrl = await api.uploadImage(tempAvatarPath);
-      }
-
+      const avatarUrl = this.data.avatarUrl;
       const userInfo = app.globalData.userInfo;
       const updated = await api.updateUser(userInfo.id, {
         nickName: nickName.trim(),

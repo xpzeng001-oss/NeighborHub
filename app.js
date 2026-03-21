@@ -23,6 +23,10 @@ App({
       this.globalData.userInfo = userInfo;
       this.globalData.token = token;
     }
+    const avatarConfig = wx.getStorageSync('avatarConfig');
+    if (avatarConfig) {
+      this.globalData.avatarConfig = avatarConfig;
+    }
     // 检查小程序更新
     this.checkUpdate();
   },

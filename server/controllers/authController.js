@@ -6,13 +6,21 @@ const DEFAULT_NICKNAMES = [
   '快乐邻居', '阳光住户', '友善邻里', '温馨家人', '热心业主',
   '开心果', '小太阳', '好邻居', '暖心人', '微笑达人'
 ];
-// DiceBear 风格头像，用随机 seed 生成唯一头像
-const AVATAR_STYLES = ['fun-emoji', 'adventurer', 'avataaars', 'bottts', 'lorelei'];
+
+// 从 COS 头像库随机选一张
+const AVATAR_COUNT = parseInt(process.env.AVATAR_COUNT, 10) || 100;
+const AVATAR_BASE = `https://${process.env.COS_BUCKET}.cos.${process.env.COS_REGION}.myqcloud.com/neighborhub/avatars`;
 function generateDefaultAvatar() {
-  const style = AVATAR_STYLES[Math.floor(Math.random() * AVATAR_STYLES.length)];
-  const seed = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-  return `https://api.dicebear.com/7.x/${style}/png?seed=${seed}&size=200`;
+  const index = Math.floor(Math.random() * AVATAR_COUNT) + 1;
+  return `${AVATAR_BASE}/${index}.png`;
 }
+
+exports.getAvatarConfig = (req, res) => {
+  res.json({
+    code: 0,
+    data: { baseUrl: AVATAR_BASE, count: AVATAR_COUNT }
+  });
+};
 
 exports.login = async (req, res, next) => {
   try {
@@ -56,6 +64,10 @@ exports.login = async (req, res, next) => {
       if (nickName) updates.nick_name = nickName;
       if (avatarUrl) updates.avatar_url = avatarUrl;
       if (phoneNumber) updates.phone = phoneNumber;
+      // 旧头像是 DiceBear 链接或空的，替换为 COS 头像库
+      if (!avatarUrl && (!user.avatar_url || user.avatar_url.includes('dicebear.com'))) {
+        updates.avatar_url = generateDefaultAvatar();
+      }
       await user.update(updates);
     }
 
@@ -75,6 +87,10 @@ exports.login = async (req, res, next) => {
           creditScore: user.credit_score,
           isVerified: user.is_verified,
           role: user.role
+        },
+        avatarConfig: {
+          baseUrl: AVATAR_BASE,
+          count: AVATAR_COUNT
         }
       }
     });

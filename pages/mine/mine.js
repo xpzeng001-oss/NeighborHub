@@ -9,11 +9,7 @@ Page({
     isVerified: false,
     creditLevel: '新住户',
     buildings: ['1栋', '2栋', '3栋', '5栋', '6栋', '7栋', '8栋', '9栋', '10栋', '12栋'],
-    isAdmin: false,
-    showProfile: false,
-    tempAvatar: '',
-    tempNickname: '',
-    tempBuilding: ''
+    isAdmin: false
   },
 
   onLoad() {
@@ -59,12 +55,16 @@ Page({
           data: { code: loginRes.code, phoneCode },
           success: (res) => {
             if (res.data.code === 0) {
-              const { token, userInfo } = res.data.data;
+              const { token, userInfo, avatarConfig } = res.data.data;
               app.globalData.token = token;
               app.globalData.userInfo = userInfo;
+              if (avatarConfig) {
+                app.globalData.avatarConfig = avatarConfig;
+                wx.setStorageSync('avatarConfig', avatarConfig);
+              }
               wx.setStorageSync('token', token);
               wx.setStorageSync('userInfo', userInfo);
-              this.setData({ userInfo, showProfile: true, tempAvatar: '', tempNickname: '' });
+              this.setData({ userInfo });
               if (app._loginCallback) {
                 app._loginCallback(userInfo);
                 app._loginCallback = null;
@@ -78,50 +78,6 @@ Page({
         });
       }
     });
-  },
-
-  onChooseAvatar(e) {
-    this.setData({ tempAvatar: e.detail.avatarUrl });
-  },
-
-  onNicknameChange(e) {
-    this.setData({ tempNickname: e.detail.value });
-  },
-
-  onProfileBuildingChange(e) {
-    this.setData({ tempBuilding: this.data.buildings[e.detail.value] });
-  },
-
-  async onSaveProfile() {
-    const { tempAvatar, tempNickname } = this.data;
-    const nickName = (tempNickname || '').trim();
-    if (!nickName) {
-      wx.showToast({ title: '请填写昵称', icon: 'none' });
-      return;
-    }
-    try {
-      let avatarUrl = tempAvatar;
-      // 如果是本地临时文件，先上传
-      if (avatarUrl && avatarUrl.startsWith('http://tmp') || avatarUrl && avatarUrl.startsWith('wxfile://')) {
-        avatarUrl = await api.uploadImage(avatarUrl);
-      }
-      const building = this.data.tempBuilding;
-      const updateData = { nickName, avatarUrl };
-      if (building) { updateData.building = building; updateData.isVerified = true; }
-      const updated = await api.updateUser(this.data.userInfo.id, updateData);
-      const userInfo = { ...this.data.userInfo, nickName: updated.nickName || nickName, avatarUrl: updated.avatarUrl || avatarUrl, building: updated.building || building, isVerified: !!building };
-      app.globalData.userInfo = userInfo;
-      wx.setStorageSync('userInfo', userInfo);
-      this.setData({ userInfo, showProfile: false });
-      wx.showToast({ title: '设置成功', icon: 'success' });
-    } catch (err) {
-      const building = this.data.tempBuilding;
-      const userInfo = { ...this.data.userInfo, nickName, avatarUrl: tempAvatar, building: building || this.data.userInfo.building, isVerified: !!building };
-      app.globalData.userInfo = userInfo;
-      wx.setStorageSync('userInfo', userInfo);
-      this.setData({ userInfo, showProfile: false });
-      wx.showToast({ title: '设置成功', icon: 'success' });
-    }
   },
 
   goMyPublish() {
