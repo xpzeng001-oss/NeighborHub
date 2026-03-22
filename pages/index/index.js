@@ -31,14 +31,23 @@ Page({
   onLoad() {
     const sysInfo = wx.getSystemInfoSync();
     const menuRect = wx.getMenuButtonBoundingClientRect();
+    const community = app.globalData.currentCommunity;
     this.setData({
       statusBarHeight: menuRect.top,
       navHeight: menuRect.height,
       communities: app.globalData.communities,
-      currentCommunity: app.globalData.currentCommunity.name
+      currentCommunity: (community && community.name) || '选择小区'
     });
-    this.loadProducts();
-    this.loadCommunities();
+    this.loadCommunities().then(() => {
+      // 如果没有选过小区，默认选第一个
+      if (!app.globalData.currentCommunity && app.globalData.communities.length > 0) {
+        const first = app.globalData.communities[0];
+        app.globalData.currentCommunity = first;
+        wx.setStorageSync('currentCommunity', first);
+        this.setData({ currentCommunity: first.name });
+      }
+      this.loadProducts();
+    });
   },
 
   onShow() {
@@ -122,6 +131,7 @@ Page({
   selectCommunity(e) {
     const item = e.currentTarget.dataset.item;
     app.globalData.currentCommunity = item;
+    wx.setStorageSync('currentCommunity', item);
     this.setData({
       currentCommunity: item.name,
       showCommunityPicker: false

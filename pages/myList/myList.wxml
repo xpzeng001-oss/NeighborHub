@@ -5,6 +5,13 @@
   }
 </wxs>
 <view class="page">
+  <!-- 分类Tab（我的发布） -->
+  <view class="sub-tabs" wx:if="{{type === 'publish'}}">
+    <view class="sub-tab {{publishTab === item.key ? 'active' : ''}}" wx:for="{{publishTabs}}" wx:key="key" bindtap="switchPublishTab" data-key="{{item.key}}">
+      {{item.name}}
+    </view>
+  </view>
+
   <!-- 分类Tab（我的参与） -->
   <view class="sub-tabs" wx:if="{{type === 'activity'}}">
     <view class="sub-tab {{subType === item.key ? 'active' : ''}}" wx:for="{{activityTabs}}" wx:key="key" bindtap="switchSubTab" data-key="{{item.key}}">
@@ -15,7 +22,7 @@
   <!-- 空状态 -->
   <view class="empty" wx:if="{{!loading && list.length === 0}}">
     <icon name="package" size="80" color="#ddd"></icon>
-    <text class="empty-text" wx:if="{{helper.actualType(type, subType) === 'publish'}}">还没有发布过商品</text>
+    <text class="empty-text" wx:if="{{helper.actualType(type, subType) === 'publish'}}">还没有发布过内容</text>
     <text class="empty-text" wx:elif="{{helper.actualType(type, subType) === 'favorite'}}">还没有收藏商品</text>
     <text class="empty-text" wx:elif="{{helper.actualType(type, subType) === 'sam'}}">还没有参与拼单</text>
     <text class="empty-text" wx:elif="{{helper.actualType(type, subType) === 'carpool'}}">还没有参与拼车</text>
@@ -23,8 +30,45 @@
     <text class="empty-text" wx:else>还没有记录</text>
   </view>
 
-  <!-- 商品列表（发布/收藏） -->
-  <view wx:if="{{helper.actualType(type, subType) === 'publish' || helper.actualType(type, subType) === 'favorite'}}">
+  <!-- 我的发布（所有类型混合列表） -->
+  <view wx:if="{{type === 'publish'}}">
+    <view class="publish-item" wx:for="{{list}}" wx:key="id">
+      <view class="publish-content" bindtap="goDetail" data-id="{{item.id}}" data-type="{{item._type}}">
+        <image class="publish-img" wx:if="{{item.images && item.images.length > 0}}" src="{{item.images[0]}}" mode="aspectFill"></image>
+        <view class="publish-info">
+          <view class="publish-title-row">
+            <view class="type-tag type-{{item._type}}">{{item._typeLabel}}</view>
+            <text class="publish-title">{{item.title}}</text>
+          </view>
+          <text class="publish-desc" wx:if="{{item.description || item.content}}">{{item.description || item.content}}</text>
+          <view class="publish-bottom">
+            <text class="publish-price" wx:if="{{item._type === 'product' && !item.isFree}}">¥{{item.price}}</text>
+            <text class="publish-free" wx:if="{{item._type === 'product' && item.isFree}}">免费送</text>
+            <text class="publish-time">{{item.createdAt}}</text>
+          </view>
+        </view>
+      </view>
+      <!-- 闲置商品：下架/上架/已售出 -->
+      <view class="publish-actions" wx:if="{{item._type === 'product'}}">
+        <view class="action-btn action-off" wx:if="{{item.status === 'selling'}}" bindtap="offShelfProduct" data-id="{{item.id}}" data-index="{{index}}">
+          <text>下架</text>
+        </view>
+        <view class="action-btn action-on" wx:elif="{{item.status === 'off'}}" bindtap="relistProduct" data-id="{{item.id}}" data-index="{{index}}">
+          <text>上架</text>
+        </view>
+        <view class="action-btn action-sold" wx:elif="{{item.status === 'sold'}}">
+          <text>已售出</text>
+        </view>
+      </view>
+      <!-- 其他类型：删除 -->
+      <view class="publish-delete" wx:else bindtap="deleteItem" data-id="{{item.id}}" data-type="{{item._type}}" data-index="{{index}}">
+        <text>删除</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品列表（收藏） -->
+  <view wx:if="{{helper.actualType(type, subType) === 'favorite'}}">
     <view class="product-item" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
       <image class="product-img" src="{{item.images[0] || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
       <view class="product-info">

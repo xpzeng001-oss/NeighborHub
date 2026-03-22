@@ -4,5 +4,6 @@ const { auth } = require('../middleware/auth');
 
 router.get('/', rentalController.list);
 router.post('/', auth, rentalController.create);
+router.delete('/:id', auth, rentalController.remove);
 
 module.exports = router;

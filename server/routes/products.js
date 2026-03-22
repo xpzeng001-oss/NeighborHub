@@ -9,6 +9,7 @@ router.get('/:id', optionalAuth, productController.detail);
 router.post('/', auth, contentCheck, productController.create);
 router.put('/:id', auth, contentCheck, productController.update);
 router.delete('/:id', auth, productController.remove);
+router.put('/:id/relist', auth, productController.relist);
 router.post('/:id/want', auth, productController.want);
 router.post('/:id/favorite', auth, productController.toggleFavorite);
 

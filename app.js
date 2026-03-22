@@ -2,15 +2,8 @@ App({
   globalData: {
     userInfo: null,
     token: '',
-    currentCommunity: {
-      id: 'c001',
-      name: '仁恒峦山美地'
-    },
-    communities: [
-      { id: 'c001', name: '仁恒峦山美地' },
-      { id: 'c002', name: '万科城市花园' },
-      { id: 'c003', name: '绿地海珀外滩' }
-    ],
+    currentCommunity: null,
+    communities: [],
     baseUrl: 'https://xckjsoft.cn/neighborhub-api', // 生产环境域名
     version: '1.0.0'
   },
@@ -26,6 +19,11 @@ App({
     const avatarConfig = wx.getStorageSync('avatarConfig');
     if (avatarConfig) {
       this.globalData.avatarConfig = avatarConfig;
+    }
+    // 恢复上次选择的小区
+    const savedCommunity = wx.getStorageSync('currentCommunity');
+    if (savedCommunity) {
+      this.globalData.currentCommunity = savedCommunity;
     }
     // 检查小程序更新
     this.checkUpdate();

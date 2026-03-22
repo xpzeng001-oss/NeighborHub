@@ -187,6 +187,16 @@ exports.remove = async (req, res, next) => {
   }
 };
 
+exports.relist = async (req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.id);
+    if (!product) return res.status(404).json({ code: 404, message: '商品不存在', data: null });
+    if (product.user_id !== req.user.id) return res.status(403).json({ code: 403, message: '无权操作', data: null });
+    await product.update({ status: 'selling' });
+    res.json({ code: 0, data: null });
+  } catch (err) { next(err); }
+};
+
 exports.want = async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);

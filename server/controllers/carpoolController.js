@@ -71,6 +71,16 @@ exports.create = async (req, res, next) => {
   }
 };
 
+exports.remove = async (req, res, next) => {
+  try {
+    const carpool = await Carpool.findByPk(req.params.id);
+    if (!carpool) return res.status(404).json({ code: 404, message: '拼车不存在', data: null });
+    if (carpool.user_id !== req.user.id) return res.status(403).json({ code: 403, message: '无权删除', data: null });
+    await carpool.destroy();
+    res.json({ code: 0, data: null });
+  } catch (err) { next(err); }
+};
+
 exports.join = async (req, res, next) => {
   try {
     const carpool = await Carpool.findByPk(req.params.id);

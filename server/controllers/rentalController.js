@@ -62,3 +62,13 @@ exports.create = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.remove = async (req, res, next) => {
+  try {
+    const rental = await Rental.findByPk(req.params.id);
+    if (!rental) return res.status(404).json({ code: 404, message: '租赁不存在', data: null });
+    if (rental.user_id !== req.user.id) return res.status(403).json({ code: 403, message: '无权删除', data: null });
+    await rental.destroy();
+    res.json({ code: 0, data: null });
+  } catch (err) { next(err); }
+};

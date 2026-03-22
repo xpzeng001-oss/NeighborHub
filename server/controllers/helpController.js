@@ -59,6 +59,16 @@ exports.create = async (req, res, next) => {
   }
 };
 
+exports.remove = async (req, res, next) => {
+  try {
+    const help = await HelpRequest.findByPk(req.params.id);
+    if (!help) return res.status(404).json({ code: 404, message: '求助不存在', data: null });
+    if (help.user_id !== req.user.id) return res.status(403).json({ code: 403, message: '无权删除', data: null });
+    await help.destroy();
+    res.json({ code: 0, data: null });
+  } catch (err) { next(err); }
+};
+
 exports.respond = async (req, res, next) => {
   try {
     const help = await HelpRequest.findByPk(req.params.id);

@@ -202,6 +202,110 @@
 }
 .general-meta { font-size: 22rpx; color: #9A9A9A; }
 
+/* 我的发布（混合列表） */
+.publish-item {
+  display: flex;
+  align-items: center;
+  margin: 0 32rpx 16rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+.publish-content {
+  flex: 1;
+  display: flex;
+  padding: 24rpx;
+  min-width: 0;
+}
+.publish-content:active { background: #FEFCFA; }
+.publish-img {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+  background: #f5f5f5;
+  margin-right: 20rpx;
+}
+.publish-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  gap: 8rpx;
+}
+.publish-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+.type-tag {
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.type-tag.type-product { color: #C67A52; background: #F3E8DA; }
+.type-tag.type-post { color: #5B8CDD; background: #E3EDFA; }
+.type-tag.type-help { color: #E8636F; background: #FCEAEC; }
+.type-tag.type-pet { color: #E8963F; background: #FBF0E0; }
+.type-tag.type-sam { color: #7B61C4; background: #EDE7F6; }
+.type-tag.type-carpool { color: #4CAF50; background: #E8F5E9; }
+.type-tag.type-rental { color: #E8883C; background: #FFE8D0; }
+.publish-title {
+  font-size: 28rpx;
+  color: #2C2C2C;
+  font-weight: 500;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.publish-desc {
+  font-size: 24rpx;
+  color: #9A9A9A;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.publish-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.publish-price { font-size: 28rpx; color: #C67A52; font-weight: 700; }
+.publish-free { font-size: 24rpx; color: #D49A78; font-weight: 600; }
+.publish-time { font-size: 22rpx; color: #BDBDBD; }
+.publish-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  border-left: 1rpx solid #f5f5f5;
+}
+.action-btn {
+  padding: 24rpx 28rpx;
+  font-size: 24rpx;
+  font-weight: 600;
+  text-align: center;
+}
+.action-off { color: #C67A52; }
+.action-off:active { background: #F3E8DA; }
+.action-on { color: #4CAF50; }
+.action-on:active { background: #E8F5E9; }
+.action-sold { color: #9A9A9A; }
+.publish-delete {
+  padding: 24rpx 28rpx;
+  color: #E8636F;
+  font-size: 24rpx;
+  font-weight: 600;
+  flex-shrink: 0;
+  border-left: 1rpx solid #f5f5f5;
+}
+.publish-delete:active { background: #FCEAEC; }
+
 .loading-more {
   text-align: center;
   padding: 30rpx 0;

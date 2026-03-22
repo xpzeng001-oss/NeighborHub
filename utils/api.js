@@ -74,6 +74,7 @@ const getProducts   = (params)   => request({ url: '/api/products', data: params
 const getProduct    = (id)       => request({ url: '/api/products/' + id });
 const createProduct = (data)     => request({ url: '/api/products', method: 'POST', data });
 const deleteProduct = (id)       => request({ url: '/api/products/' + id, method: 'DELETE' });
+const relistProduct = (id)       => request({ url: '/api/products/' + id + '/relist', method: 'PUT' });
 const wantProduct   = (id)       => request({ url: '/api/products/' + id + '/want', method: 'POST' });
 const toggleFavorite= (id)       => request({ url: '/api/products/' + id + '/favorite', method: 'POST' });
 const getPosts      = (params)   => request({ url: '/api/posts', data: params });
@@ -97,6 +98,9 @@ const updatePickupStatus  = (id, userId, data)  => request({ url: '/api/sams/' +
 const getCarpools   = (params)   => request({ url: '/api/carpools', data: params });
 const createCarpool = (data)     => request({ url: '/api/carpools', method: 'POST', data });
 const joinCarpool   = (id)       => request({ url: '/api/carpools/' + id + '/join', method: 'POST' });
+const deleteHelp    = (id)       => request({ url: '/api/helps/' + id, method: 'DELETE' });
+const deleteCarpool = (id)       => request({ url: '/api/carpools/' + id, method: 'DELETE' });
+const deleteRental  = (id)       => request({ url: '/api/rentals/' + id, method: 'DELETE' });
 const getPets       = (params)   => request({ url: '/api/pets', data: params });
 const getPetDetail  = (id)       => request({ url: '/api/pets/' + id });
 const createPet     = (data)     => request({ url: '/api/pets', method: 'POST', data });
@@ -152,7 +156,7 @@ const createAdminCommunity = (data) => request({ url: '/api/admin/communities', 
 const deleteAdminCommunity = (id) => request({ url: '/api/admin/communities/' + id, method: 'DELETE' });
 
 module.exports = {
-  getProducts, getProduct, createProduct, deleteProduct, wantProduct, toggleFavorite,
+  getProducts, getProduct, createProduct, deleteProduct, relistProduct, wantProduct, toggleFavorite,
   getPosts, getPost, createPost, deletePost, likePost, addComment,
   getHelps, createHelp, respondHelp,
   getRentals,
@@ -167,6 +171,7 @@ module.exports = {
   getCommunities, applyCommunity, getMyCommunityApplications,
   getAdminCommunityApplications, handleCommunityApplication,
   getAdminStats, getAdminReports, handleAdminReport, getAdminContent, takedownContent, restoreContent,
+  deleteHelp, deleteCarpool, deleteRental,
   getAdminUsers, banUser, unbanUser,
   getAdminCommunities, createAdminCommunity, deleteAdminCommunity
 };
