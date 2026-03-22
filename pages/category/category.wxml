@@ -24,16 +24,16 @@
     </view>
     <view class="stats-row">
       <view class="stat-item">
-        <text class="stat-value" style="color: #C67A52;">{{stats.activeUsers}}</text>
-        <text class="stat-label">活跃住户</text>
+        <text class="stat-value" style="color: #C67A52;">{{stats.registeredUsers}}</text>
+        <text class="stat-label">入驻住户</text>
       </view>
       <view class="stat-item">
-        <text class="stat-value" style="color: #4A90D9;">{{stats.monthlyTrades}}</text>
-        <text class="stat-label">本月交易</text>
+        <text class="stat-value" style="color: #4A90D9;">{{stats.activePosts}}</text>
+        <text class="stat-label">总帖子数</text>
       </view>
       <view class="stat-item">
-        <text class="stat-value" style="color: #C67A52;">{{stats.rating}}</text>
-        <text class="stat-label">好评率</text>
+        <text class="stat-value" style="color: #C67A52;">{{stats.todayPosts}}</text>
+        <text class="stat-label">今日动态</text>
       </view>
     </view>
   </view>

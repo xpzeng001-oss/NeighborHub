@@ -12,9 +12,9 @@ Page({
       { id: 'carpool', name: '拼车顺路', icon: 'car', color: '#4A90D9', tint: '#DAEAF6', count: 0, url: '/pages/carpool/carpool' }
     ],
     stats: {
-      activeUsers: '238',
-      monthlyTrades: '1.2k',
-      rating: '96%'
+      registeredUsers: 12,
+      activePosts: 0,
+      todayPosts: 0
     }
   },
 
@@ -37,7 +37,12 @@ Page({
         ...cat,
         count: counts[cat.id] || 0
       }));
-      this.setData({ categories });
+      this.setData({
+        categories,
+        'stats.registeredUsers': counts.registeredUsers || 12,
+        'stats.activePosts': counts.activePosts || 0,
+        'stats.todayPosts': counts.todayPosts || 0
+      });
     } catch (e) {
       // 加载失败保持当前数量
     }
