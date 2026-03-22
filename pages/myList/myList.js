@@ -18,7 +18,8 @@ const TYPE_LABELS = {
 
 const PUBLISH_TABS = [
   { key: 'product', name: '闲置' },
-  { key: 'posts', name: '帖子' }
+  { key: 'posts', name: '帖子' },
+  { key: 'offshelf', name: '已下架' }
 ];
 
 const ACTIVITY_TABS = [
@@ -91,9 +92,14 @@ Page({
 
       if (actualType === 'publish') {
         if (this.data.publishTab === 'product') {
-          // 闲置 tab
+          // 闲置 tab（排除已下架）
           const products = await api.getProducts({ userId: userInfo.id }).catch(() => ({ list: [] }));
-          const list = (products.list || []).map(item => ({ ...item, _type: 'product', _typeLabel: TYPE_LABELS.product }));
+          const list = (products.list || []).filter(item => item.status !== 'off').map(item => ({ ...item, _type: 'product', _typeLabel: TYPE_LABELS.product }));
+          this.setData({ list, hasMore: false, loading: false });
+        } else if (this.data.publishTab === 'offshelf') {
+          // 已下架 tab
+          const products = await api.getProducts({ userId: userInfo.id }).catch(() => ({ list: [] }));
+          const list = (products.list || []).filter(item => item.status === 'off').map(item => ({ ...item, _type: 'product', _typeLabel: TYPE_LABELS.product }));
           this.setData({ list, hasMore: false, loading: false });
         } else {
           // 帖子 tab（论坛、互助、宠物、拼单、拼车）
