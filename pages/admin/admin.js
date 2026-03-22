@@ -75,6 +75,12 @@ Page({
     communityPage: 1,
     communityHasMore: true,
 
+    // Community management tab
+    manageCommunityList: [],
+    manageCommunityPage: 1,
+    manageCommunityHasMore: true,
+    manageCommunityKeyword: '',
+
     loading: false
   },
 
@@ -98,6 +104,9 @@ Page({
     } else if (tab === 'community') {
       this.setData({ communityPage: 1, communityList: [], communityHasMore: true });
       this.loadCommunityApplications().then(() => wx.stopPullDownRefresh());
+    } else if (tab === 'manage') {
+      this.setData({ manageCommunityPage: 1, manageCommunityList: [], manageCommunityHasMore: true });
+      this.loadManagedCommunities().then(() => wx.stopPullDownRefresh());
     }
   },
 
@@ -113,6 +122,8 @@ Page({
       this.loadUsers();
     } else if (tab === 'community' && this.data.communityList.length === 0) {
       this.loadCommunityApplications();
+    } else if (tab === 'manage' && this.data.manageCommunityList.length === 0) {
+      this.loadManagedCommunities();
     }
   },
 
@@ -481,6 +492,93 @@ Page({
     });
   },
 
+  // ==================== Community Management ====================
+
+  async loadManagedCommunities() {
+    if (this.data.loading) return;
+    this.setData({ loading: true });
+    try {
+      const params = {
+        page: this.data.manageCommunityPage,
+        pageSize: 20,
+        keyword: this.data.manageCommunityKeyword
+      };
+      const result = await api.getAdminCommunities(params);
+      const newList = formatList(result.list, false);
+      this.setData({
+        manageCommunityList: this.data.manageCommunityPage === 1 ? newList : [...this.data.manageCommunityList, ...newList],
+        manageCommunityPage: this.data.manageCommunityPage + 1,
+        manageCommunityHasMore: newList.length >= 20,
+        loading: false
+      });
+    } catch (err) {
+      this.setData({ loading: false });
+    }
+  },
+
+  searchCommunity(e) {
+    this.setData({
+      manageCommunityKeyword: e.detail.value,
+      manageCommunityPage: 1,
+      manageCommunityList: [],
+      manageCommunityHasMore: true
+    });
+    if (this._communitySearchTimer) clearTimeout(this._communitySearchTimer);
+    this._communitySearchTimer = setTimeout(() => {
+      this.loadManagedCommunities();
+    }, 400);
+  },
+
+  addCommunity() {
+    wx.showModal({
+      title: '添加小区',
+      editable: true,
+      placeholderText: '请输入小区名称',
+      success: (res) => {
+        if (res.confirm && res.content && res.content.trim()) {
+          this._doAddCommunity(res.content.trim());
+        }
+      }
+    });
+  },
+
+  async _doAddCommunity(name) {
+    try {
+      wx.showLoading({ title: '添加中...' });
+      await api.createAdminCommunity({ name });
+      wx.hideLoading();
+      wx.showToast({ title: '添加成功', icon: 'success' });
+      this.setData({ manageCommunityPage: 1, manageCommunityList: [], manageCommunityHasMore: true });
+      this.loadManagedCommunities();
+    } catch (err) {
+      wx.hideLoading();
+    }
+  },
+
+  deleteCommunity(e) {
+    const { id, name, index } = e.currentTarget.dataset;
+    wx.showModal({
+      title: '确认删除',
+      content: '确认删除小区「' + name + '」？删除后用户将无法选择该小区。',
+      confirmColor: '#E8636F',
+      confirmText: '删除',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            wx.showLoading({ title: '删除中...' });
+            await api.deleteAdminCommunity(id);
+            wx.hideLoading();
+            wx.showToast({ title: '已删除', icon: 'success' });
+            this.setData({ manageCommunityPage: 1, manageCommunityList: [], manageCommunityHasMore: true });
+            this.loadManagedCommunities();
+          } catch (err) {
+            wx.hideLoading();
+          }
+        }
+      }
+    });
+  },
+
   // ==================== Common ====================
 
   loadMore() {
@@ -493,6 +591,8 @@ Page({
       this.loadUsers();
     } else if (tab === 'community' && this.data.communityHasMore && !this.data.loading) {
       this.loadCommunityApplications();
+    } else if (tab === 'manage' && this.data.manageCommunityHasMore && !this.data.loading) {
+      this.loadManagedCommunities();
     }
   }
 });

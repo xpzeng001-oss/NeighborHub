@@ -23,6 +23,7 @@
     <view class="tab {{tab === 'content' ? 'active' : ''}}" bindtap="switchTab" data-tab="content">内容管理</view>
     <view class="tab {{tab === 'user' ? 'active' : ''}}" bindtap="switchTab" data-tab="user">用户管理</view>
     <view class="tab {{tab === 'community' ? 'active' : ''}}" bindtap="switchTab" data-tab="community">小区入驻</view>
+    <view class="tab {{tab === 'manage' ? 'active' : ''}}" bindtap="switchTab" data-tab="manage">小区管理</view>
   </view>
 
   <!-- ========== Reports Tab ========== -->
@@ -256,6 +257,45 @@
 
     <view class="loading-more" wx:if="{{loading}}"><text>加载中...</text></view>
     <view class="loading-more" wx:if="{{!communityHasMore && communityList.length > 0}}"><text>没有更多了</text></view>
+  </scroll-view>
+
+  <!-- ========== Community Management Tab ========== -->
+  <scroll-view scroll-y class="list-scroll" bindscrolltolower="loadMore" wx:if="{{tab === 'manage'}}">
+
+    <!-- Search + Add -->
+    <view class="manage-toolbar">
+      <view class="search-input-wrap manage-search">
+        <icon name="search" size="32" color="#9A9A9A"></icon>
+        <input class="search-input" placeholder="搜索小区名称" value="{{manageCommunityKeyword}}" bindinput="searchCommunity" />
+      </view>
+      <view class="btn-action btn-add" bindtap="addCommunity">
+        <text>+ 添加</text>
+      </view>
+    </view>
+
+    <!-- Empty -->
+    <view class="empty" wx:if="{{!loading && manageCommunityList.length === 0}}">
+      <text class="empty-text">暂无小区</text>
+    </view>
+
+    <!-- Community List -->
+    <view class="community-card" wx:for="{{manageCommunityList}}" wx:key="id">
+      <view class="community-main">
+        <view class="community-name">{{item.name}}</view>
+        <view class="community-address" wx:if="{{item.address}}">{{item.address}}</view>
+        <view class="community-meta">
+          <text class="community-time">{{item.timeText}}</text>
+        </view>
+      </view>
+      <view class="community-actions">
+        <view class="btn-action btn-danger btn-sm" bindtap="deleteCommunity" data-id="{{item.id}}" data-name="{{item.name}}" data-index="{{index}}">
+          <text>删除</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="loading-more" wx:if="{{loading}}"><text>加载中...</text></view>
+    <view class="loading-more" wx:if="{{!manageCommunityHasMore && manageCommunityList.length > 0}}"><text>没有更多了</text></view>
   </scroll-view>
 
 </view>

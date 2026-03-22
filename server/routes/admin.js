@@ -22,6 +22,11 @@ router.put('/content/:type/:id/restore',    admin.restoreContent);
 router.get('/community-applications',      admin.listCommunityApplications);
 router.put('/community-applications/:id',  admin.handleCommunityApplication);
 
+// Community management (direct add/delete)
+router.get('/communities',         admin.listCommunities);
+router.post('/communities',        admin.createCommunity);
+router.delete('/communities/:id',  admin.deleteCommunity);
+
 // User management
 router.get('/users',                  admin.listUsers);
 router.put('/users/:id/ban',          admin.banUser);

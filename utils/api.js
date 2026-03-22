@@ -146,6 +146,11 @@ const getAdminUsers = (params) => request({ url: '/api/admin/users', data: param
 const banUser = (id, data) => request({ url: '/api/admin/users/' + id + '/ban', method: 'PUT', data });
 const unbanUser = (id) => request({ url: '/api/admin/users/' + id + '/unban', method: 'PUT' });
 
+// Admin Community Management
+const getAdminCommunities = (params) => request({ url: '/api/admin/communities', data: params });
+const createAdminCommunity = (data) => request({ url: '/api/admin/communities', method: 'POST', data });
+const deleteAdminCommunity = (id) => request({ url: '/api/admin/communities/' + id, method: 'DELETE' });
+
 module.exports = {
   getProducts, getProduct, createProduct, deleteProduct, wantProduct, toggleFavorite,
   getPosts, getPost, createPost, deletePost, likePost, addComment,
@@ -162,5 +167,6 @@ module.exports = {
   getCommunities, applyCommunity, getMyCommunityApplications,
   getAdminCommunityApplications, handleCommunityApplication,
   getAdminStats, getAdminReports, handleAdminReport, getAdminContent, takedownContent, restoreContent,
-  getAdminUsers, banUser, unbanUser
+  getAdminUsers, banUser, unbanUser,
+  getAdminCommunities, createAdminCommunity, deleteAdminCommunity
 };

@@ -549,7 +549,83 @@ exports.handleCommunityApplication = async (req, res, next) => {
 };
 
 // ────────────────────────────────────────────────────────────
-// l) GET /admin/users/:id/violations
+// l) GET /admin/communities
+// ────────────────────────────────────────────────────────────
+exports.listCommunities = async (req, res, next) => {
+  try {
+    const { page = 1, pageSize = 20, keyword } = req.query;
+    const where = {};
+    if (keyword) {
+      where.name = { [Op.like]: `%${keyword}%` };
+    }
+
+    const { rows, count } = await Community.findAndCountAll({
+      where,
+      order: [['created_at', 'DESC']],
+      limit: Number(pageSize),
+      offset: (Number(page) - 1) * Number(pageSize)
+    });
+
+    const list = rows.map(c => ({
+      id: c.id,
+      name: c.name,
+      address: c.address,
+      status: c.status,
+      createdAt: c.created_at
+    }));
+
+    res.json({ code: 0, data: { list, total: count, page: Number(page) } });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ────────────────────────────────────────────────────────────
+// m) POST /admin/communities
+// ────────────────────────────────────────────────────────────
+exports.createCommunity = async (req, res, next) => {
+  try {
+    const { name, address } = req.body;
+    if (!name || !name.trim()) {
+      return res.status(400).json({ code: 400, message: '小区名称不能为空', data: null });
+    }
+
+    const existing = await Community.findOne({ where: { name: name.trim() } });
+    if (existing) {
+      return res.status(400).json({ code: 400, message: '该小区已存在', data: null });
+    }
+
+    const community = await Community.create({
+      name: name.trim(),
+      address: (address || '').trim(),
+      status: 'active'
+    });
+
+    res.json({ code: 0, data: { id: community.id, name: community.name } });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ────────────────────────────────────────────────────────────
+// n) DELETE /admin/communities/:id
+// ────────────────────────────────────────────────────────────
+exports.deleteCommunity = async (req, res, next) => {
+  try {
+    const community = await Community.findByPk(req.params.id);
+    if (!community) {
+      return res.status(404).json({ code: 404, message: '小区不存在', data: null });
+    }
+
+    await community.destroy();
+    res.json({ code: 0, data: null });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ────────────────────────────────────────────────────────────
+// o) GET /admin/users/:id/violations
 // ────────────────────────────────────────────────────────────
 exports.userViolations = async (req, res, next) => {
   try {
