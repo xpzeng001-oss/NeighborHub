@@ -19,7 +19,16 @@ Page({
   },
 
   async onLoad() {
-    const communities = app.globalData.communities || [];
+    // 每次打开都重新拉取最新小区列表
+    let communities = app.globalData.communities || [];
+    try {
+      const data = await api.getCommunities();
+      const list = data.list || data;
+      if (list && list.length > 0) {
+        communities = list;
+        app.globalData.communities = list;
+      }
+    } catch (e) {}
     this.setData({ communities });
 
     const userInfo = app.globalData.userInfo;

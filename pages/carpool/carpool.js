@@ -19,7 +19,11 @@ Page({
 
   async loadTrips() {
     try {
-      const data = await api.getCarpools();
+      const app = getApp();
+      const community = app.globalData.currentCommunity;
+      const params = {};
+      if (community && community.id) params.communityId = community.id;
+      const data = await api.getCarpools(params);
       this.setData({ tripList: data.list || [] });
     } catch (err) {
       this.setData({ tripList: [] });

@@ -79,7 +79,7 @@ exports.detail = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { type, petName, petType, title, description, dateRange, reward, tags } = req.body;
+    const { type, petName, petType, title, description, dateRange, reward, tags, communityId } = req.body;
     if (!title || !type) {
       return res.status(400).json({ code: 400, message: '标题和类型不能为空', data: null });
     }
@@ -93,7 +93,8 @@ exports.create = async (req, res, next) => {
       description: description || '',
       date_range: dateRange || '',
       reward: reward || '',
-      tags: tags || []
+      tags: tags || [],
+      community_id: communityId || null
     });
 
     res.json({ code: 0, data: { id: pet.id } });

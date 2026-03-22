@@ -38,7 +38,7 @@ exports.list = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { title, building, roomType, area, rent, deposit, isAgent, images, description } = req.body;
+    const { title, building, roomType, area, rent, deposit, isAgent, images, description, communityId } = req.body;
     if (!title) {
       return res.status(400).json({ code: 400, message: '标题不能为空', data: null });
     }
@@ -53,7 +53,8 @@ exports.create = async (req, res, next) => {
       deposit: deposit || '',
       is_agent: !!isAgent,
       images: images || [],
-      description: description || ''
+      description: description || '',
+      community_id: communityId || null
     });
 
     res.json({ code: 0, data: { id: rental.id } });

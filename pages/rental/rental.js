@@ -10,7 +10,11 @@ Page({
 
   async loadData() {
     try {
-      const data = await api.getRentals();
+      const app = getApp();
+      const community = app.globalData.currentCommunity;
+      const params = {};
+      if (community && community.id) params.communityId = community.id;
+      const data = await api.getRentals(params);
       this.setData({ rentals: data.list || [] });
     } catch (err) {
       console.log('加载租赁列表失败', err);

@@ -280,6 +280,10 @@ Page({
         imageUrls = await api.uploadImages(imageList);
       }
 
+      const app = getApp();
+      const community = app.globalData.currentCommunity;
+      const communityId = (community && community.id) || null;
+
       if (publishType === 'product' || publishType === 'free') {
         await api.createProduct({
           title: form.title,
@@ -290,20 +294,23 @@ Page({
           condition: form.condition,
           images: imageUrls,
           description: form.description,
-          tradeMethod: form.tradeMethod
+          tradeMethod: form.tradeMethod,
+          communityId
         });
       } else if (publishType === 'post') {
         await api.createPost({
           category: form.postCategory,
           title: form.title,
           content: form.description,
-          images: imageUrls
+          images: imageUrls,
+          communityId
         });
       } else if (publishType === 'help') {
         await api.createHelp({
           title: form.title,
           description: form.description,
-          isUrgent: form.isUrgent
+          isUrgent: form.isUrgent,
+          communityId
         });
       } else if (publishType === 'pet') {
         const dateRange = form.petStartDate && form.petEndDate
@@ -316,7 +323,8 @@ Page({
           petName: form.petName,
           images: imageUrls,
           dateRange,
-          reward: form.reward
+          reward: form.reward,
+          communityId
         });
       } else if (publishType === 'sam') {
         const samResult = await api.createSam({
@@ -325,7 +333,8 @@ Page({
           deadline: (form.samDeadlineDate && form.samDeadlineTime) ? form.samDeadlineDate + ' ' + form.samDeadlineTime : form.samDeadlineDate || '',
           pickupMethod: form.samPickupMethod,
           minAmount: form.samMinAmount,
-          targetCount: form.samTargetCount
+          targetCount: form.samTargetCount,
+          communityId
         });
         wx.hideLoading();
         wx.showToast({ title: '发布成功！', icon: 'success' });
@@ -348,7 +357,8 @@ Page({
           date: form.carpoolDate,
           time: form.carpoolTime,
           seats: Number(form.carpoolSeats) || 0,
-          fee: form.carpoolFee
+          fee: form.carpoolFee,
+          communityId
         });
       }
 

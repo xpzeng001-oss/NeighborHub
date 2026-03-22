@@ -13,7 +13,11 @@ Page({
 
   async loadData() {
     try {
-      const data = await api.getHelps();
+      const app = getApp();
+      const community = app.globalData.currentCommunity;
+      const params = {};
+      if (community && community.id) params.communityId = community.id;
+      const data = await api.getHelps(params);
       const helps = (data.list || []).map(h => ({
         ...h,
         timeAgo: formatTime(new Date(h.createdAt))

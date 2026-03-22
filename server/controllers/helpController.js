@@ -38,7 +38,7 @@ exports.list = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { title, description, isUrgent, deadline, building } = req.body;
+    const { title, description, isUrgent, deadline, building, communityId } = req.body;
     if (!title) {
       return res.status(400).json({ code: 400, message: '标题不能为空', data: null });
     }
@@ -49,7 +49,8 @@ exports.create = async (req, res, next) => {
       title,
       description: description || '',
       is_urgent: !!isUrgent,
-      deadline: deadline || null
+      deadline: deadline || null,
+      community_id: communityId || null
     });
 
     res.json({ code: 0, data: { id: help.id } });

@@ -86,7 +86,7 @@ exports.detail = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { category, title, content, images } = req.body;
+    const { category, title, content, images, communityId } = req.body;
     if (!title || !category) {
       return res.status(400).json({ code: 400, message: '标题和分类不能为空', data: null });
     }
@@ -96,7 +96,8 @@ exports.create = async (req, res, next) => {
       category,
       title,
       content: content || '',
-      images: images || []
+      images: images || [],
+      community_id: communityId || null
     });
 
     // 异步图片安全检测

@@ -18,7 +18,10 @@ Page({
   async loadPosts() {
     try {
       const catClassMap = { '公告': 'announcement', '吐槽': 'complaint', '求助': 'question', '活动': 'activity' };
+      const app = getApp();
+      const community = app.globalData.currentCommunity;
       const params = {};
+      if (community && community.id) params.communityId = community.id;
       if (this.data.forumTab !== '全部') {
         params.category = this.data.forumTab;
       }

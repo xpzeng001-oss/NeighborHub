@@ -117,7 +117,7 @@ exports.detail = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { title, price, originalPrice, isFree, category, condition, images, description, tradeMethod } = req.body;
+    const { title, price, originalPrice, isFree, category, condition, images, description, tradeMethod, communityId } = req.body;
 
     if (!title) {
       return res.status(400).json({ code: 400, message: '标题不能为空', data: null });
@@ -133,7 +133,8 @@ exports.create = async (req, res, next) => {
       condition: condition || '',
       images: images || [],
       description: description || '',
-      trade_method: tradeMethod || ''
+      trade_method: tradeMethod || '',
+      community_id: communityId || null
     });
 
     // 异步图片安全检测

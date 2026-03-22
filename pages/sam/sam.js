@@ -19,7 +19,11 @@ Page({
 
   async loadOrders() {
     try {
-      const data = await api.getSams();
+      const app = getApp();
+      const community = app.globalData.currentCommunity;
+      const params = {};
+      if (community && community.id) params.communityId = community.id;
+      const data = await api.getSams(params);
       this.setData({ orderList: data.list || [] });
     } catch (err) {
       this.setData({ orderList: [] });

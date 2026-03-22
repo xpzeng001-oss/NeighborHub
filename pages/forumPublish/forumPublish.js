@@ -69,11 +69,14 @@ Page({
         imageUrls = await api.uploadImages(this.data.images);
       }
 
+      const app = getApp();
+      const community = app.globalData.currentCommunity;
       await api.createPost({
         category: this.data.category,
         title: this.data.title.trim(),
         content: this.data.content.trim(),
-        images: imageUrls
+        images: imageUrls,
+        communityId: (community && community.id) || null
       });
 
       wx.showToast({ title: '发布成功', icon: 'success' });

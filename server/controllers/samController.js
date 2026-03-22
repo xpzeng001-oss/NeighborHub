@@ -109,7 +109,7 @@ exports.updatePickupStatus = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { title, description, deadline, pickupMethod, minAmount, targetCount } = req.body;
+    const { title, description, deadline, pickupMethod, minAmount, targetCount, communityId } = req.body;
     if (!title) {
       return res.status(400).json({ code: 400, message: '标题不能为空', data: null });
     }
@@ -121,7 +121,8 @@ exports.create = async (req, res, next) => {
       deadline: deadline || '',
       pickup_method: pickupMethod || '',
       min_amount: Number(minAmount) || 0,
-      target_count: Number(targetCount) || 5
+      target_count: Number(targetCount) || 5,
+      community_id: communityId || null
     });
 
     res.json({ code: 0, data: { id: order.id } });

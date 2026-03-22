@@ -46,7 +46,7 @@ exports.list = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { type, title, description, from, to, date, time, seats, fee } = req.body;
+    const { type, title, description, from, to, date, time, seats, fee, communityId } = req.body;
     if (!title) {
       return res.status(400).json({ code: 400, message: '标题不能为空', data: null });
     }
@@ -61,7 +61,8 @@ exports.create = async (req, res, next) => {
       date: date || '',
       time: time || '',
       seats: Number(seats) || 0,
-      fee: fee || ''
+      fee: fee || '',
+      community_id: communityId || null
     });
 
     res.json({ code: 0, data: { id: carpool.id } });

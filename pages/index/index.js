@@ -54,6 +54,12 @@ Page({
       const type = this.data.activeType;
       const sort = this.data.activeSort;
 
+      // 按当前小区过滤
+      const community = app.globalData.currentCommunity;
+      if (community && community.id) {
+        params.communityId = community.id;
+      }
+
       // 分类筛选
       if (type === 'free') params.isFree = '1';
       else if (type === 'product') params.category = 'product';
