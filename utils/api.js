@@ -122,7 +122,7 @@ const getMyCommunityApplications = ()     => request({ url: '/api/communities/my
 const getAvatarConfig     = ()         => request({ url: '/api/auth/avatar-config' });
 
 // Stats
-const getCategoryCounts   = ()         => request({ url: '/api/stats/counts' });
+const getCategoryCounts   = (params)   => request({ url: '/api/stats/counts', data: params });
 
 // Chat
 const getConversations    = ()         => request({ url: '/api/chat/conversations' });

@@ -27,12 +27,19 @@ Page({
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({ selected: 1 });
     }
+    const app = getApp();
+    const community = app.globalData.currentCommunity;
+    this.setData({ communityName: (community && community.name) || '社区数据' });
     this.loadCounts();
   },
 
   async loadCounts() {
     try {
-      const counts = await api.getCategoryCounts();
+      const app = getApp();
+      const community = app.globalData.currentCommunity;
+      const params = {};
+      if (community && community.id) params.communityId = community.id;
+      const counts = await api.getCategoryCounts(params);
       const categories = this.data.categories.map(cat => ({
         ...cat,
         count: counts[cat.id] || 0
