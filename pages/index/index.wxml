@@ -63,8 +63,7 @@
             </view>
             <view class="card-footer">
               <text class="seller-info">{{item.communityName}}{{item.building ? ' ' + item.building : ''}}</text>
-              <text class="want-count">{{item.wantCount}}人想要</text>
-            </view>
+                          </view>
           </view>
         </view>
       </view>
@@ -83,8 +82,7 @@
             </view>
             <view class="card-footer">
               <text class="seller-info">{{item.communityName}}{{item.building ? ' ' + item.building : ''}}</text>
-              <text class="want-count">{{item.wantCount}}人想要</text>
-            </view>
+                          </view>
           </view>
         </view>
       </view>
