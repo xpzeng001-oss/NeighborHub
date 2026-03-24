@@ -163,6 +163,21 @@ Page({
       app.globalData.userInfo = newUserInfo;
       wx.setStorageSync('userInfo', newUserInfo);
 
+      // 设置当前小区并自动关联社区
+      const selectedCommunity = this.data.communities[this.data.communityIndex];
+      if (selectedCommunity) {
+        app.globalData.currentCommunity = selectedCommunity;
+        wx.setStorageSync('currentCommunity', selectedCommunity);
+        const districts = app.globalData.districts || [];
+        const parentDistrict = districts.find(d =>
+          d.communities && d.communities.some(c => c.id === selectedCommunity.id)
+        );
+        if (parentDistrict) {
+          app.globalData.currentDistrict = parentDistrict;
+          wx.setStorageSync('currentDistrict', parentDistrict);
+        }
+      }
+
       wx.showToast({ title: '保存成功', icon: 'success' });
       setTimeout(() => { wx.navigateBack(); }, 1000);
     } catch (err) {

@@ -1,10 +1,12 @@
 const { Rental, User } = require('../models');
+const { buildDistrictFilter } = require('../utils/districtFilter');
 
 exports.list = async (req, res, next) => {
   try {
-    const { page = 1, pageSize = 20, communityId } = req.query;
+    const { page = 1, pageSize = 20, communityId, districtId } = req.query;
     const where = {};
     if (communityId) where.community_id = communityId;
+    else Object.assign(where, await buildDistrictFilter(districtId));
 
     const { rows, count } = await Rental.findAndCountAll({
       where,

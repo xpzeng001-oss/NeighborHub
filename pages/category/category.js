@@ -28,17 +28,17 @@ Page({
       this.getTabBar().setData({ selected: 1 });
     }
     const app = getApp();
-    const community = app.globalData.currentCommunity;
-    this.setData({ communityName: (community && community.name) || '社区数据' });
+    const district = app.globalData.currentDistrict;
+    this.setData({ communityName: (district && district.name) || '社区数据' });
     this.loadCounts();
   },
 
   async loadCounts() {
     try {
       const app = getApp();
-      const community = app.globalData.currentCommunity;
+      const district = app.globalData.currentDistrict;
       const params = {};
-      if (community && community.id) params.communityId = community.id;
+      if (district && district.id) params.districtId = district.id;
       const counts = await api.getCategoryCounts(params);
       const categories = this.data.categories.map(cat => ({
         ...cat,

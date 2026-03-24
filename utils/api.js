@@ -117,7 +117,8 @@ const createReport    = (data)    => request({ url: '/api/reports', method: 'POS
 const getFeedbacks    = (params)  => request({ url: '/api/feedbacks', data: params });
 const createFeedback  = (data)    => request({ url: '/api/feedbacks', method: 'POST', data });
 
-// Communities
+// Districts & Communities
+const getDistricts             = ()       => request({ url: '/api/communities/districts' });
 const getCommunities           = ()       => request({ url: '/api/communities' });
 const applyCommunity           = (data)   => request({ url: '/api/communities/apply', method: 'POST', data });
 const getMyCommunityApplications = ()     => request({ url: '/api/communities/my-applications' });
@@ -168,7 +169,7 @@ module.exports = {
   uploadImage, uploadImages, getAvatarConfig,
   getCategoryCounts,
   getConversations, createConversation, getMessages, sendMessage, markConversationRead,
-  getCommunities, applyCommunity, getMyCommunityApplications,
+  getDistricts, getCommunities, applyCommunity, getMyCommunityApplications,
   getAdminCommunityApplications, handleCommunityApplication,
   getAdminStats, getAdminReports, handleAdminReport, getAdminContent, takedownContent, restoreContent,
   deleteHelp, deleteCarpool, deleteRental,

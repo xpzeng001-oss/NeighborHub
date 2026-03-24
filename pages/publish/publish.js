@@ -233,6 +233,23 @@ Page({
       return;
     }
 
+    // 检查是否已设置小区和楼栋
+    const app = getApp();
+    const userInfo = app.globalData.userInfo;
+    if (!userInfo || !userInfo.community || !userInfo.building) {
+      wx.showModal({
+        title: '完善信息',
+        content: '发布前请先选择您所在的小区和楼栋',
+        confirmText: '去设置',
+        success: (res) => {
+          if (res.confirm) {
+            wx.navigateTo({ url: '/pages/settings/settings' });
+          }
+        }
+      });
+      return;
+    }
+
     // 基础校验
     if (!form.title.trim()) {
       wx.showToast({ title: '请输入标题', icon: 'none' });

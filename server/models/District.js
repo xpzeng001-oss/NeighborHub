@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Community = sequelize.define('Community', {
+const District = sequelize.define('District', {
   id: {
     type: DataTypes.INTEGER.UNSIGNED,
     autoIncrement: true,
@@ -12,21 +12,12 @@ const Community = sequelize.define('Community', {
     allowNull: false,
     unique: true
   },
-  address: {
-    type: DataTypes.STRING(256),
-    defaultValue: ''
-  },
-  district_id: {
-    type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: true,
-    defaultValue: null
-  },
   status: {
     type: DataTypes.STRING(16),
     defaultValue: 'active'  // active | disabled
   }
 }, {
-  tableName: 'communities'
+  tableName: 'districts'
 });
 
-module.exports = Community;
+module.exports = District;

@@ -27,6 +27,12 @@ router.get('/communities',         admin.listCommunities);
 router.post('/communities',        admin.createCommunity);
 router.delete('/communities/:id',  admin.deleteCommunity);
 
+// District management
+router.get('/districts',                    admin.listDistricts);
+router.post('/districts',                   admin.createDistrict);
+router.delete('/districts/:id',             admin.deleteDistrict);
+router.put('/communities/:id/district',     admin.assignCommunityToDistrict);
+
 // User management
 router.get('/users',                  admin.listUsers);
 router.put('/users/:id/ban',          admin.banUser);

@@ -21,9 +21,9 @@ Page({
     try {
       const typeMap = { 1: 'need', 2: 'offer', 3: 'social' };
       const app = getApp();
-      const community = app.globalData.currentCommunity;
+      const district = app.globalData.currentDistrict;
       const params = {};
-      if (community && community.id) params.communityId = community.id;
+      if (district && district.id) params.districtId = district.id;
       if (this.data.activeTab > 0) {
         params.type = typeMap[this.data.activeTab];
       }

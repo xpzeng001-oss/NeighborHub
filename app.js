@@ -3,6 +3,8 @@ App({
     userInfo: null,
     token: '',
     currentCommunity: null,
+    currentDistrict: null,
+    districts: [],
     communities: [],
     baseUrl: 'https://xckjsoft.cn/neighborhub-api', // 生产环境域名
     version: '1.0.0'
@@ -20,10 +22,14 @@ App({
     if (avatarConfig) {
       this.globalData.avatarConfig = avatarConfig;
     }
-    // 恢复上次选择的小区
+    // 恢复上次选择的小区和社区
     const savedCommunity = wx.getStorageSync('currentCommunity');
     if (savedCommunity) {
       this.globalData.currentCommunity = savedCommunity;
+    }
+    const savedDistrict = wx.getStorageSync('currentDistrict');
+    if (savedDistrict) {
+      this.globalData.currentDistrict = savedDistrict;
     }
     // 检查小程序更新
     this.checkUpdate();

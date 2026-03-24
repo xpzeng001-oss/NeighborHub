@@ -1,13 +1,15 @@
 const { PetPost, User } = require('../models');
 const contentCheckService = require('../services/contentCheckService');
+const { buildDistrictFilter } = require('../utils/districtFilter');
 
 exports.list = async (req, res, next) => {
   try {
-    const { page = 1, pageSize = 20, type, communityId, userId } = req.query;
+    const { page = 1, pageSize = 20, type, communityId, districtId, userId } = req.query;
     const { Op } = require('sequelize');
     const where = { status: { [Op.ne]: 'off' } };
     if (type) where.type = type;
     if (communityId) where.community_id = communityId;
+    else Object.assign(where, await buildDistrictFilter(districtId));
     if (userId) where.user_id = Number(userId);
 
     const { rows, count } = await PetPost.findAndCountAll({

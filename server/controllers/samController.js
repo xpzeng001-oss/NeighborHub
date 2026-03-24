@@ -1,12 +1,14 @@
 const { SamOrder, User, Conversation, Message } = require('../models');
+const { buildDistrictFilter } = require('../utils/districtFilter');
 
 exports.list = async (req, res, next) => {
   try {
-    const { page = 1, pageSize = 20, status, communityId, userId } = req.query;
+    const { page = 1, pageSize = 20, status, communityId, districtId, userId } = req.query;
     const { Op } = require('sequelize');
     const where = { status: { [Op.ne]: 'off' } };
     if (status) where.status = status;
     if (communityId) where.community_id = communityId;
+    else Object.assign(where, await buildDistrictFilter(districtId));
     if (userId) where.user_id = Number(userId);
 
     const { rows, count } = await SamOrder.findAndCountAll({

@@ -1,10 +1,11 @@
 const { Product, User, Favorite } = require('../models');
 const { Op } = require('sequelize');
 const contentCheckService = require('../services/contentCheckService');
+const { buildDistrictFilter } = require('../utils/districtFilter');
 
 exports.list = async (req, res, next) => {
   try {
-    const { page = 1, pageSize = 10, category, isFree, sort, keyword, communityId, userId } = req.query;
+    const { page = 1, pageSize = 10, category, isFree, sort, keyword, communityId, districtId, userId } = req.query;
     const where = {};
     if (userId) {
       where.user_id = Number(userId);
@@ -16,6 +17,7 @@ exports.list = async (req, res, next) => {
     if (isFree === '1') where.is_free = true;
     else if (isFree === '0') where.is_free = false;
     if (communityId) where.community_id = communityId;
+    else Object.assign(where, await buildDistrictFilter(districtId));
     if (keyword) {
       where[Op.or] = [
         { title: { [Op.like]: `%${keyword}%` } },

@@ -1,4 +1,25 @@
-const { Community, CommunityApplication, User } = require('../models');
+const { District, Community, CommunityApplication, User } = require('../models');
+
+// GET /communities/districts — list all active districts with their communities
+exports.listDistricts = async (req, res, next) => {
+  try {
+    const districts = await District.findAll({
+      where: { status: 'active' },
+      include: [{ model: Community, attributes: ['id', 'name'], where: { status: 'active' }, required: false }],
+      order: [['created_at', 'ASC']]
+    });
+
+    const list = districts.map(d => ({
+      id: d.id,
+      name: d.name,
+      communities: (d.Communities || []).map(c => ({ id: c.id, name: c.name }))
+    }));
+
+    res.json({ code: 0, data: { list } });
+  } catch (err) {
+    next(err);
+  }
+};
 
 // GET /communities — list all active communities
 exports.list = async (req, res, next) => {

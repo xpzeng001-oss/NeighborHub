@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const {
   sequelize,
+  District,
   User,
   Product,
   Post,
@@ -649,4 +650,64 @@ exports.userViolations = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+// ────────────────────────────────────────────────────────────
+// District management
+// ────────────────────────────────────────────────────────────
+exports.listDistricts = async (req, res, next) => {
+  try {
+    const districts = await District.findAll({
+      include: [{ model: Community, attributes: ['id', 'name', 'status'] }],
+      order: [['created_at', 'DESC']]
+    });
+    const list = districts.map(d => ({
+      id: d.id,
+      name: d.name,
+      status: d.status,
+      communityCount: (d.Communities || []).length,
+      communities: (d.Communities || []).map(c => ({ id: c.id, name: c.name })),
+      createdAt: d.created_at
+    }));
+    res.json({ code: 0, data: { list } });
+  } catch (err) { next(err); }
+};
+
+exports.createDistrict = async (req, res, next) => {
+  try {
+    const { name } = req.body;
+    if (!name || !name.trim()) {
+      return res.status(400).json({ code: 400, message: '社区名称不能为空', data: null });
+    }
+    const existing = await District.findOne({ where: { name: name.trim() } });
+    if (existing) {
+      return res.status(400).json({ code: 400, message: '该社区已存在', data: null });
+    }
+    const district = await District.create({ name: name.trim() });
+    res.json({ code: 0, data: { id: district.id, name: district.name } });
+  } catch (err) { next(err); }
+};
+
+exports.deleteDistrict = async (req, res, next) => {
+  try {
+    const district = await District.findByPk(req.params.id);
+    if (!district) return res.status(404).json({ code: 404, message: '社区不存在', data: null });
+    await Community.update({ district_id: null }, { where: { district_id: district.id } });
+    await district.destroy();
+    res.json({ code: 0, data: null });
+  } catch (err) { next(err); }
+};
+
+exports.assignCommunityToDistrict = async (req, res, next) => {
+  try {
+    const { districtId } = req.body;
+    const community = await Community.findByPk(req.params.id);
+    if (!community) return res.status(404).json({ code: 404, message: '小区不存在', data: null });
+    if (districtId) {
+      const district = await District.findByPk(districtId);
+      if (!district) return res.status(404).json({ code: 404, message: '社区不存在', data: null });
+    }
+    await community.update({ district_id: districtId || null });
+    res.json({ code: 0, data: null });
+  } catch (err) { next(err); }
 };

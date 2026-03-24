@@ -11,9 +11,9 @@ Page({
   async loadData() {
     try {
       const app = getApp();
-      const community = app.globalData.currentCommunity;
+      const district = app.globalData.currentDistrict;
       const params = {};
-      if (community && community.id) params.communityId = community.id;
+      if (district && district.id) params.districtId = district.id;
       const data = await api.getRentals(params);
       this.setData({ rentals: data.list || [] });
     } catch (err) {

@@ -1,22 +1,22 @@
 const router = require('express').Router();
 const { Op } = require('sequelize');
 const { Post, HelpRequest, Rental, PetPost, SamOrder, Carpool, User, Product } = require('../models');
+const { getCommunityIdsForDistrict } = require('../utils/districtFilter');
 
-const notOff = { where: { status: { [Op.ne]: 'off' } } };
-
-// GET /api/stats/counts - 各分类数量统计（排除已下架内容，支持按小区过滤）
+// GET /api/stats/counts - 各分类数量统计（排除已下架内容，支持按社区过滤）
 router.get('/counts', async (req, res, next) => {
   try {
-    const { communityId } = req.query;
+    const { districtId } = req.query;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
     // 基础过滤条件
     const base = { status: { [Op.ne]: 'off' } };
     const baseRental = {};
-    if (communityId) {
-      base.community_id = communityId;
-      baseRental.community_id = communityId;
+    const communityIds = await getCommunityIdsForDistrict(districtId);
+    if (communityIds && communityIds.length > 0) {
+      base.community_id = { [Op.in]: communityIds };
+      baseRental.community_id = { [Op.in]: communityIds };
     }
     const todayBase = { ...base, created_at: { [Op.gte]: today } };
 

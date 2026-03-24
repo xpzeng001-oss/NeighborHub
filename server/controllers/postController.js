@@ -1,12 +1,14 @@
 const { Post, Comment, User } = require('../models');
 const contentCheckService = require('../services/contentCheckService');
+const { buildDistrictFilter } = require('../utils/districtFilter');
 
 exports.list = async (req, res, next) => {
   try {
-    const { page = 1, pageSize = 20, category, communityId } = req.query;
+    const { page = 1, pageSize = 20, category, communityId, districtId } = req.query;
     const where = { status: { [require('sequelize').Op.ne]: 'off' } };
     if (category) where.category = category;
     if (communityId) where.community_id = communityId;
+    else Object.assign(where, await buildDistrictFilter(districtId));
 
     const { rows, count } = await Post.findAndCountAll({
       where,

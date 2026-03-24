@@ -51,6 +51,23 @@ Page({
   },
 
   async onSubmit() {
+    // 检查是否已设置小区和楼栋
+    const app = getApp();
+    const userInfo = app.globalData.userInfo;
+    if (!userInfo || !userInfo.community || !userInfo.building) {
+      wx.showModal({
+        title: '完善信息',
+        content: '发布前请先选择您所在的小区和楼栋',
+        confirmText: '去设置',
+        success: (res) => {
+          if (res.confirm) {
+            wx.navigateTo({ url: '/pages/settings/settings' });
+          }
+        }
+      });
+      return;
+    }
+
     if (!this.data.category) {
       wx.showToast({ title: '请选择分类', icon: 'none' });
       return;

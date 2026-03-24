@@ -42,8 +42,7 @@ Page({
       // 如果没有选过小区，默认选第一个
       if (!app.globalData.currentCommunity && app.globalData.communities.length > 0) {
         const first = app.globalData.communities[0];
-        app.globalData.currentCommunity = first;
-        wx.setStorageSync('currentCommunity', first);
+        this._selectCommunityAndDistrict(first);
         this.setData({ currentCommunity: first.name });
       }
       this.loadProducts();
@@ -64,10 +63,10 @@ Page({
       const type = this.data.activeType;
       const sort = this.data.activeSort;
 
-      // 按当前小区过滤
-      const community = app.globalData.currentCommunity;
-      if (community && community.id) {
-        params.communityId = community.id;
+      // 按当前社区过滤
+      const district = app.globalData.currentDistrict;
+      if (district && district.id) {
+        params.districtId = district.id;
       }
 
       // 分类筛选
@@ -121,7 +120,6 @@ Page({
     wx.showToast({ title: '刷新成功', icon: 'none' });
   },
 
-  // 公告点击
   // 小区选择
   onCommunityTap() {
     this.setData({ showCommunityPicker: true });
@@ -131,8 +129,7 @@ Page({
   },
   selectCommunity(e) {
     const item = e.currentTarget.dataset.item;
-    app.globalData.currentCommunity = item;
-    wx.setStorageSync('currentCommunity', item);
+    this._selectCommunityAndDistrict(item);
     this.setData({
       currentCommunity: item.name,
       showCommunityPicker: false
@@ -140,21 +137,40 @@ Page({
     this.loadProducts();
     wx.showToast({ title: '已切换至' + item.name, icon: 'none' });
   },
+  // 选小区时自动关联社区
+  _selectCommunityAndDistrict(community) {
+    app.globalData.currentCommunity = community;
+    wx.setStorageSync('currentCommunity', community);
+    // 从 districts 列表中找到该小区所属的社区
+    const districts = app.globalData.districts || [];
+    const parentDistrict = districts.find(d =>
+      d.communities && d.communities.some(c => c.id === community.id)
+    );
+    if (parentDistrict) {
+      app.globalData.currentDistrict = parentDistrict;
+      wx.setStorageSync('currentDistrict', parentDistrict);
+    }
+  },
   goCommunityApply() {
     this.setData({ showCommunityPicker: false });
     wx.navigateTo({ url: '/pages/communityApply/communityApply' });
   },
   async loadCommunities() {
     try {
+      // 加载社区列表（含小区映射）
+      const districtData = await api.getDistricts();
+      const districtList = districtData.list || [];
+      if (districtList.length > 0) {
+        app.globalData.districts = districtList;
+      }
+      // 加载小区列表
       const data = await api.getCommunities();
-      const list = data.list || [];
-      if (list.length > 0) {
+      const list = data.list || data;
+      if (list && list.length > 0) {
         app.globalData.communities = list;
         this.setData({ communities: list });
       }
-    } catch (err) {
-      // fallback to hardcoded list
-    }
+    } catch (err) {}
   },
 
   // 导航
