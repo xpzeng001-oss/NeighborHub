@@ -14,6 +14,7 @@ exports.list = async (req, res, next) => {
 
     if (category && category !== '全部') where.category = category;
     if (isFree === '1') where.is_free = true;
+    else if (isFree === '0') where.is_free = false;
     if (communityId) where.community_id = communityId;
     if (keyword) {
       where[Op.or] = [

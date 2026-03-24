@@ -72,7 +72,7 @@ Page({
 
       // 分类筛选
       if (type === 'free') params.isFree = '1';
-      else if (type === 'product') params.category = 'product';
+      else if (type === 'product') params.isFree = '0';
       else if (type !== 'all') params.type = type;
 
       // 排序

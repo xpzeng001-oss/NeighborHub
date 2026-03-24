@@ -10,7 +10,8 @@ Page({
     messages: [],
     inputValue: '',
     scrollToView: '',
-    myUserId: null
+    myUserId: null,
+    keyboardHeight: 0
   },
 
   _timer: null,
@@ -106,6 +107,15 @@ Page({
     try {
       await api.markConversationRead(this.data.conversationId);
     } catch (err) {}
+  },
+
+  onKeyboardShow(e) {
+    this.setData({ keyboardHeight: e.detail.height });
+    this.scrollToBottom();
+  },
+
+  onKeyboardHide() {
+    this.setData({ keyboardHeight: 0 });
   },
 
   onInputChange(e) {
