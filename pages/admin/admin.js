@@ -81,6 +81,9 @@ Page({
     manageCommunityHasMore: true,
     manageCommunityKeyword: '',
 
+    // District management tab
+    districtList: [],
+
     loading: false
   },
 
@@ -107,6 +110,8 @@ Page({
     } else if (tab === 'manage') {
       this.setData({ manageCommunityPage: 1, manageCommunityList: [], manageCommunityHasMore: true });
       this.loadManagedCommunities().then(() => wx.stopPullDownRefresh());
+    } else if (tab === 'district') {
+      this.loadDistricts().then(() => wx.stopPullDownRefresh());
     }
   },
 
@@ -124,6 +129,9 @@ Page({
       this.loadCommunityApplications();
     } else if (tab === 'manage' && this.data.manageCommunityList.length === 0) {
       this.loadManagedCommunities();
+    } else if (tab === 'district') {
+      if (this.data.districtList.length === 0) this.loadDistricts();
+      if (this.data.manageCommunityList.length === 0) this.loadManagedCommunities();
     }
   },
 
@@ -575,6 +583,76 @@ Page({
             wx.hideLoading();
           }
         }
+      }
+    });
+  },
+
+  // ==================== Common ====================
+
+  // ==================== District Management ====================
+
+  async loadDistricts() {
+    try {
+      const result = await api.getAdminDistricts();
+      this.setData({ districtList: result.list || [] });
+    } catch (err) {}
+  },
+
+  addDistrict() {
+    wx.showModal({
+      title: '添加社区',
+      editable: true,
+      placeholderText: '请输入社区名称',
+      success: async (res) => {
+        if (res.confirm && res.content && res.content.trim()) {
+          try {
+            wx.showLoading({ title: '添加中...' });
+            await api.createAdminDistrict({ name: res.content.trim() });
+            wx.hideLoading();
+            wx.showToast({ title: '添加成功', icon: 'success' });
+            this.loadDistricts();
+          } catch (err) { wx.hideLoading(); }
+        }
+      }
+    });
+  },
+
+  deleteDistrict(e) {
+    const { id, name } = e.currentTarget.dataset;
+    wx.showModal({
+      title: '确认删除',
+      content: '删除社区「' + name + '」后，其下小区将不再归属任何社区。',
+      confirmColor: '#E8636F',
+      confirmText: '删除',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            wx.showLoading({ title: '删除中...' });
+            await api.deleteAdminDistrict(id);
+            wx.hideLoading();
+            wx.showToast({ title: '已删除', icon: 'success' });
+            this.loadDistricts();
+          } catch (err) { wx.hideLoading(); }
+        }
+      }
+    });
+  },
+
+  assignDistrict(e) {
+    const { id, name } = e.currentTarget.dataset;
+    const districtNames = this.data.districtList.map(d => d.name);
+    wx.showActionSheet({
+      itemList: districtNames,
+      success: async (res) => {
+        const district = this.data.districtList[res.tapIndex];
+        try {
+          wx.showLoading({ title: '分配中...' });
+          await api.assignCommunityDistrict(id, { districtId: district.id });
+          wx.hideLoading();
+          wx.showToast({ title: '已分配至' + district.name, icon: 'success' });
+          this.loadDistricts();
+          this.loadManagedCommunities();
+        } catch (err) { wx.hideLoading(); }
       }
     });
   },

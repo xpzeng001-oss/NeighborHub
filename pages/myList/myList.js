@@ -19,7 +19,8 @@ const TYPE_LABELS = {
 const PUBLISH_TABS = [
   { key: 'product', name: '闲置' },
   { key: 'posts', name: '帖子' },
-  { key: 'offshelf', name: '已下架' }
+  { key: 'offshelf', name: '已下架' },
+  { key: 'sold', name: '已卖出' }
 ];
 
 const ACTIVITY_TABS = [
@@ -101,6 +102,11 @@ Page({
           const products = await api.getProducts({ userId: userInfo.id }).catch(() => ({ list: [] }));
           const list = (products.list || []).filter(item => item.status === 'off').map(item => ({ ...item, _type: 'product', _typeLabel: TYPE_LABELS.product }));
           this.setData({ list, hasMore: false, loading: false });
+        } else if (this.data.publishTab === 'sold') {
+          // 已卖出 tab
+          const products = await api.getProducts({ userId: userInfo.id }).catch(() => ({ list: [] }));
+          const list = (products.list || []).filter(item => item.status === 'sold').map(item => ({ ...item, _type: 'product', _typeLabel: TYPE_LABELS.product }));
+          this.setData({ list, hasMore: false, loading: false });
         } else {
           // 帖子 tab（论坛、互助、宠物、拼单、拼车）
           const [posts, helps, pets, sams, carpools] = await Promise.all([
@@ -176,6 +182,32 @@ Page({
             wx.showToast({ title: '已下架', icon: 'success' });
             const key = 'list[' + index + '].status';
             this.setData({ [key]: 'off' });
+          } catch (err) {
+            wx.hideLoading();
+            wx.showToast({ title: '操作失败', icon: 'none' });
+          }
+        }
+      }
+    });
+  },
+
+  // 闲置商品：标记已卖出
+  markSoldProduct(e) {
+    const { id, index } = e.currentTarget.dataset;
+    wx.showModal({
+      title: '确认已卖出',
+      content: '标记已卖出后将无法重新上架。',
+      confirmColor: '#C67A52',
+      confirmText: '确认',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            wx.showLoading({ title: '处理中...' });
+            await api.markProductSold(id);
+            wx.hideLoading();
+            wx.showToast({ title: '已标记卖出', icon: 'success' });
+            const key = 'list[' + index + '].status';
+            this.setData({ [key]: 'sold' });
           } catch (err) {
             wx.hideLoading();
             wx.showToast({ title: '操作失败', icon: 'none' });

@@ -48,11 +48,16 @@
           </view>
         </view>
       </view>
-      <!-- 闲置商品：下架/上架/已售出 -->
+      <!-- 闲置商品：下架+已卖出/上架/已售出 -->
       <view class="publish-actions" wx:if="{{item._type === 'product'}}">
-        <view class="action-btn action-off" wx:if="{{item.status === 'selling'}}" bindtap="offShelfProduct" data-id="{{item.id}}" data-index="{{index}}">
-          <text>下架</text>
-        </view>
+        <block wx:if="{{item.status === 'selling'}}">
+          <view class="action-btn action-off" bindtap="offShelfProduct" data-id="{{item.id}}" data-index="{{index}}">
+            <text>下架</text>
+          </view>
+          <view class="action-btn action-sold-btn" bindtap="markSoldProduct" data-id="{{item.id}}" data-index="{{index}}">
+            <text>已卖出</text>
+          </view>
+        </block>
         <view class="action-btn action-on" wx:elif="{{item.status === 'off'}}" bindtap="relistProduct" data-id="{{item.id}}" data-index="{{index}}">
           <text>上架</text>
         </view>

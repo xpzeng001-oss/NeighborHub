@@ -193,11 +193,22 @@ exports.remove = async (req, res, next) => {
   }
 };
 
+exports.markSold = async (req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.id);
+    if (!product) return res.status(404).json({ code: 404, message: '商品不存在', data: null });
+    if (product.user_id !== req.user.id) return res.status(403).json({ code: 403, message: '无权操作', data: null });
+    await product.update({ status: 'sold' });
+    res.json({ code: 0, data: null });
+  } catch (err) { next(err); }
+};
+
 exports.relist = async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
     if (!product) return res.status(404).json({ code: 404, message: '商品不存在', data: null });
     if (product.user_id !== req.user.id) return res.status(403).json({ code: 403, message: '无权操作', data: null });
+    if (product.status === 'sold') return res.status(400).json({ code: 400, message: '已售出商品不能重新上架', data: null });
     await product.update({ status: 'selling' });
     res.json({ code: 0, data: null });
   } catch (err) { next(err); }

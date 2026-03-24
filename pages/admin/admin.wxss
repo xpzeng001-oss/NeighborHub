@@ -52,7 +52,7 @@
   flex: 1;
   text-align: center;
   padding: 24rpx 0;
-  font-size: 26rpx;
+  font-size: 24rpx;
   color: #9A9A9A;
   font-weight: 500;
   position: relative;
@@ -584,4 +584,49 @@
 .community-actions {
   flex-shrink: 0;
   margin-left: 20rpx;
+}
+
+/* ==================== District Management ==================== */
+.district-card {
+  margin: 16rpx 24rpx 0;
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+  padding: 24rpx;
+}
+.district-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+.district-name {
+  font-size: 32rpx;
+  color: #2C2C2C;
+  font-weight: 700;
+}
+.district-communities {
+  margin-top: 8rpx;
+}
+.district-label {
+  font-size: 24rpx;
+  color: #9A9A9A;
+  margin-bottom: 8rpx;
+}
+.district-community-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 8rpx;
+}
+.district-community-tag {
+  font-size: 22rpx;
+  color: #C67A52;
+  background: #F3E8DA;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  margin: 0 8rpx 8rpx 0;
+}
+.district-community-empty {
+  font-size: 22rpx;
+  color: #BDBDBD;
 }

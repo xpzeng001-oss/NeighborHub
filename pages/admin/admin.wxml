@@ -24,6 +24,7 @@
     <view class="tab {{tab === 'user' ? 'active' : ''}}" bindtap="switchTab" data-tab="user">用户管理</view>
     <view class="tab {{tab === 'community' ? 'active' : ''}}" bindtap="switchTab" data-tab="community">小区入驻</view>
     <view class="tab {{tab === 'manage' ? 'active' : ''}}" bindtap="switchTab" data-tab="manage">小区管理</view>
+    <view class="tab {{tab === 'district' ? 'active' : ''}}" bindtap="switchTab" data-tab="district">社区管理</view>
   </view>
 
   <!-- ========== Reports Tab ========== -->
@@ -296,6 +297,50 @@
 
     <view class="loading-more" wx:if="{{loading}}"><text>加载中...</text></view>
     <view class="loading-more" wx:if="{{!manageCommunityHasMore && manageCommunityList.length > 0}}"><text>没有更多了</text></view>
+  </scroll-view>
+
+  <!-- ========== District Management Tab ========== -->
+  <scroll-view scroll-y class="list-scroll" wx:if="{{tab === 'district'}}">
+
+    <view class="manage-toolbar">
+      <text style="font-size: 28rpx; color: #9A9A9A; flex: 1;">共 {{districtList.length}} 个社区</text>
+      <view class="btn-action btn-add" bindtap="addDistrict">
+        <text>+ 添加社区</text>
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{districtList.length === 0}}">
+      <text class="empty-text">暂无社区</text>
+    </view>
+
+    <view class="district-card" wx:for="{{districtList}}" wx:key="id">
+      <view class="district-header">
+        <view class="district-name">{{item.name}}</view>
+        <view class="btn-action btn-danger btn-sm" bindtap="deleteDistrict" data-id="{{item.id}}" data-name="{{item.name}}">
+          <text>删除</text>
+        </view>
+      </view>
+      <view class="district-communities">
+        <text class="district-label">下辖小区 ({{item.communityCount || 0}})：</text>
+        <view class="district-community-list">
+          <text class="district-community-tag" wx:for="{{item.communities}}" wx:for-item="c" wx:key="id">{{c.name}}</text>
+          <text class="district-community-empty" wx:if="{{!item.communities || item.communities.length === 0}}">暂无小区</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 未分配小区 -->
+    <view class="manage-toolbar" style="margin-top: 20rpx;">
+      <text style="font-size: 28rpx; color: #9A9A9A;">小区分配（点击分配到社区）</text>
+    </view>
+    <view class="community-card" wx:for="{{manageCommunityList}}" wx:key="id">
+      <view class="community-main">
+        <view class="community-name">{{item.name}}</view>
+      </view>
+      <view class="btn-action btn-add btn-sm" bindtap="assignDistrict" data-id="{{item.id}}" data-name="{{item.name}}">
+        <text>分配</text>
+      </view>
+    </view>
   </scroll-view>
 
 </view>

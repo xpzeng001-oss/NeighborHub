@@ -75,6 +75,7 @@ const getProduct    = (id)       => request({ url: '/api/products/' + id });
 const createProduct = (data)     => request({ url: '/api/products', method: 'POST', data });
 const deleteProduct = (id)       => request({ url: '/api/products/' + id, method: 'DELETE' });
 const relistProduct = (id)       => request({ url: '/api/products/' + id + '/relist', method: 'PUT' });
+const markProductSold = (id)     => request({ url: '/api/products/' + id + '/sold', method: 'PUT' });
 const wantProduct   = (id)       => request({ url: '/api/products/' + id + '/want', method: 'POST' });
 const toggleFavorite= (id)       => request({ url: '/api/products/' + id + '/favorite', method: 'POST' });
 const getPosts      = (params)   => request({ url: '/api/posts', data: params });
@@ -155,9 +156,15 @@ const unbanUser = (id) => request({ url: '/api/admin/users/' + id + '/unban', me
 const getAdminCommunities = (params) => request({ url: '/api/admin/communities', data: params });
 const createAdminCommunity = (data) => request({ url: '/api/admin/communities', method: 'POST', data });
 const deleteAdminCommunity = (id) => request({ url: '/api/admin/communities/' + id, method: 'DELETE' });
+const assignCommunityDistrict = (id, data) => request({ url: '/api/admin/communities/' + id + '/district', method: 'PUT', data });
+
+// Admin District Management
+const getAdminDistricts = () => request({ url: '/api/admin/districts' });
+const createAdminDistrict = (data) => request({ url: '/api/admin/districts', method: 'POST', data });
+const deleteAdminDistrict = (id) => request({ url: '/api/admin/districts/' + id, method: 'DELETE' });
 
 module.exports = {
-  getProducts, getProduct, createProduct, deleteProduct, relistProduct, wantProduct, toggleFavorite,
+  getProducts, getProduct, createProduct, deleteProduct, relistProduct, markProductSold, wantProduct, toggleFavorite,
   getPosts, getPost, createPost, deletePost, likePost, addComment,
   getHelps, createHelp, respondHelp,
   getRentals,
@@ -174,5 +181,6 @@ module.exports = {
   getAdminStats, getAdminReports, handleAdminReport, getAdminContent, takedownContent, restoreContent,
   deleteHelp, deleteCarpool, deleteRental,
   getAdminUsers, banUser, unbanUser,
-  getAdminCommunities, createAdminCommunity, deleteAdminCommunity
+  getAdminCommunities, createAdminCommunity, deleteAdminCommunity, assignCommunityDistrict,
+  getAdminDistricts, createAdminDistrict, deleteAdminDistrict
 };

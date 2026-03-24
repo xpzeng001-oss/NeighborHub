@@ -296,6 +296,8 @@
 .action-on { color: #4CAF50; }
 .action-on:active { background: #E8F5E9; }
 .action-sold { color: #9A9A9A; }
+.action-sold-btn { color: #C67A52; }
+.action-sold-btn:active { background: #F3E8DA; }
 .publish-delete {
   padding: 24rpx 28rpx;
   color: #E8636F;
