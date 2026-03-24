@@ -1,4 +1,4 @@
-const { Product, User, Favorite } = require('../models');
+const { Product, User, Favorite, Community } = require('../models');
 const { Op } = require('sequelize');
 const contentCheckService = require('../services/contentCheckService');
 const { buildDistrictFilter } = require('../utils/districtFilter');
@@ -35,7 +35,10 @@ exports.list = async (req, res, next) => {
 
     const { rows, count } = await Product.findAndCountAll({
       where,
-      include: [{ model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] }],
+      include: [
+        { model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] },
+        { model: Community, attributes: ['id', 'name'], required: false }
+      ],
       order,
       limit: Number(pageSize),
       offset: (Number(page) - 1) * Number(pageSize)
@@ -47,6 +50,7 @@ exports.list = async (req, res, next) => {
       userName: p.User.nick_name,
       userAvatar: p.User.avatar_url,
       building: p.User.building,
+      communityName: p.Community ? p.Community.name : '',
       title: p.title,
       price: Number(p.price),
       originalPrice: Number(p.original_price),

@@ -91,6 +91,10 @@ Violation.belongsTo(User, { foreignKey: 'user_id' });
 District.hasMany(Community, { foreignKey: 'district_id' });
 Community.belongsTo(District, { foreignKey: 'district_id' });
 
+// Community <-> Content models
+Community.hasMany(Product, { foreignKey: 'community_id' });
+Product.belongsTo(Community, { foreignKey: 'community_id' });
+
 // User <-> CommunityApplication
 User.hasMany(CommunityApplication, { foreignKey: 'user_id' });
 CommunityApplication.belongsTo(User, { foreignKey: 'user_id' });

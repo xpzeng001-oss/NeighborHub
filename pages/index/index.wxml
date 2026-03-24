@@ -62,7 +62,7 @@
               <text class="original-price" wx:if="{{item.originalPrice > 0 && !item.isFree}}">¥{{item.originalPrice}}</text>
             </view>
             <view class="card-footer">
-              <text class="seller-info">{{item.building}}</text>
+              <text class="seller-info">{{item.communityName}}{{item.building ? ' ' + item.building : ''}}</text>
               <text class="want-count">{{item.wantCount}}人想要</text>
             </view>
           </view>
@@ -82,7 +82,7 @@
               <text class="original-price" wx:if="{{item.originalPrice > 0 && !item.isFree}}">¥{{item.originalPrice}}</text>
             </view>
             <view class="card-footer">
-              <text class="seller-info">{{item.building}}</text>
+              <text class="seller-info">{{item.communityName}}{{item.building ? ' ' + item.building : ''}}</text>
               <text class="want-count">{{item.wantCount}}人想要</text>
             </view>
           </view>
@@ -97,21 +97,21 @@
 
 <!-- 小区选择弹窗 -->
 <view class="modal-mask" wx:if="{{showCommunityPicker}}" bindtap="closePicker">
-  <view class="modal-content" catchtap="">
+  <view class="modal-content" catchtap="" style="max-height: 80vh; display: flex; flex-direction: column;">
     <view class="modal-header">
       <text class="modal-title">选择小区</text>
       <view class="modal-close" bindtap="closePicker">
         <icon name="x" size="36" color="#999"></icon>
       </view>
     </view>
-    <view class="community-list">
+    <scroll-view scroll-y enhanced show-scrollbar="{{false}}" style="flex: 1; max-height: 50vh;" catchtouchmove="">
       <view class="community-option {{item.name === currentCommunity ? 'selected' : ''}}"
             wx:for="{{communities}}" wx:key="id"
             bindtap="selectCommunity" data-item="{{item}}">
         <text>{{item.name}}</text>
         <icon wx:if="{{item.name === currentCommunity}}" name="check" size="32" color="#C67A52"></icon>
       </view>
-    </view>
+    </scroll-view>
     <view class="community-apply-btn" bindtap="goCommunityApply">
       <icon name="plus-circle" size="32" color="#C67A52"></icon>
       <text>找不到小区？申请入驻</text>

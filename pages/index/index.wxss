@@ -253,7 +253,12 @@
   color: #9A9A9A;
   padding: 10rpx;
 }
-.community-list { }
+.modal-content-inner {
+  padding: 40rpx 32rpx;
+  background: #fff;
+  border-radius: 24rpx 24rpx 0 0;
+}
+.community-list { max-height: 60vh; }
 .community-option {
   display: flex;
   justify-content: space-between;
@@ -272,7 +277,7 @@
   align-items: center;
   justify-content: center;
   gap: 10rpx;
-  padding: 28rpx 0 8rpx;
+  padding: 28rpx 0 16rpx;
   margin-top: 16rpx;
   border-top: 1rpx solid #F0EDE8;
 }
