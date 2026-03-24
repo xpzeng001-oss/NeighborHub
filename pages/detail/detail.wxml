@@ -41,7 +41,7 @@
         <image class="seller-avatar" src="{{product.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
         <view class="seller-info">
           <text class="seller-name">{{product.userName}}</text>
-          <text class="seller-building">{{product.building}}</text>
+          <text class="seller-building">{{product.communityName}}{{product.building ? ' ' + product.building : ''}}</text>
         </view>
       </view>
       <icon name="caret-right" size="32" color="#ccc"></icon>

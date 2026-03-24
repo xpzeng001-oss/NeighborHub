@@ -75,7 +75,10 @@ exports.list = async (req, res, next) => {
 exports.detail = async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id, {
-      include: [{ model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] }]
+      include: [
+        { model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] },
+        { model: Community, attributes: ['id', 'name'], required: false }
+      ]
     });
 
     if (!product) {
@@ -100,6 +103,7 @@ exports.detail = async (req, res, next) => {
         userName: product.User.nick_name,
         userAvatar: product.User.avatar_url,
         building: product.User.building,
+        communityName: product.Community ? product.Community.name : '',
         title: product.title,
         price: Number(product.price),
         originalPrice: Number(product.original_price),
