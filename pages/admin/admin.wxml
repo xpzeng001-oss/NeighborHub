@@ -134,10 +134,10 @@
         <view class="top-badge-sm" wx:if="{{item.isTop}}">置顶</view>
         <view class="status-badge status-{{item.status === 'off' ? 'off' : 'active'}}">{{item.status === 'off' ? '已下架' : '正常'}}</view>
         <view class="content-actions">
-          <view class="btn-action btn-warn btn-sm" wx:if="{{item.type === 'post' && !item.isTop}}" bindtap="toggleTop" data-id="{{item.id}}" data-index="{{index}}">
+          <view class="btn-action btn-warn btn-sm" wx:if="{{!item.isTop}}" bindtap="toggleTop" data-type="{{item.type}}" data-id="{{item.id}}" data-index="{{index}}">
             <text>置顶</text>
           </view>
-          <view class="btn-action btn-plain btn-sm" wx:if="{{item.type === 'post' && item.isTop}}" bindtap="toggleTop" data-id="{{item.id}}" data-index="{{index}}">
+          <view class="btn-action btn-plain btn-sm" wx:if="{{item.isTop}}" bindtap="toggleTop" data-type="{{item.type}}" data-id="{{item.id}}" data-index="{{index}}">
             <text>取消置顶</text>
           </view>
           <view class="btn-action btn-danger btn-sm" wx:if="{{item.status !== 'off'}}" bindtap="takedownContent" data-type="{{item.type}}" data-id="{{item.id}}" data-index="{{index}}">

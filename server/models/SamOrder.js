@@ -45,6 +45,10 @@ const SamOrder = sequelize.define('SamOrder', {
   community_id: {
     type: DataTypes.STRING(16),
     defaultValue: ''
+  },
+  is_top: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   }
 }, {
   tableName: 'sam_orders'

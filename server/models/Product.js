@@ -61,6 +61,10 @@ const Product = sequelize.define('Product', {
   community_id: {
     type: DataTypes.STRING(16),
     defaultValue: ''
+  },
+  is_top: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   }
 }, {
   tableName: 'products'

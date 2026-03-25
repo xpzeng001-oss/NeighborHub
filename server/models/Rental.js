@@ -49,6 +49,10 @@ const Rental = sequelize.define('Rental', {
   community_id: {
     type: DataTypes.STRING(16),
     defaultValue: ''
+  },
+  is_top: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   }
 }, {
   tableName: 'rentals'

@@ -37,6 +37,10 @@ const HelpRequest = sequelize.define('HelpRequest', {
   community_id: {
     type: DataTypes.STRING(16),
     defaultValue: ''
+  },
+  is_top: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   }
 }, {
   tableName: 'help_requests'

@@ -278,7 +278,7 @@ exports.listContent = async (req, res, next) => {
           status:      info.status,
           createdAt:   item.created_at
         };
-        if (t === 'post') entry.isTop = !!item.is_top;
+        entry.isTop = !!item.is_top;
         allItems.push(entry);
       });
     }
@@ -708,17 +708,22 @@ exports.deleteDistrict = async (req, res, next) => {
 };
 
 // ────────────────────────────────────────────────────────────
-// PUT /admin/posts/:id/top — 置顶/取消置顶帖子
+// PUT /admin/content/:type/:id/top — 置顶/取消置顶任意内容
 // ────────────────────────────────────────────────────────────
-exports.togglePostTop = async (req, res, next) => {
+exports.toggleContentTop = async (req, res, next) => {
   try {
-    const post = await Post.findByPk(req.params.id);
-    if (!post) {
-      return res.status(404).json({ code: 404, message: '帖子不存在', data: null });
+    const { type, id } = req.params;
+    const Model = MODEL_MAP[type];
+    if (!Model) {
+      return res.status(400).json({ code: 400, message: '不支持的内容类型', data: null });
     }
-    post.is_top = !post.is_top;
-    await post.save();
-    res.json({ code: 0, data: { id: post.id, isTop: post.is_top } });
+    const item = await Model.findByPk(id);
+    if (!item) {
+      return res.status(404).json({ code: 404, message: '内容不存在', data: null });
+    }
+    item.is_top = !item.is_top;
+    await item.save();
+    res.json({ code: 0, data: { id: item.id, isTop: item.is_top } });
   } catch (err) {
     next(err);
   }

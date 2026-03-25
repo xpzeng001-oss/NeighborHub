@@ -21,8 +21,8 @@ router.get('/content',                      admin.listContent);
 router.put('/content/:type/:id/takedown',   admin.takedownContent);
 router.put('/content/:type/:id/restore',    admin.restoreContent);
 
-// Post pinning
-router.put('/posts/:id/top', admin.togglePostTop);
+// Content pinning (all types)
+router.put('/content/:type/:id/top', admin.toggleContentTop);
 
 // Community application management
 router.get('/community-applications',      admin.listCommunityApplications);

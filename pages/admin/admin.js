@@ -327,12 +327,12 @@ Page({
   },
 
   async toggleTop(e) {
-    const { id, index } = e.currentTarget.dataset;
+    const { type, id, index } = e.currentTarget.dataset;
     const item = this.data.contentList[index];
     const action = item.isTop ? '取消置顶' : '置顶';
     try {
       wx.showLoading({ title: '处理中...' });
-      const res = await api.togglePostTop(id);
+      const res = await api.toggleContentTop(type, id);
       wx.hideLoading();
       const key = 'contentList[' + index + '].isTop';
       this.setData({ [key]: res.isTop });

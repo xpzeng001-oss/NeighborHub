@@ -154,7 +154,7 @@ const handleAdminReport = (id, data) => request({ url: '/api/admin/reports/' + i
 const getAdminContent = (params) => request({ url: '/api/admin/content', data: params });
 const takedownContent = (type, id, data) => request({ url: '/api/admin/content/' + type + '/' + id + '/takedown', method: 'PUT', data });
 const restoreContent = (type, id) => request({ url: '/api/admin/content/' + type + '/' + id + '/restore', method: 'PUT' });
-const togglePostTop = (id) => request({ url: '/api/admin/posts/' + id + '/top', method: 'PUT' });
+const toggleContentTop = (type, id) => request({ url: '/api/admin/content/' + type + '/' + id + '/top', method: 'PUT' });
 const getAdminUsers = (params) => request({ url: '/api/admin/users', data: params });
 const banUser = (id, data) => request({ url: '/api/admin/users/' + id + '/ban', method: 'PUT', data });
 const unbanUser = (id) => request({ url: '/api/admin/users/' + id + '/unban', method: 'PUT' });
@@ -185,7 +185,7 @@ module.exports = {
   getConversations, createConversation, getMessages, sendMessage, markConversationRead,
   getDistricts, getCommunities, applyCommunity, getMyCommunityApplications,
   getAdminCommunityApplications, handleCommunityApplication,
-  getAdminStats, getAdminDashboard, togglePostTop, getAdminReports, handleAdminReport, getAdminContent, takedownContent, restoreContent,
+  getAdminStats, getAdminDashboard, toggleContentTop, getAdminReports, handleAdminReport, getAdminContent, takedownContent, restoreContent,
   getFeed,
   deleteHelp, deleteCarpool, deleteRental,
   getAdminUsers, banUser, unbanUser,
