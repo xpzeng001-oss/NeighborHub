@@ -25,6 +25,12 @@
       <view class="feed-card" wx:for="{{feedList}}" wx:key="{{item.feedType + '-' + item.id}}"
             bindtap="goDetail" data-type="{{item.feedType}}" data-id="{{item.id}}">
 
+        <!-- 置顶标记 -->
+        <view class="feed-top-badge" wx:if="{{item.isTop}}">
+          <icon name="pin" size="22" color="#E8636F"></icon>
+          <text>置顶</text>
+        </view>
+
         <!-- 卡片头部：用户信息 + 类型标签 -->
         <view class="feed-header">
           <image class="feed-avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
