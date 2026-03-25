@@ -1,0 +1,133 @@
+/* pages/dashboard/dashboard.wxss */
+.page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #F0E4D8 0%, #FAF8F4 30%);
+  padding: 20rpx 24rpx 40rpx;
+}
+
+.dash-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 28rpx 28rpx 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.06);
+}
+
+.dash-overview {
+  display: flex;
+  justify-content: space-around;
+  padding: 8rpx 0 20rpx;
+}
+.dash-overview-secondary {
+  border-top: 1rpx solid #F0EDE8;
+  padding-top: 20rpx;
+  padding-bottom: 0;
+}
+.dash-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+.dash-stat-value {
+  font-size: 44rpx;
+  font-weight: 700;
+}
+.dash-stat-label {
+  font-size: 22rpx;
+  color: #9A9A9A;
+  margin-top: 6rpx;
+}
+
+.dash-section-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2C2C2C;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+/* 条形图 */
+.dash-bar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+}
+.dash-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+.dash-bar-label {
+  font-size: 26rpx;
+  color: #2C2C2C;
+  width: 110rpx;
+  flex-shrink: 0;
+}
+.dash-bar-track {
+  flex: 1;
+  height: 20rpx;
+  background: #F0EDE8;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+.dash-bar-fill {
+  height: 100%;
+  border-radius: 10rpx;
+  min-width: 6rpx;
+  transition: width 0.3s;
+}
+.dash-bar-count {
+  font-size: 24rpx;
+  color: #666;
+  width: 80rpx;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* 趋势表格 */
+.dash-trend {
+  border-radius: 12rpx;
+  overflow: hidden;
+  border: 1rpx solid #F0EDE8;
+}
+.dash-trend-row {
+  display: flex;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #F0EDE8;
+}
+.dash-trend-row:last-child {
+  border-bottom: none;
+}
+.dash-trend-header {
+  background: #FAF8F4;
+}
+.dash-trend-header .dash-trend-cell {
+  font-weight: 600;
+  color: #666;
+}
+.dash-trend-cell {
+  flex: 1;
+  text-align: center;
+  font-size: 26rpx;
+  color: #2C2C2C;
+}
+
+.dash-empty {
+  padding: 40rpx 0;
+  text-align: center;
+}
+.dash-empty-text {
+  font-size: 24rpx;
+  color: #9A9A9A;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 200rpx 0;
+}
+.loading-text {
+  font-size: 28rpx;
+  color: #9A9A9A;
+}

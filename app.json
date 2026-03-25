@@ -97,6 +97,10 @@
     {
       "root": "pages/communityApply",
       "pages": ["communityApply"]
+    },
+    {
+      "root": "pages/dashboard",
+      "pages": ["dashboard"]
     }
   ],
   "window": {
