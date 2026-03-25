@@ -20,14 +20,12 @@ async function start() {
       console.log('Database tables synced (fallback).');
     }
 
-    // 一次性迁移：credit_score → coins
+    // 一次性迁移：credit_score → coins（SQLite 兼容）
     try {
-      const [results] = await sequelize.query(
-        "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='users' AND COLUMN_NAME='credit_score'"
-      );
-      if (results.length > 0) {
-        await sequelize.query("UPDATE users SET coins = credit_score - 100 WHERE coins = 0 AND credit_score > 100");
-        await sequelize.query("ALTER TABLE users DROP COLUMN credit_score");
+      const [cols] = await sequelize.query("PRAGMA table_info(users)");
+      const hasCreditScore = cols.some(c => c.name === 'credit_score');
+      if (hasCreditScore) {
+        await sequelize.query("UPDATE users SET coins = MAX(credit_score - 100, 0) WHERE coins = 0");
         console.log('Migrated credit_score → coins.');
       }
     } catch (e) {

@@ -2,35 +2,36 @@ const db = require('../models');
 
 async function migrate() {
   try {
-    // 检查 coins 列是否已存在
-    const [cols] = await db.sequelize.query(
-      "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='users' AND COLUMN_NAME='coins'"
-    );
-    if (cols.length === 0) {
-      await db.sequelize.query('ALTER TABLE users ADD COLUMN coins INT DEFAULT 0');
+    // 检查 users 表结构
+    const [columns] = await db.sequelize.query("PRAGMA table_info(users)");
+    const colNames = columns.map(c => c.name);
+    const hasCoins = colNames.includes('coins');
+    const hasCreditScore = colNames.includes('credit_score');
+
+    // 添加 coins 列
+    if (!hasCoins) {
+      await db.sequelize.query('ALTER TABLE users ADD COLUMN coins INTEGER DEFAULT 0');
       console.log('Added coins column');
     } else {
       console.log('coins column already exists');
     }
 
-    // 检查 credit_score 列是否还在
-    const [old] = await db.sequelize.query(
-      "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='users' AND COLUMN_NAME='credit_score'"
-    );
-    if (old.length > 0) {
-      await db.sequelize.query('UPDATE users SET coins = GREATEST(credit_score - 100, 0)');
-      await db.sequelize.query('ALTER TABLE users DROP COLUMN credit_score');
-      console.log('Migrated credit_score to coins');
+    // 迁移 credit_score 数据
+    if (hasCreditScore) {
+      await db.sequelize.query('UPDATE users SET coins = MAX(credit_score - 100, 0)');
+      console.log('Migrated credit_score data to coins');
+      // SQLite 不支持 DROP COLUMN（旧版本），保留旧列不影响使用
+      console.log('Note: credit_score column kept (SQLite limitation), will be ignored');
     }
 
     // 创建 coin_logs 表
     await db.sequelize.query(
       "CREATE TABLE IF NOT EXISTS coin_logs (" +
-      "id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, " +
-      "user_id INT UNSIGNED NOT NULL, " +
+      "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+      "user_id INTEGER NOT NULL, " +
       "action VARCHAR(32) NOT NULL, " +
-      "coins INT NOT NULL, " +
-      "ref_id INT UNSIGNED DEFAULT NULL, " +
+      "coins INTEGER NOT NULL, " +
+      "ref_id INTEGER DEFAULT NULL, " +
       "created_at DATETIME DEFAULT CURRENT_TIMESTAMP)"
     );
     console.log('coin_logs table ready');
