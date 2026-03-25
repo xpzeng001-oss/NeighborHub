@@ -145,7 +145,7 @@ const getAdminCommunityApplications = (params) => request({ url: '/api/admin/com
 const handleCommunityApplication = (id, data) => request({ url: '/api/admin/community-applications/' + id, method: 'PUT', data });
 
 const getAdminStats = () => request({ url: '/api/admin/stats' });
-const getAdminDashboard = () => request({ url: '/api/admin/dashboard' });
+const getAdminDashboard = (params) => request({ url: '/api/admin/dashboard', data: params });
 const getAdminReports = (params) => request({ url: '/api/admin/reports', data: params });
 const handleAdminReport = (id, data) => request({ url: '/api/admin/reports/' + id, method: 'PUT', data });
 const getAdminContent = (params) => request({ url: '/api/admin/content', data: params });

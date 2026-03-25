@@ -1,8 +1,12 @@
 // pages/dashboard/dashboard.js
 const api = require('../../utils/api');
 
+const PERIOD_LABELS = { all: '总', today: '今日', week: '本周', month: '本月' };
+
 Page({
   data: {
+    period: 'all',
+    periodLabel: '总',
     dashboard: null,
     contentBarList: []
   },
@@ -11,11 +15,17 @@ Page({
     this.loadDashboard();
   },
 
+  switchPeriod(e) {
+    const period = e.currentTarget.dataset.period;
+    if (period === this.data.period) return;
+    this.setData({ period, periodLabel: PERIOD_LABELS[period], dashboard: null });
+    this.loadDashboard();
+  },
+
   async loadDashboard() {
     try {
-      const data = await api.getAdminDashboard();
+      const data = await api.getAdminDashboard({ period: this.data.period });
 
-      // Calculate percentages for content bars
       const cb = data.contentBreakdown;
       const contentItems = [
         { label: '闲置', count: cb.product, color: '#C67A52' },
@@ -32,7 +42,6 @@ Page({
         percent: Math.round((item.count / maxContent) * 100)
       }));
 
-      // Calculate percentages for each community's buildings
       const usersByCommunity = (data.usersByCommunity || []).map(c => {
         const maxB = Math.max(...c.buildings.map(b => b.count), 1);
         return {

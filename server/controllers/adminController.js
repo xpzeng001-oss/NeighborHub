@@ -715,67 +715,75 @@ exports.assignCommunityToDistrict = async (req, res, next) => {
 
 // ────────────────────────────────────────────────────────────
 // GET /admin/dashboard — 管理员数据看板
+// period: all(总量) / today(自然日) / week(自然周) / month(自然月)
 // ────────────────────────────────────────────────────────────
 exports.dashboard = async (req, res, next) => {
   try {
+    const { period = 'all' } = req.query;
     const now = new Date();
     const today = new Date(now);
     today.setHours(0, 0, 0, 0);
 
-    const weekAgo = new Date(today);
-    weekAgo.setDate(weekAgo.getDate() - 7);
+    // Calculate period start date
+    let periodStart = null;
+    if (period === 'today') {
+      periodStart = today;
+    } else if (period === 'week') {
+      periodStart = new Date(today);
+      const day = periodStart.getDay();
+      periodStart.setDate(periodStart.getDate() - (day === 0 ? 6 : day - 1)); // Monday
+    } else if (period === 'month') {
+      periodStart = new Date(today.getFullYear(), today.getMonth(), 1);
+    }
+
+    // Build date filter
+    const dateFilter = periodStart ? { created_at: { [Op.gte]: periodStart } } : {};
+    const contentDateFilter = (hasStatus) => {
+      const where = { ...dateFilter };
+      if (hasStatus) where.status = { [Op.ne]: 'off' };
+      return where;
+    };
 
     // ── Overview stats ──
     const [
-      totalUsers, todayNewUsers, weekNewUsers, bannedUsers, pendingReports,
+      userCount, bannedUsers, pendingReports,
       productCount, postCount, helpCount, rentalCount, petCount, samCount, carpoolCount
     ] = await Promise.all([
-      User.count(),
-      User.count({ where: { created_at: { [Op.gte]: today } } }),
-      User.count({ where: { created_at: { [Op.gte]: weekAgo } } }),
+      User.count({ where: dateFilter }),
       User.count({ where: { is_banned: true } }),
       Report.count({ where: { status: 'pending' } }),
-      Product.count({ where: { status: { [Op.ne]: 'off' } } }),
-      Post.count({ where: { status: { [Op.ne]: 'off' } } }),
-      HelpRequest.count({ where: { status: { [Op.ne]: 'off' } } }),
-      Rental.count(),
-      PetPost.count({ where: { status: { [Op.ne]: 'off' } } }),
-      SamOrder.count({ where: { status: { [Op.ne]: 'off' } } }),
-      Carpool.count({ where: { status: { [Op.ne]: 'off' } } })
+      Product.count({ where: contentDateFilter(true) }),
+      Post.count({ where: contentDateFilter(true) }),
+      HelpRequest.count({ where: contentDateFilter(true) }),
+      Rental.count({ where: dateFilter }),
+      PetPost.count({ where: contentDateFilter(true) }),
+      SamOrder.count({ where: contentDateFilter(true) }),
+      Carpool.count({ where: contentDateFilter(true) })
     ]);
 
-    const totalContent = productCount + postCount + helpCount + rentalCount + petCount + samCount + carpoolCount;
-
-    // Today's new content
-    const todayWhere = { created_at: { [Op.gte]: today } };
-    const todayContent = (await Promise.all([
-      Post.count({ where: { ...todayWhere, status: { [Op.ne]: 'off' } } }),
-      Product.count({ where: { ...todayWhere, status: { [Op.ne]: 'off' } } }),
-      HelpRequest.count({ where: { ...todayWhere, status: { [Op.ne]: 'off' } } }),
-      PetPost.count({ where: { ...todayWhere, status: { [Op.ne]: 'off' } } }),
-      SamOrder.count({ where: { ...todayWhere, status: { [Op.ne]: 'off' } } }),
-      Carpool.count({ where: { ...todayWhere, status: { [Op.ne]: 'off' } } })
-    ])).reduce((a, b) => a + b, 0);
+    const contentCount = productCount + postCount + helpCount + rentalCount + petCount + samCount + carpoolCount;
 
     // ── Users by community + building ──
+    const timeClause = periodStart
+      ? `AND uc.created_at >= '${periodStart.toISOString()}'`
+      : '';
     const usersByCommunityRaw = await sequelize.query(`
       SELECT c.name AS community, u.building, COUNT(DISTINCT u.id) AS count
       FROM (
-        SELECT user_id, community_id FROM products WHERE community_id IS NOT NULL
-        UNION SELECT user_id, community_id FROM posts WHERE community_id IS NOT NULL
-        UNION SELECT user_id, community_id FROM help_requests WHERE community_id IS NOT NULL
-        UNION SELECT user_id, community_id FROM pet_posts WHERE community_id IS NOT NULL
-        UNION SELECT user_id, community_id FROM sam_orders WHERE community_id IS NOT NULL
-        UNION SELECT user_id, community_id FROM carpools WHERE community_id IS NOT NULL
+        SELECT user_id, community_id, created_at FROM products WHERE community_id IS NOT NULL
+        UNION SELECT user_id, community_id, created_at FROM posts WHERE community_id IS NOT NULL
+        UNION SELECT user_id, community_id, created_at FROM help_requests WHERE community_id IS NOT NULL
+        UNION SELECT user_id, community_id, created_at FROM pet_posts WHERE community_id IS NOT NULL
+        UNION SELECT user_id, community_id, created_at FROM sam_orders WHERE community_id IS NOT NULL
+        UNION SELECT user_id, community_id, created_at FROM carpools WHERE community_id IS NOT NULL
       ) AS uc
       JOIN users u ON u.id = uc.user_id
       JOIN communities c ON c.id = uc.community_id
-      WHERE u.building IS NOT NULL AND u.building != ''
+      WHERE u.building IS NOT NULL AND u.building != '' ${timeClause}
       GROUP BY c.name, u.building
       ORDER BY c.name, count DESC
     `, { type: sequelize.QueryTypes.SELECT });
 
-    // Group into { community, totalCount, buildings: [{building, count}] }
     const communityMap = {};
     for (const row of usersByCommunityRaw) {
       if (!communityMap[row.community]) {
@@ -787,7 +795,7 @@ exports.dashboard = async (req, res, next) => {
     }
     const usersByCommunity = Object.values(communityMap).sort((a, b) => b.totalCount - a.totalCount);
 
-    // ── 7-day trend ──
+    // ── 7-day trend (always last 7 days) ──
     const recentDays = [];
     for (let i = 6; i >= 0; i--) {
       const dayStart = new Date(today);
@@ -810,7 +818,7 @@ exports.dashboard = async (req, res, next) => {
       ]);
 
       recentDays.push({
-        date: dayStart.toISOString().slice(5, 10), // MM-DD
+        date: dayStart.toISOString().slice(5, 10),
         newUsers,
         newContent
       });
@@ -819,12 +827,10 @@ exports.dashboard = async (req, res, next) => {
     res.json({
       code: 0,
       data: {
+        period,
         overview: {
-          totalUsers,
-          totalContent,
-          todayContent,
-          todayNewUsers,
-          weekNewUsers,
+          userCount,
+          contentCount,
           bannedUsers,
           pendingReports
         },
