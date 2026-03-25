@@ -6,12 +6,13 @@
   </view>
 
   <!-- 顶部Tab栏 -->
-  <scroll-view scroll-x class="tab-scroll" enhanced show-scrollbar="{{false}}">
+  <scroll-view scroll-x class="tab-bar" enhanced show-scrollbar="{{false}}">
     <view class="tab-list">
       <view class="tab-item {{activeTab === item.id ? 'active' : ''}}"
             wx:for="{{tabs}}" wx:key="id"
             bindtap="switchTab" data-id="{{item.id}}">
         <text>{{item.name}}</text>
+        <view class="tab-line" wx:if="{{activeTab === item.id}}"></view>
       </view>
     </view>
   </scroll-view>

@@ -17,31 +17,35 @@
 }
 
 /* Tab 栏 */
-.tab-scroll {
+.tab-bar {
   white-space: nowrap;
   flex-shrink: 0;
+  border-bottom: 1rpx solid #F0EDE8;
 }
 .tab-list {
   display: flex;
-  padding: 0 28rpx 16rpx;
-  gap: 12rpx;
+  padding: 0 20rpx;
 }
 .tab-item {
   flex-shrink: 0;
-  padding: 14rpx 32rpx;
-  font-size: 28rpx;
-  color: #6B6B6B;
-  background: #fff;
-  border-radius: 32rpx;
-  border: 1rpx solid #E5E2DC;
-  font-weight: 500;
+  padding: 20rpx 28rpx;
+  font-size: 30rpx;
+  color: #9A9A9A;
+  position: relative;
 }
 .tab-item.active {
+  color: #2C2C2C;
+  font-weight: 700;
+}
+.tab-line {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40rpx;
+  height: 6rpx;
   background: #C67A52;
-  border-color: #C67A52;
-  color: #fff;
-  font-weight: 600;
-  box-shadow: 0 6rpx 20rpx rgba(198, 122, 82, 0.3);
+  border-radius: 3rpx;
 }
 
 /* 信息流 */
