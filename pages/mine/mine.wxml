@@ -97,6 +97,92 @@
     <!-- 管理入口（仅管理员可见） -->
     <view class="menu-group" wx:if="{{isAdmin}}">
       <view class="menu-title">管理</view>
+
+      <!-- 数据看板 -->
+      <view class="dashboard" wx:if="{{dashboard}}">
+        <!-- 概览卡片 -->
+        <view class="dash-overview">
+          <view class="dash-stat">
+            <text class="dash-stat-value" style="color:#C67A52;">{{dashboard.overview.totalUsers}}</text>
+            <text class="dash-stat-label">总用户</text>
+          </view>
+          <view class="dash-stat">
+            <text class="dash-stat-value" style="color:#4A90D9;">{{dashboard.overview.totalContent}}</text>
+            <text class="dash-stat-label">总内容</text>
+          </view>
+          <view class="dash-stat">
+            <text class="dash-stat-value" style="color:#E8883C;">{{dashboard.overview.todayContent}}</text>
+            <text class="dash-stat-label">今日动态</text>
+          </view>
+          <view class="dash-stat">
+            <text class="dash-stat-value" style="color:#8B6DB0;">{{dashboard.overview.todayNewUsers}}</text>
+            <text class="dash-stat-label">今日新增</text>
+          </view>
+        </view>
+
+        <!-- 第二行概览 -->
+        <view class="dash-overview dash-overview-secondary">
+          <view class="dash-stat">
+            <text class="dash-stat-value" style="color:#4A90D9;">{{dashboard.overview.weekNewUsers}}</text>
+            <text class="dash-stat-label">本周新增</text>
+          </view>
+          <view class="dash-stat">
+            <text class="dash-stat-value" style="color:#E8883C;">{{dashboard.overview.pendingReports}}</text>
+            <text class="dash-stat-label">待处理举报</text>
+          </view>
+          <view class="dash-stat">
+            <text class="dash-stat-value" style="color:#D94A4A;">{{dashboard.overview.bannedUsers}}</text>
+            <text class="dash-stat-label">封禁用户</text>
+          </view>
+        </view>
+
+        <!-- 内容分布 -->
+        <view class="dash-section">
+          <text class="dash-section-title">内容分布</text>
+          <view class="dash-bar-list">
+            <view class="dash-bar-item" wx:for="{{contentBarList}}" wx:key="label">
+              <text class="dash-bar-label">{{item.label}}</text>
+              <view class="dash-bar-track">
+                <view class="dash-bar-fill" style="width:{{item.percent}}%;background:{{item.color}};"></view>
+              </view>
+              <text class="dash-bar-count">{{item.count}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 住户分布 -->
+        <view class="dash-section">
+          <text class="dash-section-title">住户楼栋分布</text>
+          <view class="dash-building-list">
+            <view class="dash-building-item" wx:for="{{dashboard.usersByBuilding}}" wx:key="building">
+              <text class="dash-building-name">{{item.building}}</text>
+              <view class="dash-bar-track">
+                <view class="dash-bar-fill" style="width:{{item.percent}}%;background:#C67A52;"></view>
+              </view>
+              <text class="dash-bar-count">{{item.count}}人</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 7日趋势 -->
+        <view class="dash-section">
+          <text class="dash-section-title">近7日趋势</text>
+          <view class="dash-trend">
+            <view class="dash-trend-row dash-trend-header">
+              <text class="dash-trend-cell">日期</text>
+              <text class="dash-trend-cell">新用户</text>
+              <text class="dash-trend-cell">新内容</text>
+            </view>
+            <view class="dash-trend-row" wx:for="{{dashboard.recentDays}}" wx:key="date">
+              <text class="dash-trend-cell">{{item.date}}</text>
+              <text class="dash-trend-cell" style="color:#8B6DB0;">{{item.newUsers}}</text>
+              <text class="dash-trend-cell" style="color:#4A90D9;">{{item.newContent}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 管理功能入口 -->
       <view class="menu-item" bindtap="goAdmin">
         <icon name="clipboard" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">内容管理</text>

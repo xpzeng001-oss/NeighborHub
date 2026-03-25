@@ -145,6 +145,7 @@ const getAdminCommunityApplications = (params) => request({ url: '/api/admin/com
 const handleCommunityApplication = (id, data) => request({ url: '/api/admin/community-applications/' + id, method: 'PUT', data });
 
 const getAdminStats = () => request({ url: '/api/admin/stats' });
+const getAdminDashboard = () => request({ url: '/api/admin/dashboard' });
 const getAdminReports = (params) => request({ url: '/api/admin/reports', data: params });
 const handleAdminReport = (id, data) => request({ url: '/api/admin/reports/' + id, method: 'PUT', data });
 const getAdminContent = (params) => request({ url: '/api/admin/content', data: params });
@@ -180,7 +181,7 @@ module.exports = {
   getConversations, createConversation, getMessages, sendMessage, markConversationRead,
   getDistricts, getCommunities, applyCommunity, getMyCommunityApplications,
   getAdminCommunityApplications, handleCommunityApplication,
-  getAdminStats, getAdminReports, handleAdminReport, getAdminContent, takedownContent, restoreContent,
+  getAdminStats, getAdminDashboard, getAdminReports, handleAdminReport, getAdminContent, takedownContent, restoreContent,
   deleteHelp, deleteCarpool, deleteRental,
   getAdminUsers, banUser, unbanUser,
   getAdminCommunities, createAdminCommunity, deleteAdminCommunity, assignCommunityDistrict,

@@ -10,6 +10,7 @@ const {
   PetPost,
   SamOrder,
   Carpool,
+  Rental,
   Report,
   Violation,
   Community,
@@ -710,4 +711,119 @@ exports.assignCommunityToDistrict = async (req, res, next) => {
     await community.update({ district_id: districtId || null });
     res.json({ code: 0, data: null });
   } catch (err) { next(err); }
+};
+
+// ────────────────────────────────────────────────────────────
+// GET /admin/dashboard — 管理员数据看板
+// ────────────────────────────────────────────────────────────
+exports.dashboard = async (req, res, next) => {
+  try {
+    const now = new Date();
+    const today = new Date(now);
+    today.setHours(0, 0, 0, 0);
+
+    const weekAgo = new Date(today);
+    weekAgo.setDate(weekAgo.getDate() - 7);
+
+    // ── Overview stats ──
+    const [
+      totalUsers, todayNewUsers, weekNewUsers, bannedUsers, pendingReports,
+      productCount, postCount, helpCount, rentalCount, petCount, samCount, carpoolCount
+    ] = await Promise.all([
+      User.count(),
+      User.count({ where: { created_at: { [Op.gte]: today } } }),
+      User.count({ where: { created_at: { [Op.gte]: weekAgo } } }),
+      User.count({ where: { is_banned: true } }),
+      Report.count({ where: { status: 'pending' } }),
+      Product.count({ where: { status: { [Op.ne]: 'off' } } }),
+      Post.count({ where: { status: { [Op.ne]: 'off' } } }),
+      HelpRequest.count({ where: { status: { [Op.ne]: 'off' } } }),
+      Rental.count(),
+      PetPost.count({ where: { status: { [Op.ne]: 'off' } } }),
+      SamOrder.count({ where: { status: { [Op.ne]: 'off' } } }),
+      Carpool.count({ where: { status: { [Op.ne]: 'off' } } })
+    ]);
+
+    const totalContent = productCount + postCount + helpCount + rentalCount + petCount + samCount + carpoolCount;
+
+    // Today's new content
+    const todayWhere = { created_at: { [Op.gte]: today } };
+    const todayContent = (await Promise.all([
+      Post.count({ where: { ...todayWhere, status: { [Op.ne]: 'off' } } }),
+      Product.count({ where: { ...todayWhere, status: { [Op.ne]: 'off' } } }),
+      HelpRequest.count({ where: { ...todayWhere, status: { [Op.ne]: 'off' } } }),
+      PetPost.count({ where: { ...todayWhere, status: { [Op.ne]: 'off' } } }),
+      SamOrder.count({ where: { ...todayWhere, status: { [Op.ne]: 'off' } } }),
+      Carpool.count({ where: { ...todayWhere, status: { [Op.ne]: 'off' } } })
+    ])).reduce((a, b) => a + b, 0);
+
+    // ── Users by building ──
+    const usersByBuilding = await User.findAll({
+      attributes: [
+        'building',
+        [sequelize.fn('COUNT', sequelize.col('id')), 'count']
+      ],
+      where: { building: { [Op.ne]: '' } },
+      group: ['building'],
+      order: [[sequelize.literal('count'), 'DESC']],
+      raw: true
+    });
+
+    // ── 7-day trend ──
+    const recentDays = [];
+    for (let i = 6; i >= 0; i--) {
+      const dayStart = new Date(today);
+      dayStart.setDate(dayStart.getDate() - i);
+      const dayEnd = new Date(dayStart);
+      dayEnd.setDate(dayEnd.getDate() + 1);
+
+      const dayWhere = { created_at: { [Op.gte]: dayStart, [Op.lt]: dayEnd } };
+
+      const [newUsers, newContent] = await Promise.all([
+        User.count({ where: dayWhere }),
+        Promise.all([
+          Post.count({ where: dayWhere }),
+          Product.count({ where: dayWhere }),
+          HelpRequest.count({ where: dayWhere }),
+          PetPost.count({ where: dayWhere }),
+          SamOrder.count({ where: dayWhere }),
+          Carpool.count({ where: dayWhere })
+        ]).then(counts => counts.reduce((a, b) => a + b, 0))
+      ]);
+
+      recentDays.push({
+        date: dayStart.toISOString().slice(5, 10), // MM-DD
+        newUsers,
+        newContent
+      });
+    }
+
+    res.json({
+      code: 0,
+      data: {
+        overview: {
+          totalUsers,
+          totalContent,
+          todayContent,
+          todayNewUsers,
+          weekNewUsers,
+          bannedUsers,
+          pendingReports
+        },
+        contentBreakdown: {
+          product: productCount,
+          post: postCount,
+          help: helpCount,
+          rental: rentalCount,
+          pet: petCount,
+          sam: samCount,
+          carpool: carpoolCount
+        },
+        usersByBuilding,
+        recentDays
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
 };

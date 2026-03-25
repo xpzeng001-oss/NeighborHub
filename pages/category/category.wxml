@@ -16,25 +16,4 @@
     </view>
   </view>
 
-  <!-- 社区数据 -->
-  <view class="stats-card">
-    <view class="stats-header">
-      <icon name="star" size="32" color="#D4A04A"></icon>
-      <text class="stats-title">{{communityName}}</text>
-    </view>
-    <view class="stats-row">
-      <view class="stat-item">
-        <text class="stat-value" style="color: #C67A52;">{{stats.registeredUsers}}</text>
-        <text class="stat-label">入驻住户</text>
-      </view>
-      <view class="stat-item">
-        <text class="stat-value" style="color: #4A90D9;">{{stats.activePosts}}</text>
-        <text class="stat-label">总帖子数</text>
-      </view>
-      <view class="stat-item">
-        <text class="stat-value" style="color: #C67A52;">{{stats.todayPosts}}</text>
-        <text class="stat-label">今日动态</text>
-      </view>
-    </view>
-  </view>
 </view>

@@ -11,11 +11,6 @@ Page({
       { id: 'sam', name: '山姆拼单', icon: 'shopping-cart', color: '#8B6DB0', tint: '#E8D5F0', count: 0, url: '/pages/sam/sam' },
       { id: 'carpool', name: '拼车顺路', icon: 'car', color: '#4A90D9', tint: '#DAEAF6', count: 0, url: '/pages/carpool/carpool' }
     ],
-    stats: {
-      registeredUsers: 12,
-      activePosts: 0,
-      todayPosts: 0
-    }
   },
 
   onLoad() {
@@ -27,9 +22,6 @@ Page({
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({ selected: 1 });
     }
-    const app = getApp();
-    const district = app.globalData.currentDistrict;
-    this.setData({ communityName: (district && district.name) || '社区数据' });
     this.loadCounts();
   },
 
@@ -44,12 +36,7 @@ Page({
         ...cat,
         count: counts[cat.id] || 0
       }));
-      this.setData({
-        categories,
-        'stats.registeredUsers': counts.registeredUsers || 12,
-        'stats.activePosts': counts.activePosts || 0,
-        'stats.todayPosts': counts.todayPosts || 0
-      });
+      this.setData({ categories });
     } catch (e) {
       // 加载失败保持当前数量
     }

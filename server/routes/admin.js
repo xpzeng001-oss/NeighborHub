@@ -9,6 +9,9 @@ router.use(auth, adminAuth);
 // Dashboard stats
 router.get('/stats', admin.stats);
 
+// Admin data dashboard (管理员数据看板)
+router.get('/dashboard', admin.dashboard);
+
 // Report management
 router.get('/reports',     admin.listReports);
 router.put('/reports/:id', admin.handleReport);
