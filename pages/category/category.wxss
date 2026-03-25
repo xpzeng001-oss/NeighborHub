@@ -95,6 +95,9 @@
 
 /* 类型标签 */
 .feed-type-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4rpx;
   font-size: 22rpx;
   padding: 6rpx 16rpx;
   border-radius: 8rpx;

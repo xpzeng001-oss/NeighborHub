@@ -32,8 +32,10 @@
             <text class="feed-username">{{item.userName}}</text>
             <text class="feed-time">{{item.timeAgo}}</text>
           </view>
-          <icon wx:if="{{item.isTop}}" name="flame" size="28" color="#E8636F" filled></icon>
-          <view class="feed-type-tag tag-{{item.feedType}}">{{item.typeLabel}}</view>
+          <view class="feed-type-tag tag-{{item.feedType}}">
+            <icon wx:if="{{item.isTop}}" name="flame" size="24" color="#E8636F" filled></icon>
+            <text>{{item.typeLabel}}</text>
+          </view>
         </view>
 
         <!-- 标题 -->
