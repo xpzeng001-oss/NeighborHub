@@ -326,6 +326,23 @@ Page({
     });
   },
 
+  async toggleTop(e) {
+    const { id, index } = e.currentTarget.dataset;
+    const item = this.data.contentList[index];
+    const action = item.isTop ? '取消置顶' : '置顶';
+    try {
+      wx.showLoading({ title: '处理中...' });
+      const res = await api.togglePostTop(id);
+      wx.hideLoading();
+      const key = 'contentList[' + index + '].isTop';
+      this.setData({ [key]: res.isTop });
+      wx.showToast({ title: '已' + action, icon: 'success' });
+    } catch (err) {
+      wx.hideLoading();
+      wx.showToast({ title: err.message || '操作失败', icon: 'none' });
+    }
+  },
+
   // ==================== Users ====================
 
   async loadUsers() {

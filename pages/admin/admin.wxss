@@ -206,6 +206,16 @@
   background: #F0F0F0;
 }
 
+.top-badge-sm {
+  font-size: 20rpx;
+  padding: 4rpx 14rpx;
+  border-radius: 16rpx;
+  font-weight: 600;
+  color: #E8636F;
+  background: rgba(232, 99, 111, 0.1);
+  flex-shrink: 0;
+}
+
 /* ==================== Status Badges ==================== */
 .status-badge {
   font-size: 20rpx;
@@ -263,6 +273,20 @@
 }
 .btn-action.btn-success:active {
   background: #3D9141;
+}
+.btn-action.btn-warn {
+  color: #fff;
+  background: #E8883C;
+}
+.btn-action.btn-warn:active {
+  background: #D47A30;
+}
+.btn-action.btn-plain {
+  color: #666;
+  background: #F0EDE8;
+}
+.btn-action.btn-plain:active {
+  background: #E5E2DC;
 }
 .btn-action.btn-gray {
   color: #666;
@@ -414,6 +438,10 @@
 .content-username {
   font-size: 22rpx;
   color: #9A9A9A;
+}
+.content-location {
+  font-size: 20rpx;
+  color: #C67A52;
 }
 .content-time {
   font-size: 22rpx;

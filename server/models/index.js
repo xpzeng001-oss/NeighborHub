@@ -99,6 +99,18 @@ Community.belongsTo(District, { foreignKey: 'district_id' });
 // Community <-> Content models
 Community.hasMany(Product, { foreignKey: 'community_id' });
 Product.belongsTo(Community, { foreignKey: 'community_id' });
+Community.hasMany(Post, { foreignKey: 'community_id' });
+Post.belongsTo(Community, { foreignKey: 'community_id' });
+Community.hasMany(HelpRequest, { foreignKey: 'community_id' });
+HelpRequest.belongsTo(Community, { foreignKey: 'community_id' });
+Community.hasMany(PetPost, { foreignKey: 'community_id' });
+PetPost.belongsTo(Community, { foreignKey: 'community_id' });
+Community.hasMany(SamOrder, { foreignKey: 'community_id' });
+SamOrder.belongsTo(Community, { foreignKey: 'community_id' });
+Community.hasMany(Carpool, { foreignKey: 'community_id' });
+Carpool.belongsTo(Community, { foreignKey: 'community_id' });
+Community.hasMany(Rental, { foreignKey: 'community_id' });
+Rental.belongsTo(Community, { foreignKey: 'community_id' });
 
 // User <-> CommunityApplication
 User.hasMany(CommunityApplication, { foreignKey: 'user_id' });

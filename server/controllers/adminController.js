@@ -253,25 +253,33 @@ exports.listContent = async (req, res, next) => {
         }
       }
 
-      const items = await Model.findAll({
-        where,
-        include: [{ model: User, attributes: ['id', 'nick_name', 'avatar_url'] }],
-        order: [['created_at', 'DESC']]
-      });
+      const include = [
+        { model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] }
+      ];
+      // Include community if model has community_id
+      if (Model.rawAttributes.community_id) {
+        include.push({ model: Community, attributes: ['id', 'name'], required: false });
+      }
+
+      const items = await Model.findAll({ where, include, order: [['created_at', 'DESC']] });
 
       items.forEach(item => {
         const info = extractInfo(t, item);
-        allItems.push({
+        const entry = {
           id:          item.id,
           type:        t,
           title:       info.title.substring(0, 100),
           description: (info.description || '').substring(0, 200),
           userName:    item.User ? item.User.nick_name : '未知用户',
           userAvatar:  item.User ? item.User.avatar_url : '',
+          building:    item.User ? item.User.building : '',
+          community:   item.Community ? item.Community.name : '',
           images:      info.images,
           status:      info.status,
           createdAt:   item.created_at
-        });
+        };
+        if (t === 'post') entry.isTop = !!item.is_top;
+        allItems.push(entry);
       });
     }
 
@@ -697,6 +705,23 @@ exports.deleteDistrict = async (req, res, next) => {
     await district.destroy();
     res.json({ code: 0, data: null });
   } catch (err) { next(err); }
+};
+
+// ────────────────────────────────────────────────────────────
+// PUT /admin/posts/:id/top — 置顶/取消置顶帖子
+// ────────────────────────────────────────────────────────────
+exports.togglePostTop = async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.id);
+    if (!post) {
+      return res.status(404).json({ code: 404, message: '帖子不存在', data: null });
+    }
+    post.is_top = !post.is_top;
+    await post.save();
+    res.json({ code: 0, data: { id: post.id, isTop: post.is_top } });
+  } catch (err) {
+    next(err);
+  }
 };
 
 exports.assignCommunityToDistrict = async (req, res, next) => {
