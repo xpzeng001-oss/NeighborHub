@@ -51,21 +51,24 @@
       </view>
     </view>
 
-    <!-- 住户分布 -->
-    <view class="dash-card">
-      <text class="dash-section-title">住户楼栋分布</text>
-      <view class="dash-bar-list">
-        <view class="dash-bar-item" wx:for="{{dashboard.usersByBuilding}}" wx:key="building">
-          <text class="dash-bar-label">{{item.building}}</text>
+    <!-- 小区住户分布 -->
+    <view class="dash-card" wx:for="{{dashboard.usersByCommunity}}" wx:key="community">
+      <view class="dash-community-header">
+        <text class="dash-section-title" style="margin-bottom:0;">{{item.community}}</text>
+        <text class="dash-community-total">{{item.totalCount}}人</text>
+      </view>
+      <view class="dash-bar-list" style="margin-top:16rpx;">
+        <view class="dash-bar-item" wx:for="{{item.buildings}}" wx:for-item="b" wx:key="building">
+          <text class="dash-bar-label">{{b.building}}</text>
           <view class="dash-bar-track">
-            <view class="dash-bar-fill" style="width:{{item.percent}}%;background:#C67A52;"></view>
+            <view class="dash-bar-fill" style="width:{{b.percent}}%;background:#C67A52;"></view>
           </view>
-          <text class="dash-bar-count">{{item.count}}人</text>
+          <text class="dash-bar-count">{{b.count}}人</text>
         </view>
       </view>
-      <view class="dash-empty" wx:if="{{!dashboard.usersByBuilding.length}}">
-        <text class="dash-empty-text">暂无楼栋认证数据</text>
-      </view>
+    </view>
+    <view class="dash-card" wx:if="{{!dashboard.usersByCommunity.length}}">
+      <text class="dash-empty-text">暂无小区住户数据</text>
     </view>
 
     <!-- 7日趋势 -->

@@ -113,6 +113,17 @@
   color: #2C2C2C;
 }
 
+.dash-community-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dash-community-total {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #C67A52;
+}
+
 .dash-empty {
   padding: 40rpx 0;
   text-align: center;

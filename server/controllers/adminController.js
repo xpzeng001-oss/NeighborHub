@@ -757,17 +757,35 @@ exports.dashboard = async (req, res, next) => {
       Carpool.count({ where: { ...todayWhere, status: { [Op.ne]: 'off' } } })
     ])).reduce((a, b) => a + b, 0);
 
-    // ── Users by building ──
-    const usersByBuilding = await User.findAll({
-      attributes: [
-        'building',
-        [sequelize.fn('COUNT', sequelize.col('id')), 'count']
-      ],
-      where: { building: { [Op.ne]: '' } },
-      group: ['building'],
-      order: [[sequelize.literal('count'), 'DESC']],
-      raw: true
-    });
+    // ── Users by community + building ──
+    const usersByCommunityRaw = await sequelize.query(`
+      SELECT c.name AS community, u.building, COUNT(DISTINCT u.id) AS count
+      FROM (
+        SELECT user_id, community_id FROM products WHERE community_id IS NOT NULL
+        UNION SELECT user_id, community_id FROM posts WHERE community_id IS NOT NULL
+        UNION SELECT user_id, community_id FROM help_requests WHERE community_id IS NOT NULL
+        UNION SELECT user_id, community_id FROM pet_posts WHERE community_id IS NOT NULL
+        UNION SELECT user_id, community_id FROM sam_orders WHERE community_id IS NOT NULL
+        UNION SELECT user_id, community_id FROM carpools WHERE community_id IS NOT NULL
+      ) AS uc
+      JOIN users u ON u.id = uc.user_id
+      JOIN communities c ON c.id = uc.community_id
+      WHERE u.building IS NOT NULL AND u.building != ''
+      GROUP BY c.name, u.building
+      ORDER BY c.name, count DESC
+    `, { type: sequelize.QueryTypes.SELECT });
+
+    // Group into { community, totalCount, buildings: [{building, count}] }
+    const communityMap = {};
+    for (const row of usersByCommunityRaw) {
+      if (!communityMap[row.community]) {
+        communityMap[row.community] = { community: row.community, totalCount: 0, buildings: [] };
+      }
+      const cnt = Number(row.count);
+      communityMap[row.community].totalCount += cnt;
+      communityMap[row.community].buildings.push({ building: row.building, count: cnt });
+    }
+    const usersByCommunity = Object.values(communityMap).sort((a, b) => b.totalCount - a.totalCount);
 
     // ── 7-day trend ──
     const recentDays = [];
@@ -819,7 +837,7 @@ exports.dashboard = async (req, res, next) => {
           sam: samCount,
           carpool: carpoolCount
         },
-        usersByBuilding,
+        usersByCommunity,
         recentDays
       }
     });

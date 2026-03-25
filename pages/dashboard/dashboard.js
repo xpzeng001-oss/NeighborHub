@@ -32,16 +32,20 @@ Page({
         percent: Math.round((item.count / maxContent) * 100)
       }));
 
-      // Calculate percentages for building distribution
-      const maxBuilding = Math.max(...(data.usersByBuilding || []).map(b => Number(b.count)), 1);
-      const usersByBuilding = (data.usersByBuilding || []).map(b => ({
-        ...b,
-        count: Number(b.count),
-        percent: Math.round((Number(b.count) / maxBuilding) * 100)
-      }));
+      // Calculate percentages for each community's buildings
+      const usersByCommunity = (data.usersByCommunity || []).map(c => {
+        const maxB = Math.max(...c.buildings.map(b => b.count), 1);
+        return {
+          ...c,
+          buildings: c.buildings.map(b => ({
+            ...b,
+            percent: Math.round((b.count / maxB) * 100)
+          }))
+        };
+      });
 
       this.setData({
-        dashboard: { ...data, usersByBuilding },
+        dashboard: { ...data, usersByCommunity },
         contentBarList
       });
     } catch (e) {
