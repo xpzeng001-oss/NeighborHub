@@ -1,6 +1,7 @@
 const { User } = require('../models');
 const wechatService = require('../services/wechatService');
 const tokenService = require('../services/tokenService');
+const coinService = require('../services/coinService');
 
 const DEFAULT_NICKNAMES = [
   '快乐邻居', '阳光住户', '友善邻里', '温馨家人', '热心业主',
@@ -71,6 +72,10 @@ exports.login = async (req, res, next) => {
       await user.update(updates);
     }
 
+    // 每日登录奖励
+    const loginCoins = await coinService.grant(user.id, 'daily_login');
+    if (loginCoins) await user.reload();
+
     // 签发 JWT
     const token = tokenService.sign({ id: user.id, openid: user.openid });
 
@@ -84,7 +89,7 @@ exports.login = async (req, res, next) => {
           nickName: user.nick_name,
           avatarUrl: user.avatar_url,
           building: user.building,
-          creditScore: user.credit_score,
+          coins: user.coins,
           isVerified: user.is_verified,
           role: user.role
         },

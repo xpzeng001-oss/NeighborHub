@@ -1,5 +1,6 @@
 const { HelpRequest, User } = require('../models');
 const { buildDistrictFilter } = require('../utils/districtFilter');
+const coinService = require('../services/coinService');
 
 exports.list = async (req, res, next) => {
   try {
@@ -54,6 +55,9 @@ exports.create = async (req, res, next) => {
       deadline: deadline || null,
       community_id: communityId || null
     });
+
+    // 发帖 +3
+    coinService.grant(req.user.id, 'publish_post', help.id);
 
     res.json({ code: 0, data: { id: help.id } });
   } catch (err) {

@@ -28,9 +28,9 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING(32),
     defaultValue: ''
   },
-  credit_score: {
+  coins: {
     type: DataTypes.INTEGER,
-    defaultValue: 100
+    defaultValue: 0
   },
   is_verified: {
     type: DataTypes.BOOLEAN,

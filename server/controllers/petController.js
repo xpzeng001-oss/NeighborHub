@@ -1,5 +1,6 @@
 const { PetPost, User } = require('../models');
 const contentCheckService = require('../services/contentCheckService');
+const coinService = require('../services/coinService');
 const { buildDistrictFilter } = require('../utils/districtFilter');
 
 exports.list = async (req, res, next) => {
@@ -98,6 +99,9 @@ exports.create = async (req, res, next) => {
       tags: tags || [],
       community_id: communityId || null
     });
+
+    // 发帖 +3
+    coinService.grant(req.user.id, 'publish_post', pet.id);
 
     res.json({ code: 0, data: { id: pet.id } });
   } catch (err) {

@@ -1,30 +1,49 @@
 const app = getApp();
+const api = require('../../utils/api');
 
 Page({
   data: {
-    score: 100,
-    level: '新住户',
-    levelColor: '#999',
+    coins: 0,
     rules: [
-      { action: '发布商品', point: '+2', desc: '每次发布闲置商品' },
-      { action: '完成交易', point: '+5', desc: '买卖双方确认交易完成' },
-      { action: '帮助邻居', point: '+3', desc: '响应求帮忙请求' },
-      { action: '获得好评', point: '+2', desc: '交易后获得对方好评' },
-      { action: '被举报', point: '-10', desc: '被其他用户举报且成立' },
-      { action: '违规发布', point: '-5', desc: '发布违规内容被处理' }
-    ]
+      { action: '发布闲置/免费送', point: '+5', desc: '每次发布，每日最多3次' },
+      { action: '发帖', point: '+3', desc: '论坛/互助/拼车/团购/宠物，每日最多5次' },
+      { action: '每日登录', point: '+1', desc: '每天首次打开小程序' },
+      { action: '交易完成', point: '+10', desc: '标记商品已售出' },
+      { action: '邀请好友', point: '+20', desc: '好友完成社区认证后发放' }
+    ],
+    logs: [],
+    hasMore: true,
+    page: 1
   },
 
   onLoad() {
+    this.refreshCoins();
+    this.loadLogs();
+  },
+
+  refreshCoins() {
     const userInfo = app.globalData.userInfo;
     if (!userInfo) return;
 
-    const score = userInfo.creditScore || userInfo.credit_score || 100;
-    let level = '新住户';
-    let levelColor = '#999';
-    if (score >= 200) { level = '金牌邻居'; levelColor = '#D4A04A'; }
-    else if (score >= 120) { level = '活跃邻居'; levelColor = '#C67A52'; }
+    this.setData({ coins: userInfo.coins || 0 });
+  },
 
-    this.setData({ score, level, levelColor });
+  async loadLogs() {
+    try {
+      const res = await api.getCoinLogs({ page: this.data.page, pageSize: 20 });
+      const logs = this.data.page === 1 ? res.list : [...this.data.logs, ...res.list];
+      this.setData({
+        logs,
+        hasMore: logs.length < res.total
+      });
+    } catch (e) {
+      // ignore
+    }
+  },
+
+  loadMore() {
+    if (!this.data.hasMore) return;
+    this.setData({ page: this.data.page + 1 });
+    this.loadLogs();
   }
 });

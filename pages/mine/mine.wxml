@@ -15,9 +15,9 @@
             </view>
           </view>
         </view>
-        <view class="credit-badge">
-          <text class="credit-label">信用分</text>
-          <text class="credit-score">{{userInfo.credit_score || 100}}</text>
+        <view class="credit-badge" bindtap="goCredit">
+          <text class="credit-label">邻里币</text>
+          <text class="credit-score">{{userInfo.coins || 0}}</text>
         </view>
       </view>
       <view class="profile-content login-prompt" wx:else>
@@ -64,11 +64,8 @@
       </picker>
       <view class="menu-item" bindtap="goCredit">
         <icon name="star" size="36" color="#333" class="menu-icon-wrap"></icon>
-        <text class="menu-text">我的信用</text>
-        <view class="menu-right">
-          <text class="credit-level">{{creditLevel}}</text>
-          <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
-        </view>
+        <text class="menu-text">邻里币</text>
+        <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
       </view>
       <view class="menu-item" bindtap="goReport">
         <icon name="alert-triangle" size="36" color="#333" class="menu-icon-wrap"></icon>

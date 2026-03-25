@@ -1,42 +1,40 @@
 <!--pages/credit/credit.wxml-->
 <view class="page">
-  <!-- 信用分卡片 -->
+  <!-- 邻里币卡片 -->
   <view class="score-card">
-    <text class="score-num">{{score}}</text>
-    <text class="score-label">信用分</text>
-    <view class="level-badge" style="background: {{levelColor}};">
-      <text>{{level}}</text>
-    </view>
+    <text class="score-num">{{coins}}</text>
+    <text class="score-label">邻里币</text>
   </view>
 
-  <!-- 信用等级说明 -->
+  <!-- 获取规则 -->
   <view class="section">
-    <view class="section-title">信用等级</view>
-    <view class="level-row">
-      <view class="level-item">
-        <text class="level-range">0-119</text>
-        <text class="level-name" style="color: #999;">新住户</text>
-      </view>
-      <view class="level-item">
-        <text class="level-range">120-199</text>
-        <text class="level-name" style="color: #C67A52;">活跃邻居</text>
-      </view>
-      <view class="level-item">
-        <text class="level-range">200+</text>
-        <text class="level-name" style="color: #D4A04A;">金牌邻居</text>
-      </view>
-    </view>
-  </view>
-
-  <!-- 积分规则 -->
-  <view class="section">
-    <view class="section-title">积分规则</view>
+    <view class="section-title">获取规则</view>
     <view class="rule-item" wx:for="{{rules}}" wx:key="action">
       <view class="rule-left">
         <text class="rule-action">{{item.action}}</text>
         <text class="rule-desc">{{item.desc}}</text>
       </view>
-      <text class="rule-point {{item.point.indexOf('-') >= 0 ? 'minus' : 'plus'}}">{{item.point}}</text>
+      <text class="rule-point plus">{{item.point}}</text>
+    </view>
+  </view>
+
+  <!-- 收支记录 -->
+  <view class="section">
+    <view class="section-title">最近记录</view>
+    <block wx:if="{{logs.length > 0}}">
+      <view class="log-item" wx:for="{{logs}}" wx:key="id">
+        <view class="log-left">
+          <text class="log-label">{{item.label}}</text>
+          <text class="log-time">{{item.createdAt}}</text>
+        </view>
+        <text class="log-coins">+{{item.coins}}</text>
+      </view>
+      <view class="load-more" wx:if="{{hasMore}}" bindtap="loadMore">
+        <text>加载更多</text>
+      </view>
+    </block>
+    <view class="empty-tip" wx:else>
+      <text>暂无记录，发布闲置或发帖即可获得邻里币</text>
     </view>
   </view>
 </view>

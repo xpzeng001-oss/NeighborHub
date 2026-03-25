@@ -20,6 +20,20 @@ async function start() {
       console.log('Database tables synced (fallback).');
     }
 
+    // 一次性迁移：credit_score → coins
+    try {
+      const [results] = await sequelize.query(
+        "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='users' AND COLUMN_NAME='credit_score'"
+      );
+      if (results.length > 0) {
+        await sequelize.query("UPDATE users SET coins = credit_score - 100 WHERE coins = 0 AND credit_score > 100");
+        await sequelize.query("ALTER TABLE users DROP COLUMN credit_score");
+        console.log('Migrated credit_score → coins.');
+      }
+    } catch (e) {
+      console.error('credit_score migration skipped:', e.message);
+    }
+
     // 确保管理员账号
     try {
       const { User } = require('./models');

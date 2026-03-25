@@ -175,8 +175,8 @@
           <text class="user-building" wx:if="{{item.building}}">{{item.building}}</text>
           <view class="user-stats">
             <view class="user-stat">
-              <text class="user-stat-label">信用分</text>
-              <text class="user-stat-value">{{item.creditScore || 100}}</text>
+              <text class="user-stat-label">邻里币</text>
+              <text class="user-stat-value">{{item.coins || 0}}</text>
             </view>
             <view class="user-stat">
               <text class="user-stat-label">违规次数</text>

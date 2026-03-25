@@ -84,8 +84,6 @@
 .menu-right { display: flex; align-items: center; gap: 8rpx; }
 .verify-status { font-size: 24rpx; color: #E8883C; }
 .verify-status.verified { color: #C67A52; }
-.credit-level { font-size: 24rpx; color: #C67A52; }
-
 /* 分享按钮 */
 .share-wrap { position: relative; }
 .share-btn-hidden {

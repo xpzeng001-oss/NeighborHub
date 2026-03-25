@@ -7,7 +7,6 @@ Page({
     statusBarHeight: 44,
     userInfo: null,
     isVerified: false,
-    creditLevel: '新住户',
     buildings: ['1栋', '2栋', '3栋', '5栋', '6栋', '7栋', '8栋', '9栋', '10栋', '12栋'],
     isAdmin: false
   },
@@ -26,15 +25,9 @@ Page({
       this.onQuickLogin();
     }
     if (userInfo) {
-      let creditLevel = '新住户';
-      const score = userInfo.creditScore || userInfo.credit_score || 100;
-      if (score >= 200) creditLevel = '金牌邻居';
-      else if (score >= 120) creditLevel = '活跃邻居';
-
       this.setData({
         userInfo,
         isVerified: !!userInfo.building,
-        creditLevel,
         isAdmin: userInfo.role === 'admin' || userInfo.id == 20
       });
     }

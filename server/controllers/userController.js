@@ -1,10 +1,10 @@
 const { Op } = require('sequelize');
-const { User, Product, Favorite } = require('../models');
+const { User, Product, Favorite, CoinLog } = require('../models');
 
 exports.getProfile = async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id, {
-      attributes: ['id', 'nick_name', 'avatar_url', 'building', 'credit_score', 'is_verified', 'created_at']
+      attributes: ['id', 'nick_name', 'avatar_url', 'building', 'coins', 'is_verified', 'created_at']
     });
 
     if (!user) {
@@ -18,7 +18,7 @@ exports.getProfile = async (req, res, next) => {
         nickName: user.nick_name,
         avatarUrl: user.avatar_url,
         building: user.building,
-        creditScore: user.credit_score,
+        coins: user.coins,
         isVerified: user.is_verified,
         createdAt: user.created_at
       }
@@ -56,8 +56,44 @@ exports.updateProfile = async (req, res, next) => {
         nickName: user.nick_name,
         avatarUrl: user.avatar_url,
         building: user.building,
-        creditScore: user.credit_score,
+        coins: user.coins,
         isVerified: user.is_verified
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getCoinLogs = async (req, res, next) => {
+  try {
+    const { page = 1, pageSize = 20 } = req.query;
+    const { rows, count } = await CoinLog.findAndCountAll({
+      where: { user_id: req.user.id },
+      order: [['created_at', 'DESC']],
+      limit: Number(pageSize),
+      offset: (Number(page) - 1) * Number(pageSize)
+    });
+
+    const ACTION_LABELS = {
+      publish_product: '发布闲置',
+      publish_post: '发帖',
+      daily_login: '每日登录',
+      trade_complete: '交易完成',
+      invite: '邀请好友'
+    };
+
+    res.json({
+      code: 0,
+      data: {
+        list: rows.map(r => ({
+          id: r.id,
+          action: r.action,
+          label: ACTION_LABELS[r.action] || r.action,
+          coins: r.coins,
+          createdAt: r.created_at
+        })),
+        total: count
       }
     });
   } catch (err) {

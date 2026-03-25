@@ -1,6 +1,7 @@
 const { Product, User, Favorite, Community } = require('../models');
 const { Op } = require('sequelize');
 const contentCheckService = require('../services/contentCheckService');
+const coinService = require('../services/coinService');
 const { buildDistrictFilter } = require('../utils/districtFilter');
 
 exports.list = async (req, res, next) => {
@@ -150,6 +151,9 @@ exports.create = async (req, res, next) => {
     // 异步图片安全检测
     contentCheckService.checkImages(req.user.openid, images, 'product', product.id);
 
+    // 发放邻里币（发布闲置/免费送 +5）
+    coinService.grant(req.user.id, 'publish_product', product.id);
+
     res.json({ code: 0, data: { id: product.id } });
   } catch (err) {
     next(err);
@@ -203,6 +207,8 @@ exports.markSold = async (req, res, next) => {
     if (!product) return res.status(404).json({ code: 404, message: '商品不存在', data: null });
     if (product.user_id !== req.user.id) return res.status(403).json({ code: 403, message: '无权操作', data: null });
     await product.update({ status: 'sold' });
+    // 交易完成 +10
+    coinService.grant(req.user.id, 'trade_complete', product.id);
     res.json({ code: 0, data: null });
   } catch (err) { next(err); }
 };

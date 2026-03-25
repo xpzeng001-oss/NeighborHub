@@ -27,6 +27,13 @@ Component({
     },
     goPage(e) {
       const url = e.currentTarget.dataset.path;
+      const app = getApp();
+      if (!app.globalData.userInfo) {
+        app.login(() => {
+          wx.navigateTo({ url: url });
+        });
+        return;
+      }
       wx.navigateTo({ url: url });
     },
     fetchUnread() {

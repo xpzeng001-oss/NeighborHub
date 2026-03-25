@@ -192,7 +192,7 @@ exports.handleReport = async (req, res, next) => {
           });
 
           // Deduct credit score
-          await User.decrement('credit_score', {
+          await User.decrement('coins', {
             by: 10,
             where: { id: target.user_id }
           });
@@ -325,7 +325,7 @@ exports.takedownContent = async (req, res, next) => {
     });
 
     // Deduct credit score
-    await User.decrement('credit_score', {
+    await User.decrement('coins', {
       by: 10,
       where: { id: item.user_id }
     });
@@ -384,7 +384,7 @@ exports.listUsers = async (req, res, next) => {
 
     const { rows, count } = await User.findAndCountAll({
       where,
-      attributes: ['id', 'nick_name', 'avatar_url', 'building', 'credit_score', 'is_verified', 'role', 'is_banned', 'created_at'],
+      attributes: ['id', 'nick_name', 'avatar_url', 'building', 'coins', 'is_verified', 'role', 'is_banned', 'created_at'],
       order: [['created_at', 'DESC']],
       limit: Number(pageSize),
       offset: (Number(page) - 1) * Number(pageSize)
@@ -410,7 +410,7 @@ exports.listUsers = async (req, res, next) => {
       nickName:       u.nick_name,
       avatarUrl:      u.avatar_url,
       building:       u.building,
-      creditScore:    u.credit_score,
+      coins:          u.coins,
       isVerified:     u.is_verified,
       role:           u.role,
       isBanned:       u.is_banned,

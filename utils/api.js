@@ -108,6 +108,7 @@ const createPet     = (data)     => request({ url: '/api/pets', method: 'POST', 
 const deletePet     = (id)       => request({ url: '/api/pets/' + id, method: 'DELETE' });
 const respondPet    = (id)       => request({ url: '/api/pets/' + id + '/respond', method: 'POST' });
 const updateUser    = (id, data) => request({ url: '/api/users/' + id, method: 'PUT', data });
+const getCoinLogs   = (params)  => request({ url: '/api/users/coin-logs', data: params });
 const getMyFavorites = (params)  => request({ url: '/api/products/favorites', data: params });
 
 // Reports
@@ -171,7 +172,7 @@ module.exports = {
   getSams, getSamDetail, createSam, deleteSam, joinSam, updateShoppingList, postSamUpdate, updatePickupStatus,
   getCarpools, createCarpool, joinCarpool,
   getPets, getPetDetail, createPet, deletePet, respondPet,
-  updateUser,
+  updateUser, getCoinLogs,
   getMyFavorites, getReports, createReport, getFeedbacks, createFeedback,
   uploadImage, uploadImages, getAvatarConfig,
   getCategoryCounts,

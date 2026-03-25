@@ -1,5 +1,6 @@
 const { Post, Comment, User } = require('../models');
 const contentCheckService = require('../services/contentCheckService');
+const coinService = require('../services/coinService');
 const { buildDistrictFilter } = require('../utils/districtFilter');
 
 exports.list = async (req, res, next) => {
@@ -104,6 +105,9 @@ exports.create = async (req, res, next) => {
 
     // 异步图片安全检测
     contentCheckService.checkImages(req.user.openid, images, 'post', post.id);
+
+    // 发帖 +3
+    coinService.grant(req.user.id, 'publish_post', post.id);
 
     res.json({ code: 0, data: { id: post.id } });
   } catch (err) {
