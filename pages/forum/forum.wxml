@@ -1,14 +1,5 @@
 <!--pages/forum/forum.wxml-->
 <view class="page">
-  <!-- 分类Tab -->
-  <view class="forum-tabs">
-    <view class="forum-tab {{forumTab === item ? 'active' : ''}}"
-          wx:for="{{tabs}}" wx:key="*this"
-          bindtap="switchTab" data-tab="{{item}}">
-      {{item}}
-    </view>
-  </view>
-
   <scroll-view scroll-y class="scroll-content" refresher-enabled="{{true}}"
                bindrefresherrefresh="onRefresh" refresher-triggered="{{isRefreshing}}">
     <view class="post-list">
@@ -26,7 +17,6 @@
             <text class="post-username">{{item.userName}}</text>
             <text class="post-time">{{item.timeAgo}}</text>
           </view>
-          <view class="category-tag tag-{{item.categoryClass}}">{{item.category}}</view>
         </view>
 
         <!-- 帖子内容 -->

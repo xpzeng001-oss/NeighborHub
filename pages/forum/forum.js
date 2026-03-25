@@ -4,8 +4,6 @@ const formatTime = d => { const df = Date.now() - d; if (df < 60000) return '刚
 
 Page({
   data: {
-    tabs: ['全部', '公告', '吐槽', '求助', '活动'],
-    forumTab: '全部',
     posts: [],
     filteredPosts: [],
     isRefreshing: false
@@ -17,33 +15,20 @@ Page({
 
   async loadPosts() {
     try {
-      const catClassMap = { '公告': 'announcement', '吐槽': 'complaint', '求助': 'question', '活动': 'activity' };
       const app = getApp();
       const district = app.globalData.currentDistrict;
       const params = {};
       if (district && district.id) params.districtId = district.id;
-      if (this.data.forumTab !== '全部') {
-        params.category = this.data.forumTab;
-      }
       const data = await api.getPosts(params);
-      console.log('[forum] API返回数据:', JSON.stringify(data).substring(0, 500));
-      console.log('[forum] list长度:', (data.list || []).length);
       const posts = (data.list || []).map(p => ({
         ...p,
-        timeAgo: formatTime(new Date(p.createdAt)),
-        categoryClass: catClassMap[p.category] || 'default'
+        timeAgo: formatTime(new Date(p.createdAt))
       }));
       this.setData({ posts, filteredPosts: posts });
-      console.log('[forum] setData完成, filteredPosts长度:', this.data.filteredPosts.length);
     } catch (err) {
       console.error('[forum] 加载帖子失败', err);
       wx.showToast({ title: '加载失败，请下拉刷新', icon: 'none' });
     }
-  },
-
-  switchTab(e) {
-    this.setData({ forumTab: e.currentTarget.dataset.tab });
-    this.loadPosts();
   },
 
   async onRefresh() {

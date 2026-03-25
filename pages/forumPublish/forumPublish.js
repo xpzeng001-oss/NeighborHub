@@ -4,9 +4,6 @@ const api = require('../../utils/api');
 
 Page({
   data: {
-    categories: ['公告', '吐槽', '求助', '活动'],
-    catClassMap: { '公告': 'announcement', '吐槽': 'complaint', '求助': 'question', '活动': 'activity' },
-    category: '',
     title: '',
     content: '',
     images: [],
@@ -18,10 +15,6 @@ Page({
       wx.showToast({ title: '请先登录', icon: 'none' });
       setTimeout(() => wx.navigateBack(), 1500);
     }
-  },
-
-  onCategoryTap(e) {
-    this.setData({ category: e.currentTarget.dataset.cat });
   },
 
   onTitleInput(e) {
@@ -68,10 +61,6 @@ Page({
       return;
     }
 
-    if (!this.data.category) {
-      wx.showToast({ title: '请选择分类', icon: 'none' });
-      return;
-    }
     if (!this.data.title.trim()) {
       wx.showToast({ title: '请输入标题', icon: 'none' });
       return;
@@ -89,7 +78,7 @@ Page({
       const app = getApp();
       const community = app.globalData.currentCommunity;
       await api.createPost({
-        category: this.data.category,
+        category: '帖子',
         title: this.data.title.trim(),
         content: this.data.content.trim(),
         images: imageUrls,

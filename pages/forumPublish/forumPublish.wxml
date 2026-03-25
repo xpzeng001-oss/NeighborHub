@@ -1,17 +1,5 @@
 <!--pages/forumPublish/forumPublish.wxml-->
 <view class="page">
-  <!-- 分类选择 -->
-  <view class="section">
-    <view class="section-title">选择分类</view>
-    <view class="category-list">
-      <view class="cat-item {{category === item ? 'active cat-' + catClassMap[item] : ''}}"
-            wx:for="{{categories}}" wx:key="*this"
-            bindtap="onCategoryTap" data-cat="{{item}}">
-        {{item}}
-      </view>
-    </view>
-  </view>
-
   <!-- 标题 -->
   <view class="section">
     <input class="title-input" placeholder="输入标题（必填）" maxlength="50" bindinput="onTitleInput" value="{{title}}" />

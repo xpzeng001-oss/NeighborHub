@@ -1,34 +1,6 @@
 /* pages/forum/forum.wxss */
 .page { background: #FEFCFA; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
-.forum-tabs {
-  display: flex;
-  background: #fff;
-  padding: 0 24rpx;
-  gap: 8rpx;
-}
-.forum-tab {
-  padding: 24rpx 28rpx;
-  font-size: 28rpx;
-  color: #9A9A9A;
-  position: relative;
-}
-.forum-tab.active {
-  color: #2C2C2C;
-  font-weight: 600;
-}
-.forum-tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40rpx;
-  height: 6rpx;
-  background: #C67A52;
-  border-radius: 3rpx;
-}
-
 .scroll-content { flex: 1; height: 0; }
 .post-list { padding: 16rpx 24rpx; }
 
@@ -56,16 +28,6 @@
 .post-user { flex: 1; }
 .post-username { font-size: 28rpx; color: #2C2C2C; font-weight: 500; display: block; }
 .post-time { font-size: 22rpx; color: #9A9A9A; }
-
-.category-tag {
-  font-size: 22rpx;
-  padding: 6rpx 16rpx;
-  border-radius: 8rpx;
-}
-.tag-announcement { background: rgba(232, 99, 111, 0.1); color: #E8636F; }
-.tag-complaint { background: rgba(232, 136, 60, 0.1); color: #E8883C; }
-.tag-question { background: rgba(74, 144, 217, 0.1); color: #4A90D9; }
-.tag-activity { background: rgba(198, 122, 82, 0.15); color: #C67A52; }
 
 .post-title {
   font-size: 30rpx;
