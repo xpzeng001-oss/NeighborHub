@@ -66,17 +66,6 @@
   box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
 }
 
-/* 置顶标记 */
-.feed-top-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4rpx;
-  font-size: 22rpx;
-  color: #E8636F;
-  font-weight: 500;
-  margin-bottom: 12rpx;
-}
-
 /* 卡片头部 */
 .feed-header {
   display: flex;
