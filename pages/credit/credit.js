@@ -21,17 +21,35 @@ Page({
     this.loadLogs();
   },
 
-  refreshCoins() {
+  async refreshCoins() {
     const userInfo = app.globalData.userInfo;
     if (!userInfo) return;
 
-    this.setData({ coins: userInfo.coins || 0 });
+    try {
+      const profile = await api.getUser(userInfo.id);
+      const coins = profile.coins || 0;
+      userInfo.coins = coins;
+      app.globalData.userInfo = userInfo;
+      wx.setStorageSync('userInfo', userInfo);
+      this.setData({ coins });
+    } catch (e) {
+      this.setData({ coins: userInfo.coins || 0 });
+    }
   },
 
   async loadLogs() {
     try {
       const res = await api.getCoinLogs({ page: this.data.page, pageSize: 20 });
-      const logs = this.data.page === 1 ? res.list : [...this.data.logs, ...res.list];
+      const list = res.list.map(item => {
+        const d = new Date(item.createdAt);
+        const mm = ('0' + (d.getMonth() + 1)).slice(-2);
+        const dd = ('0' + d.getDate()).slice(-2);
+        const hh = ('0' + d.getHours()).slice(-2);
+        const mi = ('0' + d.getMinutes()).slice(-2);
+        item.createdAt = mm + '-' + dd + ' ' + hh + ':' + mi;
+        return item;
+      });
+      const logs = this.data.page === 1 ? list : [...this.data.logs, ...list];
       this.setData({
         logs,
         hasMore: logs.length < res.total
