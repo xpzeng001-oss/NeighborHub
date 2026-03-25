@@ -98,7 +98,7 @@
     <view class="menu-group" wx:if="{{isAdmin}}">
       <view class="menu-title">管理</view>
       <view class="menu-item" bindtap="goDashboard">
-        <icon name="bar-chart" size="36" color="#333" class="menu-icon-wrap"></icon>
+        <icon name="flame" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">数据看板</text>
         <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
       </view>
