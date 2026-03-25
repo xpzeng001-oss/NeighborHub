@@ -32,7 +32,7 @@
             <text class="feed-username">{{item.userName}}</text>
             <text class="feed-time">{{item.timeAgo}}</text>
           </view>
-          <icon wx:if="{{item.isTop}}" name="flame" size="28" color="#E8636F"></icon>
+          <icon wx:if="{{item.isTop}}" name="flame" size="28" color="#E8636F" filled></icon>
           <view class="feed-type-tag tag-{{item.feedType}}">{{item.typeLabel}}</view>
         </view>
 
