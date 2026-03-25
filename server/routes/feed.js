@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Op } = require('sequelize');
-const { User, Product, Post, HelpRequest, Rental, PetPost, SamOrder, Carpool } = require('../models');
+const { User, Product, Post, HelpRequest, Rental, PetPost, SamOrder, Carpool, Community } = require('../models');
 const { buildDistrictFilter } = require('../utils/districtFilter');
 
 const topOrder = [['is_top', 'DESC'], ['created_at', 'DESC']];
@@ -55,13 +55,17 @@ function mapBase(item, feedType, extra) {
     userName: item.User ? item.User.nick_name : '',
     userAvatar: item.User ? item.User.avatar_url : '',
     building: item.User ? item.User.building : '',
+    community: item.Community ? item.Community.name : '',
     createdAt: item.created_at,
     ...extra
   };
 }
 
 async function fetchByType(type, activeWhere, districtWhere, limit, offset) {
-  const include = [{ model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] }];
+  const include = [
+    { model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] },
+    { model: Community, attributes: ['id', 'name'], required: false }
+  ];
 
   switch (type) {
     case 'product': {

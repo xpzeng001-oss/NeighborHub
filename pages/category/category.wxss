@@ -88,6 +88,15 @@
   font-weight: 500;
   display: block;
 }
+.feed-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+.feed-location {
+  font-size: 22rpx;
+  color: #C67A52;
+}
 .feed-time {
   font-size: 22rpx;
   color: #9A9A9A;
