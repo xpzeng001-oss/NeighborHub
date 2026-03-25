@@ -16,6 +16,11 @@ const TYPE_LABELS = {
   pet: '宠物', sam: '拼单', carpool: '拼车'
 };
 
+const TYPE_COLORS = {
+  product: '#C67A52', post: '#4A90D9', help: '#E8883C', rental: '#D4A04A',
+  pet: '#8B6DB0', sam: '#4A90D9', carpool: '#C67A52'
+};
+
 const formatTime = d => {
   const df = Date.now() - d;
   if (df < 60000) return '刚刚';
@@ -68,6 +73,7 @@ Page({
       const items = (data.list || []).map(item => ({
         ...item,
         typeLabel: TYPE_LABELS[item.feedType] || '',
+        typeColor: TYPE_COLORS[item.feedType] || '#999',
         timeAgo: formatTime(new Date(item.createdAt))
       }));
 
