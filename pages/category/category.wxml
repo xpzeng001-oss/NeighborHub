@@ -1,19 +1,109 @@
-<!--pages/category/category.wxml-->
+<!--pages/category/category.wxml - 广场-->
 <view class="page">
   <view style="height: {{statusBarHeight}}px;"></view>
   <view class="page-header">
-    <text class="page-title">分类</text>
+    <text class="page-title">广场</text>
   </view>
 
-  <!-- 分类卡片网格 -->
-  <view class="cat-grid">
-    <view class="cat-card" wx:for="{{categories}}" wx:key="id" bindtap="goPage" data-url="{{item.url}}">
-      <view class="cat-icon" style="background: {{item.tint}};">
-        <icon name="{{item.icon}}" size="40" color="{{item.color}}"></icon>
+  <!-- 顶部Tab栏 -->
+  <scroll-view scroll-x class="tab-scroll" enhanced show-scrollbar="{{false}}">
+    <view class="tab-list">
+      <view class="tab-item {{activeTab === item.id ? 'active' : ''}}"
+            wx:for="{{tabs}}" wx:key="id"
+            bindtap="switchTab" data-id="{{item.id}}">
+        <text>{{item.name}}</text>
       </view>
-      <text class="cat-name">{{item.name}}</text>
-      <text class="cat-count">{{item.count}}条信息</text>
     </view>
-  </view>
+  </scroll-view>
 
+  <!-- 信息流 -->
+  <scroll-view scroll-y class="feed-scroll" refresher-enabled="{{true}}"
+               bindrefresherrefresh="onRefresh" refresher-triggered="{{isRefreshing}}"
+               bindscrolltolower="onLoadMore">
+    <view class="feed-list">
+      <view class="feed-card" wx:for="{{feedList}}" wx:key="{{item.feedType + '-' + item.id}}"
+            bindtap="goDetail" data-type="{{item.feedType}}" data-id="{{item.id}}">
+
+        <!-- 卡片头部：用户信息 + 类型标签 -->
+        <view class="feed-header">
+          <image class="feed-avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+          <view class="feed-user">
+            <text class="feed-username">{{item.userName}}</text>
+            <text class="feed-time">{{item.timeAgo}}</text>
+          </view>
+          <view class="feed-type-tag tag-{{item.feedType}}">{{item.typeLabel}}</view>
+        </view>
+
+        <!-- 标题 -->
+        <text class="feed-title" wx:if="{{item.title}}">{{item.title}}</text>
+
+        <!-- 描述 -->
+        <text class="feed-desc" wx:if="{{item.description}}">{{item.description}}</text>
+
+        <!-- 图片 -->
+        <view class="feed-images" wx:if="{{item.images.length > 0}}">
+          <image wx:for="{{item.images}}" wx:for-item="img" wx:key="*this"
+                 wx:if="{{index < 3}}"
+                 src="{{img}}" mode="aspectFill" class="feed-img {{item.images.length === 1 ? 'single' : ''}}"></image>
+          <view class="feed-img-more" wx:if="{{item.images.length > 3}}">+{{item.images.length - 3}}</view>
+        </view>
+
+        <!-- 类型特有信息 -->
+        <!-- 闲置：价格 -->
+        <view class="feed-extra" wx:if="{{item.feedType === 'product'}}">
+          <text class="feed-price" wx:if="{{!item.isFree}}">¥{{item.price}}</text>
+          <text class="feed-price free" wx:else>免费自取</text>
+        </view>
+
+        <!-- 帖子：点赞评论 -->
+        <view class="feed-extra" wx:if="{{item.feedType === 'post'}}">
+          <view class="feed-stat">
+            <icon name="thumbs-up" size="24" color="#999"></icon>
+            <text>{{item.likeCount || 0}}</text>
+          </view>
+          <view class="feed-stat">
+            <icon name="message-circle" size="24" color="#999"></icon>
+            <text>{{item.commentCount || 0}}</text>
+          </view>
+        </view>
+
+        <!-- 互助：紧急标签 -->
+        <view class="feed-extra" wx:if="{{item.feedType === 'help'}}">
+          <view class="urgent-tag" wx:if="{{item.isUrgent}}">紧急</view>
+          <text class="feed-status">{{item.status === 'open' ? '待帮助' : '已解决'}}</text>
+        </view>
+
+        <!-- 租赁：租金 -->
+        <view class="feed-extra" wx:if="{{item.feedType === 'rental'}}">
+          <text class="feed-price">¥{{item.rent}}/月</text>
+          <text class="feed-meta" wx:if="{{item.roomType}}">{{item.roomType}} · {{item.area}}㎡</text>
+        </view>
+
+        <!-- 宠物 -->
+        <view class="feed-extra" wx:if="{{item.feedType === 'pet'}}">
+          <text class="feed-meta" wx:if="{{item.petName}}">{{item.petName}}</text>
+          <text class="feed-status">{{item.status === 'open' ? '进行中' : '已结束'}}</text>
+        </view>
+
+        <!-- 拼单：进度 -->
+        <view class="feed-extra" wx:if="{{item.feedType === 'sam'}}">
+          <text class="feed-meta">{{item.currentCount || 0}}/{{item.targetCount}}人</text>
+          <text class="feed-status">{{item.status === 'open' ? '拼单中' : '已截止'}}</text>
+        </view>
+
+        <!-- 拼车：路线 -->
+        <view class="feed-extra" wx:if="{{item.feedType === 'carpool'}}">
+          <text class="feed-meta" wx:if="{{item.from}}">{{item.from}} → {{item.to}}</text>
+          <text class="feed-meta" wx:if="{{item.fee}}">¥{{item.fee}}/人</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="feed-empty" wx:if="{{feedList.length === 0 && !isRefreshing}}">
+      <icon name="compass" size="96" color="#ccc"></icon>
+      <text>暂无内容</text>
+    </view>
+    <view class="load-more" wx:if="{{feedList.length > 0 && !hasMore}}">— 没有更多了 —</view>
+    <view style="height: 160rpx;"></view>
+  </scroll-view>
 </view>

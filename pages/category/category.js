@@ -1,16 +1,40 @@
 const api = require('../../utils/api');
 
+const TABS = [
+  { id: 'all', name: '全部' },
+  { id: 'product', name: '闲置' },
+  { id: 'post', name: '帖子' },
+  { id: 'help', name: '互助' },
+  { id: 'rental', name: '租赁' },
+  { id: 'pet', name: '宠物' },
+  { id: 'sam', name: '拼单' },
+  { id: 'carpool', name: '拼车' }
+];
+
+const TYPE_LABELS = {
+  product: '闲置', post: '帖子', help: '互助', rental: '租赁',
+  pet: '宠物', sam: '拼单', carpool: '拼车'
+};
+
+const formatTime = d => {
+  const df = Date.now() - d;
+  if (df < 60000) return '刚刚';
+  if (df < 3600000) return Math.floor(df / 60000) + '分钟前';
+  if (df < 86400000) return Math.floor(df / 3600000) + '小时前';
+  if (df < 604800000) return Math.floor(df / 86400000) + '天前';
+  const m = d.getMonth() + 1, day = d.getDate();
+  return (m < 10 ? '0' + m : m) + '-' + (day < 10 ? '0' + day : day);
+};
+
 Page({
   data: {
     statusBarHeight: 44,
-    categories: [
-      { id: 'forum', name: '楼里事儿', icon: 'message-circle', color: '#C67A52', tint: '#F3E8DA', count: 0, url: '/pages/forum/forum' },
-      { id: 'help', name: '邻里帮忙', icon: 'handshake', color: '#4A90D9', tint: '#DAEAF6', count: 0, url: '/pages/help/help' },
-      { id: 'rental', name: '房屋租赁', icon: 'home', color: '#E8883C', tint: '#FFE8D0', count: 0, url: '/pages/rental/rental' },
-      { id: 'pet', name: '宠物喂养', icon: 'paw-print', color: '#D4A04A', tint: '#FFF3D0', count: 0, url: '/pages/pet/pet' },
-      { id: 'sam', name: '山姆拼单', icon: 'shopping-cart', color: '#8B6DB0', tint: '#E8D5F0', count: 0, url: '/pages/sam/sam' },
-      { id: 'carpool', name: '拼车顺路', icon: 'car', color: '#4A90D9', tint: '#DAEAF6', count: 0, url: '/pages/carpool/carpool' }
-    ],
+    tabs: TABS,
+    activeTab: 'all',
+    feedList: [],
+    isRefreshing: false,
+    hasMore: true,
+    page: 1
   },
 
   onLoad() {
@@ -22,28 +46,68 @@ Page({
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({ selected: 1 });
     }
-    this.loadCounts();
+    this.loadFeed(true);
   },
 
-  async loadCounts() {
+  switchTab(e) {
+    const id = e.currentTarget.dataset.id;
+    if (id === this.data.activeTab) return;
+    this.setData({ activeTab: id, feedList: [], page: 1, hasMore: true });
+    this.loadFeed(true);
+  },
+
+  async loadFeed(reset) {
     try {
       const app = getApp();
       const district = app.globalData.currentDistrict;
-      const params = {};
+      const page = reset ? 1 : this.data.page;
+      const params = { type: this.data.activeTab, page, pageSize: 20 };
       if (district && district.id) params.districtId = district.id;
-      const counts = await api.getCategoryCounts(params);
-      const categories = this.data.categories.map(cat => ({
-        ...cat,
-        count: counts[cat.id] || 0
+
+      const data = await api.getFeed(params);
+      const items = (data.list || []).map(item => ({
+        ...item,
+        typeLabel: TYPE_LABELS[item.feedType] || '',
+        timeAgo: formatTime(new Date(item.createdAt))
       }));
-      this.setData({ categories });
+
+      if (reset) {
+        this.setData({ feedList: items, page: 2, hasMore: items.length >= 20 });
+      } else {
+        this.setData({
+          feedList: this.data.feedList.concat(items),
+          page: page + 1,
+          hasMore: items.length >= 20
+        });
+      }
     } catch (e) {
-      // 加载失败保持当前数量
+      console.error('[plaza] load failed', e);
     }
   },
 
-  goPage(e) {
-    const url = e.currentTarget.dataset.url;
-    wx.navigateTo({ url });
+  async onRefresh() {
+    this.setData({ isRefreshing: true });
+    await this.loadFeed(true);
+    this.setData({ isRefreshing: false });
+  },
+
+  onLoadMore() {
+    if (this.data.hasMore) this.loadFeed(false);
+  },
+
+  goDetail(e) {
+    const { type, id } = e.currentTarget.dataset;
+    const routes = {
+      product: '/pages/detail/detail?id=',
+      post: '/pages/forumDetail/forumDetail?id=',
+      help: '/pages/help/help',
+      rental: '/pages/rental/rental',
+      pet: '/pages/petDetail/petDetail?id=',
+      sam: '/pages/samDetail/samDetail?id=',
+      carpool: '/pages/carpool/carpool'
+    };
+    const url = routes[type];
+    if (!url) return;
+    wx.navigateTo({ url: url.includes('?') ? url + id : url });
   }
 });

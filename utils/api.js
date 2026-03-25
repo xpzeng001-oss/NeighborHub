@@ -129,6 +129,9 @@ const getMyCommunityApplications = ()     => request({ url: '/api/communities/my
 // Avatar
 const getAvatarConfig     = ()         => request({ url: '/api/auth/avatar-config' });
 
+// Feed
+const getFeed             = (params)   => request({ url: '/api/feed', data: params });
+
 // Stats
 const getCategoryCounts   = (params)   => request({ url: '/api/stats/counts', data: params });
 
@@ -182,6 +185,7 @@ module.exports = {
   getDistricts, getCommunities, applyCommunity, getMyCommunityApplications,
   getAdminCommunityApplications, handleCommunityApplication,
   getAdminStats, getAdminDashboard, getAdminReports, handleAdminReport, getAdminContent, takedownContent, restoreContent,
+  getFeed,
   deleteHelp, deleteCarpool, deleteRental,
   getAdminUsers, banUser, unbanUser,
   getAdminCommunities, createAdminCommunity, deleteAdminCommunity, assignCommunityDistrict,
