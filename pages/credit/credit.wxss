@@ -10,6 +10,7 @@
 }
 .score-num { font-size: 96rpx; font-weight: 700; line-height: 1; }
 .score-label { font-size: 26rpx; color: #9A9A9A; margin-top: 8rpx; }
+.score-hint { font-size: 22rpx; color: #7A7A7A; margin-top: 16rpx; }
 .section {
   margin-top: 20rpx;
   background: #fff;

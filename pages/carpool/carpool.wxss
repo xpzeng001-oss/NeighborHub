@@ -169,7 +169,7 @@
 }
 
 .card-actions { display: flex; gap: 12rpx; margin-left: auto; }
-.btn-contact, .btn-join {
+.btn-share, .btn-contact, .btn-join {
   width: 150rpx;
   height: 64rpx;
   line-height: 64rpx;
@@ -178,6 +178,11 @@
   border-radius: 16rpx;
   text-align: center;
   white-space: nowrap;
+}
+.btn-share {
+  background: #FEFCFA;
+  color: #9A9A9A;
+  border: none;
 }
 .btn-contact {
   background: #FEFCFA;

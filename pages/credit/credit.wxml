@@ -4,6 +4,7 @@
   <view class="score-card">
     <text class="score-num">{{coins}}</text>
     <text class="score-label">邻里币</text>
+    <text class="score-hint">10邻里币≈1元，后续可兑换礼品</text>
   </view>
 
   <!-- 获取规则 -->

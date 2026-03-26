@@ -62,6 +62,13 @@ Page({
     });
   },
 
+  onShareAppMessage() {
+    return {
+      title: '邻里互助，有事大家帮',
+      path: '/pages/help/help'
+    };
+  },
+
   goPublish() {
     const app = getApp();
     if (!app.globalData.userInfo) {

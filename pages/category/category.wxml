@@ -31,7 +31,7 @@
           <view class="feed-user">
             <text class="feed-username">{{item.userName}}</text>
             <view class="feed-meta-row">
-              <text class="feed-location" wx:if="{{item.community || item.building}}">{{item.community}}{{item.building ? ' ' + item.building : ''}}</text>
+              <text class="feed-location" wx:if="{{item.community || item.building}}">{{item.community}}{{item.building ? ' ' + item.building : ''}} · </text>
               <text class="feed-time">{{item.timeAgo}}</text>
             </view>
           </view>

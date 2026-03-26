@@ -101,6 +101,13 @@ Page({
     if (this.data.hasMore) this.loadFeed(false);
   },
 
+  onShareAppMessage() {
+    return {
+      title: '来邻里广场看看吧',
+      path: '/pages/category/category'
+    };
+  },
+
   goDetail(e) {
     const { type, id } = e.currentTarget.dataset;
     const routes = {

@@ -70,6 +70,7 @@
             <text class="p-count">暂无人拼车</text>
           </view>
           <view class="card-actions">
+            <button class="btn-share" open-type="share" data-item="{{item}}">转发</button>
             <view class="btn-contact" catchtap="onContact" data-id="{{item.id}}">私信</view>
             <view class="btn-join {{item.joined ? 'btn-joined' : ''}} {{item.status !== 'open' ? 'btn-disabled' : ''}}"
                   catchtap="{{item.status === 'open' && !item.joined ? 'onJoin' : ''}}" data-id="{{item.id}}">

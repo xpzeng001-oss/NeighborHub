@@ -95,6 +95,20 @@ Page({
     }
   },
 
+  onShareAppMessage(e) {
+    if (e.from === 'button' && e.target.dataset.item) {
+      const item = e.target.dataset.item;
+      return {
+        title: (item.from && item.to) ? item.from + ' → ' + item.to : item.title || '邻里拼车',
+        path: '/pages/carpool/carpool'
+      };
+    }
+    return {
+      title: '邻里拼车，顺路同行',
+      path: '/pages/carpool/carpool'
+    };
+  },
+
   goPublish() {
     const app = getApp();
     if (!app.globalData.userInfo) {

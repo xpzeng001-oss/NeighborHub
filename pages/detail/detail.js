@@ -123,9 +123,12 @@ Page({
   },
 
   onShareAppMessage() {
+    const p = this.data.product;
+    const price = p.is_free ? '免费自取' : '¥' + p.price;
     return {
-      title: this.data.product.title,
-      path: '/pages/detail/detail?id=' + this.data.product.id
+      title: p.title + ' · ' + price,
+      path: '/pages/detail/detail?id=' + p.id,
+      imageUrl: (p.images && p.images.length > 0) ? p.images[0] : ''
     };
   }
 });

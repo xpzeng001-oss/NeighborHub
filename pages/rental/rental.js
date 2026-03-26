@@ -21,6 +21,13 @@ Page({
     }
   },
 
+  onShareAppMessage() {
+    return {
+      title: '邻里租赁信息',
+      path: '/pages/rental/rental'
+    };
+  },
+
   onContact(e) {
     const id = e.currentTarget.dataset.id;
     const item = this.data.rentals.find(r => r.id === id);

@@ -42,6 +42,15 @@ Page({
     }
   },
 
+  onShareAppMessage() {
+    const p = this.data.post;
+    return {
+      title: p.title || '来看看这篇帖子',
+      path: '/pages/forumDetail/forumDetail?id=' + p.id,
+      imageUrl: (p.images && p.images.length > 0) ? p.images[0] : ''
+    };
+  },
+
   async onSend() {
     if (!this.data.commentText.trim()) {
       wx.showToast({ title: '请输入评论', icon: 'none' });
