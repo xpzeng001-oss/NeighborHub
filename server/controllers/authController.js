@@ -25,7 +25,7 @@ exports.getAvatarConfig = (req, res) => {
 
 exports.login = async (req, res, next) => {
   try {
-    const { code, phoneCode, nickName, avatarUrl } = req.body;
+    const { code, phoneCode, nickName, avatarUrl, inviterId } = req.body;
 
     if (!code) {
       return res.status(400).json({ code: 400, message: '缺少code参数', data: null });
@@ -49,14 +49,17 @@ exports.login = async (req, res, next) => {
     const randomAvatar = generateDefaultAvatar();
 
     // 查找或创建用户
+    const defaults = {
+      nick_name: nickName || randomNick,
+      avatar_url: avatarUrl || randomAvatar,
+      phone: phoneNumber || '',
+      session_key: sessionKey
+    };
+    if (inviterId) defaults.invited_by = inviterId;
+
     let [user, created] = await User.findOrCreate({
       where: { openid },
-      defaults: {
-        nick_name: nickName || randomNick,
-        avatar_url: avatarUrl || randomAvatar,
-        phone: phoneNumber || '',
-        session_key: sessionKey
-      }
+      defaults
     });
 
     // 已有用户则更新资料
@@ -70,6 +73,11 @@ exports.login = async (req, res, next) => {
         updates.avatar_url = generateDefaultAvatar();
       }
       await user.update(updates);
+    }
+
+    // 新用户邀请奖励：给邀请人发币
+    if (created && inviterId && inviterId !== user.id) {
+      await coinService.grant(inviterId, 'invite', user.id);
     }
 
     // 每日登录奖励

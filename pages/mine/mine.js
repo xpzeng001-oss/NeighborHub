@@ -46,7 +46,7 @@ Page({
         wx.request({
           url: app.globalData.baseUrl + '/api/auth/login',
           method: 'POST',
-          data: { code: loginRes.code, phoneCode },
+          data: { code: loginRes.code, phoneCode, inviterId: app.globalData.inviterId || '' },
           success: (res) => {
             if (res.data.code === 0) {
               const { token, userInfo, avatarConfig } = res.data.data;
@@ -149,9 +149,10 @@ Page({
   },
 
   onShareAppMessage() {
+    const uid = this.data.userInfo ? this.data.userInfo.id : '';
     return {
       title: '邻里市集 - 小区闲置好物交易',
-      path: '/pages/index/index'
+      path: '/pages/index/index?inviter=' + uid
     };
   }
 });

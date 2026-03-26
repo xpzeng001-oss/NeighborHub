@@ -10,7 +10,11 @@ App({
     version: '1.0.0'
   },
 
-  onLaunch() {
+  onLaunch(options) {
+    // 捕获邀请人参数
+    if (options && options.query && options.query.inviter) {
+      this.globalData.inviterId = options.query.inviter;
+    }
     // 恢复登录状态
     const userInfo = wx.getStorageSync('userInfo');
     const token = wx.getStorageSync('token');

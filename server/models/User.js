@@ -44,6 +44,11 @@ const User = sequelize.define('User', {
   is_banned: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
+  },
+  invited_by: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    defaultValue: null,
+    comment: '邀请人用户ID'
   }
 }, {
   tableName: 'users'

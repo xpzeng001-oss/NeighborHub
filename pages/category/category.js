@@ -102,9 +102,10 @@ Page({
   },
 
   onShareAppMessage() {
+    const uid = getApp().globalData.userInfo ? getApp().globalData.userInfo.id : '';
     return {
       title: '来邻里广场看看吧',
-      path: '/pages/category/category'
+      path: '/pages/index/index?inviter=' + uid
     };
   },
 
