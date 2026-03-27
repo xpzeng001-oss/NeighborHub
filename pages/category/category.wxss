@@ -252,9 +252,8 @@
   gap: 12rpx;
 }
 .feed-p-avatars {
-  position: relative;
-  height: 44rpx;
-  flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 .feed-p-avatar {
   width: 44rpx;
@@ -262,6 +261,10 @@
   border-radius: 50%;
   border: 3rpx solid #fff;
   background: #E5E2DC;
+  flex-shrink: 0;
+}
+.feed-p-avatar.overlap {
+  margin-left: -18rpx;
 }
 .feed-p-count {
   font-size: 22rpx;

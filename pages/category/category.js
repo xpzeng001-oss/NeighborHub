@@ -86,9 +86,7 @@ Page({
         timeAgo: formatTime(new Date(item.createdAt)),
         startTimeFormatted: item.feedType === 'activity' ? formatActivityTime(item.startTime) : '',
         endTimeFormatted: item.feedType === 'activity' ? formatActivityTime(item.endTime) : '',
-        participantAvatars: item.participantAvatars || [],
-        avatarsReversed: [...(item.participantAvatars || [])].reverse(),
-        avatarCount: (item.participantAvatars || []).length
+        participantAvatars: item.participantAvatars || []
       }));
 
       if (reset) {

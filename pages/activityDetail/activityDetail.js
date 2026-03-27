@@ -38,8 +38,6 @@ Page({
       data.startTimeFormatted = formatActivityTime(data.startTime);
       data.endTimeFormatted = formatActivityTime(data.endTime);
       data.participantAvatars = data.participantAvatars || [];
-      data.avatarsReversed = [...data.participantAvatars].reverse();
-      data.avatarCount = data.participantAvatars.length;
       data.images = data.images || [];
       this.setData({ detail: data });
     } catch (e) {
