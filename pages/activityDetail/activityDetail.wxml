@@ -8,9 +8,9 @@
         <icon name="arrow-left" size="36" color="#fff"></icon>
       </view>
       <view class="nav-actions">
-        <view class="nav-btn" bindtap="onShare">
+        <button class="nav-share-btn" open-type="share">
           <icon name="share-2" size="32" color="#fff"></icon>
-        </view>
+        </button>
       </view>
     </view>
   </view>
