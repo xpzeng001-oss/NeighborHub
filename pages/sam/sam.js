@@ -46,12 +46,14 @@ Page({
   },
 
   async onJoin(e) {
+    if (this._submitting) return;
     const app = getApp();
     if (!app.globalData.userInfo) {
       app.login(() => { this.onJoin(e); });
       return;
     }
     const id = e.currentTarget.dataset.id;
+    this._submitting = true;
     try {
       const data = await api.joinSam(id);
       const list = this.data.filteredList.map(item => {
@@ -76,6 +78,8 @@ Page({
       });
       this.setData({ filteredList: list, orderList });
       wx.showToast({ title: '拼单成功', icon: 'success' });
+    } finally {
+      this._submitting = false;
     }
   },
 

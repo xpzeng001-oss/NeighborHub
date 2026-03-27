@@ -63,10 +63,12 @@ Page({
 
   // --- 加入拼单 ---
   async onJoin() {
+    if (this._submitting) return;
     if (!app.globalData.userInfo) {
       app.login(() => { this.onJoin(); });
       return;
     }
+    this._submitting = true;
     try {
       await api.joinSam(this.orderId);
       wx.showToast({ title: '拼单成功', icon: 'success' });
@@ -79,6 +81,8 @@ Page({
         'detail.currentCount': d.currentCount + 1
       });
       wx.showToast({ title: '拼单成功', icon: 'success' });
+    } finally {
+      this._submitting = false;
     }
   },
 

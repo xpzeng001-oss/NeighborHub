@@ -62,12 +62,14 @@ Page({
   },
 
   async onJoin(e) {
+    if (this._submitting) return;
     const id = e.currentTarget.dataset.id;
     const app = getApp();
     if (!app.globalData.userInfo) {
       app.login(() => { this.onJoin(e); });
       return;
     }
+    this._submitting = true;
     try {
       const data = await api.joinCarpool(id);
       const list = this.data.filteredList.map(item => {
@@ -92,6 +94,8 @@ Page({
       });
       this.setData({ filteredList: list, tripList });
       wx.showToast({ title: '拼车成功', icon: 'success' });
+    } finally {
+      this._submitting = false;
     }
   },
 

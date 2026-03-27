@@ -47,10 +47,10 @@ Page({
   },
 
   async onJoin() {
+    if (this._submitting) return;
     const { detail } = this.data;
     if (!detail) return;
     if (detail.isOrganizer) return;
-    if (detail.isJoined || detail.status !== 'open') return;
 
     const token = wx.getStorageSync('token');
     if (!token) {
@@ -58,13 +58,14 @@ Page({
       return;
     }
 
-    // 已报名则取消
-    if (detail.isJoined) {
-      const confirmRes = await new Promise(resolve => {
-        wx.showModal({ title: '取消报名', content: '确定要取消报名吗？', success: resolve });
-      });
-      if (!confirmRes.confirm) return;
-      try {
+    this._submitting = true;
+    try {
+      // 已报名则取消
+      if (detail.isJoined) {
+        const confirmRes = await new Promise(resolve => {
+          wx.showModal({ title: '取消报名', content: '确定要取消报名吗？', success: resolve });
+        });
+        if (!confirmRes.confirm) return;
         const result = await api.cancelActivity(this.activityId);
         wx.showToast({ title: '已取消报名', icon: 'success' });
         this.setData({
@@ -72,13 +73,10 @@ Page({
           'detail.currentParticipants': result.currentParticipants,
           'detail.status': result.status
         });
-      } catch (e) {
-        console.error('[activityDetail] cancel failed', e);
+        return;
       }
-      return;
-    }
 
-    try {
+      if (detail.status !== 'open') return;
       const result = await api.joinActivity(this.activityId);
       wx.showToast({ title: '报名成功！', icon: 'success' });
       this.setData({
@@ -87,7 +85,9 @@ Page({
         'detail.status': result.status
       });
     } catch (e) {
-      console.error('[activityDetail] join failed', e);
+      console.error('[activityDetail] join/cancel failed', e);
+    } finally {
+      this._submitting = false;
     }
   },
 
@@ -105,6 +105,7 @@ Page({
   },
 
   async onDelete() {
+    if (this._submitting) return;
     const res = await new Promise(resolve => {
       wx.showModal({
         title: '确认删除',
@@ -114,12 +115,15 @@ Page({
     });
     if (!res.confirm) return;
 
+    this._submitting = true;
     try {
       await api.deleteActivity(this.activityId);
       wx.showToast({ title: '已删除', icon: 'success' });
       setTimeout(() => wx.navigateBack(), 1000);
     } catch (e) {
       console.error('[activityDetail] delete failed', e);
+    } finally {
+      this._submitting = false;
     }
   },
 
