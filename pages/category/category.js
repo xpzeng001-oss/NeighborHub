@@ -79,6 +79,8 @@ Page({
       if (district && district.id) params.districtId = district.id;
 
       const data = await api.getFeed(params);
+      const userInfo = app.globalData.userInfo;
+      const myId = userInfo ? userInfo.id : null;
       const items = (data.list || []).map(item => ({
         ...item,
         typeLabel: TYPE_LABELS[item.feedType] || '',
@@ -86,7 +88,8 @@ Page({
         timeAgo: formatTime(new Date(item.createdAt)),
         startTimeFormatted: item.feedType === 'activity' ? formatActivityTime(item.startTime) : '',
         endTimeFormatted: item.feedType === 'activity' ? formatActivityTime(item.endTime) : '',
-        participantAvatars: item.participantAvatars || []
+        participantAvatars: item.participantAvatars || [],
+        isJoined: item.feedType === 'activity' && myId ? (item.participantIds || []).includes(myId) : false
       }));
 
       if (reset) {

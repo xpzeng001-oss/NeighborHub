@@ -126,8 +126,8 @@
             </view>
             <text class="feed-p-count">{{item.currentParticipants}}人想参加</text>
           </view>
-          <view class="feed-act-btn" style="margin-left:auto;" catchtap="onJoinActivity" data-id="{{item.id}}">
-            <text wx:if="{{item.price > 0}}">¥{{item.price}} </text>去报名
+          <view class="feed-act-btn {{item.isJoined ? 'joined' : ''}}" style="margin-left:auto;" catchtap="onJoinActivity" data-id="{{item.id}}">
+            {{item.isJoined ? '已报名' : (item.price > 0 ? '¥' + item.price + ' 去报名' : '去报名')}}
           </view>
         </view>
       </view>

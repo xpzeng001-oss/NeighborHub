@@ -281,6 +281,10 @@
   font-weight: 600;
   white-space: nowrap;
 }
+.feed-act-btn.joined {
+  background: #E5E2DC;
+  color: #666;
+}
 
 /* 空状态 & 加载更多 */
 .feed-empty {

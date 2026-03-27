@@ -142,7 +142,8 @@ async function fetchByType(type, activeWhere, districtWhere, limit, offset) {
         coverImage: a.cover_image, startTime: a.start_time, endTime: a.end_time,
         location: a.location, price: a.price,
         maxParticipants: a.max_participants, currentParticipants: a.current_participants,
-        participantAvatars: a.participant_avatars, status: a.status
+        participantAvatars: a.participant_avatars, participantIds: a.participant_ids || [],
+        status: a.status
       })) };
     }
     default:
