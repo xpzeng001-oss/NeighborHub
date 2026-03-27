@@ -52,7 +52,7 @@
 
     <view class="menu-group">
       <view class="menu-title">账户设置</view>
-      <picker range="{{buildings}}" bindchange="onBuildingChange">
+      <picker range="{{buildings}}" bindchange="onBuildingChange" class="menu-picker">
         <view class="menu-item">
           <icon name="home" size="36" color="#333" class="menu-icon-wrap"></icon>
           <text class="menu-text">楼栋认证</text>
