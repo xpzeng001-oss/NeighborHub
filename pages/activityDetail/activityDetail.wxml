@@ -7,11 +7,6 @@
       <view class="nav-back" bindtap="goBack">
         <icon name="arrow-left" size="36" color="#fff"></icon>
       </view>
-      <view class="nav-actions">
-        <button class="nav-share-btn" open-type="share">
-          <icon name="share-2" size="32" color="#fff"></icon>
-        </button>
-      </view>
     </view>
   </view>
 
