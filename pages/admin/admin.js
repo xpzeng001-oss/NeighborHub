@@ -87,9 +87,19 @@ Page({
     loading: false
   },
 
-  onLoad() {
+  onLoad(options) {
     this.loadStats();
-    this.loadReports();
+    if (options.tab) {
+      this.setData({ tab: options.tab });
+      if (options.tab === 'user') this.loadUsers();
+      else if (options.tab === 'content') this.loadContent();
+      else if (options.tab === 'community') this.loadCommunityApplications();
+      else if (options.tab === 'manage') this.loadManagedCommunities();
+      else if (options.tab === 'district') this.loadDistricts();
+      else this.loadReports();
+    } else {
+      this.loadReports();
+    }
   },
 
   onPullDownRefresh() {

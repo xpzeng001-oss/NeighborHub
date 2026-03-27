@@ -143,6 +143,9 @@ Page({
   goAdmin() {
     wx.navigateTo({ url: '/pages/admin/admin' });
   },
+  goUserManage() {
+    wx.navigateTo({ url: '/pages/admin/admin?tab=user' });
+  },
 
   goFeedbackList() {
     wx.navigateTo({ url: '/pages/feedbackList/feedbackList' });
