@@ -219,6 +219,38 @@
   font-weight: 500;
 }
 
+/* 活动卡片底部 */
+.feed-extra-activity {
+  flex-direction: column;
+  gap: 12rpx;
+}
+.feed-extra-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+.feed-participants {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+.feed-p-avatars {
+  display: flex;
+  align-items: center;
+}
+.feed-p-avatar {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  border: 3rpx solid #fff;
+  position: relative;
+  background: #E5E2DC;
+}
+.feed-p-count {
+  font-size: 22rpx;
+  color: #999;
+}
+
 /* 空状态 & 加载更多 */
 .feed-empty {
   display: flex;

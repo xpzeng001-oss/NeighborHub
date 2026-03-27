@@ -105,11 +105,21 @@
         </view>
 
         <!-- 活动 -->
-        <view class="feed-extra" wx:if="{{item.feedType === 'activity'}}">
-          <text class="feed-meta" wx:if="{{item.startTimeFormatted}}">{{item.startTimeFormatted}}</text>
-          <text class="feed-meta" wx:if="{{item.location}}">{{item.location}}</text>
-          <text class="feed-price" wx:if="{{item.price > 0}}">¥{{item.price}}</text>
-          <text class="feed-status">{{item.status === 'open' ? '报名中' : '已结束'}}</text>
+        <view class="feed-extra feed-extra-activity" wx:if="{{item.feedType === 'activity'}}">
+          <view class="feed-extra-row">
+            <text class="feed-meta" wx:if="{{item.startTimeFormatted}}">{{item.startTimeFormatted}}</text>
+            <text class="feed-meta" wx:if="{{item.location}}">{{item.location}}</text>
+            <text class="feed-price" wx:if="{{item.price > 0}}">¥{{item.price}}</text>
+            <text class="feed-status">{{item.status === 'open' ? '报名中' : '已结束'}}</text>
+          </view>
+          <view class="feed-participants" wx:if="{{item.currentParticipants > 0}}">
+            <view class="feed-p-avatars">
+              <image class="feed-p-avatar" wx:for="{{item.participantAvatars}}" wx:for-item="av" wx:key="*this"
+                     wx:if="{{index < 6}}" src="{{av}}" mode="aspectFill"
+                     style="margin-left: {{index === 0 ? '0' : '-14rpx'}}; z-index: {{10 - index}};"></image>
+            </view>
+            <text class="feed-p-count">{{item.currentParticipants}}人想参加</text>
+          </view>
         </view>
       </view>
     </view>
