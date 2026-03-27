@@ -101,7 +101,8 @@ exports.create = async (req, res, next) => {
 
     // 发起人自动成为第一个参与者
     const creator = await User.findByPk(req.user.id, { attributes: ['avatar_url'] });
-    const initAvatars = creator && creator.avatar_url ? [creator.avatar_url] : [];
+    const creatorAvatar = (creator && creator.avatar_url) ? creator.avatar_url : '/images/avatar-placeholder.png';
+    const initAvatars = [creatorAvatar];
 
     const activity = await Activity.create({
       user_id: req.user.id,
@@ -142,12 +143,11 @@ exports.join = async (req, res, next) => {
     const newCount = activity.current_participants + 1;
     const newStatus = activity.max_participants > 0 && newCount >= activity.max_participants ? 'full' : 'open';
 
-    // Add participant avatar
+    // Add participant avatar (use placeholder if no avatar)
     const joiner = await User.findByPk(req.user.id, { attributes: ['nick_name', 'avatar_url'] });
     const avatars = activity.participant_avatars || [];
-    if (joiner && joiner.avatar_url) {
-      avatars.push(joiner.avatar_url);
-    }
+    const avatar = (joiner && joiner.avatar_url) ? joiner.avatar_url : '/images/avatar-placeholder.png';
+    avatars.push(avatar);
 
     await activity.update({
       current_participants: newCount,
