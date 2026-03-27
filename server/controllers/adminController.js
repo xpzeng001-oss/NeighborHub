@@ -417,12 +417,26 @@ exports.listUsers = async (req, res, next) => {
     const countMap = {};
     violationCounts.forEach(v => { countMap[v.user_id] = Number(v.count); });
 
+    // Get community name from user's latest product
+    const latestProducts = await Product.findAll({
+      attributes: ['user_id', 'community_id'],
+      where: { user_id: { [Op.in]: userIds }, community_id: { [Op.ne]: '' } },
+      include: [{ model: Community, attributes: ['name'], required: true }],
+      order: [['created_at', 'DESC']],
+      raw: true
+    });
+    const communityMap = {};
+    latestProducts.forEach(p => {
+      if (!communityMap[p.user_id]) communityMap[p.user_id] = p['Community.name'];
+    });
+
     const list = rows.map(u => ({
       id:             u.id,
       nickName:       u.nick_name,
       avatarUrl:      u.avatar_url,
       building:       u.building,
       phone:          u.phone || '',
+      community:      communityMap[u.id] || '',
       coins:          u.coins,
       isVerified:     u.is_verified,
       role:           u.role,

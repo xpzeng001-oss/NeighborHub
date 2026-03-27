@@ -144,7 +144,7 @@ Page({
     wx.navigateTo({ url: '/pages/admin/admin' });
   },
   goUserManage() {
-    wx.navigateTo({ url: '/pages/admin/admin?tab=user' });
+    wx.navigateTo({ url: '/pages/admin/admin?mode=user' });
   },
 
   goFeedbackList() {

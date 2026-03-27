@@ -45,6 +45,7 @@ function formatList(list, isReport) {
 
 Page({
   data: {
+    mode: 'content',
     tab: 'report',
 
     // Stats
@@ -88,17 +89,22 @@ Page({
   },
 
   onLoad(options) {
-    this.loadStats();
-    if (options.tab) {
-      this.setData({ tab: options.tab });
-      if (options.tab === 'user') this.loadUsers();
-      else if (options.tab === 'content') this.loadContent();
-      else if (options.tab === 'community') this.loadCommunityApplications();
-      else if (options.tab === 'manage') this.loadManagedCommunities();
-      else if (options.tab === 'district') this.loadDistricts();
-      else this.loadReports();
+    if (options.mode === 'user') {
+      wx.setNavigationBarTitle({ title: '用户管理' });
+      this.setData({ mode: 'user', tab: 'user' });
+      this.loadUsers();
     } else {
-      this.loadReports();
+      this.loadStats();
+      if (options.tab) {
+        this.setData({ tab: options.tab });
+        if (options.tab === 'content') this.loadContent();
+        else if (options.tab === 'community') this.loadCommunityApplications();
+        else if (options.tab === 'manage') this.loadManagedCommunities();
+        else if (options.tab === 'district') this.loadDistricts();
+        else this.loadReports();
+      } else {
+        this.loadReports();
+      }
     }
   },
 

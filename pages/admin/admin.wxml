@@ -1,8 +1,8 @@
 <!--pages/admin/admin.wxml-->
 <view class="page">
 
-  <!-- ========== Stats Bar ========== -->
-  <view class="stats-bar">
+  <!-- ========== Stats Bar (仅内容管理模式) ========== -->
+  <view class="stats-bar" wx:if="{{mode === 'content'}}">
     <view class="stat-card">
       <text class="stat-num {{stats.pendingReports > 0 ? 'stat-warn' : ''}}">{{stats.pendingReports || 0}}</text>
       <text class="stat-label">待处理举报</text>
@@ -18,9 +18,15 @@
   </view>
 
   <!-- ========== Main Tabs ========== -->
-  <view class="tabs">
+  <view class="tabs" wx:if="{{mode === 'content'}}">
     <view class="tab {{tab === 'report' ? 'active' : ''}}" bindtap="switchTab" data-tab="report">举报处理</view>
     <view class="tab {{tab === 'content' ? 'active' : ''}}" bindtap="switchTab" data-tab="content">内容管理</view>
+    <view class="tab {{tab === 'user' ? 'active' : ''}}" bindtap="switchTab" data-tab="user">用户管理</view>
+    <view class="tab {{tab === 'community' ? 'active' : ''}}" bindtap="switchTab" data-tab="community">小区入驻</view>
+    <view class="tab {{tab === 'manage' ? 'active' : ''}}" bindtap="switchTab" data-tab="manage">小区管理</view>
+    <view class="tab {{tab === 'district' ? 'active' : ''}}" bindtap="switchTab" data-tab="district">社区管理</view>
+  </view>
+  <view class="tabs" wx:if="{{mode === 'user'}}">
     <view class="tab {{tab === 'user' ? 'active' : ''}}" bindtap="switchTab" data-tab="user">用户管理</view>
     <view class="tab {{tab === 'community' ? 'active' : ''}}" bindtap="switchTab" data-tab="community">小区入驻</view>
     <view class="tab {{tab === 'manage' ? 'active' : ''}}" bindtap="switchTab" data-tab="manage">小区管理</view>
@@ -180,7 +186,7 @@
             <text class="user-name">{{item.nickName}}</text>
             <view class="ban-badge" wx:if="{{item.isBanned}}">已封禁</view>
           </view>
-          <text class="user-building" wx:if="{{item.building}}">{{item.building}}</text>
+          <text class="user-building" wx:if="{{item.community || item.building}}">{{item.community}}{{item.building ? ' ' + item.building : ''}}</text>
           <text class="user-phone" wx:if="{{item.phone}}">{{item.phone}}</text>
           <view class="user-stats">
             <view class="user-stat">
