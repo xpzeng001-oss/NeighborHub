@@ -150,7 +150,7 @@ Page({
       return;
     }
     wx.navigateTo({
-      url: '/pages/chatDetail/chatDetail?userId=' + detail.userId + '&userName=' + detail.userName
+      url: '/pages/chatDetail/chatDetail?targetUserId=' + detail.userId + '&nickName=' + encodeURIComponent(detail.userName)
     });
   },
 
