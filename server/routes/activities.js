@@ -8,5 +8,6 @@ router.get('/:id', optionalAuth, activityController.detail);
 router.post('/', auth, contentCheck, activityController.create);
 router.delete('/:id', auth, activityController.remove);
 router.post('/:id/join', auth, activityController.join);
+router.post('/:id/cancel', auth, activityController.cancelJoin);
 
 module.exports = router;

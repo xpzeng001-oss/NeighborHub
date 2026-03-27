@@ -58,6 +58,26 @@ Page({
       return;
     }
 
+    // 已报名则取消
+    if (detail.isJoined) {
+      const confirmRes = await new Promise(resolve => {
+        wx.showModal({ title: '取消报名', content: '确定要取消报名吗？', success: resolve });
+      });
+      if (!confirmRes.confirm) return;
+      try {
+        const result = await api.cancelActivity(this.activityId);
+        wx.showToast({ title: '已取消报名', icon: 'success' });
+        this.setData({
+          'detail.isJoined': false,
+          'detail.currentParticipants': result.currentParticipants,
+          'detail.status': result.status
+        });
+      } catch (e) {
+        console.error('[activityDetail] cancel failed', e);
+      }
+      return;
+    }
+
     try {
       const result = await api.joinActivity(this.activityId);
       wx.showToast({ title: '报名成功！', icon: 'success' });

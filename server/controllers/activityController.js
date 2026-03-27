@@ -182,6 +182,36 @@ exports.join = async (req, res, next) => {
   }
 };
 
+exports.cancelJoin = async (req, res, next) => {
+  try {
+    const activity = await Activity.findByPk(req.params.id);
+    if (!activity) {
+      return res.status(404).json({ code: 404, message: '活动不存在', data: null });
+    }
+
+    const newCount = Math.max(0, activity.current_participants - 1);
+    const newStatus = activity.status === 'full' ? 'open' : activity.status;
+
+    // Remove participant avatar
+    const user = await User.findByPk(req.user.id, { attributes: ['avatar_url'] });
+    let avatars = activity.participant_avatars || [];
+    if (user && user.avatar_url) {
+      const idx = avatars.indexOf(user.avatar_url);
+      if (idx !== -1) avatars.splice(idx, 1);
+    }
+
+    await activity.update({
+      current_participants: newCount,
+      status: newStatus,
+      participant_avatars: avatars
+    });
+
+    res.json({ code: 0, data: { currentParticipants: newCount, status: newStatus } });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.remove = async (req, res, next) => {
   try {
     const activity = await Activity.findByPk(req.params.id);
