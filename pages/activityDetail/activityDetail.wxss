@@ -68,28 +68,6 @@
   height: 200rpx;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent);
 }
-.hero-badge {
-  position: absolute;
-  top: 24rpx;
-  right: 24rpx;
-  padding: 8rpx 24rpx;
-  border-radius: 8rpx;
-  font-size: 24rpx;
-  font-weight: 600;
-}
-.hero-badge.status-open {
-  background: #4CD964;
-  color: #fff;
-}
-.hero-badge.status-full {
-  background: #E8883C;
-  color: #fff;
-}
-.hero-badge.status-closed,
-.hero-badge.status-ended {
-  background: #999;
-  color: #fff;
-}
 
 /* 信息卡片 */
 .detail-card {
@@ -101,14 +79,31 @@
   z-index: 10;
   box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
 }
+.detail-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-bottom: 24rpx;
+}
 .detail-title {
   font-size: 36rpx;
   font-weight: 700;
   color: #2C2C2C;
   line-height: 1.4;
-  display: block;
-  margin-bottom: 24rpx;
+  flex: 1;
 }
+.detail-badge {
+  flex-shrink: 0;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+  margin-top: 6rpx;
+}
+.detail-badge.status-open { background: #4CD964; color: #fff; }
+.detail-badge.status-full { background: #E8883C; color: #fff; }
+.detail-badge.status-closed, .detail-badge.status-ended { background: #999; color: #fff; }
 .detail-row {
   display: flex;
   align-items: flex-start;

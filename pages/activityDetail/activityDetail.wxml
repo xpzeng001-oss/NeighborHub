@@ -20,14 +20,16 @@
     <view class="hero-section">
       <image class="hero-image" src="{{detail.coverImage || (detail.images[0] || '/images/avatar-placeholder.png')}}" mode="aspectFill"></image>
       <view class="hero-overlay"></view>
-      <view class="hero-badge status-{{detail.status}}">
-        {{detail.status === 'open' ? '报名中' : detail.status === 'full' ? '已满员' : '已结束'}}
-      </view>
     </view>
 
     <!-- 活动信息 -->
     <view class="detail-card">
-      <text class="detail-title">{{detail.title}}</text>
+      <view class="detail-title-row">
+        <text class="detail-title">{{detail.title}}</text>
+        <view class="detail-badge status-{{detail.status}}">
+          {{detail.status === 'open' ? '报名中' : detail.status === 'full' ? '已满员' : '已结束'}}
+        </view>
+      </view>
 
       <!-- 时间 -->
       <view class="detail-row" wx:if="{{detail.startTime}}">
