@@ -9,7 +9,7 @@ async function migrate() {
   console.log('Connected to:', sequelize.getDialect());
 
   try {
-    await sequelize.query("ALTER TABLE activities ADD COLUMN participant_ids JSON DEFAULT '[]'");
+    await sequelize.query("ALTER TABLE activities ADD COLUMN participant_ids JSON");
     console.log('✅ Added participant_ids column');
   } catch (e) {
     if (e.message && (e.message.includes('Duplicate') || e.message.includes('duplicate') || e.message.includes('already exists'))) {
