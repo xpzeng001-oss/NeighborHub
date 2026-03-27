@@ -68,7 +68,7 @@
             <view class="participant-avatars" wx:if="{{item.participantAvatars.length > 0}}">
               <image class="p-avatar" wx:for="{{item.participantAvatars}}" wx:for-item="av" wx:key="index"
                      wx:if="{{index < 6}}" src="{{av}}" mode="aspectFill"
-                     style="margin-left: {{index === 0 ? '0' : '-16rpx'}}; z-index: {{10 - index}};"></image>
+                     style="position:relative; margin-left: {{index === 0 ? '0' : '-16rpx'}}; z-index: {{10 - index}};"></image>
             </view>
             <text class="participant-count">{{item.currentParticipants || 0}}人想参加</text>
           </view>
