@@ -236,9 +236,9 @@
 
 /* 活动报名状态标签（右上角） */
 .feed-status-tag {
-  font-size: 20rpx;
-  padding: 4rpx 12rpx;
-  border-radius: 6rpx;
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
   background: rgba(76, 217, 100, 0.12);
   color: #3CB371;
   font-weight: 500;
