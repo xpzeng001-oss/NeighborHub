@@ -12,13 +12,14 @@ const TITLES = {
 };
 
 const TYPE_LABELS = {
-  product: '闲置', post: '论坛', help: '互助',
+  product: '闲置', post: '论坛', help: '互助', activity: '活动',
   pet: '宠物', sam: '拼单', carpool: '拼车', rental: '租赁'
 };
 
 const PUBLISH_TABS = [
   { key: 'product', name: '闲置' },
   { key: 'posts', name: '帖子' },
+  { key: 'activity', name: '活动' },
   { key: 'offshelf', name: '已下架' },
   { key: 'sold', name: '已卖出' }
 ];
@@ -107,6 +108,11 @@ Page({
           // 已卖出 tab
           const products = await api.getProducts({ userId: userInfo.id }).catch(() => ({ list: [] }));
           const list = (products.list || []).filter(item => item.status === 'sold').map(item => ({ ...item, _type: 'product', _typeLabel: TYPE_LABELS.product }));
+          this.setData({ list, hasMore: false, loading: false });
+        } else if (this.data.publishTab === 'activity') {
+          // 活动 tab
+          const activities = await api.getActivities({ userId: userInfo.id }).catch(() => ({ list: [] }));
+          const list = (activities.list || []).map(item => ({ ...item, _type: 'activity', _typeLabel: '活动' }));
           this.setData({ list, hasMore: false, loading: false });
         } else {
           // 帖子 tab（论坛、互助、宠物、拼单、拼车）
@@ -266,6 +272,7 @@ Page({
             else if (type === 'sam') await api.deleteSam(id);
             else if (type === 'carpool') await api.deleteCarpool(id);
             else if (type === 'rental') await api.deleteRental(id);
+            else if (type === 'activity') await api.deleteActivity(id);
             wx.hideLoading();
             wx.showToast({ title: '已删除', icon: 'success' });
             const list = this.data.list.filter((_, i) => i !== index);

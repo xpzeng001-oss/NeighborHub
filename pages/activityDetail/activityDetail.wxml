@@ -114,11 +114,6 @@
     </view>
   </view>
 
-  <!-- 删除（发起人） -->
-  <view class="delete-section" wx:if="{{detail && detail.isOrganizer}}">
-    <text class="delete-btn" bindtap="onDelete">删除活动</text>
-  </view>
-
   <!-- 报名弹窗 -->
   <view class="modal-mask" wx:if="{{showJoinModal}}" bindtap="closeJoinModal"></view>
   <view class="modal-box" wx:if="{{showJoinModal}}">
