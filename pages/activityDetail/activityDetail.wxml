@@ -89,10 +89,13 @@
 
     <!-- 参与者 -->
     <view class="participants-card" wx:if="{{detail.currentParticipants > 0}}">
-      <text class="section-title">已报名 ({{detail.currentParticipants}}人)</text>
-      <view class="participant-list">
-        <image class="participant-avatar" wx:for="{{detail.participantAvatars}}" wx:key="*this"
-               src="{{item}}" mode="aspectFill"></image>
+      <view class="participants-row">
+        <view class="participants-stack">
+          <image class="participant-avatar" wx:for="{{detail.participantAvatars}}" wx:key="*this"
+                 wx:if="{{index < 8}}" src="{{item}}" mode="aspectFill"
+                 style="margin-left: {{index === 0 ? '0' : '-18rpx'}}; z-index: {{10 - index}};"></image>
+        </view>
+        <text class="participants-count">{{detail.currentParticipants}}人想参加</text>
       </view>
     </view>
 

@@ -224,16 +224,26 @@
   border-radius: 20rpx;
   box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.04);
 }
-.participant-list {
+.participants-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12rpx;
+  align-items: center;
+  gap: 16rpx;
+}
+.participants-stack {
+  display: flex;
+  align-items: center;
 }
 .participant-avatar {
-  width: 72rpx;
-  height: 72rpx;
+  width: 64rpx;
+  height: 64rpx;
   border-radius: 50%;
+  border: 4rpx solid #fff;
   background: #E5E2DC;
+  position: relative;
+}
+.participants-count {
+  font-size: 26rpx;
+  color: #666;
 }
 
 /* 底部操作栏 */
