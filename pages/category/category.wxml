@@ -106,6 +106,7 @@
 
         <!-- 活动 -->
         <view class="feed-extra" wx:if="{{item.feedType === 'activity'}}">
+          <text class="feed-meta" wx:if="{{item.startTimeFormatted}}">{{item.startTimeFormatted}}</text>
           <text class="feed-meta" wx:if="{{item.location}}">{{item.location}}</text>
           <text class="feed-price" wx:if="{{item.price > 0}}">¥{{item.price}}</text>
           <text class="feed-status">{{item.status === 'open' ? '报名中' : '已结束'}}</text>
