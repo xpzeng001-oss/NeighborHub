@@ -187,8 +187,8 @@
 
 /* 参与者头像 */
 .participant-avatars {
-  display: flex;
-  align-items: center;
+  position: relative;
+  height: 48rpx;
   flex-shrink: 0;
 }
 .p-avatar {
@@ -196,7 +196,6 @@
   height: 48rpx;
   border-radius: 50%;
   border: 3rpx solid #fff;
-  position: relative;
   background: #E5E2DC;
 }
 .participant-count {

@@ -120,10 +120,10 @@
         <!-- 活动 -->
         <view class="feed-extra" wx:if="{{item.feedType === 'activity'}}">
           <view class="feed-participants" wx:if="{{item.currentParticipants > 0}}">
-            <view class="feed-p-avatars">
+            <view class="feed-p-avatars" style="width:{{item.participantAvatars.length > 6 ? 6 * 28 + 16 : (item.participantAvatars.length - 1) * 28 + 44}}rpx;">
               <image class="feed-p-avatar" wx:for="{{item.participantAvatars}}" wx:for-item="av" wx:key="index"
                      wx:if="{{index < 6}}" src="{{av}}" mode="aspectFill"
-                     style="position:relative; margin-left: {{index === 0 ? '0' : '-20rpx'}}; z-index: {{index + 1}};"></image>
+                     style="position:absolute; left:{{index * 28}}rpx; z-index:{{10 - index}};"></image>
             </view>
             <text class="feed-p-count">{{item.currentParticipants}}人想参加</text>
           </view>

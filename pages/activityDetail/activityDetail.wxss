@@ -230,8 +230,9 @@
   gap: 16rpx;
 }
 .participants-stack {
-  display: flex;
-  align-items: center;
+  position: relative;
+  height: 64rpx;
+  flex-shrink: 0;
 }
 .participant-avatar {
   width: 64rpx;
@@ -239,7 +240,6 @@
   border-radius: 50%;
   border: 4rpx solid #fff;
   background: #E5E2DC;
-  position: relative;
 }
 .participants-count {
   font-size: 26rpx;

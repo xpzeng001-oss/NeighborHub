@@ -90,10 +90,10 @@
     <!-- 参与者 -->
     <view class="participants-card" wx:if="{{detail.currentParticipants > 0}}">
       <view class="participants-row">
-        <view class="participants-stack">
+        <view class="participants-stack" style="width:{{detail.participantAvatars.length > 8 ? 8 * 40 + 24 : (detail.participantAvatars.length - 1) * 40 + 64}}rpx;">
           <image class="participant-avatar" wx:for="{{detail.participantAvatars}}" wx:key="index"
                  wx:if="{{index < 8}}" src="{{item}}" mode="aspectFill"
-                 style="position:relative; margin-left: {{index === 0 ? '0' : '-26rpx'}}; z-index: {{index + 1}};"></image>
+                 style="position:absolute; left:{{index * 40}}rpx; z-index:{{10 - index}};"></image>
         </view>
         <text class="participants-count">{{detail.currentParticipants}}人想参加</text>
       </view>

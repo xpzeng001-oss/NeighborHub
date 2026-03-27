@@ -252,15 +252,15 @@
   gap: 12rpx;
 }
 .feed-p-avatars {
-  display: flex;
-  align-items: center;
+  position: relative;
+  height: 44rpx;
+  flex-shrink: 0;
 }
 .feed-p-avatar {
   width: 44rpx;
   height: 44rpx;
   border-radius: 50%;
   border: 3rpx solid #fff;
-  position: relative;
   background: #E5E2DC;
 }
 .feed-p-count {
