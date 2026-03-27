@@ -41,6 +41,10 @@ const User = sequelize.define('User', {
     defaultValue: 'user',
     comment: 'user / admin'
   },
+  phone: {
+    type: DataTypes.STRING(32),
+    defaultValue: ''
+  },
   is_banned: {
     type: DataTypes.BOOLEAN,
     defaultValue: false

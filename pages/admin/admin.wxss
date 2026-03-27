@@ -501,6 +501,10 @@
   font-size: 24rpx;
   color: #9A9A9A;
 }
+.user-phone {
+  font-size: 24rpx;
+  color: #666;
+}
 .user-stats {
   display: flex;
   gap: 24rpx;

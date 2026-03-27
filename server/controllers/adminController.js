@@ -388,12 +388,15 @@ exports.listUsers = async (req, res, next) => {
     const { page = 1, pageSize = 20, keyword } = req.query;
     const where = {};
     if (keyword) {
-      where.nick_name = { [Op.like]: `%${keyword}%` };
+      where[Op.or] = [
+        { nick_name: { [Op.like]: `%${keyword}%` } },
+        { phone: { [Op.like]: `%${keyword}%` } }
+      ];
     }
 
     const { rows, count } = await User.findAndCountAll({
       where,
-      attributes: ['id', 'nick_name', 'avatar_url', 'building', 'coins', 'is_verified', 'role', 'is_banned', 'created_at'],
+      attributes: ['id', 'nick_name', 'avatar_url', 'building', 'phone', 'coins', 'is_verified', 'role', 'is_banned', 'created_at'],
       order: [['created_at', 'DESC']],
       limit: Number(pageSize),
       offset: (Number(page) - 1) * Number(pageSize)
@@ -419,6 +422,7 @@ exports.listUsers = async (req, res, next) => {
       nickName:       u.nick_name,
       avatarUrl:      u.avatar_url,
       building:       u.building,
+      phone:          u.phone || '',
       coins:          u.coins,
       isVerified:     u.is_verified,
       role:           u.role,

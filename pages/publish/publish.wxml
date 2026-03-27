@@ -38,6 +38,10 @@
         <icon name="shopping-cart" size="28" color="{{publishType === 'sam' ? '#fff' : '#8B6DB0'}}"></icon>
         <text>山姆拼单</text>
       </view>
+      <view class="type-tab {{publishType === 'carpool' ? 'active' : ''}}" bindtap="switchType" data-type="carpool">
+        <icon name="car" size="28" color="{{publishType === 'carpool' ? '#fff' : '#5B9E6F'}}"></icon>
+        <text>拼车顺路</text>
+      </view>
     </view>
   </scroll-view>
 

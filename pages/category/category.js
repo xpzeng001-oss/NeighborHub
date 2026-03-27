@@ -5,7 +5,6 @@ const TABS = [
   { id: 'product', name: '闲置' },
   { id: 'post', name: '帖子' },
   { id: 'help', name: '互助' },
-  { id: 'rental', name: '租赁' },
   { id: 'pet', name: '宠物' },
   { id: 'sam', name: '拼单' },
   { id: 'carpool', name: '拼车' }

@@ -161,7 +161,7 @@
     <view class="search-bar">
       <view class="search-input-wrap">
         <icon name="search" size="32" color="#9A9A9A"></icon>
-        <input class="search-input" placeholder="搜索用户昵称" value="{{userKeyword}}" bindinput="searchUser" />
+        <input class="search-input" placeholder="搜索昵称或手机号" value="{{userKeyword}}" bindinput="searchUser" />
       </view>
     </view>
 
@@ -181,6 +181,7 @@
             <view class="ban-badge" wx:if="{{item.isBanned}}">已封禁</view>
           </view>
           <text class="user-building" wx:if="{{item.building}}">{{item.building}}</text>
+          <text class="user-phone" wx:if="{{item.phone}}">{{item.phone}}</text>
           <view class="user-stats">
             <view class="user-stat">
               <text class="user-stat-label">邻里币</text>
