@@ -99,6 +99,10 @@ exports.create = async (req, res, next) => {
       return res.status(400).json({ code: 400, message: '标题不能为空', data: null });
     }
 
+    // 发起人自动成为第一个参与者
+    const creator = await User.findByPk(req.user.id, { attributes: ['avatar_url'] });
+    const initAvatars = creator && creator.avatar_url ? [creator.avatar_url] : [];
+
     const activity = await Activity.create({
       user_id: req.user.id,
       title,
@@ -112,6 +116,8 @@ exports.create = async (req, res, next) => {
       longitude: Number(longitude) || 0,
       price: Number(price) || 0,
       max_participants: Number(maxParticipants) || 0,
+      current_participants: 1,
+      participant_avatars: initAvatars,
       community_id: communityId || null
     });
 
