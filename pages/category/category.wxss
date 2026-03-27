@@ -119,7 +119,7 @@
 .tag-pet { background: rgba(139, 109, 176, 0.12); color: #8B6DB0; }
 .tag-sam { background: rgba(74, 144, 217, 0.12); color: #4A90D9; }
 .tag-carpool { background: rgba(198, 122, 82, 0.12); color: #C67A52; }
-.tag-activity { background: rgba(198, 122, 82, 0.12); color: #C67A52; }
+.tag-activity { background: rgba(76, 217, 100, 0.12); color: #3CB371; }
 
 /* 标题 & 描述 */
 .feed-title {
