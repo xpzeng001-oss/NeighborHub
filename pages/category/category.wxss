@@ -234,16 +234,17 @@
   color: #999;
 }
 
+/* 活动报名状态标签（右上角） */
+.feed-status-tag {
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 6rpx;
+  background: rgba(76, 217, 100, 0.12);
+  color: #3CB371;
+  font-weight: 500;
+}
+
 /* 活动卡片底部 */
-.feed-extra-activity {
-  flex-direction: column;
-  gap: 12rpx;
-}
-.feed-extra-row {
-  display: flex;
-  align-items: center;
-  gap: 16rpx;
-}
 .feed-participants {
   display: flex;
   align-items: center;

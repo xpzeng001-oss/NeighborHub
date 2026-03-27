@@ -35,6 +35,7 @@
               <text class="feed-time">{{item.timeAgo}}</text>
             </view>
           </view>
+          <view class="feed-status-tag" wx:if="{{item.feedType === 'activity'}}">{{item.status === 'open' ? '报名中' : '已结束'}}</view>
           <view class="feed-type-tag tag-{{item.feedType}}">
             <icon wx:if="{{item.isTop}}" name="flame" size="24" color="{{item.typeColor}}" filled></icon>
             <text>{{item.typeLabel}}</text>
@@ -117,11 +118,7 @@
         </view>
 
         <!-- 活动 -->
-        <view class="feed-extra feed-extra-activity" wx:if="{{item.feedType === 'activity'}}">
-          <view class="feed-extra-row">
-            <text class="feed-price" wx:if="{{item.price > 0}}">¥{{item.price}}</text>
-            <text class="feed-status">{{item.status === 'open' ? '报名中' : '已结束'}}</text>
-          </view>
+        <view class="feed-extra" wx:if="{{item.feedType === 'activity'}}">
           <view class="feed-participants" wx:if="{{item.currentParticipants > 0}}">
             <view class="feed-p-avatars">
               <image class="feed-p-avatar" wx:for="{{item.participantAvatars}}" wx:for-item="av" wx:key="*this"
@@ -130,6 +127,8 @@
             </view>
             <text class="feed-p-count">{{item.currentParticipants}}人想参加</text>
           </view>
+          <text class="feed-price" wx:if="{{item.price > 0}}" style="margin-left:auto;">¥{{item.price}}</text>
+          <text class="feed-price free" wx:else style="margin-left:auto;">免费</text>
         </view>
       </view>
     </view>
