@@ -47,6 +47,18 @@
         <!-- 描述 -->
         <text class="feed-desc" wx:if="{{item.description}}">{{item.description}}</text>
 
+        <!-- 活动：时间+地点（描述下方） -->
+        <view class="feed-act-info" wx:if="{{item.feedType === 'activity' && (item.startTimeFormatted || item.location)}}">
+          <view class="feed-act-info-row" wx:if="{{item.startTimeFormatted}}">
+            <icon name="clock" size="24" color="#999"></icon>
+            <text>{{item.startTimeFormatted}}{{item.endTimeFormatted ? ' – ' + item.endTimeFormatted : ''}}</text>
+          </view>
+          <view class="feed-act-info-row" wx:if="{{item.location}}">
+            <icon name="map-pin" size="24" color="#999"></icon>
+            <text>{{item.location}}</text>
+          </view>
+        </view>
+
         <!-- 图片 -->
         <view class="feed-images" wx:if="{{item.images.length > 0}}">
           <image wx:for="{{item.images}}" wx:for-item="img" wx:key="*this"
@@ -107,8 +119,6 @@
         <!-- 活动 -->
         <view class="feed-extra feed-extra-activity" wx:if="{{item.feedType === 'activity'}}">
           <view class="feed-extra-row">
-            <text class="feed-meta" wx:if="{{item.startTimeFormatted}}">{{item.startTimeFormatted}}</text>
-            <text class="feed-meta" wx:if="{{item.location}}">{{item.location}}</text>
             <text class="feed-price" wx:if="{{item.price > 0}}">¥{{item.price}}</text>
             <text class="feed-status">{{item.status === 'open' ? '报名中' : '已结束'}}</text>
           </view>

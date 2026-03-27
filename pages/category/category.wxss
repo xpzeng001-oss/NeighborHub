@@ -219,6 +219,21 @@
   font-weight: 500;
 }
 
+/* 活动时间地点（描述下方） */
+.feed-act-info {
+  margin-top: 12rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+.feed-act-info-row {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  font-size: 22rpx;
+  color: #999;
+}
+
 /* 活动卡片底部 */
 .feed-extra-activity {
   flex-direction: column;
