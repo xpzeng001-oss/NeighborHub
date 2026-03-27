@@ -52,7 +52,27 @@ Page({
     if (this._submitting) return;
     const { detail } = this.data;
     if (!detail) return;
-    if (detail.isOrganizer) return;
+
+    // 发起人：管理活动
+    if (detail.isOrganizer) {
+      const actions = ['删除活动'];
+      if (detail.status === 'open') actions.unshift('关闭报名');
+      if (detail.status === 'closed') actions.unshift('开放报名');
+      wx.showActionSheet({
+        itemList: actions,
+        success: async (res) => {
+          const action = actions[res.tapIndex];
+          if (action === '删除活动') {
+            this.onDelete();
+          } else if (action === '关闭报名') {
+            await this.updateStatus('closed');
+          } else if (action === '开放报名') {
+            await this.updateStatus('open');
+          }
+        }
+      });
+      return;
+    }
 
     const token = wx.getStorageSync('token');
     if (!token) {
@@ -152,6 +172,20 @@ Page({
     wx.navigateTo({
       url: '/pages/chatDetail/chatDetail?targetUserId=' + detail.userId + '&nickName=' + encodeURIComponent(detail.userName)
     });
+  },
+
+  async updateStatus(newStatus) {
+    if (this._submitting) return;
+    this._submitting = true;
+    try {
+      await api.updateActivity(this.activityId, { status: newStatus });
+      this.setData({ 'detail.status': newStatus });
+      wx.showToast({ title: newStatus === 'open' ? '已开放报名' : '已关闭报名', icon: 'success' });
+    } catch (e) {
+      console.error('[activityDetail] updateStatus failed', e);
+    } finally {
+      this._submitting = false;
+    }
   },
 
   async onDelete() {

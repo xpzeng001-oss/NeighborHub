@@ -141,6 +141,23 @@ exports.create = async (req, res, next) => {
   }
 };
 
+exports.update = async (req, res, next) => {
+  try {
+    const activity = await Activity.findByPk(req.params.id);
+    if (!activity) {
+      return res.status(404).json({ code: 404, message: '活动不存在', data: null });
+    }
+    if (activity.user_id !== req.user.id) {
+      return res.status(403).json({ code: 403, message: '无权操作', data: null });
+    }
+    const { status } = req.body;
+    if (status) await activity.update({ status });
+    res.json({ code: 0, data: null });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.join = async (req, res, next) => {
   try {
     const activity = await Activity.findByPk(req.params.id);

@@ -111,6 +111,7 @@ const getActivities     = (params)   => request({ url: '/api/activities', data: 
 const getActivityDetail = (id)       => request({ url: '/api/activities/' + id });
 const createActivity    = (data)     => request({ url: '/api/activities', method: 'POST', data });
 const deleteActivity    = (id)       => request({ url: '/api/activities/' + id, method: 'DELETE' });
+const updateActivity    = (id, data) => request({ url: '/api/activities/' + id, method: 'PUT', data });
 const joinActivity      = (id)       => request({ url: '/api/activities/' + id + '/join', method: 'POST' });
 const cancelActivity    = (id)       => request({ url: '/api/activities/' + id + '/cancel', method: 'POST' });
 const getUser       = (id)       => request({ url: '/api/users/' + id });
@@ -183,7 +184,7 @@ module.exports = {
   getRentals,
   getSams, getSamDetail, createSam, deleteSam, joinSam, updateShoppingList, postSamUpdate, updatePickupStatus,
   getCarpools, createCarpool, joinCarpool,
-  getActivities, getActivityDetail, createActivity, deleteActivity, joinActivity, cancelActivity,
+  getActivities, getActivityDetail, createActivity, deleteActivity, updateActivity, joinActivity, cancelActivity,
   getPets, getPetDetail, createPet, deletePet, respondPet,
   getUser, updateUser, getCoinLogs,
   getMyFavorites, getReports, createReport, getFeedbacks, createFeedback,
