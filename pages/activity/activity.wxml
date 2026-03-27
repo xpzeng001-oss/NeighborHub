@@ -1,0 +1,95 @@
+<!--pages/activity/activity.wxml - 活动列表-->
+<view class="page">
+  <!-- 自定义导航栏 -->
+  <view class="custom-nav-wrap">
+    <view style="height: {{statusBarHeight}}px;"></view>
+    <view class="custom-nav-bar">
+      <view class="nav-back" bindtap="goBack">
+        <icon name="arrow-left" size="36" color="#1A1A1A"></icon>
+      </view>
+      <view class="nav-title">活动</view>
+    </view>
+  </view>
+
+  <!-- 分类Tab -->
+  <view class="activity-tabs">
+    <view class="activity-tab {{activeTab === index ? 'active' : ''}}"
+          wx:for="{{tabs}}" wx:key="index"
+          bindtap="switchTab" data-index="{{index}}">
+      {{item}}
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="scroll-content" refresher-enabled="{{true}}"
+               bindrefresherrefresh="onRefresh" refresher-triggered="{{isRefreshing}}"
+               bindscrolltolower="onLoadMore">
+    <view class="activity-list">
+      <view class="activity-card" wx:for="{{filteredList}}" wx:key="id"
+            bindtap="goDetail" data-id="{{item.id}}">
+
+        <!-- 上半部分：封面图 + 信息 -->
+        <view class="card-body">
+          <!-- 左侧封面图 -->
+          <view class="card-cover-wrap">
+            <image class="card-cover" src="{{item.coverImage || (item.images[0] || '/images/avatar-placeholder.png')}}" mode="aspectFill"></image>
+            <view class="card-status-badge status-{{item.status}}">
+              <text>{{item.status === 'open' ? '报名中' : item.status === 'full' ? '已满员' : '已结束'}}</text>
+            </view>
+          </view>
+
+          <!-- 右侧信息 -->
+          <view class="card-info">
+            <text class="card-title">{{item.title}}</text>
+
+            <!-- 时间 -->
+            <view class="info-row" wx:if="{{item.startTime}}">
+              <icon name="clock" size="26" color="#999"></icon>
+              <text class="info-text">{{item.startTimeFormatted}}{{item.endTime ? ' – ' + item.endTimeFormatted : ''}}</text>
+            </view>
+
+            <!-- 地点 -->
+            <view class="info-row" wx:if="{{item.location}}">
+              <icon name="map-pin" size="26" color="#999"></icon>
+              <text class="info-text">{{item.location}}{{item.distance ? '  ' + item.distance : ''}}</text>
+            </view>
+
+            <!-- 发起人 -->
+            <view class="organizer-row">
+              <image class="organizer-avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+              <text class="organizer-name">{{item.userName}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 下半部分：参与者 + 价格按钮 -->
+        <view class="card-footer">
+          <view class="footer-left">
+            <!-- 参与者头像 -->
+            <view class="participant-avatars" wx:if="{{item.participantAvatars.length > 0}}">
+              <image class="p-avatar" wx:for="{{item.participantAvatars}}" wx:for-item="av" wx:key="*this"
+                     wx:if="{{index < 6}}" src="{{av}}" mode="aspectFill"
+                     style="margin-left: {{index === 0 ? '0' : '-16rpx'}}; z-index: {{10 - index}};"></image>
+            </view>
+            <text class="participant-count">{{item.currentParticipants || 0}}人想参加</text>
+          </view>
+          <view class="footer-btn" catchtap="onJoin" data-id="{{item.id}}">
+            <text wx:if="{{item.price > 0}}">¥{{item.price}} </text>
+            <text>报名</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{filteredList.length === 0 && !isRefreshing}}">
+      <icon name="calendar" size="96" color="#ccc"></icon>
+      <text class="empty-text">暂无活动，快来发起吧</text>
+    </view>
+    <view class="load-more" wx:if="{{filteredList.length > 0 && !hasMore}}">— 没有更多了 —</view>
+    <view style="height: 160rpx;"></view>
+  </scroll-view>
+
+  <!-- 发起活动按钮 -->
+  <view class="fab-btn" bindtap="goPublish">
+    <icon name="pencil" size="44" color="#fff"></icon>
+  </view>
+</view>

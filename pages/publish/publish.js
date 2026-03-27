@@ -51,7 +51,14 @@ Page({
       carpoolDate: '',
       carpoolTime: '',
       carpoolSeats: '',
-      carpoolFee: ''
+      carpoolFee: '',
+      activityStartDate: '',
+      activityStartTime: '',
+      activityEndDate: '',
+      activityEndTime: '',
+      activityLocation: '',
+      activityPrice: '',
+      activityMaxParticipants: ''
     }
   },
 
@@ -60,7 +67,7 @@ Page({
     const now = new Date();
     const y = now.getFullYear(), m = ('0' + (now.getMonth() + 1)).slice(-2), d = ('0' + now.getDate()).slice(-2);
     const data = { statusBarHeight: sysInfo.statusBarHeight || 44, today: y + '-' + m + '-' + d };
-    const validTypes = ['product', 'free', 'post', 'help', 'pet', 'sam', 'carpool'];
+    const validTypes = ['product', 'free', 'post', 'help', 'pet', 'sam', 'carpool', 'activity'];
     if (options.type && validTypes.indexOf(options.type) !== -1) {
       data.publishType = options.type;
       data.lockedType = true;
@@ -109,7 +116,14 @@ Page({
         carpoolDate: '',
         carpoolTime: '',
         carpoolSeats: '',
-        carpoolFee: ''
+        carpoolFee: '',
+        activityStartDate: '',
+        activityStartTime: '',
+        activityEndDate: '',
+        activityEndTime: '',
+        activityLocation: '',
+        activityPrice: '',
+        activityMaxParticipants: ''
       }
     });
   },
@@ -289,6 +303,16 @@ Page({
         return;
       }
     }
+    if (publishType === 'activity') {
+      if (!form.activityStartDate) {
+        wx.showToast({ title: '请选择开始日期', icon: 'none' });
+        return;
+      }
+      if (!form.activityLocation.trim()) {
+        wx.showToast({ title: '请输入活动地点', icon: 'none' });
+        return;
+      }
+    }
 
     wx.showLoading({ title: '发布中...' });
     try {
@@ -377,6 +401,36 @@ Page({
           fee: form.carpoolFee,
           communityId
         });
+      } else if (publishType === 'activity') {
+        const startTime = (form.activityStartDate && form.activityStartTime)
+          ? form.activityStartDate + ' ' + form.activityStartTime
+          : form.activityStartDate || '';
+        const endTime = (form.activityEndDate && form.activityEndTime)
+          ? form.activityEndDate + ' ' + form.activityEndTime
+          : form.activityEndDate || '';
+        const activityResult = await api.createActivity({
+          title: form.title,
+          description: form.description,
+          coverImage: imageUrls[0] || '',
+          images: imageUrls,
+          startTime,
+          endTime,
+          location: form.activityLocation,
+          price: form.activityPrice,
+          maxParticipants: form.activityMaxParticipants,
+          communityId
+        });
+        wx.hideLoading();
+        wx.showToast({ title: '发布成功！', icon: 'success' });
+        setTimeout(() => {
+          const newId = activityResult && activityResult.id;
+          if (newId) {
+            wx.redirectTo({ url: '/pages/activityDetail/activityDetail?id=' + newId });
+          } else {
+            wx.navigateBack();
+          }
+        }, 1500);
+        return;
       }
 
       wx.hideLoading();

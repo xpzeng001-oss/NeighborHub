@@ -15,6 +15,7 @@ router.use('/reports',  require('./reports'));
 router.use('/feedbacks', require('./feedbacks'));
 router.use('/sams',      require('./sams'));
 router.use('/carpools',  require('./carpools'));
+router.use('/activities', require('./activities'));
 router.use('/stats',     require('./stats'));
 router.use('/feed',      require('./feed'));
 router.use('/wechat',   require('./wechat'));

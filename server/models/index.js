@@ -20,6 +20,7 @@ const District = require('./District');
 const Community = require('./Community');
 const CommunityApplication = require('./CommunityApplication');
 const CoinLog = require('./CoinLog');
+const Activity = require('./Activity');
 
 // User <-> Product
 User.hasMany(Product, { foreignKey: 'user_id' });
@@ -112,6 +113,14 @@ Carpool.belongsTo(Community, { foreignKey: 'community_id' });
 Community.hasMany(Rental, { foreignKey: 'community_id' });
 Rental.belongsTo(Community, { foreignKey: 'community_id' });
 
+// User <-> Activity
+User.hasMany(Activity, { foreignKey: 'user_id' });
+Activity.belongsTo(User, { foreignKey: 'user_id' });
+
+// Community <-> Activity
+Community.hasMany(Activity, { foreignKey: 'community_id' });
+Activity.belongsTo(Community, { foreignKey: 'community_id' });
+
 // User <-> CommunityApplication
 User.hasMany(CommunityApplication, { foreignKey: 'user_id' });
 CommunityApplication.belongsTo(User, { foreignKey: 'user_id' });
@@ -138,5 +147,6 @@ module.exports = {
   District,
   Community,
   CommunityApplication,
-  CoinLog
+  CoinLog,
+  Activity
 };

@@ -103,6 +103,13 @@
           <text class="feed-meta" wx:if="{{item.from}}">{{item.from}} → {{item.to}}</text>
           <text class="feed-meta" wx:if="{{item.fee}}">¥{{item.fee}}/人</text>
         </view>
+
+        <!-- 活动 -->
+        <view class="feed-extra" wx:if="{{item.feedType === 'activity'}}">
+          <text class="feed-meta" wx:if="{{item.location}}">{{item.location}}</text>
+          <text class="feed-price" wx:if="{{item.price > 0}}">¥{{item.price}}</text>
+          <text class="feed-status">{{item.status === 'open' ? '报名中' : '已结束'}}</text>
+        </view>
       </view>
     </view>
 

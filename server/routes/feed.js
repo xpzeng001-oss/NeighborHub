@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Op } = require('sequelize');
-const { User, Product, Post, HelpRequest, Rental, PetPost, SamOrder, Carpool, Community } = require('../models');
+const { User, Product, Post, HelpRequest, Rental, PetPost, SamOrder, Carpool, Community, Activity } = require('../models');
 const { buildDistrictFilter } = require('../utils/districtFilter');
 
 const topOrder = [['is_top', 'DESC'], ['created_at', 'DESC']];
@@ -21,19 +21,20 @@ router.get('/', async (req, res, next) => {
 
     // "全部" — fetch from all types and merge
     const perType = offset + limit;
-    const [products, posts, helps, rentals, pets, sams, carpools] = await Promise.all([
+    const [products, posts, helps, rentals, pets, sams, carpools, activities] = await Promise.all([
       fetchByType('product', activeWhere, districtWhere, perType, 0),
       fetchByType('post', activeWhere, districtWhere, perType, 0),
       fetchByType('help', activeWhere, districtWhere, perType, 0),
       fetchByType('rental', activeWhere, districtWhere, perType, 0),
       fetchByType('pet', activeWhere, districtWhere, perType, 0),
       fetchByType('sam', activeWhere, districtWhere, perType, 0),
-      fetchByType('carpool', activeWhere, districtWhere, perType, 0)
+      fetchByType('carpool', activeWhere, districtWhere, perType, 0),
+      fetchByType('activity', activeWhere, districtWhere, perType, 0)
     ]);
 
     let all = [
       ...products.list, ...posts.list, ...helps.list, ...rentals.list,
-      ...pets.list, ...sams.list, ...carpools.list
+      ...pets.list, ...sams.list, ...carpools.list, ...activities.list
     ];
     // 置顶优先，再按时间
     all.sort((a, b) => {
@@ -130,6 +131,18 @@ async function fetchByType(type, activeWhere, districtWhere, limit, offset) {
         title: c.title, description: c.description, images: [],
         from: c.from_location, to: c.to_location, date: c.date, time: c.time,
         seats: c.seats, takenSeats: c.taken_seats, fee: c.fee, status: c.status
+      })) };
+    }
+    case 'activity': {
+      const { rows, count } = await Activity.findAndCountAll({
+        where: activeWhere, include, order: topOrder, limit, offset
+      });
+      return { total: count, list: rows.map(a => mapBase(a, 'activity', {
+        title: a.title, description: a.description, images: a.images || [],
+        coverImage: a.cover_image, startTime: a.start_time, endTime: a.end_time,
+        location: a.location, price: a.price,
+        maxParticipants: a.max_participants, currentParticipants: a.current_participants,
+        participantAvatars: a.participant_avatars, status: a.status
       })) };
     }
     default:

@@ -27,7 +27,8 @@ const ACTIVITY_TABS = [
   { key: 'help', name: '帮忙' },
   { key: 'sam', name: '拼单' },
   { key: 'carpool', name: '拼车' },
-  { key: 'pet', name: '宠物' }
+  { key: 'pet', name: '宠物' },
+  { key: 'activity', name: '活动' }
 ];
 
 Page({
@@ -136,6 +137,8 @@ Page({
         result = await api.getCarpools({ userId: userInfo.id, page, pageSize: 20 });
       } else if (actualType === 'pet') {
         result = await api.getPets({ userId: userInfo.id, page, pageSize: 20 });
+      } else if (actualType === 'activity') {
+        result = await api.getActivities({ userId: userInfo.id, page, pageSize: 20 });
       }
 
       const newList = result.list || [];
@@ -160,6 +163,8 @@ Page({
       wx.navigateTo({ url: '/pages/petDetail/petDetail?id=' + id });
     } else if (actualType === 'post') {
       wx.navigateTo({ url: '/pages/forumDetail/forumDetail?id=' + id });
+    } else if (actualType === 'activity') {
+      wx.navigateTo({ url: '/pages/activityDetail/activityDetail?id=' + id });
     } else {
       wx.navigateTo({ url: '/pages/detail/detail?id=' + id });
     }

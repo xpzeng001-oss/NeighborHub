@@ -7,7 +7,7 @@
       <view class="nav-back" bindtap="goBack">
         <icon name="arrow-left" size="36" color="#1A1A1A"></icon>
       </view>
-      <view class="nav-title">{{lockedType ? (publishType === 'carpool' ? '发布拼车' : publishType === 'pet' ? '发布宠物喂养' : publishType === 'sam' ? '发布山姆拼单' : publishType === 'help' ? '发布求帮忙' : publishType === 'post' ? '发布帖子' : publishType === 'free' ? '发布免费送' : '发布') : '发布'}}</view>
+      <view class="nav-title">{{lockedType ? (publishType === 'carpool' ? '发布拼车' : publishType === 'pet' ? '发布宠物喂养' : publishType === 'sam' ? '发布山姆拼单' : publishType === 'help' ? '发布求帮忙' : publishType === 'post' ? '发布帖子' : publishType === 'free' ? '发布免费送' : publishType === 'activity' ? '发布活动' : '发布') : '发布'}}</view>
     </view>
   </view>
 
@@ -41,6 +41,10 @@
       <view class="type-tab {{publishType === 'carpool' ? 'active' : ''}}" bindtap="switchType" data-type="carpool">
         <icon name="car" size="28" color="{{publishType === 'carpool' ? '#fff' : '#5B9E6F'}}"></icon>
         <text>拼车顺路</text>
+      </view>
+      <view class="type-tab {{publishType === 'activity' ? 'active' : ''}}" bindtap="switchType" data-type="activity">
+        <icon name="calendar" size="28" color="{{publishType === 'activity' ? '#fff' : '#3CB371'}}"></icon>
+        <text>发活动</text>
       </view>
     </view>
   </scroll-view>
@@ -401,6 +405,91 @@
         <view class="form-item-col">
           <text class="form-label">详细描述</text>
           <textarea class="form-textarea" placeholder="描述路线、时间安排等详细信息..." maxlength="500" bindinput="onInput" data-field="description" value="{{form.description}}"/>
+        </view>
+      </view>
+    </view>
+
+    <!-- 活动表单 -->
+    <view wx:if="{{publishType === 'activity'}}">
+      <!-- 图片上传 -->
+      <view class="form-section">
+        <view class="upload-area">
+          <view class="image-list">
+            <view class="image-item" wx:for="{{imageList}}" wx:key="index">
+              <image src="{{item}}" mode="aspectFill" class="uploaded-img"></image>
+              <view class="remove-btn" bindtap="removeImage" data-index="{{index}}">
+                <icon name="x" size="22" color="#fff"></icon>
+              </view>
+            </view>
+            <view class="image-item add-btn" bindtap="chooseImage" wx:if="{{imageList.length < 9}}">
+              <icon name="camera" size="48" color="#bbb"></icon>
+              <text class="add-text">封面图</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 标题 -->
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">活动标题</text>
+          <input class="form-input" placeholder="如：周末露营活动" maxlength="30" bindinput="onInput" data-field="title" value="{{form.title}}"/>
+        </view>
+      </view>
+
+      <!-- 活动时间 -->
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">开始时间</text>
+          <view class="date-range-picker">
+            <picker mode="date" bindchange="onInput" data-field="activityStartDate" value="{{form.activityStartDate}}" start="{{today}}">
+              <text class="{{form.activityStartDate ? 'date-text' : 'placeholder'}}">{{form.activityStartDate || '选择日期'}}</text>
+            </picker>
+            <picker mode="time" bindchange="onInput" data-field="activityStartTime" value="{{form.activityStartTime}}">
+              <text class="{{form.activityStartTime ? 'date-text' : 'placeholder'}}">{{form.activityStartTime || '选择时间'}}</text>
+            </picker>
+          </view>
+        </view>
+        <view class="form-item">
+          <text class="form-label">结束时间</text>
+          <view class="date-range-picker">
+            <picker mode="date" bindchange="onInput" data-field="activityEndDate" value="{{form.activityEndDate}}" start="{{form.activityStartDate || today}}">
+              <text class="{{form.activityEndDate ? 'date-text' : 'placeholder'}}">{{form.activityEndDate || '选择日期'}}</text>
+            </picker>
+            <picker mode="time" bindchange="onInput" data-field="activityEndTime" value="{{form.activityEndTime}}">
+              <text class="{{form.activityEndTime ? 'date-text' : 'placeholder'}}">{{form.activityEndTime || '选择时间'}}</text>
+            </picker>
+          </view>
+        </view>
+      </view>
+
+      <!-- 地点 -->
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">活动地点</text>
+          <input class="form-input" placeholder="如：小区中心花园" maxlength="60" bindinput="onInput" data-field="activityLocation" value="{{form.activityLocation}}"/>
+        </view>
+      </view>
+
+      <!-- 费用 & 人数 -->
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">活动费用</text>
+          <input class="form-input" type="digit" placeholder="0 表示免费" bindinput="onInput" data-field="activityPrice" value="{{form.activityPrice}}"/>
+          <text class="form-unit">元</text>
+        </view>
+        <view class="form-item">
+          <text class="form-label">人数上限</text>
+          <input class="form-input" type="number" placeholder="0 表示不限" bindinput="onInput" data-field="activityMaxParticipants" value="{{form.activityMaxParticipants}}"/>
+          <text class="form-unit">人</text>
+        </view>
+      </view>
+
+      <!-- 详细描述 -->
+      <view class="form-section">
+        <view class="form-item-col">
+          <text class="form-label">活动详情</text>
+          <textarea class="form-textarea" placeholder="描述活动内容、注意事项等..." maxlength="1000" bindinput="onInput" data-field="description" value="{{form.description}}" style="height: 300rpx;"/>
         </view>
       </view>
     </view>

@@ -14,7 +14,8 @@ const {
   Report,
   Violation,
   Community,
-  CommunityApplication
+  CommunityApplication,
+  Activity
 } = require('../models');
 
 // ── helper: map target_type string to Sequelize model ──
@@ -25,7 +26,8 @@ const MODEL_MAP = {
   pet:     PetPost,
   sam:     SamOrder,
   carpool: Carpool,
-  help:    HelpRequest
+  help:    HelpRequest,
+  activity: Activity
 };
 
 // Default active status for each model (used when restoring)

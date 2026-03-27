@@ -5,6 +5,7 @@ const TABS = [
   { id: 'product', name: '闲置' },
   { id: 'post', name: '帖子' },
   { id: 'help', name: '互助' },
+  { id: 'activity', name: '活动' },
   { id: 'pet', name: '宠物' },
   { id: 'sam', name: '拼单' },
   { id: 'carpool', name: '拼车' }
@@ -12,12 +13,12 @@ const TABS = [
 
 const TYPE_LABELS = {
   product: '闲置', post: '帖子', help: '互助', rental: '租赁',
-  pet: '宠物', sam: '拼单', carpool: '拼车'
+  pet: '宠物', sam: '拼单', carpool: '拼车', activity: '活动'
 };
 
 const TYPE_COLORS = {
   product: '#C67A52', post: '#4A90D9', help: '#E8883C', rental: '#D4A04A',
-  pet: '#8B6DB0', sam: '#4A90D9', carpool: '#C67A52'
+  pet: '#8B6DB0', sam: '#4A90D9', carpool: '#C67A52', activity: '#4CD964'
 };
 
 const formatTime = d => {
@@ -117,7 +118,8 @@ Page({
       rental: '/pages/rental/rental',
       pet: '/pages/petDetail/petDetail?id=',
       sam: '/pages/samDetail/samDetail?id=',
-      carpool: '/pages/carpool/carpool'
+      carpool: '/pages/carpool/carpool',
+      activity: '/pages/activityDetail/activityDetail?id='
     };
     const url = routes[type];
     if (!url) return;
