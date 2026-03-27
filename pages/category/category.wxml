@@ -22,52 +22,7 @@
                bindrefresherrefresh="onRefresh" refresher-triggered="{{isRefreshing}}"
                bindscrolltolower="onLoadMore">
     <view class="feed-list">
-      <!-- ====== 活动专属卡片 ====== -->
-      <view class="activity-feed-card" wx:for="{{feedList}}" wx:key="{{item.feedType + '-' + item.id}}"
-            wx:if="{{item.feedType === 'activity'}}"
-            bindtap="goDetail" data-type="{{item.feedType}}" data-id="{{item.id}}">
-        <!-- 上半：封面 + 信息 -->
-        <view class="act-card-body">
-          <view class="act-cover-wrap">
-            <image class="act-cover" src="{{item.coverImage || (item.images[0] || '/images/avatar-placeholder.png')}}" mode="aspectFill"></image>
-            <view class="act-badge act-badge-{{item.status}}">{{item.status === 'open' ? '报名中' : item.status === 'full' ? '已满员' : '已结束'}}</view>
-          </view>
-          <view class="act-info">
-            <text class="act-title">{{item.title}}</text>
-            <view class="act-row" wx:if="{{item.startTime}}">
-              <icon name="clock" size="24" color="#999"></icon>
-              <text class="act-row-text">{{item.startTimeFormatted}}{{item.endTime ? ' – ' + item.endTimeFormatted : ''}}</text>
-            </view>
-            <view class="act-row" wx:if="{{item.location}}">
-              <icon name="map-pin" size="24" color="#999"></icon>
-              <text class="act-row-text">{{item.location}}</text>
-            </view>
-            <view class="act-organizer">
-              <image class="act-org-avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
-              <text class="act-org-name">{{item.userName}}</text>
-            </view>
-          </view>
-        </view>
-        <!-- 下半：参与者 + 价格按钮 -->
-        <view class="act-card-footer">
-          <view class="act-footer-left">
-            <view class="act-avatars" wx:if="{{item.participantAvatars.length > 0}}">
-              <image class="act-p-avatar" wx:for="{{item.participantAvatars}}" wx:for-item="av" wx:key="*this"
-                     wx:if="{{index < 6}}" src="{{av}}" mode="aspectFill"
-                     style="margin-left: {{index === 0 ? '0' : '-16rpx'}}; z-index: {{10 - index}};"></image>
-            </view>
-            <text class="act-count">{{item.currentParticipants || 0}}人想参加</text>
-          </view>
-          <view class="act-price-btn">
-            <text wx:if="{{item.price > 0}}">¥{{item.price}} </text>
-            <text>报名</text>
-          </view>
-        </view>
-      </view>
-
-      <!-- ====== 通用卡片（非活动） ====== -->
       <view class="feed-card" wx:for="{{feedList}}" wx:key="{{item.feedType + '-' + item.id}}"
-            wx:if="{{item.feedType !== 'activity'}}"
             bindtap="goDetail" data-type="{{item.feedType}}" data-id="{{item.id}}">
 
         <!-- 卡片头部：用户信息 + 类型标签 -->
@@ -147,6 +102,13 @@
         <view class="feed-extra" wx:if="{{item.feedType === 'carpool'}}">
           <text class="feed-meta" wx:if="{{item.from}}">{{item.from}} → {{item.to}}</text>
           <text class="feed-meta" wx:if="{{item.fee}}">¥{{item.fee}}/人</text>
+        </view>
+
+        <!-- 活动 -->
+        <view class="feed-extra" wx:if="{{item.feedType === 'activity'}}">
+          <text class="feed-meta" wx:if="{{item.location}}">{{item.location}}</text>
+          <text class="feed-price" wx:if="{{item.price > 0}}">¥{{item.price}}</text>
+          <text class="feed-status">{{item.status === 'open' ? '报名中' : '已结束'}}</text>
         </view>
       </view>
     </view>
