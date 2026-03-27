@@ -2,10 +2,10 @@ const api = require('../../utils/api');
 
 const TABS = [
   { id: 'all', name: '全部' },
+  { id: 'activity', name: '活动' },
   { id: 'product', name: '闲置' },
   { id: 'post', name: '帖子' },
   { id: 'help', name: '互助' },
-  { id: 'activity', name: '活动' },
   { id: 'pet', name: '宠物' },
   { id: 'sam', name: '拼单' },
   { id: 'carpool', name: '拼车' }
