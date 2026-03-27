@@ -18,7 +18,9 @@ function formatActivityTime(timeStr) {
 Page({
   data: {
     statusBarHeight: 44,
-    detail: null
+    detail: null,
+    showJoinModal: false,
+    joinForm: { name: '', phone: '', idCard: '' }
   },
 
   onLoad(options) {
@@ -77,15 +79,63 @@ Page({
       }
 
       if (detail.status !== 'open') return;
+      // 弹出报名表单
+      this.setData({ showJoinModal: true, joinForm: { name: '', phone: '', idCard: '' } });
+    } catch (e) {
+      console.error('[activityDetail] cancel failed', e);
+    } finally {
+      this._submitting = false;
+    }
+  },
+
+  onJoinInput(e) {
+    const field = e.currentTarget.dataset.field;
+    this.setData({ [`joinForm.${field}`]: e.detail.value });
+  },
+
+  closeJoinModal() {
+    this.setData({ showJoinModal: false });
+  },
+
+  async submitJoin() {
+    const { joinForm } = this.data;
+    if (!joinForm.name.trim()) {
+      wx.showToast({ title: '请输入姓名', icon: 'none' });
+      return;
+    }
+    if (!joinForm.phone.trim() || joinForm.phone.length !== 11) {
+      wx.showToast({ title: '请输入正确的手机号', icon: 'none' });
+      return;
+    }
+
+    if (this._submitting) return;
+    this._submitting = true;
+    try {
       const result = await api.joinActivity(this.activityId);
-      wx.showToast({ title: '报名成功！', icon: 'success' });
       this.setData({
+        showJoinModal: false,
         'detail.isJoined': true,
         'detail.currentParticipants': result.currentParticipants,
         'detail.status': result.status
       });
+      wx.showToast({ title: '报名成功！', icon: 'success' });
+
+      // 发送报名信息给发起人
+      const { detail } = this.data;
+      if (detail && detail.userId) {
+        try {
+          const userInfo = getApp().globalData.userInfo;
+          const senderName = userInfo ? userInfo.nickName : '用户';
+          let msg = `${senderName}报名了「${detail.title}」\n姓名：${joinForm.name}\n手机：${joinForm.phone}`;
+          if (joinForm.idCard.trim()) msg += `\n身份证：${joinForm.idCard}`;
+          const convRes = await api.createConversation({ targetUserId: detail.userId });
+          await api.sendMessage(convRes.id, { content: msg });
+        } catch (e) {
+          console.error('发送报名信息失败', e);
+        }
+      }
     } catch (e) {
-      console.error('[activityDetail] join/cancel failed', e);
+      console.error('[activityDetail] join failed', e);
     } finally {
       this._submitting = false;
     }

@@ -118,4 +118,26 @@
   <view class="delete-section" wx:if="{{detail && detail.isOrganizer}}">
     <text class="delete-btn" bindtap="onDelete">删除活动</text>
   </view>
+
+  <!-- 报名弹窗 -->
+  <view class="modal-mask" wx:if="{{showJoinModal}}" bindtap="closeJoinModal"></view>
+  <view class="modal-box" wx:if="{{showJoinModal}}">
+    <text class="modal-title">填写报名信息</text>
+    <view class="modal-field">
+      <text class="modal-label">姓名 <text style="color:#E8636F;">*</text></text>
+      <input class="modal-input" placeholder="请输入姓名" value="{{joinForm.name}}" bindinput="onJoinInput" data-field="name"/>
+    </view>
+    <view class="modal-field">
+      <text class="modal-label">手机号 <text style="color:#E8636F;">*</text></text>
+      <input class="modal-input" type="number" placeholder="请输入手机号" maxlength="11" value="{{joinForm.phone}}" bindinput="onJoinInput" data-field="phone"/>
+    </view>
+    <view class="modal-field">
+      <text class="modal-label">身份证号 <text style="color:#999;font-size:22rpx;">(选填)</text></text>
+      <input class="modal-input" placeholder="请输入身份证号" maxlength="18" value="{{joinForm.idCard}}" bindinput="onJoinInput" data-field="idCard"/>
+    </view>
+    <view class="modal-btns">
+      <view class="modal-btn cancel" bindtap="closeJoinModal">取消</view>
+      <view class="modal-btn confirm" bindtap="submitJoin">确认报名</view>
+    </view>
+  </view>
 </view>
