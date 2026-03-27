@@ -123,7 +123,7 @@
             <view class="feed-p-avatars">
               <image class="feed-p-avatar" wx:for="{{item.participantAvatars}}" wx:for-item="av" wx:key="index"
                      wx:if="{{index < 6}}" src="{{av}}" mode="aspectFill"
-                     style="position:relative; margin-left: {{index === 0 ? '0' : '-20rpx'}}; z-index: {{10 - index}};"></image>
+                     style="position:relative; margin-left: {{index === 0 ? '0' : '-20rpx'}}; z-index: {{index + 1}};"></image>
             </view>
             <text class="feed-p-count">{{item.currentParticipants}}人想参加</text>
           </view>
