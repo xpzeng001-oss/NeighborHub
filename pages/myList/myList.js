@@ -144,7 +144,7 @@ Page({
       } else if (actualType === 'pet') {
         result = await api.getPets({ userId: userInfo.id, page, pageSize: 20 });
       } else if (actualType === 'activity') {
-        result = await api.getActivities({ userId: userInfo.id, page, pageSize: 20 });
+        result = await api.getActivities({ joinedUserId: userInfo.id, page, pageSize: 20 });
       }
 
       const newList = result.list || [];

@@ -4,13 +4,22 @@ const coinService = require('../services/coinService');
 
 exports.list = async (req, res, next) => {
   try {
-    const { page = 1, pageSize = 20, status, communityId, districtId, userId } = req.query;
+    const { page = 1, pageSize = 20, status, communityId, districtId, userId, joinedUserId } = req.query;
     const { Op } = require('sequelize');
+    const sequelize = require('../config/database');
     const where = { status: { [Op.ne]: 'off' } };
     if (status) where.status = status;
     if (communityId) where.community_id = communityId;
     else Object.assign(where, await buildDistrictFilter(districtId));
     if (userId) where.user_id = Number(userId);
+    if (joinedUserId) {
+      const dialect = sequelize.getDialect();
+      if (dialect === 'mysql') {
+        where[Op.and] = sequelize.literal(`JSON_CONTAINS(participant_ids, '${Number(joinedUserId)}')`);
+      } else {
+        where.participant_ids = { [Op.like]: `%${Number(joinedUserId)}%` };
+      }
+    }
 
     const { rows, count } = await Activity.findAndCountAll({
       where,
