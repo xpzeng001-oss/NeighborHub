@@ -121,6 +121,11 @@ Page({
     };
   },
 
+  onJoinActivity(e) {
+    const id = e.currentTarget.dataset.id;
+    wx.navigateTo({ url: '/pages/activityDetail/activityDetail?id=' + id });
+  },
+
   goDetail(e) {
     const { type, id } = e.currentTarget.dataset;
     const routes = {

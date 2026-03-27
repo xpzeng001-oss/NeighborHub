@@ -267,6 +267,17 @@
   color: #999;
 }
 
+/* 活动报名按钮 */
+.feed-act-btn {
+  padding: 10rpx 28rpx;
+  background: #2C2C2C;
+  color: #fff;
+  border-radius: 36rpx;
+  font-size: 24rpx;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 /* 空状态 & 加载更多 */
 .feed-empty {
   display: flex;

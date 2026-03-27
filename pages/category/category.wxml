@@ -127,8 +127,9 @@
             </view>
             <text class="feed-p-count">{{item.currentParticipants}}人想参加</text>
           </view>
-          <text class="feed-price" wx:if="{{item.price > 0}}" style="margin-left:auto;">¥{{item.price}}</text>
-          <text class="feed-price free" wx:else style="margin-left:auto;">免费</text>
+          <view class="feed-act-btn" style="margin-left:auto;" catchtap="onJoinActivity" data-id="{{item.id}}">
+            <text wx:if="{{item.price > 0}}">¥{{item.price}} </text>去报名
+          </view>
         </view>
       </view>
     </view>
