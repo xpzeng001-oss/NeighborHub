@@ -242,6 +242,7 @@
   background: rgba(76, 217, 100, 0.12);
   color: #3CB371;
   font-weight: 500;
+  margin-right: 10rpx;
 }
 
 /* 活动卡片底部 */
