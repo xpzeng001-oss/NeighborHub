@@ -70,8 +70,8 @@
 }
 .hero-badge {
   position: absolute;
-  bottom: 24rpx;
-  left: 24rpx;
+  top: 24rpx;
+  right: 24rpx;
   padding: 8rpx 24rpx;
   border-radius: 8rpx;
   font-size: 24rpx;
