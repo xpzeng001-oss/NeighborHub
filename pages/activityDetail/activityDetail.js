@@ -229,7 +229,8 @@ Page({
     if (detail) {
       const price = detail.price > 0 ? '¥' + detail.price : '免费';
       const time = detail.startTimeFormatted || '';
-      title = detail.title + ' | ' + price + (time ? ' | ' + time : '');
+      const people = detail.currentParticipants > 0 ? detail.currentParticipants + '人已报名' : '';
+      title = detail.title + ' | ' + price + (time ? ' | ' + time : '') + (people ? ' | ' + people : '');
     }
     return {
       title,
