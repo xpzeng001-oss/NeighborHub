@@ -225,9 +225,15 @@ Page({
 
   onShareAppMessage() {
     const { detail } = this.data;
+    let title = '一起参加活动吧';
+    if (detail) {
+      const price = detail.price > 0 ? ' ¥' + detail.price : ' 免费';
+      title = detail.title + price;
+    }
     return {
-      title: detail ? detail.title : '一起参加活动吧',
-      path: '/pages/activityDetail/activityDetail?id=' + this.activityId
+      title,
+      path: '/pages/activityDetail/activityDetail?id=' + this.activityId,
+      imageUrl: detail ? (detail.coverImage || (detail.images && detail.images[0]) || '') : ''
     };
   }
 });
