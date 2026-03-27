@@ -238,6 +238,8 @@ Page({
   },
 
   async onPublish() {
+    if (this._publishing) return;
+
     const { form, publishType, imageList } = this.data;
 
     // fix: 先检查登录状态，避免无意义 loading
@@ -314,6 +316,7 @@ Page({
       }
     }
 
+    this._publishing = true;
     wx.showLoading({ title: '发布中...' });
     try {
       let imageUrls = [];
@@ -449,6 +452,8 @@ Page({
         ? err.message
         : '发布失败，请重试';
       wx.showToast({ title: msg, icon: 'none' });
+    } finally {
+      this._publishing = false;
     }
   }
 });
