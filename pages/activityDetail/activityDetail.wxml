@@ -62,6 +62,17 @@
       </view>
     </view>
 
+    <!-- 参与者 -->
+    <view class="participants-card" wx:if="{{detail.currentParticipants > 0}}">
+      <view class="participants-row">
+        <view class="participants-stack">
+          <image class="participant-avatar {{index > 0 ? 'overlap' : ''}}" wx:for="{{detail.participantAvatars}}" wx:key="index"
+                 wx:if="{{index < 8}}" src="{{item}}" mode="aspectFill"></image>
+        </view>
+        <text class="participants-count">{{detail.currentParticipants}}人想参加</text>
+      </view>
+    </view>
+
     <!-- 发起人 -->
     <view class="organizer-card">
       <image class="organizer-avatar" src="{{detail.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
@@ -85,17 +96,6 @@
     <view class="images-card" wx:if="{{detail.images.length > 0}}">
       <image wx:for="{{detail.images}}" wx:key="*this" src="{{item}}" mode="widthFix"
              class="detail-image" bindtap="previewImage" data-src="{{item}}"></image>
-    </view>
-
-    <!-- 参与者 -->
-    <view class="participants-card" wx:if="{{detail.currentParticipants > 0}}">
-      <view class="participants-row">
-        <view class="participants-stack">
-          <image class="participant-avatar {{index > 0 ? 'overlap' : ''}}" wx:for="{{detail.participantAvatars}}" wx:key="index"
-                 wx:if="{{index < 8}}" src="{{item}}" mode="aspectFill"></image>
-        </view>
-        <text class="participants-count">{{detail.currentParticipants}}人想参加</text>
-      </view>
     </view>
 
     <view style="height: 200rpx;"></view>
