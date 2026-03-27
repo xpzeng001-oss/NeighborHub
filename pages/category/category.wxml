@@ -121,7 +121,7 @@
         <view class="feed-extra" wx:if="{{item.feedType === 'activity'}}">
           <view class="feed-participants" wx:if="{{item.currentParticipants > 0}}">
             <view class="feed-p-avatars">
-              <image class="feed-p-avatar" wx:for="{{item.participantAvatars}}" wx:for-item="av" wx:key="*this"
+              <image class="feed-p-avatar" wx:for="{{item.participantAvatars}}" wx:for-item="av" wx:key="index"
                      wx:if="{{index < 6}}" src="{{av}}" mode="aspectFill"
                      style="margin-left: {{index === 0 ? '0' : '-20rpx'}}; z-index: {{10 - index}};"></image>
             </view>

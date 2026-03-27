@@ -91,7 +91,7 @@
     <view class="participants-card" wx:if="{{detail.currentParticipants > 0}}">
       <view class="participants-row">
         <view class="participants-stack">
-          <image class="participant-avatar" wx:for="{{detail.participantAvatars}}" wx:key="*this"
+          <image class="participant-avatar" wx:for="{{detail.participantAvatars}}" wx:key="index"
                  wx:if="{{index < 8}}" src="{{item}}" mode="aspectFill"
                  style="margin-left: {{index === 0 ? '0' : '-26rpx'}}; z-index: {{10 - index}};"></image>
         </view>

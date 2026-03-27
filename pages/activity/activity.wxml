@@ -66,7 +66,7 @@
           <view class="footer-left">
             <!-- 参与者头像 -->
             <view class="participant-avatars" wx:if="{{item.participantAvatars.length > 0}}">
-              <image class="p-avatar" wx:for="{{item.participantAvatars}}" wx:for-item="av" wx:key="*this"
+              <image class="p-avatar" wx:for="{{item.participantAvatars}}" wx:for-item="av" wx:key="index"
                      wx:if="{{index < 6}}" src="{{av}}" mode="aspectFill"
                      style="margin-left: {{index === 0 ? '0' : '-16rpx'}}; z-index: {{10 - index}};"></image>
             </view>
