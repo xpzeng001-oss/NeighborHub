@@ -227,8 +227,9 @@ Page({
     const { detail } = this.data;
     let title = '一起参加活动吧';
     if (detail) {
-      const price = detail.price > 0 ? ' ¥' + detail.price : ' 免费';
-      title = detail.title + price;
+      const price = detail.price > 0 ? '¥' + detail.price : '免费';
+      const time = detail.startTimeFormatted || '';
+      title = detail.title + ' | ' + price + (time ? ' | ' + time : '');
     }
     return {
       title,
