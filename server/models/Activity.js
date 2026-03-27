@@ -58,6 +58,10 @@ const Activity = sequelize.define('Activity', {
     type: DataTypes.INTEGER.UNSIGNED,
     defaultValue: 0
   },
+  participant_ids: {
+    type: DataTypes.JSON,
+    defaultValue: []
+  },
   participant_avatars: {
     type: DataTypes.JSON,
     defaultValue: []

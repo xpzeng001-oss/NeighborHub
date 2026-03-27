@@ -58,7 +58,8 @@ exports.detail = async (req, res, next) => {
       return res.status(404).json({ code: 404, message: '活动不存在', data: null });
     }
     const isOrganizer = req.user && req.user.id === activity.user_id;
-    const isJoined = false; // TODO: check participant list
+    const pIds = activity.participant_ids || [];
+    const isJoined = req.user ? pIds.includes(req.user.id) : false;
 
     res.json({
       code: 0,
@@ -118,6 +119,7 @@ exports.create = async (req, res, next) => {
       price: Number(price) || 0,
       max_participants: Number(maxParticipants) || 0,
       current_participants: 1,
+      participant_ids: [req.user.id],
       participant_avatars: initAvatars,
       community_id: communityId || null
     });
@@ -140,18 +142,26 @@ exports.join = async (req, res, next) => {
       return res.status(400).json({ code: 400, message: '活动报名已截止', data: null });
     }
 
-    const newCount = activity.current_participants + 1;
-    const newStatus = activity.max_participants > 0 && newCount >= activity.max_participants ? 'full' : 'open';
+    // Prevent duplicate join
+    const pIds = activity.participant_ids || [];
+    if (pIds.includes(req.user.id)) {
+      return res.status(400).json({ code: 400, message: '你已经报名了', data: null });
+    }
 
-    // Add participant avatar (use placeholder if no avatar)
     const joiner = await User.findByPk(req.user.id, { attributes: ['nick_name', 'avatar_url'] });
-    const avatars = activity.participant_avatars || [];
     const avatar = (joiner && joiner.avatar_url) ? joiner.avatar_url : '/images/avatar-placeholder.png';
+
+    pIds.push(req.user.id);
+    const avatars = activity.participant_avatars || [];
     avatars.push(avatar);
+
+    const newCount = pIds.length;
+    const newStatus = activity.max_participants > 0 && newCount >= activity.max_participants ? 'full' : 'open';
 
     await activity.update({
       current_participants: newCount,
       status: newStatus,
+      participant_ids: pIds,
       participant_avatars: avatars
     });
 
@@ -189,20 +199,24 @@ exports.cancelJoin = async (req, res, next) => {
       return res.status(404).json({ code: 404, message: '活动不存在', data: null });
     }
 
-    const newCount = Math.max(0, activity.current_participants - 1);
-    const newStatus = activity.status === 'full' ? 'open' : activity.status;
-
-    // Remove participant avatar
-    const user = await User.findByPk(req.user.id, { attributes: ['avatar_url'] });
-    let avatars = activity.participant_avatars || [];
-    if (user && user.avatar_url) {
-      const idx = avatars.indexOf(user.avatar_url);
-      if (idx !== -1) avatars.splice(idx, 1);
+    // Remove by user ID
+    const pIds = activity.participant_ids || [];
+    const idx = pIds.indexOf(req.user.id);
+    if (idx === -1) {
+      return res.status(400).json({ code: 400, message: '你还没有报名', data: null });
     }
+
+    pIds.splice(idx, 1);
+    let avatars = activity.participant_avatars || [];
+    if (idx < avatars.length) avatars.splice(idx, 1);
+
+    const newCount = pIds.length;
+    const newStatus = activity.status === 'full' ? 'open' : activity.status;
 
     await activity.update({
       current_participants: newCount,
       status: newStatus,
+      participant_ids: pIds,
       participant_avatars: avatars
     });
 
