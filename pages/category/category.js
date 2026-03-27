@@ -31,6 +31,15 @@ const formatTime = d => {
   return (m < 10 ? '0' + m : m) + '-' + (day < 10 ? '0' + day : day);
 };
 
+const WEEKDAYS = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+const formatActivityTime = t => {
+  if (!t) return '';
+  const d = new Date(t);
+  if (isNaN(d.getTime())) return t;
+  return (d.getMonth() + 1) + '月' + d.getDate() + '日 ' + WEEKDAYS[d.getDay()] + ' ' +
+    ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+};
+
 Page({
   data: {
     statusBarHeight: 44,
@@ -74,7 +83,10 @@ Page({
         ...item,
         typeLabel: TYPE_LABELS[item.feedType] || '',
         typeColor: TYPE_COLORS[item.feedType] || '#999',
-        timeAgo: formatTime(new Date(item.createdAt))
+        timeAgo: formatTime(new Date(item.createdAt)),
+        startTimeFormatted: item.feedType === 'activity' ? formatActivityTime(item.startTime) : '',
+        endTimeFormatted: item.feedType === 'activity' ? formatActivityTime(item.endTime) : '',
+        participantAvatars: item.participantAvatars || []
       }));
 
       if (reset) {
