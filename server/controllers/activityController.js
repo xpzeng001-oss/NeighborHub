@@ -143,26 +143,24 @@ exports.join = async (req, res, next) => {
     }
 
     // Prevent duplicate join
-    const pIds = activity.participant_ids || [];
-    if (pIds.includes(req.user.id)) {
+    const oldIds = activity.participant_ids || [];
+    if (oldIds.includes(req.user.id)) {
       return res.status(400).json({ code: 400, message: '你已经报名了', data: null });
     }
 
     const joiner = await User.findByPk(req.user.id, { attributes: ['nick_name', 'avatar_url'] });
     const avatar = (joiner && joiner.avatar_url) ? joiner.avatar_url : '/images/avatar-placeholder.png';
 
-    pIds.push(req.user.id);
-    const avatars = activity.participant_avatars || [];
-    avatars.push(avatar);
-
-    const newCount = pIds.length;
+    const newIds = [...oldIds, req.user.id];
+    const newAvatars = [...(activity.participant_avatars || []), avatar];
+    const newCount = newIds.length;
     const newStatus = activity.max_participants > 0 && newCount >= activity.max_participants ? 'full' : 'open';
 
     await activity.update({
       current_participants: newCount,
       status: newStatus,
-      participant_ids: pIds,
-      participant_avatars: avatars
+      participant_ids: newIds,
+      participant_avatars: newAvatars
     });
 
     // Notify organizer
@@ -200,24 +198,24 @@ exports.cancelJoin = async (req, res, next) => {
     }
 
     // Remove by user ID
-    const pIds = activity.participant_ids || [];
-    const idx = pIds.indexOf(req.user.id);
+    const oldIds = activity.participant_ids || [];
+    const idx = oldIds.indexOf(req.user.id);
     if (idx === -1) {
       return res.status(400).json({ code: 400, message: '你还没有报名', data: null });
     }
 
-    pIds.splice(idx, 1);
-    let avatars = activity.participant_avatars || [];
-    if (idx < avatars.length) avatars.splice(idx, 1);
+    const newIds = oldIds.filter((_, i) => i !== idx);
+    const oldAvatars = activity.participant_avatars || [];
+    const newAvatars = oldAvatars.filter((_, i) => i !== idx);
 
-    const newCount = pIds.length;
+    const newCount = newIds.length;
     const newStatus = activity.status === 'full' ? 'open' : activity.status;
 
     await activity.update({
       current_participants: newCount,
       status: newStatus,
-      participant_ids: pIds,
-      participant_avatars: avatars
+      participant_ids: newIds,
+      participant_avatars: newAvatars
     });
 
     res.json({ code: 0, data: { currentParticipants: newCount, status: newStatus } });
