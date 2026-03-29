@@ -10,8 +10,8 @@
           <view class="user-meta">
             <view style="display:inline-flex;align-items:center;gap:4rpx;">
               <icon name="map-pin" size="24" color="#888"></icon>
-              <text class="building" wx:if="{{userInfo.building}}">{{userInfo.building}}</text>
-              <text class="building" wx:else>未认证楼栋</text>
+              <text class="building" wx:if="{{userInfo.community || userInfo.building}}">{{userInfo.community || ''}}{{userInfo.building ? ' ' + userInfo.building : ''}}</text>
+              <text class="building" wx:else>未认证小区楼栋</text>
             </view>
           </view>
         </view>
@@ -52,12 +52,12 @@
 
     <view class="menu-group">
       <view class="menu-title">账户设置</view>
-      <picker range="{{buildings}}" bindchange="onBuildingChange" class="menu-picker">
+      <picker mode="multiSelector" range="{{[communityNames, buildings]}}" value="{{verifyPickerValue}}" bindcolumnchange="onVerifyPickerChange" bindchange="onVerifyConfirm" class="menu-picker">
         <view class="menu-item">
           <icon name="home" size="36" color="#333" class="menu-icon-wrap"></icon>
-          <text class="menu-text">楼栋认证</text>
+          <text class="menu-text">小区楼栋认证</text>
           <view class="menu-right">
-            <text class="verify-status {{isVerified ? 'verified' : ''}}">{{isVerified ? userInfo.building : '未认证'}}</text>
+            <text class="verify-status {{isVerified ? 'verified' : ''}}">{{isVerified ? userInfo.community + ' ' + userInfo.building : '未认证'}}</text>
             <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
           </view>
         </view>

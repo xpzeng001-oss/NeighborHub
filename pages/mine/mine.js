@@ -7,7 +7,10 @@ Page({
     statusBarHeight: 44,
     userInfo: null,
     isVerified: false,
-    buildings: ['1栋', '2栋', '3栋', '5栋', '6栋', '7栋', '8栋', '9栋', '10栋', '12栋'],
+    buildings: ['1栋', '2栋', '3栋', '4栋', '5栋', '6栋', '7栋', '8栋', '9栋', '10栋', '11栋', '12栋'],
+    communities: [],
+    communityNames: [],
+    verifyPickerValue: [0, 0],
     isAdmin: false
   },
 
@@ -28,10 +31,31 @@ Page({
       const isAdmin = userInfo.role === 'admin' || userInfo.id == 20;
       this.setData({
         userInfo,
-        isVerified: !!userInfo.building,
+        isVerified: !!(userInfo.community && userInfo.building),
         isAdmin
       });
     }
+    this.loadCommunities();
+  },
+
+  async loadCommunities() {
+    let communities = app.globalData.communities || [];
+    if (communities.length === 0) {
+      try {
+        const data = await api.getCommunities();
+        communities = data.list || data || [];
+        app.globalData.communities = communities;
+      } catch (e) {}
+    }
+    const communityNames = communities.map(c => c.name);
+    const userInfo = this.data.userInfo;
+    let cIdx = 0, bIdx = 0;
+    if (userInfo) {
+      const community = userInfo.community || userInfo.communityName || '';
+      cIdx = Math.max(0, communityNames.indexOf(community));
+      bIdx = Math.max(0, this.data.buildings.indexOf(userInfo.building));
+    }
+    this.setData({ communities, communityNames, verifyPickerValue: [cIdx, bIdx] });
   },
 
   onLogin() {
@@ -94,24 +118,29 @@ Page({
     wx.navigateTo({ url: '/pages/myList/myList?type=activity' });
   },
 
-  async onBuildingChange(e) {
+  onVerifyPickerChange(e) {
+    this.setData({ verifyPickerValue: e.detail.value });
+  },
+
+  async onVerifyConfirm(e) {
     if (!this.data.userInfo) { this.onLogin(); return; }
-    const buildings = this.data.buildings;
-    const building = buildings[e.detail.value];
-    try {
-      const updated = await api.updateUser(this.data.userInfo.id, { building, isVerified: true });
-      const userInfo = { ...this.data.userInfo, building: updated.building, isVerified: true };
-      app.globalData.userInfo = userInfo;
-      wx.setStorageSync('userInfo', userInfo);
-      this.setData({ userInfo, isVerified: true });
-      wx.showToast({ title: '认证成功：' + building, icon: 'success' });
-    } catch (err) {
-      const userInfo = { ...this.data.userInfo, building, isVerified: true };
-      app.globalData.userInfo = userInfo;
-      wx.setStorageSync('userInfo', userInfo);
-      this.setData({ userInfo, isVerified: true });
-      wx.showToast({ title: '认证成功：' + building, icon: 'success' });
+    const [cIdx, bIdx] = e.detail.value;
+    const community = this.data.communities[cIdx];
+    const building = this.data.buildings[bIdx];
+    if (!community) {
+      wx.showToast({ title: '请选择小区', icon: 'none' });
+      return;
     }
+    try {
+      await api.updateUser(this.data.userInfo.id, { building, isVerified: true });
+    } catch (err) {}
+    const userInfo = { ...this.data.userInfo, community: community.name, communityName: community.name, building, isVerified: true };
+    app.globalData.userInfo = userInfo;
+    wx.setStorageSync('userInfo', userInfo);
+    app.globalData.currentCommunity = community;
+    wx.setStorageSync('currentCommunity', community);
+    this.setData({ userInfo, isVerified: true, verifyPickerValue: [cIdx, bIdx] });
+    wx.showToast({ title: '认证成功', icon: 'success' });
   },
 
   goSettings() {
