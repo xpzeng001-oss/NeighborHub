@@ -29,7 +29,7 @@ Component({
       const data = e.currentTarget.dataset;
       const url = data.path;
       // 广场、消息需要完善信息
-      if (url !== '/pages/index/index' && url !== '/pages/mine/mine' && this._needProfileGuide()) {
+      if (url !== '/pages/index/index' && url !== '/pages/category/category' && url !== '/pages/mine/mine' && this._needProfileGuide()) {
         wx.showToast({ title: '请先完善个人信息', icon: 'none' });
         wx.switchTab({ url: '/pages/mine/mine' });
         return;
