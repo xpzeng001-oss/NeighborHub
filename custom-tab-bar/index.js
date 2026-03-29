@@ -20,9 +20,20 @@ Component({
   },
 
   methods: {
+    _needProfileGuide() {
+      const app = getApp();
+      const u = app.globalData.userInfo;
+      return u && (!u.community || !u.building);
+    },
     switchTab(e) {
       const data = e.currentTarget.dataset;
       const url = data.path;
+      // 广场、消息需要完善信息
+      if (url !== '/pages/index/index' && url !== '/pages/mine/mine' && this._needProfileGuide()) {
+        wx.showToast({ title: '请先完善个人信息', icon: 'none' });
+        wx.switchTab({ url: '/pages/mine/mine' });
+        return;
+      }
       wx.switchTab({ url: url });
     },
     goPage(e) {
@@ -32,6 +43,12 @@ Component({
         app.login(() => {
           wx.navigateTo({ url: url });
         });
+        return;
+      }
+      // 发布需要完善信息
+      if (this._needProfileGuide()) {
+        wx.showToast({ title: '请先完善个人信息', icon: 'none' });
+        wx.switchTab({ url: '/pages/mine/mine' });
         return;
       }
       wx.navigateTo({ url: url });
