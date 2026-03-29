@@ -36,16 +36,6 @@
       </view>
     </scroll-view>
 
-    <!-- 排序Tab -->
-    <view class="sort-bar">
-      <view class="sort-tab {{activeSort === index ? 'active' : ''}}"
-            wx:for="{{sortTabs}}" wx:key="index"
-            bindtap="onSortChange" data-index="{{index}}">
-        <text>{{item}}</text>
-        <view class="sort-line" wx:if="{{activeSort === index}}"></view>
-      </view>
-    </view>
-
     <!-- 商品瀑布流 -->
     <view class="product-grid">
       <view class="grid-column">
