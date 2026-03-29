@@ -97,3 +97,76 @@
   opacity: 0;
 }
 .share-btn-hidden::after { border: none; }
+
+/* 完善信息引导弹窗 */
+.guide-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.guide-modal {
+  width: 620rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 48rpx 40rpx;
+  box-shadow: 0 16rpx 48rpx rgba(0,0,0,0.15);
+}
+.guide-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #2C2C2C;
+  display: block;
+  text-align: center;
+  margin-bottom: 12rpx;
+}
+.guide-desc {
+  font-size: 24rpx;
+  color: #9A9A9A;
+  display: block;
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+.guide-field {
+  margin-bottom: 28rpx;
+}
+.guide-label {
+  font-size: 26rpx;
+  color: #666;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 12rpx;
+}
+.guide-input {
+  background: #F8F6F3;
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+  color: #2C2C2C;
+}
+.guide-picker {
+  background: #F8F6F3;
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+  color: #2C2C2C;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.guide-placeholder { color: #BDBDBD; }
+.guide-btn {
+  margin-top: 36rpx;
+  background: #C67A52;
+  color: #fff;
+  text-align: center;
+  padding: 24rpx 0;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.guide-btn:active { opacity: 0.8; }
+.guide-btn-disabled { opacity: 0.5; }

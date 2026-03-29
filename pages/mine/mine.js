@@ -11,7 +11,12 @@ Page({
     communities: [],
     communityNames: [],
     verifyPickerValue: [0, 0],
-    isAdmin: false
+    isAdmin: false,
+    showProfileGuide: false,
+    guideNickName: '',
+    guideCommunityIndex: 0,
+    guideBuildingIndex: 0,
+    guideSaving: false
   },
 
   onLoad() {
@@ -29,11 +34,20 @@ Page({
     }
     if (userInfo) {
       const isAdmin = userInfo.role === 'admin' || userInfo.id == 20;
+      const isVerified = !!(userInfo.community && userInfo.building);
       this.setData({
         userInfo,
-        isVerified: !!(userInfo.community && userInfo.building),
+        isVerified,
         isAdmin
       });
+      // 检查是否需要引导完善信息
+      const needGuide = !userInfo.community || !userInfo.building;
+      if (needGuide && !this.data.showProfileGuide) {
+        this.setData({
+          showProfileGuide: true,
+          guideNickName: userInfo.nickName || ''
+        });
+      }
     }
     this.loadCommunities();
   },
@@ -141,6 +155,65 @@ Page({
     wx.setStorageSync('currentCommunity', community);
     this.setData({ userInfo, isVerified: true, verifyPickerValue: [cIdx, bIdx] });
     wx.showToast({ title: '认证成功', icon: 'success' });
+  },
+
+  onGuideNicknameInput(e) {
+    this.setData({ guideNickName: e.detail.value });
+  },
+
+  onGuideCommunityChange(e) {
+    this.setData({ guideCommunityIndex: e.detail.value });
+  },
+
+  onGuideBuildingChange(e) {
+    this.setData({ guideBuildingIndex: e.detail.value });
+  },
+
+  async onGuideSave() {
+    const { guideNickName, guideCommunityIndex, guideBuildingIndex, communities, buildings, guideSaving } = this.data;
+    if (guideSaving) return;
+    const nickName = guideNickName.trim();
+    if (!nickName) {
+      wx.showToast({ title: '请输入昵称', icon: 'none' });
+      return;
+    }
+    if (nickName.length > 20) {
+      wx.showToast({ title: '昵称不能超过20个字', icon: 'none' });
+      return;
+    }
+    const community = communities[guideCommunityIndex];
+    if (!community) {
+      wx.showToast({ title: '请选择小区', icon: 'none' });
+      return;
+    }
+    const building = buildings[guideBuildingIndex];
+
+    this.setData({ guideSaving: true });
+    try {
+      const updated = await api.updateUser(this.data.userInfo.id, {
+        nickName,
+        building,
+        isVerified: true
+      });
+      const userInfo = {
+        ...this.data.userInfo,
+        nickName: updated.nickName || nickName,
+        community: community.name,
+        communityName: community.name,
+        building: updated.building || building,
+        isVerified: true
+      };
+      app.globalData.userInfo = userInfo;
+      wx.setStorageSync('userInfo', userInfo);
+      app.globalData.currentCommunity = community;
+      wx.setStorageSync('currentCommunity', community);
+      this.setData({ userInfo, isVerified: true, showProfileGuide: false });
+      wx.showToast({ title: '设置成功', icon: 'success' });
+    } catch (err) {
+      wx.showToast({ title: '保存失败，请重试', icon: 'none' });
+    } finally {
+      this.setData({ guideSaving: false });
+    }
   },
 
   goSettings() {

@@ -122,4 +122,40 @@
     <view style="height: 180rpx;"></view>
   </scroll-view>
 
+  <!-- 完善信息引导弹窗 -->
+  <view class="guide-mask" wx:if="{{showProfileGuide}}">
+    <view class="guide-modal">
+      <text class="guide-title">完善个人信息</text>
+      <text class="guide-desc">设置昵称并认证小区楼栋，让邻居更好地认识你</text>
+
+      <view class="guide-field">
+        <text class="guide-label">昵称</text>
+        <input class="guide-input" value="{{guideNickName}}" bindinput="onGuideNicknameInput" placeholder="请输入昵称" maxlength="20" />
+      </view>
+
+      <view class="guide-field">
+        <text class="guide-label">小区</text>
+        <picker range="{{communityNames}}" value="{{guideCommunityIndex}}" bindchange="onGuideCommunityChange">
+          <view class="guide-picker">
+            <text class="{{communityNames[guideCommunityIndex] ? '' : 'guide-placeholder'}}">{{communityNames[guideCommunityIndex] || '请选择小区'}}</text>
+            <icon name="caret-right" size="28" color="#ccc"></icon>
+          </view>
+        </picker>
+      </view>
+
+      <view class="guide-field">
+        <text class="guide-label">楼栋</text>
+        <picker range="{{buildings}}" value="{{guideBuildingIndex}}" bindchange="onGuideBuildingChange">
+          <view class="guide-picker">
+            <text>{{buildings[guideBuildingIndex]}}</text>
+            <icon name="caret-right" size="28" color="#ccc"></icon>
+          </view>
+        </picker>
+      </view>
+
+      <view class="guide-btn {{guideSaving ? 'guide-btn-disabled' : ''}}" bindtap="onGuideSave">
+        <text>{{guideSaving ? '保存中...' : '确认'}}</text>
+      </view>
+    </view>
+  </view>
 </view>
