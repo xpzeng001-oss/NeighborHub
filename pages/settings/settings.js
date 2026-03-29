@@ -10,7 +10,7 @@ Page({
     building: '',
     buildingIndex: 0,
     communities: [],
-    buildings: ['1栋', '2栋', '3栋', '5栋', '6栋', '7栋', '8栋', '9栋', '10栋', '12栋'],
+    buildings: ['1栋', '2栋', '3栋', '4栋', '5栋', '6栋', '7栋', '8栋', '9栋', '10栋', '11栋', '12栋'],
     saving: false,
     tempAvatarPath: '',
     avatarBase: '',
