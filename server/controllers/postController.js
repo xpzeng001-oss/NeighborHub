@@ -5,11 +5,12 @@ const { buildDistrictFilter } = require('../utils/districtFilter');
 
 exports.list = async (req, res, next) => {
   try {
-    const { page = 1, pageSize = 20, category, communityId, districtId } = req.query;
+    const { page = 1, pageSize = 20, category, communityId, districtId, userId } = req.query;
     const where = { status: { [require('sequelize').Op.ne]: 'off' } };
+    if (userId) where.user_id = userId;
     if (category) where.category = category;
     if (communityId) where.community_id = communityId;
-    else Object.assign(where, await buildDistrictFilter(districtId));
+    else if (!userId) Object.assign(where, await buildDistrictFilter(districtId));
 
     const { rows, count } = await Post.findAndCountAll({
       where,
