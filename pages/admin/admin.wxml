@@ -194,6 +194,10 @@
               <text class="user-stat-value">{{item.coins || 0}}</text>
             </view>
             <view class="user-stat">
+              <text class="user-stat-label">发布数</text>
+              <text class="user-stat-value">{{item.publishCount || 0}}</text>
+            </view>
+            <view class="user-stat">
               <text class="user-stat-label">违规次数</text>
               <text class="user-stat-value {{item.violationCount > 0 ? 'violation-count' : ''}}">{{item.violationCount || 0}}</text>
             </view>

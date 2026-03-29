@@ -419,6 +419,30 @@ exports.listUsers = async (req, res, next) => {
     const countMap = {};
     violationCounts.forEach(v => { countMap[v.user_id] = Number(v.count); });
 
+    // Get publish counts for these users
+    const publishModels = [
+      { model: Product, field: 'user_id' },
+      { model: Post, field: 'user_id' },
+      { model: Activity, field: 'user_id' },
+      { model: HelpRequest, field: 'user_id' },
+      { model: Carpool, field: 'user_id' },
+      { model: PetPost, field: 'user_id' },
+      { model: SamOrder, field: 'user_id' }
+    ];
+    const publishCountResults = await Promise.all(
+      publishModels.map(m => m.model.findAll({
+        attributes: [m.field, [sequelize.fn('COUNT', sequelize.col('id')), 'count']],
+        where: { [m.field]: { [Op.in]: userIds } },
+        group: [m.field],
+        raw: true
+      }))
+    );
+    const publishMap = {};
+    userIds.forEach(id => { publishMap[id] = 0; });
+    publishCountResults.forEach(results => {
+      results.forEach(r => { publishMap[r.user_id] = (publishMap[r.user_id] || 0) + Number(r.count); });
+    });
+
     // Get community name from user's latest product
     const latestProducts = await Product.findAll({
       attributes: ['user_id', 'community_id'],
@@ -444,6 +468,7 @@ exports.listUsers = async (req, res, next) => {
       role:           u.role,
       isBanned:       u.is_banned,
       violationCount: countMap[u.id] || 0,
+      publishCount:   publishMap[u.id] || 0,
       createdAt:      u.created_at
     }));
 
