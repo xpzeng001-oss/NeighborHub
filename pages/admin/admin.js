@@ -397,6 +397,11 @@ Page({
     }, 400);
   },
 
+  goUserProfile(e) {
+    const userId = e.currentTarget.dataset.userId;
+    wx.navigateTo({ url: '/pages/userProfile/userProfile?userId=' + userId });
+  },
+
   banUser(e) {
     const { id, index } = e.currentTarget.dataset;
     wx.showModal({

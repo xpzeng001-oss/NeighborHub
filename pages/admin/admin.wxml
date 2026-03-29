@@ -179,7 +179,7 @@
 
     <!-- User List -->
     <view class="user-card" wx:for="{{userList}}" wx:key="id">
-      <view class="user-main">
+      <view class="user-main" bindtap="goUserProfile" data-user-id="{{item.id}}">
         <image class="avatar-md" src="{{item.avatarUrl}}" mode="aspectFill"></image>
         <view class="user-info">
           <view class="user-name-row">
