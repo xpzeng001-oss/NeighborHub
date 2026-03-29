@@ -15,7 +15,7 @@
         <text>{{statusInfo.label}}</text>
       </view>
       <text class="detail-title">{{detail.title}}</text>
-      <view class="author-row">
+      <view class="author-row" bindtap="goUserProfile">
         <image class="author-avatar" src="{{detail.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
         <view class="author-info">
           <text class="author-name">{{detail.userName}}</text>

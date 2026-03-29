@@ -1,0 +1,155 @@
+<view class="page">
+  <!-- 用户不存在 -->
+  <view class="not-found" wx:if="{{notFound}}">
+    <icon name="user" size="80" color="#ddd"></icon>
+    <text class="not-found-text">该用户不存在</text>
+    <view class="btn-back" bindtap="goBack">返回</view>
+  </view>
+
+  <block wx:else>
+    <!-- 用户信息卡片 -->
+    <view class="profile-card" wx:if="{{userInfo}}">
+      <image class="avatar" src="{{userInfo.avatarUrl || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+      <view class="user-info">
+        <text class="nickname">{{userInfo.nickName}}</text>
+        <view class="user-meta">
+          <view class="meta-item">
+            <icon name="map-pin" size="24" color="#888"></icon>
+            <text class="building">{{userInfo.building || '未认证楼栋'}}</text>
+          </view>
+          <view class="meta-item">
+            <icon name="calendar" size="24" color="#888"></icon>
+            <text class="join-time">{{userInfo.createdAt}} 加入</text>
+          </view>
+        </view>
+      </view>
+      <view class="btn-message" bindtap="onSendMessage">
+        <icon name="message-circle" size="32" color="#fff"></icon>
+        <text>发消息</text>
+      </view>
+    </view>
+
+    <!-- Tab 栏 -->
+    <scroll-view class="tab-bar" scroll-x enable-flex>
+      <view class="tab-item {{activeTab === item.key ? 'active' : ''}}"
+            wx:for="{{tabs}}" wx:key="key"
+            bindtap="switchTab" data-key="{{item.key}}">
+        <text>{{item.name}}</text>
+      </view>
+    </scroll-view>
+
+    <!-- 空状态 -->
+    <view class="empty" wx:if="{{!loading && list.length === 0}}">
+      <icon name="package" size="80" color="#ddd"></icon>
+      <text class="empty-text">TA 还没有发布内容</text>
+    </view>
+
+    <!-- 商品列表 -->
+    <view wx:if="{{activeTab === 'product'}}">
+      <view class="product-item" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}" data-type="product">
+        <image class="product-img" src="{{item.images[0] || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+        <view class="product-info">
+          <text class="product-title">{{item.title}}</text>
+          <view class="product-bottom">
+            <text class="product-price" wx:if="{{!item.isFree}}">¥{{item.price}}</text>
+            <text class="product-free" wx:else>免费送</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 帖子列表 -->
+    <view wx:if="{{activeTab === 'post'}}">
+      <view class="post-item" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}" data-type="post">
+        <text class="post-title">{{item.title || item.content}}</text>
+        <text class="post-desc">{{item.content}}</text>
+        <view class="post-footer">
+          <text class="post-meta">{{item.likeCount || 0}} 赞</text>
+          <text class="post-meta">{{item.commentCount || 0}} 评论</text>
+          <text class="post-time">{{item.createdAt}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 活动列表 -->
+    <view wx:if="{{activeTab === 'activity'}}">
+      <view class="general-item" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}" data-type="activity">
+        <view class="general-header">
+          <text class="general-title">{{item.title}}</text>
+          <text class="general-tag {{item.status === 'open' ? 'tag-open' : 'tag-done'}}">{{item.status === 'open' ? '报名中' : '已结束'}}</text>
+        </view>
+        <text class="general-desc">{{item.description}}</text>
+        <view class="general-footer">
+          <text class="general-meta">{{item.currentCount || 0}}/{{item.maxCount || '不限'}}人</text>
+          <text class="general-meta">{{item.activityTime}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 互助列表 -->
+    <view wx:if="{{activeTab === 'help'}}">
+      <view class="general-item" wx:for="{{list}}" wx:key="id">
+        <view class="general-header">
+          <text class="general-title">{{item.title}}</text>
+          <text class="general-tag {{item.isUrgent ? 'tag-urgent' : 'tag-open'}}">{{item.isUrgent ? '紧急' : '一般'}}</text>
+        </view>
+        <text class="general-desc">{{item.description}}</text>
+        <view class="general-footer">
+          <text class="general-meta">{{item.responseCount || 0}}人响应</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 拼车列表 -->
+    <view wx:if="{{activeTab === 'carpool'}}">
+      <view class="general-item" wx:for="{{list}}" wx:key="id">
+        <view class="general-header">
+          <text class="general-title">{{item.title}}</text>
+          <text class="general-tag {{item.type === 'offer' ? 'tag-open' : 'tag-need'}}">{{item.type === 'offer' ? '有车带人' : '找车搭乘'}}</text>
+        </view>
+        <text class="general-desc">{{item.from}} → {{item.to}}</text>
+        <view class="general-footer">
+          <text class="general-meta">{{item.date}} {{item.time}}</text>
+          <text class="general-meta">{{item.fee || '免费'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 宠物列表 -->
+    <view wx:if="{{activeTab === 'pet'}}">
+      <view class="general-item" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}" data-type="pet">
+        <view class="general-header">
+          <text class="general-title">{{item.title}}</text>
+          <text class="general-tag {{item.type === 'need' ? 'tag-need' : item.type === 'offer' ? 'tag-open' : 'tag-social'}}">{{item.type === 'need' ? '寻求喂养' : item.type === 'offer' ? '可以帮喂' : '宠物社交'}}</text>
+        </view>
+        <text class="general-desc">{{item.description}}</text>
+        <view class="general-footer">
+          <text class="general-meta" wx:if="{{item.petName}}">{{item.petName}}</text>
+          <text class="general-meta">{{item.responseCount || 0}}人响应</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 代购列表 -->
+    <view wx:if="{{activeTab === 'sam'}}">
+      <view class="general-item" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}" data-type="sam">
+        <view class="general-header">
+          <text class="general-title">{{item.title}}</text>
+          <text class="general-tag {{item.status === 'open' ? 'tag-open' : 'tag-done'}}">{{item.status === 'open' ? '拼单中' : item.status === 'full' ? '已成团' : '已结束'}}</text>
+        </view>
+        <text class="general-desc">{{item.description}}</text>
+        <view class="general-footer">
+          <text class="general-meta">{{item.currentCount || 0}}/{{item.targetCount || 5}}人</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载状态 -->
+    <view class="loading-more" wx:if="{{loading && list.length > 0}}">
+      <text>加载中...</text>
+    </view>
+    <view class="loading-more" wx:if="{{!hasMore && list.length > 0}}">
+      <text>没有更多了</text>
+    </view>
+  </block>
+</view>

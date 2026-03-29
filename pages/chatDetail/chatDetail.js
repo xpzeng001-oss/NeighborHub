@@ -57,6 +57,15 @@ Page({
     this.stopPolling();
   },
 
+  goUserProfile() {
+    const userId = this.data.targetUserId;
+    if (app.globalData.userInfo && Number(userId) === app.globalData.userInfo.id) {
+      wx.switchTab({ url: '/pages/mine/mine' });
+    } else {
+      wx.navigateTo({ url: '/pages/userProfile/userProfile?userId=' + userId });
+    }
+  },
+
   startPolling() {
     this.stopPolling();
     this._timer = setInterval(() => {

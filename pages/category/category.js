@@ -89,7 +89,8 @@ Page({
         startTimeFormatted: item.feedType === 'activity' ? formatActivityTime(item.startTime) : '',
         endTimeFormatted: item.feedType === 'activity' ? formatActivityTime(item.endTime) : '',
         participantAvatars: item.participantAvatars || [],
-        isJoined: item.feedType === 'activity' && myId ? (item.participantIds || []).includes(myId) : false
+        isJoined: item.feedType === 'activity' && myId ? (item.participantIds || []).includes(myId) : false,
+        isOwner: item.feedType === 'activity' && myId ? item.userId === myId : false
       }));
 
       if (reset) {
@@ -127,6 +128,16 @@ Page({
   onJoinActivity(e) {
     const id = e.currentTarget.dataset.id;
     wx.navigateTo({ url: '/pages/activityDetail/activityDetail?id=' + id });
+  },
+
+  goUserProfile(e) {
+    const app = getApp();
+    const userId = e.currentTarget.dataset.userId;
+    if (app.globalData.userInfo && userId === app.globalData.userInfo.id) {
+      wx.switchTab({ url: '/pages/mine/mine' });
+    } else {
+      wx.navigateTo({ url: '/pages/userProfile/userProfile?userId=' + userId });
+    }
   },
 
   goDetail(e) {

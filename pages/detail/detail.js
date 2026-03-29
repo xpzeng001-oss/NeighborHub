@@ -122,6 +122,16 @@ Page({
     });
   },
 
+  goUserProfile() {
+    const app = getApp();
+    const userId = this.data.product.userId;
+    if (app.globalData.userInfo && userId === app.globalData.userInfo.id) {
+      wx.switchTab({ url: '/pages/mine/mine' });
+    } else {
+      wx.navigateTo({ url: '/pages/userProfile/userProfile?userId=' + userId });
+    }
+  },
+
   onShareAppMessage() {
     const p = this.data.product;
     const price = p.is_free ? '免费自取' : '¥' + p.price;

@@ -161,6 +161,16 @@ Page({
     }
   },
 
+  goUserProfile() {
+    const app = getApp();
+    const userId = this.data.detail.userId;
+    if (app.globalData.userInfo && userId === app.globalData.userInfo.id) {
+      wx.switchTab({ url: '/pages/mine/mine' });
+    } else {
+      wx.navigateTo({ url: '/pages/userProfile/userProfile?userId=' + userId });
+    }
+  },
+
   onChat() {
     const { detail } = this.data;
     if (!detail) return;

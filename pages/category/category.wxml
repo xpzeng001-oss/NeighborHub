@@ -27,7 +27,7 @@
 
         <!-- 卡片头部：用户信息 + 类型标签 -->
         <view class="feed-header">
-          <image class="feed-avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+          <image class="feed-avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill" catchtap="goUserProfile" data-user-id="{{item.userId}}"></image>
           <view class="feed-user">
             <text class="feed-username">{{item.userName}}</text>
             <view class="feed-meta-row">
@@ -126,7 +126,7 @@
             </view>
             <text class="feed-p-count">{{item.currentParticipants}}人想参加</text>
           </view>
-          <view class="feed-act-btn {{item.isJoined ? 'joined' : ''}}" style="margin-left:auto;" catchtap="onJoinActivity" data-id="{{item.id}}">
+          <view class="feed-act-btn {{item.isJoined ? 'joined' : ''}}" style="margin-left:auto;" catchtap="onJoinActivity" data-id="{{item.id}}" wx:if="{{!item.isOwner}}">
             {{item.isJoined ? '已报名' : (item.price > 0 ? '¥' + item.price + ' 去报名' : '去报名')}}
           </view>
         </view>

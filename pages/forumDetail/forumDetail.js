@@ -42,6 +42,16 @@ Page({
     }
   },
 
+  goUserProfile() {
+    const app = getApp();
+    const userId = this.data.post.userId;
+    if (app.globalData.userInfo && userId === app.globalData.userInfo.id) {
+      wx.switchTab({ url: '/pages/mine/mine' });
+    } else {
+      wx.navigateTo({ url: '/pages/userProfile/userProfile?userId=' + userId });
+    }
+  },
+
   onShareAppMessage() {
     const p = this.data.post;
     return {

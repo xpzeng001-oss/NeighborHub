@@ -56,6 +56,12 @@
 .type-seek { background: rgba(74, 144, 217, 0.08); color: #4A90D9; }
 
 /* 用户信息 */
+.card-user {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
 .card-header {
   display: flex;
   align-items: center;
@@ -146,6 +152,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16rpx 0;
   margin-top: 24rpx;
   padding-top: 20rpx;
   border-top: 1rpx solid #E3D5BF;
@@ -166,6 +174,7 @@
   font-size: 22rpx;
   color: #9A9A9A;
   margin-left: 16rpx;
+  white-space: nowrap;
 }
 
 .card-actions { display: flex; gap: 12rpx; margin-left: auto; }

@@ -48,6 +48,16 @@ Page({
     }
   },
 
+  goUserProfile(e) {
+    const app = getApp();
+    const userId = e.currentTarget.dataset.userId;
+    if (app.globalData.userInfo && userId === app.globalData.userInfo.id) {
+      wx.switchTab({ url: '/pages/mine/mine' });
+    } else {
+      wx.navigateTo({ url: '/pages/userProfile/userProfile?userId=' + userId });
+    }
+  },
+
   onContact(e) {
     const id = e.currentTarget.dataset.id;
     const item = this.data.helps.find(h => h.id === id);

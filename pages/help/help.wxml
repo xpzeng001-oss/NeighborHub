@@ -4,7 +4,7 @@
     <view class="help-list">
       <view class="help-card" wx:for="{{helps}}" wx:key="id">
         <view class="help-header">
-          <view class="help-user">
+          <view class="help-user" catchtap="goUserProfile" data-user-id="{{item.userId}}">
             <image class="help-avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
             <view>
               <text class="help-name">{{item.userName}}</text>

@@ -36,7 +36,7 @@
     </view>
 
     <!-- 卖家信息 -->
-    <view class="section seller-section" bindtap="viewSeller">
+    <view class="section seller-section" bindtap="goUserProfile">
       <view class="seller-left">
         <image class="seller-avatar" src="{{product.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
         <view class="seller-info">

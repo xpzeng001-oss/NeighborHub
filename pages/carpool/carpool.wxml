@@ -20,10 +20,12 @@
 
         <!-- 用户信息 -->
         <view class="card-header">
-          <image class="avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
-          <view class="user-info">
-            <text class="user-name">{{item.userName}}</text>
-            <text class="user-building">{{item.building}}</text>
+          <view class="card-user" catchtap="goUserProfile" data-user-id="{{item.userId}}">
+            <image class="avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+            <view class="user-info">
+              <text class="user-name">{{item.userName}}</text>
+              <text class="user-building">{{item.building}}</text>
+            </view>
           </view>
           <text class="time">{{item.createdAt}}</text>
         </view>
@@ -62,11 +64,11 @@
 
         <!-- 底部操作 -->
         <view class="card-bottom">
-          <view class="participant-avatars" wx:if="{{item.participants.length > 0}}">
+          <view class="participant-avatars" wx:if="{{item.takenSeats > 0}}">
             <image class="p-avatar" wx:for="{{item.participants}}" wx:key="*this" wx:for-item="p" src="{{p}}"></image>
             <text class="p-count">{{item.takenSeats}}人已拼</text>
           </view>
-          <view class="participant-avatars" wx:else>
+          <view class="participant-avatars" wx:elif="{{item.status === 'open'}}">
             <text class="p-count">暂无人拼车</text>
           </view>
           <view class="card-actions">

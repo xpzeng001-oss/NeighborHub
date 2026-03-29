@@ -109,6 +109,10 @@
     {
       "root": "pages/dashboard",
       "pages": ["dashboard"]
+    },
+    {
+      "root": "pages/userProfile",
+      "pages": ["userProfile"]
     }
   ],
   "window": {

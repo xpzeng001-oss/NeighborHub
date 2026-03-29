@@ -21,7 +21,7 @@
       <text class="detail-title">{{detail.title}}</text>
 
       <!-- 发布者 -->
-      <view class="author-row">
+      <view class="author-row" bindtap="goUserProfile">
         <image class="author-avatar" src="{{detail.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
         <view class="author-info">
           <text class="author-name">{{detail.userName}}</text>

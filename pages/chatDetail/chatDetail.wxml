@@ -10,7 +10,7 @@
     <block wx:for="{{messages}}" wx:key="id">
       <!-- 对方消息：头像在左 -->
       <view class="msg-item msg-left" wx:if="{{item.senderId !== myUserId}}">
-        <image class="msg-avatar" src="{{targetAvatarUrl || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+        <image class="msg-avatar" src="{{targetAvatarUrl || '/images/avatar-placeholder.png'}}" mode="aspectFill" catchtap="goUserProfile"></image>
         <view class="msg-bubble bubble-other">
           <text>{{item.content}}</text>
         </view>

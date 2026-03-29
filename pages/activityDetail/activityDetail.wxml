@@ -72,10 +72,12 @@
 
     <!-- 发起人 -->
     <view class="organizer-card">
-      <image class="organizer-avatar" src="{{detail.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
-      <view class="organizer-info">
-        <text class="organizer-name">{{detail.userName}}</text>
-        <text class="organizer-label">活动发起人</text>
+      <view class="organizer-left" bindtap="goUserProfile">
+        <image class="organizer-avatar" src="{{detail.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+        <view class="organizer-info">
+          <text class="organizer-name">{{detail.userName}}</text>
+          <text class="organizer-label">活动发起人</text>
+        </view>
       </view>
       <view class="btn-chat" bindtap="onChat" wx:if="{{!detail.isOrganizer}}">
         <icon name="message-circle" size="28" color="#C67A52"></icon>
