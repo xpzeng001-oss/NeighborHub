@@ -408,14 +408,14 @@
 /* 联系方式按钮 */
 .btn-chat {
   display: flex; align-items: center; justify-content: center; gap: 8rpx;
-  background: transparent; border: none; padding: 0 16rpx; margin: 0;
-  font-size: 28rpx; color: #2C2C2C; height: 88rpx;
+  background: transparent; border: none; padding: 0; margin: 0;
+  font-size: 26rpx; color: #2C2C2C; height: 88rpx; flex-shrink: 0;
 }
 .btn-chat::after { border: none; }
 .btn-wechat, .btn-phone {
-  display: flex; align-items: center; justify-content: center; gap: 8rpx;
-  height: 88rpx; border-radius: 16rpx; padding: 0 24rpx; margin: 0;
-  font-size: 26rpx; font-weight: 600; background: #fff; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; gap: 6rpx;
+  height: 88rpx; border-radius: 16rpx; padding: 0 16rpx; margin: 0;
+  font-size: 24rpx; font-weight: 600; background: #fff; flex-shrink: 0;
 }
 .btn-wechat { color: #07C160; border: 2rpx solid #07C160; }
 .btn-phone { color: #3B82F6; border: 2rpx solid #3B82F6; }
