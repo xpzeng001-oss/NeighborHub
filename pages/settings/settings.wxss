@@ -58,6 +58,10 @@
 .form-picker {
   flex: 1;
 }
+.form-picker text {
+  display: block;
+  text-align: right;
+}
 .form-item-inner {
   display: flex;
   align-items: center;
