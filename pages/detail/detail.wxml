@@ -79,7 +79,7 @@
   <!-- 底部操作栏 -->
   <view class="bottom-bar safe-bottom">
     <button class="btn-chat" bindtap="onChat">
-      <icon name="message-circle" size="28" color="#1A1A1A"></icon>
+      <icon name="message-circle" size="32" color="#1A1A1A" filled></icon>
       <text>私信</text>
     </button>
     <button class="btn-wechat" wx:if="{{product.contactWechat}}" bindtap="onCopyWechat">
