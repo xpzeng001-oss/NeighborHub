@@ -1,0 +1,47 @@
+<!--pages/serviceDetail/serviceDetail.wxml-->
+<view class="page" wx:if="{{detail}}">
+  <scroll-view scroll-y class="scroll-content">
+    <!-- 发布者 -->
+    <view class="section user-section" bindtap="goUserProfile">
+      <image class="avatar" src="{{detail.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+      <view class="user-info">
+        <text class="user-name">{{detail.userName}}</text>
+        <text class="user-building">{{detail.communityName}}{{detail.building ? ' ' + detail.building : ''}}</text>
+      </view>
+      <view class="type-badge">
+        <text>{{typeName}}</text>
+      </view>
+    </view>
+
+    <!-- 标题+描述 -->
+    <view class="section">
+      <text class="title">{{detail.title}}</text>
+      <text class="desc" wx:if="{{detail.description}}">{{detail.description}}</text>
+    </view>
+
+    <!-- 图片 -->
+    <view class="section" wx:if="{{detail.images.length > 0}}">
+      <view class="image-list">
+        <image wx:for="{{detail.images}}" wx:key="*this" src="{{item}}" mode="aspectFill" class="detail-img" bindtap="previewImage" data-src="{{item}}"></image>
+      </view>
+    </view>
+
+    <view style="height: 200rpx;"></view>
+  </scroll-view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar safe-bottom">
+    <button class="btn-chat" bindtap="onContact">
+      <icon name="message-circle" size="32" color="#1A1A1A" filled></icon>
+      <text>私信</text>
+    </button>
+    <button class="btn-wechat" wx:if="{{detail.contactWechat}}" bindtap="onCopyWechat">
+      <icon name="wechat-logo" size="32" color="#07C160" filled></icon>
+      <text>微信咨询</text>
+    </button>
+    <button class="btn-phone" wx:if="{{detail.contactPhone}}" bindtap="onCallPhone">
+      <icon name="phone" size="32" color="#3B82F6" filled></icon>
+      <text>电话联系</text>
+    </button>
+  </view>
+</view>

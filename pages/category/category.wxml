@@ -117,6 +117,11 @@
           <text class="feed-meta" wx:if="{{item.fee}}">¥{{item.fee}}/人</text>
         </view>
 
+        <!-- 本地服务 -->
+        <view class="feed-extra" wx:if="{{item.feedType === 'service'}}">
+          <text class="feed-status">{{item.status === 'open' ? '进行中' : '已结束'}}</text>
+        </view>
+
         <!-- 活动 -->
         <view class="feed-extra" wx:if="{{item.feedType === 'activity'}}">
           <view class="feed-participants" wx:if="{{item.currentParticipants > 0}}">

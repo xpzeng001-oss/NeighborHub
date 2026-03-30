@@ -21,6 +21,7 @@ const Community = require('./Community');
 const CommunityApplication = require('./CommunityApplication');
 const CoinLog = require('./CoinLog');
 const Activity = require('./Activity');
+const ServicePost = require('./ServicePost');
 
 // User <-> Product
 User.hasMany(Product, { foreignKey: 'user_id' });
@@ -121,6 +122,12 @@ Activity.belongsTo(User, { foreignKey: 'user_id' });
 Community.hasMany(Activity, { foreignKey: 'community_id' });
 Activity.belongsTo(Community, { foreignKey: 'community_id' });
 
+// User <-> ServicePost
+User.hasMany(ServicePost, { foreignKey: 'user_id' });
+ServicePost.belongsTo(User, { foreignKey: 'user_id' });
+Community.hasMany(ServicePost, { foreignKey: 'community_id' });
+ServicePost.belongsTo(Community, { foreignKey: 'community_id' });
+
 // User <-> CommunityApplication
 User.hasMany(CommunityApplication, { foreignKey: 'user_id' });
 CommunityApplication.belongsTo(User, { foreignKey: 'user_id' });
@@ -148,5 +155,6 @@ module.exports = {
   Community,
   CommunityApplication,
   CoinLog,
-  Activity
+  Activity,
+  ServicePost
 };

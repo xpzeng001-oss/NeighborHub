@@ -100,6 +100,8 @@ const getCarpools      = (params)   => request({ url: '/api/carpools', data: par
 const getCarpoolDetail = (id)       => request({ url: '/api/carpools/' + id });
 const createCarpool    = (data)     => request({ url: '/api/carpools', method: 'POST', data });
 const joinCarpool      = (id)       => request({ url: '/api/carpools/' + id + '/join', method: 'POST' });
+const getServiceDetail = (id)     => request({ url: '/api/services/' + id });
+const createService    = (data)  => request({ url: '/api/services', method: 'POST', data });
 const deleteHelp    = (id)       => request({ url: '/api/helps/' + id, method: 'DELETE' });
 const deleteCarpool = (id)       => request({ url: '/api/carpools/' + id, method: 'DELETE' });
 const deleteRental  = (id)       => request({ url: '/api/rentals/' + id, method: 'DELETE' });
@@ -185,6 +187,7 @@ module.exports = {
   getRentals,
   getSams, getSamDetail, createSam, deleteSam, joinSam, updateShoppingList, postSamUpdate, updatePickupStatus,
   getCarpools, getCarpoolDetail, createCarpool, joinCarpool,
+  getServiceDetail, createService,
   getActivities, getActivityDetail, createActivity, deleteActivity, updateActivity, joinActivity, cancelActivity,
   getPets, getPetDetail, createPet, deletePet, respondPet,
   getUser, updateUser, getCoinLogs,

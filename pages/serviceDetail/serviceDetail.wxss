@@ -1,0 +1,40 @@
+.page { height: 100vh; display: flex; flex-direction: column; background: #FEFCFA; }
+.scroll-content { flex: 1; height: 0; }
+.section { margin: 24rpx 32rpx 0; padding: 28rpx; background: #fff; border-radius: 16rpx; }
+
+.user-section { display: flex; align-items: center; gap: 16rpx; }
+.avatar { width: 80rpx; height: 80rpx; border-radius: 50%; }
+.user-info { flex: 1; }
+.user-name { font-size: 28rpx; color: #1A1A1A; font-weight: 600; display: block; }
+.user-building { font-size: 24rpx; color: #999; display: block; margin-top: 4rpx; }
+.type-badge { padding: 8rpx 16rpx; border-radius: 8rpx; background: #F3E8DA; font-size: 22rpx; color: #C67A52; font-weight: 500; flex-shrink: 0; }
+
+.title { font-size: 34rpx; font-weight: 700; color: #1A1A1A; display: block; }
+.desc { font-size: 28rpx; color: #666; margin-top: 16rpx; display: block; line-height: 1.6; }
+
+.image-list { display: flex; flex-wrap: wrap; gap: 12rpx; }
+.detail-img { width: 210rpx; height: 210rpx; border-radius: 12rpx; }
+
+/* 底部操作栏 */
+.bottom-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #fff; display: flex; align-items: center; gap: 16rpx;
+  padding: 20rpx 32rpx;
+  padding-bottom: calc(20rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -2rpx 16rpx rgba(0,0,0,0.05);
+}
+.btn-chat {
+  display: flex; align-items: center; justify-content: center; gap: 8rpx;
+  background: transparent; border: none; padding: 0 16rpx; margin: 0;
+  font-size: 28rpx; color: #2C2C2C; height: 88rpx;
+}
+.btn-chat::after { border: none; }
+.btn-wechat, .btn-phone {
+  display: flex; align-items: center; justify-content: center; gap: 8rpx;
+  height: 88rpx; border-radius: 16rpx; padding: 0 24rpx; margin: 0;
+  font-size: 26rpx; font-weight: 600; background: #fff; flex: 1;
+}
+.btn-wechat { color: #07C160; border: 2rpx solid #07C160; }
+.btn-phone { color: #3B82F6; border: 2rpx solid #3B82F6; }
+.btn-wechat::after, .btn-phone::after { border: none; }

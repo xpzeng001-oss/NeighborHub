@@ -366,6 +366,38 @@
       </view>
     </view>
 
+    <!-- 本地服务表单（家政/维修/家教/其它） -->
+    <view wx:if="{{publishType === 'housekeeping' || publishType === 'repair' || publishType === 'tutoring' || publishType === 'other'}}">
+      <view class="form-section">
+        <view class="form-item">
+          <text class="form-label">标题</text>
+          <input class="form-input" placeholder="简短描述你的服务或需求" maxlength="30" bindinput="onInput" data-field="title" value="{{form.title}}"/>
+        </view>
+      </view>
+      <view class="form-section">
+        <view class="form-item-col">
+          <text class="form-label">详细描述</text>
+          <textarea class="form-textarea" placeholder="详细描述服务内容、时间、价格等..." maxlength="500" bindinput="onInput" data-field="description" value="{{form.description}}" style="height: 300rpx;"/>
+        </view>
+      </view>
+      <view class="form-section">
+        <view class="upload-area">
+          <view class="image-list">
+            <view class="image-item" wx:for="{{imageList}}" wx:key="index">
+              <image src="{{item}}" mode="aspectFill" class="uploaded-img"></image>
+              <view class="remove-btn" bindtap="removeImage" data-index="{{index}}">
+                <icon name="x" size="22" color="#fff"></icon>
+              </view>
+            </view>
+            <view class="image-item add-btn" bindtap="chooseImage" wx:if="{{imageList.length < 9}}">
+              <icon name="camera" size="48" color="#bbb"></icon>
+              <text class="add-text">添加图片</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
     <!-- 活动表单 -->
     <view wx:if="{{publishType === 'activity'}}">
       <!-- 图片上传 -->

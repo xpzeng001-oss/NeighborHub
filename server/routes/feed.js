@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Op } = require('sequelize');
-const { User, Product, Post, HelpRequest, Rental, PetPost, SamOrder, Carpool, Community, Activity } = require('../models');
+const { User, Product, Post, HelpRequest, Rental, PetPost, SamOrder, Carpool, Community, Activity, ServicePost } = require('../models');
 const { buildDistrictFilter } = require('../utils/districtFilter');
 
 const topOrder = [['is_top', 'DESC'], ['created_at', 'DESC']];
@@ -14,14 +14,15 @@ router.get('/', async (req, res, next) => {
     const districtWhere = await buildDistrictFilter(districtId);
     const activeWhere = { status: { [Op.ne]: 'off' }, ...districtWhere };
 
-    // 本地服务：合并 pet + sam（拼车暂时隐藏）
+    // 本地服务：合并 pet + sam + service（拼车暂时隐藏）
     if (type === 'local') {
       const perType = offset + limit;
-      const [pets, sams] = await Promise.all([
+      const [pets, sams, services] = await Promise.all([
         fetchByType('pet', activeWhere, districtWhere, perType, 0),
-        fetchByType('sam', activeWhere, districtWhere, perType, 0)
+        fetchByType('sam', activeWhere, districtWhere, perType, 0),
+        fetchByType('service', activeWhere, districtWhere, perType, 0)
       ]);
-      let all = [...pets.list, ...sams.list];
+      let all = [...pets.list, ...sams.list, ...services.list];
       all.sort((a, b) => {
         if (a.isTop && !b.isTop) return -1;
         if (!a.isTop && b.isTop) return 1;
@@ -63,12 +64,13 @@ router.get('/', async (req, res, next) => {
       fetchByType('pet', activeWhere, districtWhere, perType, 0),
       fetchByType('sam', activeWhere, districtWhere, perType, 0),
       // fetchByType('carpool', activeWhere, districtWhere, perType, 0),  // 拼车暂时隐藏
-      fetchByType('activity', activeWhere, districtWhere, perType, 0)
+      fetchByType('activity', activeWhere, districtWhere, perType, 0),
+      fetchByType('service', activeWhere, districtWhere, perType, 0)
     ]);
 
     let all = [
       ...products.list, ...posts.list, ...helps.list, ...rentals.list,
-      ...pets.list, ...sams.list, ...activities.list
+      ...pets.list, ...sams.list, ...activities.list, ...services.list
     ];
     // 置顶优先，再按时间
     all.sort((a, b) => {
@@ -178,6 +180,15 @@ async function fetchByType(type, activeWhere, districtWhere, limit, offset) {
         maxParticipants: a.max_participants, currentParticipants: a.current_participants,
         participantAvatars: a.participant_avatars, participantIds: a.participant_ids || [],
         status: a.status
+      })) };
+    }
+    case 'service': {
+      const { rows, count } = await ServicePost.findAndCountAll({
+        where: activeWhere, include, order: topOrder, limit, offset
+      });
+      return { total: count, list: rows.map(s => mapBase(s, 'service', {
+        title: s.title, description: s.description, images: s.images || [],
+        serviceType: s.type, status: s.status
       })) };
     }
     default:

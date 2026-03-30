@@ -71,8 +71,8 @@ Page({
     const now = new Date();
     const y = now.getFullYear(), m = ('0' + (now.getMonth() + 1)).slice(-2), d = ('0' + now.getDate()).slice(-2);
     const data = { statusBarHeight: sysInfo.statusBarHeight || 44, today: y + '-' + m + '-' + d };
-    const validTypes = ['product', 'free', 'post', 'help', 'pet', 'sam', 'carpool', 'activity'];
-    const localTypes = ['pet', 'sam', 'carpool'];
+    const validTypes = ['product', 'free', 'post', 'help', 'pet', 'sam', 'carpool', 'activity', 'housekeeping', 'repair', 'tutoring', 'other'];
+    const localTypes = ['pet', 'sam', 'carpool', 'housekeeping', 'repair', 'tutoring', 'other'];
     if (options.type && validTypes.indexOf(options.type) !== -1) {
       data.publishType = options.type;
       data.lockedType = true;
@@ -245,8 +245,8 @@ Page({
   },
 
   showLocalSubPicker() {
-    const types = ['宠物喂养', '山姆拼单'];
-    const keys = ['pet', 'sam'];
+    const types = ['宠物喂养', '山姆拼单', '家政保洁', '维修服务', '家教辅导', '其它'];
+    const keys = ['pet', 'sam', 'housekeeping', 'repair', 'tutoring', 'other'];
     wx.showActionSheet({
       itemList: types,
       success: (res) => {
@@ -434,7 +434,7 @@ Page({
     }
 
     // 闲置物品、发活动、本地服务：需要填写联系方式
-    const needContact = ['product', 'free', 'activity', 'pet', 'sam', 'carpool'];
+    const needContact = ['product', 'free', 'activity', 'pet', 'sam', 'carpool', 'housekeeping', 'repair', 'tutoring', 'other'];
     if (needContact.indexOf(publishType) !== -1 && !this._contactConfirmed) {
       const userInfo = app.globalData.userInfo || {};
       const hasContact = userInfo.phone || userInfo.wechatId;
@@ -587,6 +587,16 @@ Page({
           }
         }, 1500);
         return;
+      } else if (['housekeeping', 'repair', 'tutoring', 'other'].indexOf(publishType) !== -1) {
+        await api.createService({
+          type: publishType,
+          title: form.title,
+          description: form.description,
+          images: imageUrls,
+          communityId,
+          contactPhone,
+          contactWechat
+        });
       }
 
       wx.hideLoading();
