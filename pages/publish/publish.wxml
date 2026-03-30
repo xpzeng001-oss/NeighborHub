@@ -480,22 +480,18 @@
 </view>
 
 <!-- 联系方式弹窗 -->
-<view class="modal-mask" wx:if="{{showContactModal}}" bindtap="closeContactModal">
-  <view class="contact-modal" catchtap="">
+<view class="modal-mask" wx:if="{{showContactModal}}" catchtap="closeContactModal">
+  <view class="contact-modal" catchtap="preventBubble">
     <text class="contact-title">填写联系方式</text>
     <view class="contact-tip">方便其他人联系到你，至少填写一项</view>
     <view class="contact-form">
       <view class="contact-field">
         <text class="contact-label">手机号</text>
-        <view class="contact-item">
-          <input class="contact-input" type="number" maxlength="11" placeholder="输入手机号" value="{{contactPhone}}" bindinput="onContactPhone"/>
-        </view>
+        <input class="contact-input contact-input-box" type="number" maxlength="11" placeholder="输入手机号" placeholder-class="contact-placeholder" value="{{contactPhone}}" bindinput="onContactPhone"/>
       </view>
       <view class="contact-field">
         <text class="contact-label">微信号</text>
-        <view class="contact-item">
-          <input class="contact-input" placeholder="输入微信号" value="{{contactWechat}}" bindinput="onContactWechat"/>
-        </view>
+        <input class="contact-input contact-input-box" placeholder="输入微信号" placeholder-class="contact-placeholder" value="{{contactWechat}}" bindinput="onContactWechat"/>
       </view>
     </view>
     <button class="contact-btn {{contactPhone || contactWechat ? '' : 'disabled'}}" bindtap="onContactConfirm">确认</button>

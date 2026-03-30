@@ -311,6 +311,8 @@ Page({
     });
   },
 
+  preventBubble() {},
+
   onContactPhone(e) {
     this.setData({ contactPhone: e.detail.value });
   },
