@@ -94,7 +94,9 @@ exports.detail = async (req, res, next) => {
         status: activity.status,
         createdAt: activity.created_at,
         isOrganizer,
-        isJoined
+        isJoined,
+        contactPhone: activity.contact_phone,
+        contactWechat: activity.contact_wechat
       }
     });
   } catch (err) {

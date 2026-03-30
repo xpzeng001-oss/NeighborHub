@@ -73,7 +73,9 @@ exports.detail = async (req, res, next) => {
         isJoined: false,
         myShoppingList: '',
         participants: [],
-        updates: []
+        updates: [],
+        contactPhone: order.contact_phone,
+        contactWechat: order.contact_wechat
       }
     });
   } catch (err) {

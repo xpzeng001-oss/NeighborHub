@@ -101,9 +101,17 @@
   <!-- 底部操作栏 -->
   <view class="bottom-bar safe-bottom" wx:if="{{detail}}">
     <view class="btn-msg" bindtap="onContact">
-      <icon name="message-circle" size="36" color="#1A1A1A"></icon>
+      <icon name="message-circle" size="32" color="#1A1A1A" filled></icon>
       <text>私信</text>
     </view>
+    <button class="btn-wechat" wx:if="{{detail.contactWechat}}" bindtap="onCopyWechat">
+      <icon name="wechat-logo" size="32" color="#07C160" filled></icon>
+      <text>微信咨询</text>
+    </button>
+    <button class="btn-phone" wx:if="{{detail.contactPhone}}" bindtap="onCallPhone">
+      <icon name="phone" size="32" color="#3B82F6" filled></icon>
+      <text>电话联系</text>
+    </button>
     <view class="btn-action {{responded ? 'btn-disabled' : ''}}" bindtap="onRespond">
       <text>{{responded ? '已报名' : btnText}}</text>
     </view>

@@ -72,7 +72,9 @@ exports.detail = async (req, res, next) => {
         tags: pet.tags || [],
         status: pet.status,
         responseCount: pet.response_count,
-        createdAt: pet.created_at
+        createdAt: pet.created_at,
+        contactPhone: pet.contact_phone,
+        contactWechat: pet.contact_wechat
       }
     });
   } catch (err) {

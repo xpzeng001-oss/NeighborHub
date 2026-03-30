@@ -394,3 +394,22 @@
   border-color: #C67A52;
   color: #C67A52;
 }
+
+/* 联系方式按钮 */
+.btn-wechat, .btn-phone {
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 0 24rpx;
+  margin: 0;
+  flex-shrink: 0;
+}
+.btn-wechat { color: #07C160; border: 2rpx solid #07C160; }
+.btn-phone { color: #3B82F6; border: 2rpx solid #3B82F6; }
+.btn-wechat::after, .btn-phone::after { border: none; }

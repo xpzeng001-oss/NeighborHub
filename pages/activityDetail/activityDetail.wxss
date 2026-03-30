@@ -397,3 +397,19 @@
   color: #E8636F;
   text-decoration: underline;
 }
+
+/* 联系方式按钮 */
+.bar-contact-btn {
+  width: 72rpx;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 2rpx solid #E5E2DC;
+  border-radius: 12rpx;
+  padding: 0;
+  margin: 0;
+  flex-shrink: 0;
+}
+.bar-contact-btn::after { border: none; }
