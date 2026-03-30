@@ -1,3 +1,4 @@
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 const db = require('../config/database');
 
 const tables = ['products', 'activities', 'pet_posts', 'sam_orders', 'carpools'];
