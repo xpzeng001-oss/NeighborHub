@@ -107,11 +107,13 @@
       <text class="bar-free" wx:else>免费</text>
       <text class="bar-count">{{detail.currentParticipants || 0}}人已报名</text>
     </view>
-    <button class="bar-contact-btn" wx:if="{{detail.contactWechat}}" bindtap="onCopyWechat">
-      <icon name="wechat-logo" size="28" color="#07C160" filled></icon>
+    <button class="btn-wechat" wx:if="{{detail.contactWechat}}" bindtap="onCopyWechat">
+      <icon name="wechat-logo" size="32" color="#07C160" filled></icon>
+      <text>微信</text>
     </button>
-    <button class="bar-contact-btn" wx:if="{{detail.contactPhone}}" bindtap="onCallPhone">
-      <icon name="phone" size="28" color="#3B82F6" filled></icon>
+    <button class="btn-phone" wx:if="{{detail.contactPhone}}" bindtap="onCallPhone">
+      <icon name="phone" size="32" color="#3B82F6" filled></icon>
+      <text>电话</text>
     </button>
     <view class="bar-btn {{detail.isJoined ? 'joined' : ''}} {{!detail.isJoined && detail.status !== 'open' ? 'disabled' : ''}}"
           bindtap="onJoin">
