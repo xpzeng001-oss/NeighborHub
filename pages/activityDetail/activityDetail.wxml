@@ -114,10 +114,6 @@
       <icon name="phone" size="32" color="#3B82F6" filled></icon>
       <text>电话联系</text>
     </button>
-    <view class="bar-btn {{detail.isJoined ? 'joined' : ''}} {{!detail.isJoined && detail.status !== 'open' ? 'disabled' : ''}}"
-          bindtap="onJoin">
-      {{detail.isOrganizer ? '管理活动' : detail.isJoined ? '取消报名' : detail.status === 'open' ? '立即报名' : '报名已截止'}}
-    </view>
   </view>
 
   <!-- 报名弹窗 -->
