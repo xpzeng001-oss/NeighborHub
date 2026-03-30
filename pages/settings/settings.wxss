@@ -55,7 +55,7 @@
   color: #2C2C2C;
   text-align: right;
 }
-.form-item picker {
+.form-picker {
   flex: 1;
 }
 .form-item-inner {

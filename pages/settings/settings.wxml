@@ -13,18 +13,18 @@
       <text class="form-label">昵称</text>
       <input class="form-input" value="{{nickName}}" bindinput="onNicknameInput" placeholder="请输入昵称" maxlength="20" />
     </view>
-    <picker class="form-item" mode="selector" range="{{communities}}" range-key="name" value="{{communityIndex}}" bindchange="onCommunityChange">
-      <view class="form-item-inner">
-        <text class="form-label">小区</text>
-        <text class="form-value {{community ? '' : 'placeholder'}}">{{community || '请选择小区'}}</text>
-      </view>
-    </picker>
-    <picker class="form-item" mode="selector" range="{{buildings}}" value="{{buildingIndex}}" bindchange="onBuildingChange">
-      <view class="form-item-inner">
-        <text class="form-label">楼栋</text>
-        <text class="form-value {{building ? '' : 'placeholder'}}">{{building || '请选择楼栋'}}</text>
-      </view>
-    </picker>
+    <view class="form-item">
+      <text class="form-label">小区</text>
+      <picker class="form-picker" mode="selector" range="{{communities}}" range-key="name" value="{{communityIndex}}" bindchange="onCommunityChange">
+        <text class="form-input" style="text-align:right;">{{community || '请选择小区'}}</text>
+      </picker>
+    </view>
+    <view class="form-item">
+      <text class="form-label">楼栋</text>
+      <picker class="form-picker" mode="selector" range="{{buildings}}" value="{{buildingIndex}}" bindchange="onBuildingChange">
+        <text class="form-input" style="text-align:right;">{{building || '请选择楼栋'}}</text>
+      </picker>
+    </view>
     <view class="form-item">
       <text class="form-label">手机号</text>
       <input class="form-input" type="number" maxlength="11" value="{{phone}}" bindinput="onPhoneInput" placeholder="选填" />
