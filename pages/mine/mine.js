@@ -16,7 +16,10 @@ Page({
     guideNickName: '',
     guideCommunityIndex: 0,
     guideBuildingIndex: 0,
-    guideSaving: false
+    guideSaving: false,
+    showContactEdit: false,
+    editPhone: '',
+    editWechat: ''
   },
 
   onLoad() {
@@ -225,6 +228,54 @@ Page({
   goSettings() {
     if (!this.data.userInfo) { this.onLogin(); return; }
     wx.navigateTo({ url: '/pages/settings/settings' });
+  },
+
+  showContactEdit() {
+    const userInfo = app.globalData.userInfo || {};
+    this.setData({
+      showContactEdit: true,
+      editPhone: userInfo.phone || '',
+      editWechat: userInfo.wechatId || ''
+    });
+  },
+
+  closeContactEdit() {
+    this.setData({ showContactEdit: false });
+  },
+
+  preventBubble() {},
+
+  onEditPhone(e) {
+    this.setData({ editPhone: e.detail.value });
+  },
+
+  onEditWechat(e) {
+    this.setData({ editWechat: e.detail.value });
+  },
+
+  async onContactEditSave() {
+    const { editPhone, editWechat } = this.data;
+    if (!editPhone.trim() && !editWechat.trim()) {
+      wx.showToast({ title: '请至少填写一项', icon: 'none' });
+      return;
+    }
+    if (editPhone && !/^1\d{10}$/.test(editPhone)) {
+      wx.showToast({ title: '请输入正确的手机号', icon: 'none' });
+      return;
+    }
+    try {
+      const userInfo = app.globalData.userInfo;
+      const updateData = { phone: editPhone, wechatId: editWechat };
+      await api.updateUser(userInfo.id, updateData);
+      userInfo.phone = editPhone;
+      userInfo.wechatId = editWechat;
+      app.globalData.userInfo = userInfo;
+      wx.setStorageSync('userInfo', userInfo);
+      this.setData({ showContactEdit: false, userInfo });
+      wx.showToast({ title: '保存成功', icon: 'success' });
+    } catch (e) {
+      wx.showToast({ title: '保存失败', icon: 'none' });
+    }
   },
 
   goCredit() {
