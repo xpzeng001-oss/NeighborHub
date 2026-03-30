@@ -245,8 +245,8 @@ Page({
   },
 
   showLocalSubPicker() {
-    const types = ['宠物喂养', '山姆拼单', '拼车顺路'];
-    const keys = ['pet', 'sam', 'carpool'];
+    const types = ['宠物喂养', '山姆拼单'];
+    const keys = ['pet', 'sam'];
     wx.showActionSheet({
       itemList: types,
       success: (res) => {

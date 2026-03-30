@@ -14,15 +14,14 @@ router.get('/', async (req, res, next) => {
     const districtWhere = await buildDistrictFilter(districtId);
     const activeWhere = { status: { [Op.ne]: 'off' }, ...districtWhere };
 
-    // 本地服务：合并 pet + sam + carpool
+    // 本地服务：合并 pet + sam（拼车暂时隐藏）
     if (type === 'local') {
       const perType = offset + limit;
-      const [pets, sams, carpools] = await Promise.all([
+      const [pets, sams] = await Promise.all([
         fetchByType('pet', activeWhere, districtWhere, perType, 0),
-        fetchByType('sam', activeWhere, districtWhere, perType, 0),
-        fetchByType('carpool', activeWhere, districtWhere, perType, 0)
+        fetchByType('sam', activeWhere, districtWhere, perType, 0)
       ]);
-      let all = [...pets.list, ...sams.list, ...carpools.list];
+      let all = [...pets.list, ...sams.list];
       all.sort((a, b) => {
         if (a.isTop && !b.isTop) return -1;
         if (!a.isTop && b.isTop) return 1;
@@ -56,20 +55,20 @@ router.get('/', async (req, res, next) => {
 
     // "全部" — fetch from all types and merge
     const perType = offset + limit;
-    const [products, posts, helps, rentals, pets, sams, carpools, activities] = await Promise.all([
+    const [products, posts, helps, rentals, pets, sams, activities] = await Promise.all([
       fetchByType('product', activeWhere, districtWhere, perType, 0),
       fetchByType('post', activeWhere, districtWhere, perType, 0),
       fetchByType('help', activeWhere, districtWhere, perType, 0),
       fetchByType('rental', activeWhere, districtWhere, perType, 0),
       fetchByType('pet', activeWhere, districtWhere, perType, 0),
       fetchByType('sam', activeWhere, districtWhere, perType, 0),
-      fetchByType('carpool', activeWhere, districtWhere, perType, 0),
+      // fetchByType('carpool', activeWhere, districtWhere, perType, 0),  // 拼车暂时隐藏
       fetchByType('activity', activeWhere, districtWhere, perType, 0)
     ]);
 
     let all = [
       ...products.list, ...posts.list, ...helps.list, ...rentals.list,
-      ...pets.list, ...sams.list, ...carpools.list, ...activities.list
+      ...pets.list, ...sams.list, ...activities.list
     ];
     // 置顶优先，再按时间
     all.sort((a, b) => {
