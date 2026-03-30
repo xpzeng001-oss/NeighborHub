@@ -1,4 +1,4 @@
-const { Carpool, User, Conversation, Message } = require('../models');
+const { Carpool, User, Community, Conversation, Message } = require('../models');
 const { buildDistrictFilter } = require('../utils/districtFilter');
 const coinService = require('../services/coinService');
 
