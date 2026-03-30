@@ -309,14 +309,15 @@
   font-weight: 500;
   padding-left: 4rpx;
 }
-.contact-input-box {
+.contact-item {
   background: #F8F6F3;
   border-radius: 16rpx;
   padding: 28rpx 24rpx;
+}
+.contact-item input {
   width: 100%;
   font-size: 30rpx;
   color: #1A1A1A;
-  box-sizing: border-box;
 }
 .contact-placeholder {
   color: #C0C0C0;

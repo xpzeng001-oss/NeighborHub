@@ -487,11 +487,15 @@
     <view class="contact-form">
       <view class="contact-field">
         <text class="contact-label">手机号</text>
-        <input class="contact-input contact-input-box" type="number" maxlength="11" placeholder="输入手机号" placeholder-class="contact-placeholder" value="{{contactPhone}}" bindinput="onContactPhone"/>
+        <view class="contact-item">
+          <input type="number" maxlength="11" placeholder="输入手机号" placeholder-class="contact-placeholder" value="{{contactPhone}}" bindinput="onContactPhone"/>
+        </view>
       </view>
       <view class="contact-field">
         <text class="contact-label">微信号</text>
-        <input class="contact-input contact-input-box" placeholder="输入微信号" placeholder-class="contact-placeholder" value="{{contactWechat}}" bindinput="onContactWechat"/>
+        <view class="contact-item">
+          <input placeholder="输入微信号" placeholder-class="contact-placeholder" value="{{contactWechat}}" bindinput="onContactWechat"/>
+        </view>
       </view>
     </view>
     <button class="contact-btn {{contactPhone || contactWechat ? '' : 'disabled'}}" bindtap="onContactConfirm">确认</button>
