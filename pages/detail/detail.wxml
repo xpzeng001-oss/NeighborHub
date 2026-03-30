@@ -11,9 +11,19 @@
     <!-- 价格信息 -->
     <view class="price-section">
       <view class="price-row">
-        <text class="price" wx:if="{{!product.isFree}}">¥{{product.price}}</text>
-        <text class="price free" wx:else>免费自取</text>
-        <text class="original" wx:if="{{product.originalPrice > 0 && !product.isFree}}">原价 ¥{{product.originalPrice}}</text>
+        <view class="price-left">
+          <text class="price" wx:if="{{!product.isFree}}">¥{{product.price}}</text>
+          <text class="price free" wx:else>免费自取</text>
+          <text class="original" wx:if="{{product.originalPrice > 0 && !product.isFree}}">原价 ¥{{product.originalPrice}}</text>
+        </view>
+        <view class="price-actions">
+          <view class="action-icon" bindtap="toggleFav">
+            <icon name="heart" size="40" color="{{isFav ? '#E8636F' : '#AAAAAA'}}" filled="{{isFav}}"></icon>
+          </view>
+          <button class="action-icon action-share-btn" open-type="share">
+            <icon name="share-2" size="40" color="#AAAAAA"></icon>
+          </button>
+        </view>
       </view>
       <view class="tags">
         <text class="tag tag-green">{{product.condition}}</text>
@@ -76,22 +86,18 @@
 
   <!-- 底部操作栏 -->
   <view class="bottom-bar safe-bottom">
-    <view class="bar-left">
-      <view class="bar-icon-item" bindtap="toggleFav">
-        <icon name="heart" size="40" color="{{isFav ? '#E8636F' : '#AAAAAA'}}" filled="{{isFav}}"></icon>
-        <text class="bar-icon-label">{{isFav ? '已收藏' : '收藏'}}</text>
-      </view>
-      <button class="bar-icon-item bar-share-btn" open-type="share">
-        <icon name="share-2" size="40" color="#AAAAAA"></icon>
-        <text class="bar-icon-label">分享</text>
-      </button>
-    </view>
-    <view class="bar-right">
-      <button class="btn-chat" bindtap="onChat">
-        <icon name="message-circle" size="28" color="#1A1A1A"></icon>
-        <text>私信</text>
-      </button>
-      <button class="btn-want" bindtap="onWant">我想要</button>
-    </view>
+    <button class="btn-chat" bindtap="onChat">
+      <icon name="message-circle" size="28" color="#1A1A1A"></icon>
+      <text>私信</text>
+    </button>
+    <button class="btn-contact" wx:if="{{product.contactWechat}}" bindtap="onCopyWechat">
+      <icon name="message-circle" size="28" color="#1A1A1A"></icon>
+      <text>微信联系</text>
+    </button>
+    <button class="btn-contact" wx:if="{{product.contactPhone}}" bindtap="onCallPhone">
+      <icon name="phone" size="28" color="#1A1A1A"></icon>
+      <text>电话联系</text>
+    </button>
+    <button class="btn-want" bindtap="onWant">我想要</button>
   </view>
 </view>

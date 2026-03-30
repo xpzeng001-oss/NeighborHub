@@ -114,7 +114,9 @@ exports.login = async (req, res, next) => {
           building: user.building,
           coins: user.coins,
           isVerified: user.is_verified,
-          role: user.role
+          role: user.role,
+          phone: user.phone,
+          wechatId: user.wechat_id
         },
         avatarConfig: {
           baseUrl: AVATAR_BASE,

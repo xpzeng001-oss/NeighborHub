@@ -20,6 +20,8 @@ exports.getProfile = async (req, res, next) => {
         building: user.building,
         coins: user.coins,
         isVerified: user.is_verified,
+        phone: user.phone,
+        wechatId: user.wechat_id,
         createdAt: user.created_at
       }
     });
@@ -39,9 +41,9 @@ exports.updateProfile = async (req, res, next) => {
       return res.status(404).json({ code: 404, message: '用户不存在', data: null });
     }
 
-    const allowedFields = ['nick_name', 'avatar_url', 'building', 'is_verified'];
+    const allowedFields = ['nick_name', 'avatar_url', 'building', 'is_verified', 'phone', 'wechat_id'];
     const updates = {};
-    const fieldMap = { nickName: 'nick_name', avatarUrl: 'avatar_url', building: 'building', isVerified: 'is_verified' };
+    const fieldMap = { nickName: 'nick_name', avatarUrl: 'avatar_url', building: 'building', isVerified: 'is_verified', phone: 'phone', wechatId: 'wechat_id' };
 
     for (const [camel, snake] of Object.entries(fieldMap)) {
       if (req.body[camel] !== undefined) updates[snake] = req.body[camel];
@@ -57,7 +59,9 @@ exports.updateProfile = async (req, res, next) => {
         avatarUrl: user.avatar_url,
         building: user.building,
         coins: user.coins,
-        isVerified: user.is_verified
+        isVerified: user.is_verified,
+        phone: user.phone,
+        wechatId: user.wechat_id
       }
     });
   } catch (err) {

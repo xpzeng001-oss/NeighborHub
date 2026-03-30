@@ -19,7 +19,11 @@ Page({
   data: {
     statusBarHeight: 44,
     publishType: 'product',
+    isLocalService: false, // 是否选中"本地服务"大类
     lockedType: false,    // 从子页面进入时锁定类型，隐藏 tab 栏
+    showContactModal: false,
+    contactPhone: '',
+    contactWechat: '',
     imageList: [],
     categoryNames: categories.map(c => c.name),
     tagInputValue: '',
@@ -68,9 +72,13 @@ Page({
     const y = now.getFullYear(), m = ('0' + (now.getMonth() + 1)).slice(-2), d = ('0' + now.getDate()).slice(-2);
     const data = { statusBarHeight: sysInfo.statusBarHeight || 44, today: y + '-' + m + '-' + d };
     const validTypes = ['product', 'free', 'post', 'help', 'pet', 'sam', 'carpool', 'activity'];
+    const localTypes = ['pet', 'sam', 'carpool'];
     if (options.type && validTypes.indexOf(options.type) !== -1) {
       data.publishType = options.type;
       data.lockedType = true;
+      if (localTypes.indexOf(options.type) !== -1) {
+        data.isLocalService = true;
+      }
     }
     this.setData(data);
   },
@@ -85,6 +93,54 @@ Page({
   switchType(e) {
     if (this.data.lockedType) return;
     const type = e.currentTarget.dataset.type;
+    const isLocal = type === 'local';
+    this.setData({
+      publishType: isLocal ? 'pet' : type,
+      isLocalService: isLocal,
+      imageList: [],
+      tagInputValue: '',
+      form: {
+        title: '',
+        category: '',
+        categoryName: '',
+        price: '',
+        originalPrice: '',
+        condition: '',
+        description: '',
+        tradeMethod: '',
+        postCategory: '',
+        isUrgent: false,
+        petPostType: 'need',
+        petName: '',
+        petStartDate: '',
+        petEndDate: '',
+        reward: '',
+        samDeadlineDate: '',
+      samDeadlineTime: '',
+        samPickupMethod: '',
+        samMinAmount: '',
+        samTargetCount: '',
+        carpoolType: 'offer',
+        carpoolFrom: '',
+        carpoolTo: '',
+        carpoolDate: '',
+        carpoolTime: '',
+        carpoolSeats: '',
+        carpoolFee: '',
+        activityStartDate: '',
+        activityStartTime: '',
+        activityEndDate: '',
+        activityEndTime: '',
+        activityLocation: '',
+        activityPrice: '',
+        activityMaxParticipants: ''
+      }
+    });
+  },
+
+  switchLocalSub(e) {
+    const type = e.currentTarget.dataset.type;
+    if (type === this.data.publishType) return;
     this.setData({
       publishType: type,
       imageList: [],
@@ -106,7 +162,7 @@ Page({
         petEndDate: '',
         reward: '',
         samDeadlineDate: '',
-      samDeadlineTime: '',
+        samDeadlineTime: '',
         samPickupMethod: '',
         samMinAmount: '',
         samTargetCount: '',
@@ -188,6 +244,20 @@ Page({
     this.setData({ 'form.petPostType': e.currentTarget.dataset.type });
   },
 
+  showLocalSubPicker() {
+    const types = ['宠物喂养', '山姆拼单', '拼车顺路'];
+    const keys = ['pet', 'sam', 'carpool'];
+    wx.showActionSheet({
+      itemList: types,
+      success: (res) => {
+        const type = keys[res.tapIndex];
+        if (type !== this.data.publishType) {
+          this.switchLocalSub({ currentTarget: { dataset: { type } } });
+        }
+      }
+    });
+  },
+
   onTagInput(e) {
     this.setData({ tagInputValue: e.detail.value });
   },
@@ -228,13 +298,62 @@ Page({
   },
 
   showPostCategoryPicker() {
-    const cats = ['吐槽', '求助', '活动', '公告'];
+    const cats = ['求帮忙', '求助', '公告', '吐槽'];
     wx.showActionSheet({
       itemList: cats,
       success: (res) => {
-        this.setData({ 'form.postCategory': cats[res.tapIndex] });
+        const cat = cats[res.tapIndex];
+        this.setData({
+          'form.postCategory': cat,
+          publishType: cat === '求帮忙' ? 'help' : 'post'
+        });
       }
     });
+  },
+
+  onContactPhone(e) {
+    this.setData({ contactPhone: e.detail.value });
+  },
+
+  onContactWechat(e) {
+    this.setData({ contactWechat: e.detail.value });
+  },
+
+  closeContactModal() {
+    this.setData({ showContactModal: false });
+  },
+
+  async onContactConfirm() {
+    const { contactPhone, contactWechat } = this.data;
+    if (!contactPhone.trim() && !contactWechat.trim()) {
+      wx.showToast({ title: '请至少填写一项联系方式', icon: 'none' });
+      return;
+    }
+    if (contactPhone && !/^1\d{10}$/.test(contactPhone)) {
+      wx.showToast({ title: '请输入正确的手机号', icon: 'none' });
+      return;
+    }
+    // 同步到个人资料
+    const app = getApp();
+    const userInfo = app.globalData.userInfo;
+    if (userInfo && userInfo.id) {
+      try {
+        const updateData = {};
+        if (contactPhone) updateData.phone = contactPhone;
+        if (contactWechat) updateData.wechatId = contactWechat;
+        await api.updateUser(userInfo.id, updateData);
+        // 更新本地缓存
+        if (contactPhone) userInfo.phone = contactPhone;
+        if (contactWechat) userInfo.wechatId = contactWechat;
+        app.globalData.userInfo = userInfo;
+        wx.setStorageSync('userInfo', userInfo);
+      } catch (e) {
+        console.log('同步联系方式失败', e);
+      }
+    }
+    this.setData({ showContactModal: false });
+    this._contactConfirmed = true;
+    this.onPublish();
   },
 
   async onPublish() {
@@ -275,10 +394,6 @@ Page({
       wx.showToast({ title: '请上传至少一张图片', icon: 'none' });
       return;
     }
-    if (publishType === 'product' && !form.price) {
-      wx.showToast({ title: '请输入价格', icon: 'none' });
-      return;
-    }
     if (publishType === 'post' && !form.postCategory) {
       wx.showToast({ title: '请选择帖子分类', icon: 'none' });
       return;
@@ -316,7 +431,31 @@ Page({
       }
     }
 
+    // 闲置物品、发活动、本地服务：需要填写联系方式
+    const needContact = ['product', 'free', 'activity', 'pet', 'sam', 'carpool'];
+    if (needContact.indexOf(publishType) !== -1 && !this._contactConfirmed) {
+      const userInfo = app.globalData.userInfo || {};
+      const hasContact = userInfo.phone || userInfo.wechatId;
+      if (hasContact) {
+        // 已有联系方式，直接使用
+        this.setData({
+          contactPhone: userInfo.phone || '',
+          contactWechat: userInfo.wechatId || ''
+        });
+        this._contactConfirmed = true;
+      } else {
+        // 弹窗让用户填写
+        this.setData({
+          showContactModal: true,
+          contactPhone: this.data.contactPhone || '',
+          contactWechat: this.data.contactWechat || ''
+        });
+        return;
+      }
+    }
+
     this._publishing = true;
+    this._contactConfirmed = false;
     wx.showLoading({ title: '发布中...' });
     try {
       let imageUrls = [];
@@ -327,19 +466,23 @@ Page({
       const app = getApp();
       const community = app.globalData.currentCommunity;
       const communityId = (community && community.id) || null;
+      const { contactPhone, contactWechat } = this.data;
 
       if (publishType === 'product' || publishType === 'free') {
+        const price = publishType === 'free' ? 0 : Number(form.price);
         await api.createProduct({
           title: form.title,
-          price: publishType === 'free' ? 0 : Number(form.price),
+          price: price,
           originalPrice: Number(form.originalPrice) || 0,
-          isFree: publishType === 'free',
+          isFree: publishType === 'free' || price === 0,
           category: form.category,
           condition: form.condition,
           images: imageUrls,
           description: form.description,
           tradeMethod: form.tradeMethod,
-          communityId
+          communityId,
+          contactPhone,
+          contactWechat
         });
       } else if (publishType === 'post') {
         await api.createPost({
@@ -368,7 +511,9 @@ Page({
           images: imageUrls,
           dateRange,
           reward: form.reward,
-          communityId
+          communityId,
+          contactPhone,
+          contactWechat
         });
       } else if (publishType === 'sam') {
         const samResult = await api.createSam({
@@ -378,7 +523,9 @@ Page({
           pickupMethod: form.samPickupMethod,
           minAmount: form.samMinAmount,
           targetCount: form.samTargetCount,
-          communityId
+          communityId,
+          contactPhone,
+          contactWechat
         });
         wx.hideLoading();
         wx.showToast({ title: '发布成功！', icon: 'success' });
@@ -402,7 +549,9 @@ Page({
           time: form.carpoolTime,
           seats: Number(form.carpoolSeats) || 0,
           fee: form.carpoolFee,
-          communityId
+          communityId,
+          contactPhone,
+          contactWechat
         });
       } else if (publishType === 'activity') {
         const startTime = (form.activityStartDate && form.activityStartTime)
@@ -421,6 +570,8 @@ Page({
           location: form.activityLocation,
           price: form.activityPrice,
           maxParticipants: form.activityMaxParticipants,
+          contactPhone,
+          contactWechat,
           communityId
         });
         wx.hideLoading();

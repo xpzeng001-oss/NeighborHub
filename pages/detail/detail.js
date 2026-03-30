@@ -46,6 +46,22 @@ Page({
     }
   },
 
+  onCopyWechat() {
+    const wechat = this.data.product.contactWechat;
+    wx.setClipboardData({
+      data: wechat,
+      success: () => {
+        wx.showToast({ title: '微信号已复制，去微信添加好友', icon: 'none' });
+      }
+    });
+  },
+
+  onCallPhone() {
+    wx.makePhoneCall({
+      phoneNumber: this.data.product.contactPhone
+    });
+  },
+
   onChat() {
     const token = wx.getStorageSync('token');
     if (!token) {

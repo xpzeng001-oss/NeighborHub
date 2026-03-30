@@ -3,14 +3,12 @@ const api = require('../../utils/api');
 
 const typeMap = {
   need: { label: '寻求喂养', icon: 'paw-print', color: '#E8883C' },
-  offer: { label: '可以帮喂', icon: 'heart', color: '#C67A52' },
-  social: { label: '宠物活动', icon: 'sparkles', color: '#8B6DB0' }
+  offer: { label: '可以帮喂', icon: 'heart', color: '#C67A52' }
 };
 
 const btnTextMap = {
   need: '我来帮忙',
-  offer: '我需要',
-  social: '我要参加'
+  offer: '我需要'
 };
 
 Page({

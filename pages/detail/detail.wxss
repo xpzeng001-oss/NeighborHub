@@ -10,7 +10,12 @@
   background: #fff;
   padding: 32rpx;
 }
-.price-row { display: flex; align-items: baseline; gap: 12rpx; }
+.price-row { display: flex; align-items: center; justify-content: space-between; }
+.price-left { display: flex; align-items: baseline; gap: 12rpx; }
+.price-actions { display: flex; align-items: center; gap: 24rpx; }
+.action-icon { display: flex; align-items: center; justify-content: center; }
+.action-share-btn { background: none !important; border: none !important; padding: 0 !important; margin: 0 !important; line-height: 1; min-width: 0 !important; width: auto !important; display: flex; align-items: center; justify-content: center; }
+.action-share-btn::after { border: none !important; display: none; }
 .price { font-size: 44rpx; color: #C67A52; font-weight: 800; }
 .price.free { font-size: 36rpx; color: #D49A78; }
 .original { font-size: 24rpx; color: #9A9A9A; text-decoration: line-through; }
@@ -92,41 +97,12 @@
   background: #fff;
   display: flex;
   align-items: center;
+  gap: 16rpx;
   padding: 20rpx 32rpx;
   padding-bottom: calc(20rpx + constant(safe-area-inset-bottom));
   padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
   box-shadow: 0 -2rpx 16rpx rgba(0,0,0,0.05);
   z-index: 100;
-}
-.bar-left {
-  display: flex;
-  align-items: center;
-  gap: 4rpx;
-  margin-right: 16rpx;
-  flex-shrink: 0;
-}
-.bar-icon-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 64rpx;
-}
-.bar-icon-label { font-size: 18rpx; color: #9A9A9A; margin-top: 2rpx; }
-.bar-share-btn {
-  background: none !important;
-  border: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  line-height: inherit;
-  min-width: 0 !important;
-  width: 64rpx !important;
-}
-.bar-share-btn::after { border: none; }
-.bar-right {
-  flex: 1;
-  display: flex;
-  gap: 16rpx;
-  min-width: 0;
 }
 .btn-chat {
   flex: 1;
@@ -145,6 +121,23 @@
   margin: 0;
 }
 .btn-chat::after { border: none; }
+.btn-contact {
+  flex: 1;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  background: #FEFCFA;
+  color: #2C2C2C;
+  border: none;
+  border-radius: 16rpx;
+  padding: 0;
+  margin: 0;
+}
+.btn-contact::after { border: none; }
 .btn-want {
   flex: 1.5;
   height: 88rpx;

@@ -47,6 +47,9 @@ Page({
           showProfileGuide: true,
           guideNickName: userInfo.nickName || ''
         });
+        if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+          this.getTabBar().setData({ show: false });
+        }
       }
     }
     this.loadCommunities();
@@ -208,6 +211,9 @@ Page({
       app.globalData.currentCommunity = community;
       wx.setStorageSync('currentCommunity', community);
       this.setData({ userInfo, isVerified: true, showProfileGuide: false });
+      if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+        this.getTabBar().setData({ show: true });
+      }
       wx.showToast({ title: '设置成功', icon: 'success' });
     } catch (err) {
       wx.showToast({ title: '保存失败，请重试', icon: 'none' });

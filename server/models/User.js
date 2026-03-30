@@ -45,6 +45,10 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING(32),
     defaultValue: ''
   },
+  wechat_id: {
+    type: DataTypes.STRING(64),
+    defaultValue: ''
+  },
   is_banned: {
     type: DataTypes.BOOLEAN,
     defaultValue: false

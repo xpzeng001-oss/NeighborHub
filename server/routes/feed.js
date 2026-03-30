@@ -14,6 +14,41 @@ router.get('/', async (req, res, next) => {
     const districtWhere = await buildDistrictFilter(districtId);
     const activeWhere = { status: { [Op.ne]: 'off' }, ...districtWhere };
 
+    // 本地服务：合并 pet + sam + carpool
+    if (type === 'local') {
+      const perType = offset + limit;
+      const [pets, sams, carpools] = await Promise.all([
+        fetchByType('pet', activeWhere, districtWhere, perType, 0),
+        fetchByType('sam', activeWhere, districtWhere, perType, 0),
+        fetchByType('carpool', activeWhere, districtWhere, perType, 0)
+      ]);
+      let all = [...pets.list, ...sams.list, ...carpools.list];
+      all.sort((a, b) => {
+        if (a.isTop && !b.isTop) return -1;
+        if (!a.isTop && b.isTop) return 1;
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+      const list = all.slice(offset, offset + limit);
+      return res.json({ code: 0, data: { list, total: all.length, page: Number(page) } });
+    }
+
+    // 帖子：合并 post + help
+    if (type === 'post') {
+      const perType = offset + limit;
+      const [posts, helps] = await Promise.all([
+        fetchByType('post', activeWhere, districtWhere, perType, 0),
+        fetchByType('help', activeWhere, districtWhere, perType, 0)
+      ]);
+      let all = [...posts.list, ...helps.list];
+      all.sort((a, b) => {
+        if (a.isTop && !b.isTop) return -1;
+        if (!a.isTop && b.isTop) return 1;
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+      const list = all.slice(offset, offset + limit);
+      return res.json({ code: 0, data: { list, total: all.length, page: Number(page) } });
+    }
+
     if (type !== 'all') {
       const result = await fetchByType(type, activeWhere, districtWhere, limit, offset);
       return res.json({ code: 0, data: { list: result.list, total: result.total, page: Number(page) } });

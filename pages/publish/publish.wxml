@@ -7,7 +7,7 @@
       <view class="nav-back" bindtap="goBack">
         <icon name="arrow-left" size="36" color="#1A1A1A"></icon>
       </view>
-      <view class="nav-title">{{lockedType ? (publishType === 'carpool' ? '发布拼车' : publishType === 'pet' ? '发布宠物喂养' : publishType === 'sam' ? '发布山姆拼单' : publishType === 'help' ? '发布求帮忙' : publishType === 'post' ? '发布帖子' : publishType === 'free' ? '发布免费送' : publishType === 'activity' ? '发布活动' : '发布') : '发布'}}</view>
+      <view class="nav-title">{{lockedType ? (publishType === 'carpool' ? '发布拼车' : publishType === 'pet' ? '发布宠物喂养' : publishType === 'sam' ? '发布山姆拼单' : publishType === 'help' ? '发布求帮忙' : publishType === 'post' ? '发布帖子' : publishType === 'free' ? '发布免费送' : publishType === 'activity' ? '发布活动' : '发布本地服务') : '发布'}}</view>
     </view>
   </view>
 
@@ -18,36 +18,31 @@
         <icon name="package" size="28" color="{{publishType === 'product' ? '#fff' : '#C67A52'}}"></icon>
         <text>闲置物品</text>
       </view>
-      <view class="type-tab {{publishType === 'free' ? 'active' : ''}}" bindtap="switchType" data-type="free">
-        <icon name="gift" size="28" color="{{publishType === 'free' ? '#fff' : '#D49A78'}}"></icon>
-        <text>免费送</text>
-      </view>
-      <view class="type-tab {{publishType === 'post' ? 'active' : ''}}" bindtap="switchType" data-type="post">
-        <icon name="message-circle" size="28" color="{{publishType === 'post' ? '#fff' : '#4A90D9'}}"></icon>
-        <text>发帖子</text>
-      </view>
-      <view class="type-tab {{publishType === 'help' ? 'active' : ''}}" bindtap="switchType" data-type="help">
-        <icon name="handshake" size="28" color="{{publishType === 'help' ? '#fff' : '#4A90D9'}}"></icon>
-        <text>求帮忙</text>
-      </view>
-      <view class="type-tab {{publishType === 'pet' ? 'active' : ''}}" bindtap="switchType" data-type="pet">
-        <icon name="paw-print" size="28" color="{{publishType === 'pet' ? '#fff' : '#D4A04A'}}"></icon>
-        <text>宠物喂养</text>
-      </view>
-      <view class="type-tab {{publishType === 'sam' ? 'active' : ''}}" bindtap="switchType" data-type="sam">
-        <icon name="shopping-cart" size="28" color="{{publishType === 'sam' ? '#fff' : '#8B6DB0'}}"></icon>
-        <text>山姆拼单</text>
-      </view>
-      <view class="type-tab {{publishType === 'carpool' ? 'active' : ''}}" bindtap="switchType" data-type="carpool">
-        <icon name="car" size="28" color="{{publishType === 'carpool' ? '#fff' : '#5B9E6F'}}"></icon>
-        <text>拼车顺路</text>
-      </view>
       <view class="type-tab {{publishType === 'activity' ? 'active' : ''}}" bindtap="switchType" data-type="activity">
         <icon name="calendar" size="28" color="{{publishType === 'activity' ? '#fff' : '#3CB371'}}"></icon>
         <text>发活动</text>
       </view>
+      <view class="type-tab {{isLocalService ? 'active' : ''}}" bindtap="switchType" data-type="local">
+        <icon name="map-pin" size="28" color="{{isLocalService ? '#fff' : '#5B9E6F'}}"></icon>
+        <text>本地服务</text>
+      </view>
+      <view class="type-tab {{publishType === 'post' || publishType === 'help' ? 'active' : ''}}" bindtap="switchType" data-type="post">
+        <icon name="message-circle" size="28" color="{{publishType === 'post' || publishType === 'help' ? '#fff' : '#4A90D9'}}"></icon>
+        <text>发帖子</text>
+      </view>
     </view>
   </scroll-view>
+
+  <!-- 本地服务子类型选择 -->
+  <view class="form-section" style="margin: 16rpx 32rpx 0;" wx:if="{{isLocalService && !lockedType}}">
+    <view class="form-item" bindtap="showLocalSubPicker">
+      <text class="form-label">服务类型</text>
+      <view class="form-value">
+        <text>{{publishType === 'pet' ? '宠物喂养' : publishType === 'sam' ? '山姆拼单' : '拼车顺路'}}</text>
+        <icon name="caret-right" size="28" color="#ccc"></icon>
+      </view>
+    </view>
+  </view>
 
   <scroll-view scroll-y class="form-scroll">
 
@@ -127,7 +122,7 @@
     </view>
 
     <!-- 发帖表单 -->
-    <view wx:if="{{publishType === 'post'}}">
+    <view wx:if="{{publishType === 'post' || publishType === 'help'}}">
       <view class="form-section">
         <view class="form-item" bindtap="showPostCategoryPicker">
           <text class="form-label">帖子分类</text>
@@ -140,13 +135,20 @@
       <view class="form-section">
         <view class="form-item">
           <text class="form-label">标题</text>
-          <input class="form-input" placeholder="帖子标题" maxlength="30" bindinput="onInput" data-field="title" value="{{form.title}}"/>
+          <input class="form-input" placeholder="{{form.postCategory === '求帮忙' ? '简短描述你需要的帮助' : '帖子标题'}}" maxlength="30" bindinput="onInput" data-field="title" value="{{form.title}}"/>
         </view>
       </view>
       <view class="form-section">
         <view class="form-item-col">
           <text class="form-label">内容</text>
-          <textarea class="form-textarea" placeholder="说点什么..." maxlength="1000" bindinput="onInput" data-field="description" value="{{form.description}}" style="height: 300rpx;"/>
+          <textarea class="form-textarea" placeholder="{{form.postCategory === '求帮忙' ? '详细描述你需要的帮助...' : '说点什么...'}}" maxlength="1000" bindinput="onInput" data-field="description" value="{{form.description}}" style="height: 300rpx;"/>
+        </view>
+      </view>
+      <!-- 求帮忙：是否紧急 -->
+      <view class="form-section" wx:if="{{form.postCategory === '求帮忙'}}">
+        <view class="form-item">
+          <text class="form-label">是否紧急</text>
+          <switch checked="{{form.isUrgent}}" bindchange="onUrgentChange" color="#C67A52"/>
         </view>
       </view>
       <view class="form-section">
@@ -163,28 +165,6 @@
               <text class="add-text">添加图片</text>
             </view>
           </view>
-        </view>
-      </view>
-    </view>
-
-    <!-- 求帮忙表单 -->
-    <view wx:if="{{publishType === 'help'}}">
-      <view class="form-section">
-        <view class="form-item">
-          <text class="form-label">标题</text>
-          <input class="form-input" placeholder="简短描述你需要的帮助" maxlength="30" bindinput="onInput" data-field="title" value="{{form.title}}"/>
-        </view>
-      </view>
-      <view class="form-section">
-        <view class="form-item-col">
-          <text class="form-label">详细说明</text>
-          <textarea class="form-textarea" placeholder="详细描述你需要的帮助..." maxlength="500" bindinput="onInput" data-field="description" value="{{form.description}}"/>
-        </view>
-      </view>
-      <view class="form-section">
-        <view class="form-item">
-          <text class="form-label">是否紧急</text>
-          <switch checked="{{form.isUrgent}}" bindchange="onUrgentChange" color="#C67A52"/>
         </view>
       </view>
     </view>
@@ -250,10 +230,6 @@
             <view class="pet-type-option {{form.petPostType === 'offer' ? 'active type-offer' : ''}}" bindtap="onPetTypeChange" data-type="offer">
               <icon name="heart" size="28" color="{{form.petPostType === 'offer' ? '#C67A52' : '#888'}}"></icon>
               <text>可以帮喂</text>
-            </view>
-            <view class="pet-type-option {{form.petPostType === 'social' ? 'active type-social' : ''}}" bindtap="onPetTypeChange" data-type="social">
-              <icon name="sparkles" size="28" color="{{form.petPostType === 'social' ? '#8B6DB0' : '#888'}}"></icon>
-              <text>宠物社交</text>
             </view>
           </view>
         </view>
@@ -500,5 +476,28 @@
   <!-- 底部发布按钮 -->
   <view class="publish-bar safe-bottom">
     <button class="btn-publish" bindtap="onPublish">发布</button>
+  </view>
+</view>
+
+<!-- 联系方式弹窗 -->
+<view class="modal-mask" wx:if="{{showContactModal}}" bindtap="closeContactModal">
+  <view class="contact-modal" catchtap="">
+    <text class="contact-title">填写联系方式</text>
+    <view class="contact-tip">方便其他人联系到你，至少填写一项</view>
+    <view class="contact-form">
+      <view class="contact-field">
+        <text class="contact-label">手机号</text>
+        <view class="contact-item">
+          <input class="contact-input" type="number" maxlength="11" placeholder="输入手机号" value="{{contactPhone}}" bindinput="onContactPhone"/>
+        </view>
+      </view>
+      <view class="contact-field">
+        <text class="contact-label">微信号</text>
+        <view class="contact-item">
+          <input class="contact-input" placeholder="输入微信号" value="{{contactWechat}}" bindinput="onContactWechat"/>
+        </view>
+      </view>
+    </view>
+    <button class="contact-btn {{contactPhone || contactWechat ? '' : 'disabled'}}" bindtap="onContactConfirm">确认</button>
   </view>
 </view>

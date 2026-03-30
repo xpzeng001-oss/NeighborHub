@@ -1,6 +1,7 @@
 Component({
   data: {
     selected: 0,
+    show: true,
     unreadCount: 0
   },
 

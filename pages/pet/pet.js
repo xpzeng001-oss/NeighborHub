@@ -3,7 +3,7 @@ const api = require('../../utils/api');
 
 Page({
   data: {
-    tabs: ['全部', '寻求喂养', '可以帮喂', '宠物社交'],
+    tabs: ['全部', '寻求喂养', '可以帮喂'],
     activeTab: 0,
     petList: [],
     filteredList: []
