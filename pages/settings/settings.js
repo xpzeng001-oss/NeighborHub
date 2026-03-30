@@ -44,7 +44,9 @@ Page({
         community,
         communityIndex,
         building,
-        buildingIndex
+        buildingIndex,
+        phone: userInfo.phone || '',
+        wechatId: userInfo.wechatId || ''
       });
     }
 
@@ -93,6 +95,14 @@ Page({
 
   onNicknameInput(e) {
     this.setData({ nickName: e.detail.value });
+  },
+
+  onPhoneInput(e) {
+    this.setData({ phone: e.detail.value });
+  },
+
+  onWechatInput(e) {
+    this.setData({ wechatId: e.detail.value });
   },
 
   onCommunityChange(e) {
@@ -147,7 +157,9 @@ Page({
         nickName: nickName.trim(),
         avatarUrl,
         building,
-        isVerified: !!building
+        isVerified: !!building,
+        phone: this.data.phone,
+        wechatId: this.data.wechatId
       });
 
       const newUserInfo = {
@@ -158,7 +170,9 @@ Page({
         avatar_url: updated.avatarUrl || avatarUrl,
         community,
         building: updated.building || building,
-        isVerified: !!building
+        isVerified: !!building,
+        phone: this.data.phone,
+        wechatId: this.data.wechatId
       };
       app.globalData.userInfo = newUserInfo;
       wx.setStorageSync('userInfo', newUserInfo);
