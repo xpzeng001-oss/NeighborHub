@@ -130,8 +130,9 @@
   gap: 8rpx;
   font-size: 28rpx;
   font-weight: 600;
-  background: #07C160;
-  color: #fff;
+  background: #fff;
+  color: #07C160;
+  border: 2rpx solid #07C160;
   border: none;
   border-radius: 16rpx;
   padding: 0;
@@ -147,8 +148,9 @@
   gap: 8rpx;
   font-size: 28rpx;
   font-weight: 600;
-  background: #3B82F6;
-  color: #fff;
+  background: #fff;
+  color: #3B82F6;
+  border: 2rpx solid #3B82F6;
   border: none;
   border-radius: 16rpx;
   padding: 0;

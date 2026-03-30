@@ -83,11 +83,11 @@
       <text>私信</text>
     </button>
     <button class="btn-wechat" wx:if="{{product.contactWechat}}" bindtap="onCopyWechat">
-      <icon name="wechat-logo" size="32" color="#fff" filled></icon>
+      <icon name="wechat-logo" size="32" color="#07C160" filled></icon>
       <text>微信咨询</text>
     </button>
     <button class="btn-phone" wx:if="{{product.contactPhone}}" bindtap="onCallPhone">
-      <icon name="phone" size="32" color="#fff" filled></icon>
+      <icon name="phone" size="32" color="#3B82F6" filled></icon>
       <text>电话联系</text>
     </button>
   </view>
