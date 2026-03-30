@@ -125,8 +125,7 @@ Activity.belongsTo(Community, { foreignKey: 'community_id' });
 // User <-> ServicePost
 User.hasMany(ServicePost, { foreignKey: 'user_id' });
 ServicePost.belongsTo(User, { foreignKey: 'user_id' });
-Community.hasMany(ServicePost, { foreignKey: 'community_id' });
-ServicePost.belongsTo(Community, { foreignKey: 'community_id' });
+ServicePost.belongsTo(Community, { foreignKey: 'community_id', constraints: false });
 
 // User <-> CommunityApplication
 User.hasMany(CommunityApplication, { foreignKey: 'user_id' });
