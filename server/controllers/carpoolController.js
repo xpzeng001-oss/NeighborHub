@@ -47,6 +47,47 @@ exports.list = async (req, res, next) => {
   }
 };
 
+exports.detail = async (req, res, next) => {
+  try {
+    const carpool = await Carpool.findByPk(req.params.id, {
+      include: [
+        { model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] },
+        { model: Community, attributes: ['id', 'name'], required: false }
+      ]
+    });
+    if (!carpool) {
+      return res.status(404).json({ code: 404, message: '拼车不存在', data: null });
+    }
+    res.json({
+      code: 0,
+      data: {
+        id: carpool.id,
+        userId: carpool.user_id,
+        userName: carpool.User ? carpool.User.nick_name : '匿名用户',
+        userAvatar: carpool.User ? carpool.User.avatar_url : '',
+        building: carpool.User ? carpool.User.building : '',
+        communityName: carpool.Community ? carpool.Community.name : '',
+        type: carpool.type,
+        title: carpool.title,
+        description: carpool.description,
+        from: carpool.from_location,
+        to: carpool.to_location,
+        date: carpool.date,
+        time: carpool.time,
+        seats: carpool.seats,
+        takenSeats: carpool.taken_seats,
+        fee: carpool.fee,
+        status: carpool.status,
+        createdAt: carpool.created_at,
+        contactPhone: carpool.contact_phone,
+        contactWechat: carpool.contact_wechat
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.create = async (req, res, next) => {
   try {
     const { type, title, description, from, to, date, time, seats, fee, communityId, contactPhone, contactWechat } = req.body;

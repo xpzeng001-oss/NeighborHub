@@ -96,9 +96,10 @@ const joinSam       = (id)       => request({ url: '/api/sams/' + id + '/join', 
 const updateShoppingList  = (id, data)          => request({ url: '/api/sams/' + id + '/shopping-list', method: 'PUT', data });
 const postSamUpdate       = (id, data)          => request({ url: '/api/sams/' + id + '/updates', method: 'POST', data });
 const updatePickupStatus  = (id, userId, data)  => request({ url: '/api/sams/' + id + '/participants/' + userId + '/pickup', method: 'PUT', data });
-const getCarpools   = (params)   => request({ url: '/api/carpools', data: params });
-const createCarpool = (data)     => request({ url: '/api/carpools', method: 'POST', data });
-const joinCarpool   = (id)       => request({ url: '/api/carpools/' + id + '/join', method: 'POST' });
+const getCarpools      = (params)   => request({ url: '/api/carpools', data: params });
+const getCarpoolDetail = (id)       => request({ url: '/api/carpools/' + id });
+const createCarpool    = (data)     => request({ url: '/api/carpools', method: 'POST', data });
+const joinCarpool      = (id)       => request({ url: '/api/carpools/' + id + '/join', method: 'POST' });
 const deleteHelp    = (id)       => request({ url: '/api/helps/' + id, method: 'DELETE' });
 const deleteCarpool = (id)       => request({ url: '/api/carpools/' + id, method: 'DELETE' });
 const deleteRental  = (id)       => request({ url: '/api/rentals/' + id, method: 'DELETE' });
@@ -183,7 +184,7 @@ module.exports = {
   getHelps, createHelp, respondHelp,
   getRentals,
   getSams, getSamDetail, createSam, deleteSam, joinSam, updateShoppingList, postSamUpdate, updatePickupStatus,
-  getCarpools, createCarpool, joinCarpool,
+  getCarpools, getCarpoolDetail, createCarpool, joinCarpool,
   getActivities, getActivityDetail, createActivity, deleteActivity, updateActivity, joinActivity, cancelActivity,
   getPets, getPetDetail, createPet, deletePet, respondPet,
   getUser, updateUser, getCoinLogs,

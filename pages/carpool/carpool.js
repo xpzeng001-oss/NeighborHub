@@ -123,6 +123,11 @@ Page({
     };
   },
 
+  goDetail(e) {
+    const id = e.currentTarget.dataset.id;
+    wx.navigateTo({ url: '/pages/carpoolDetail/carpoolDetail?id=' + id });
+  },
+
   goPublish() {
     const app = getApp();
     if (!app.globalData.userInfo) {

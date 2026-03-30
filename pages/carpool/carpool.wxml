@@ -11,7 +11,7 @@
 
   <scroll-view scroll-y class="scroll-content">
     <view class="trip-list">
-      <view class="trip-card" wx:for="{{filteredList}}" wx:key="id">
+      <view class="trip-card" wx:for="{{filteredList}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
         <!-- 类型标签 -->
         <view class="card-type type-{{item.type}}">
           <icon name="{{item.type === 'offer' ? 'car' : 'map-pin'}}" size="24" color="{{item.type === 'offer' ? '#C67A52' : '#4A90D9'}}"></icon>

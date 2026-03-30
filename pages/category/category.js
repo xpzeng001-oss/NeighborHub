@@ -146,7 +146,7 @@ Page({
       rental: '/pages/rental/rental',
       pet: '/pages/petDetail/petDetail?id=',
       sam: '/pages/samDetail/samDetail?id=',
-      carpool: '/pages/carpool/carpool',
+      carpool: '/pages/carpoolDetail/carpoolDetail?id=',
       activity: '/pages/activityDetail/activityDetail?id='
     };
     const url = routes[type];

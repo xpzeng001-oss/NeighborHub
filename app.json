@@ -59,6 +59,10 @@
       "pages": ["carpool"]
     },
     {
+      "root": "pages/carpoolDetail",
+      "pages": ["carpoolDetail"]
+    },
+    {
       "root": "pages/activity",
       "pages": ["activity"]
     },

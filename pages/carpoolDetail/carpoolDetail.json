@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "拼车详情",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
+}
