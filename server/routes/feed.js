@@ -56,7 +56,7 @@ router.get('/', async (req, res, next) => {
 
     // "全部" — fetch from all types and merge
     const perType = offset + limit;
-    const [products, posts, helps, rentals, pets, sams, activities] = await Promise.all([
+    const [products, posts, helps, rentals, pets, sams, activities, services] = await Promise.all([
       fetchByType('product', activeWhere, districtWhere, perType, 0),
       fetchByType('post', activeWhere, districtWhere, perType, 0),
       fetchByType('help', activeWhere, districtWhere, perType, 0),
