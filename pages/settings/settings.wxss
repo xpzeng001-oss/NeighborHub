@@ -55,10 +55,12 @@
   color: #2C2C2C;
   text-align: right;
 }
+.form-item picker {
+  flex: 1;
+}
 .form-item-inner {
   display: flex;
   align-items: center;
-  padding: 28rpx 0;
 }
 .form-value {
   flex: 1;
