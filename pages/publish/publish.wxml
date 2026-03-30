@@ -38,7 +38,7 @@
     <view class="form-item" bindtap="showLocalSubPicker">
       <text class="form-label">服务类型</text>
       <view class="form-value">
-        <text>{{publishType === 'pet' ? '宠物喂养' : publishType === 'sam' ? '山姆拼单' : '拼车顺路'}}</text>
+        <text>{{publishType === 'pet' ? '宠物喂养' : publishType === 'sam' ? '山姆拼单' : publishType === 'housekeeping' ? '家政保洁' : publishType === 'repair' ? '维修服务' : publishType === 'tutoring' ? '家教辅导' : publishType === 'other' ? '其它' : '选择类型'}}</text>
         <icon name="caret-right" size="28" color="#ccc"></icon>
       </view>
     </view>
