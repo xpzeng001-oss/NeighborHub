@@ -112,7 +112,7 @@ exports.updatePickupStatus = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { title, description, deadline, pickupMethod, minAmount, targetCount, communityId } = req.body;
+    const { title, description, deadline, pickupMethod, minAmount, targetCount, communityId, contactPhone, contactWechat } = req.body;
     if (!title) {
       return res.status(400).json({ code: 400, message: '标题不能为空', data: null });
     }
@@ -125,7 +125,9 @@ exports.create = async (req, res, next) => {
       pickup_method: pickupMethod || '',
       min_amount: Number(minAmount) || 0,
       target_count: Number(targetCount) || 5,
-      community_id: communityId || null
+      community_id: communityId || null,
+      contact_phone: contactPhone || '',
+      contact_wechat: contactWechat || ''
     });
 
     // 发帖 +3

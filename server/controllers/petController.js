@@ -82,7 +82,7 @@ exports.detail = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { type, petName, petType, title, description, dateRange, reward, tags, communityId } = req.body;
+    const { type, petName, petType, title, description, dateRange, reward, tags, communityId, contactPhone, contactWechat } = req.body;
     if (!title || !type) {
       return res.status(400).json({ code: 400, message: '标题和类型不能为空', data: null });
     }
@@ -97,7 +97,9 @@ exports.create = async (req, res, next) => {
       date_range: dateRange || '',
       reward: reward || '',
       tags: tags || [],
-      community_id: communityId || null
+      community_id: communityId || null,
+      contact_phone: contactPhone || '',
+      contact_wechat: contactWechat || ''
     });
 
     // 发帖 +3

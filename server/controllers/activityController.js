@@ -104,7 +104,7 @@ exports.detail = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { title, description, coverImage, images, startTime, endTime, location, latitude, longitude, price, maxParticipants, communityId } = req.body;
+    const { title, description, coverImage, images, startTime, endTime, location, latitude, longitude, price, maxParticipants, communityId, contactPhone, contactWechat } = req.body;
     if (!title) {
       return res.status(400).json({ code: 400, message: '标题不能为空', data: null });
     }
@@ -130,7 +130,9 @@ exports.create = async (req, res, next) => {
       current_participants: 1,
       participant_ids: [req.user.id],
       participant_avatars: initAvatars,
-      community_id: communityId || null
+      community_id: communityId || null,
+      contact_phone: contactPhone || '',
+      contact_wechat: contactWechat || ''
     });
 
     coinService.grant(req.user.id, 'publish_post', activity.id);

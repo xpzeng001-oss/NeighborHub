@@ -65,6 +65,14 @@ const Product = sequelize.define('Product', {
   is_top: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
+  },
+  contact_phone: {
+    type: DataTypes.STRING(32),
+    defaultValue: ''
+  },
+  contact_wechat: {
+    type: DataTypes.STRING(64),
+    defaultValue: ''
   }
 }, {
   tableName: 'products'

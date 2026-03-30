@@ -118,7 +118,9 @@ exports.detail = async (req, res, next) => {
         wantCount: product.want_count,
         tradeMethod: product.trade_method,
         createdAt: product.created_at,
-        isFavorited
+        isFavorited,
+        contactPhone: product.contact_phone,
+        contactWechat: product.contact_wechat
       }
     });
   } catch (err) {
@@ -128,7 +130,7 @@ exports.detail = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { title, price, originalPrice, isFree, category, condition, images, description, tradeMethod, communityId } = req.body;
+    const { title, price, originalPrice, isFree, category, condition, images, description, tradeMethod, communityId, contactPhone, contactWechat } = req.body;
 
     if (!title) {
       return res.status(400).json({ code: 400, message: '标题不能为空', data: null });
@@ -145,7 +147,9 @@ exports.create = async (req, res, next) => {
       images: images || [],
       description: description || '',
       trade_method: tradeMethod || '',
-      community_id: communityId || null
+      community_id: communityId || null,
+      contact_phone: contactPhone || '',
+      contact_wechat: contactWechat || ''
     });
 
     // 异步图片安全检测
