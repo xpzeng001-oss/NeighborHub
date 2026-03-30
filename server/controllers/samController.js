@@ -46,7 +46,7 @@ exports.list = async (req, res, next) => {
 exports.detail = async (req, res, next) => {
   try {
     const order = await SamOrder.findByPk(req.params.id, {
-      include: [{ model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] }]
+      include: [{ model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building', 'phone', 'wechat_id'] }]
     });
     if (!order) {
       return res.status(404).json({ code: 404, message: '拼单不存在', data: null });
@@ -74,8 +74,8 @@ exports.detail = async (req, res, next) => {
         myShoppingList: '',
         participants: [],
         updates: [],
-        contactPhone: order.contact_phone,
-        contactWechat: order.contact_wechat
+        contactPhone: order.contact_phone || (order.User ? order.User.phone : ''),
+        contactWechat: order.contact_wechat || (order.User ? order.User.wechat_id : '')
       }
     });
   } catch (err) {

@@ -49,7 +49,7 @@ exports.list = async (req, res, next) => {
 exports.detail = async (req, res, next) => {
   try {
     const pet = await PetPost.findByPk(req.params.id, {
-      include: [{ model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] }]
+      include: [{ model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building', 'phone', 'wechat_id'] }]
     });
     if (!pet) {
       return res.status(404).json({ code: 404, message: '帖子不存在', data: null });
@@ -73,8 +73,8 @@ exports.detail = async (req, res, next) => {
         status: pet.status,
         responseCount: pet.response_count,
         createdAt: pet.created_at,
-        contactPhone: pet.contact_phone,
-        contactWechat: pet.contact_wechat
+        contactPhone: pet.contact_phone || (pet.User ? pet.User.phone : ''),
+        contactWechat: pet.contact_wechat || (pet.User ? pet.User.wechat_id : '')
       }
     });
   } catch (err) {

@@ -38,7 +38,7 @@ exports.detail = async (req, res, next) => {
   try {
     const s = await ServicePost.findByPk(req.params.id, {
       include: [
-        { model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] },
+        { model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building', 'phone', 'wechat_id'] },
         { model: Community, attributes: ['id', 'name'], required: false }
       ]
     });
@@ -50,7 +50,8 @@ exports.detail = async (req, res, next) => {
       communityName: s.Community ? s.Community.name : '',
       type: s.type, title: s.title, description: s.description, images: s.images || [],
       status: s.status, createdAt: s.created_at,
-      contactPhone: s.contact_phone, contactWechat: s.contact_wechat
+      contactPhone: s.contact_phone || (s.User ? s.User.phone : ''),
+      contactWechat: s.contact_wechat || (s.User ? s.User.wechat_id : '')
     } });
   } catch (err) { next(err); }
 };

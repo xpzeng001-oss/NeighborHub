@@ -77,7 +77,7 @@ exports.detail = async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id, {
       include: [
-        { model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] },
+        { model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building', 'phone', 'wechat_id'] },
         { model: Community, attributes: ['id', 'name'], required: false }
       ]
     });
@@ -119,8 +119,8 @@ exports.detail = async (req, res, next) => {
         tradeMethod: product.trade_method,
         createdAt: product.created_at,
         isFavorited,
-        contactPhone: product.contact_phone,
-        contactWechat: product.contact_wechat
+        contactPhone: product.contact_phone || (product.User ? product.User.phone : ''),
+        contactWechat: product.contact_wechat || (product.User ? product.User.wechat_id : '')
       }
     });
   } catch (err) {

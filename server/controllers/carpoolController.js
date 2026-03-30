@@ -51,7 +51,7 @@ exports.detail = async (req, res, next) => {
   try {
     const carpool = await Carpool.findByPk(req.params.id, {
       include: [
-        { model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] },
+        { model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building', 'phone', 'wechat_id'] },
         { model: Community, attributes: ['id', 'name'], required: false }
       ]
     });
@@ -79,8 +79,8 @@ exports.detail = async (req, res, next) => {
         fee: carpool.fee,
         status: carpool.status,
         createdAt: carpool.created_at,
-        contactPhone: carpool.contact_phone,
-        contactWechat: carpool.contact_wechat
+        contactPhone: carpool.contact_phone || (carpool.User ? carpool.User.phone : ''),
+        contactWechat: carpool.contact_wechat || (carpool.User ? carpool.User.wechat_id : '')
       }
     });
   } catch (err) {

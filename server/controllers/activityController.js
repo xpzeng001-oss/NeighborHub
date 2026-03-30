@@ -61,7 +61,7 @@ exports.list = async (req, res, next) => {
 exports.detail = async (req, res, next) => {
   try {
     const activity = await Activity.findByPk(req.params.id, {
-      include: [{ model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building'] }]
+      include: [{ model: User, attributes: ['id', 'nick_name', 'avatar_url', 'building', 'phone', 'wechat_id'] }]
     });
     if (!activity) {
       return res.status(404).json({ code: 404, message: '活动不存在', data: null });
@@ -95,8 +95,8 @@ exports.detail = async (req, res, next) => {
         createdAt: activity.created_at,
         isOrganizer,
         isJoined,
-        contactPhone: activity.contact_phone,
-        contactWechat: activity.contact_wechat
+        contactPhone: activity.contact_phone || (activity.User ? activity.User.phone : ''),
+        contactWechat: activity.contact_wechat || (activity.User ? activity.User.wechat_id : '')
       }
     });
   } catch (err) {
