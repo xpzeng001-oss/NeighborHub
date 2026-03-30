@@ -92,7 +92,7 @@
     </button>
     <button class="btn-phone" wx:if="{{product.contactPhone}}" bindtap="onCallPhone">
       <icon name="phone" size="28" color="#fff"></icon>
-      <text>{{product.contactPhone}}</text>
+      <text>电话联系</text>
     </button>
     <button class="btn-chat" wx:if="{{!product.contactWechat && !product.contactPhone}}" bindtap="onChat">
       <icon name="message-circle" size="28" color="#1A1A1A"></icon>
