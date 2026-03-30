@@ -86,18 +86,17 @@
 
   <!-- 底部操作栏 -->
   <view class="bottom-bar safe-bottom">
-    <button class="btn-chat" bindtap="onChat">
+    <button class="btn-wechat" wx:if="{{product.contactWechat}}" bindtap="onCopyWechat">
+      <icon name="message-circle" size="28" color="#fff"></icon>
+      <text>微信咨询</text>
+    </button>
+    <button class="btn-phone" wx:if="{{product.contactPhone}}" bindtap="onCallPhone">
+      <icon name="phone" size="28" color="#fff"></icon>
+      <text>{{product.contactPhone}}</text>
+    </button>
+    <button class="btn-chat" wx:if="{{!product.contactWechat && !product.contactPhone}}" bindtap="onChat">
       <icon name="message-circle" size="28" color="#1A1A1A"></icon>
       <text>私信</text>
     </button>
-    <button class="btn-contact" wx:if="{{product.contactWechat}}" bindtap="onCopyWechat">
-      <icon name="message-circle" size="28" color="#1A1A1A"></icon>
-      <text>微信联系</text>
-    </button>
-    <button class="btn-contact" wx:if="{{product.contactPhone}}" bindtap="onCallPhone">
-      <icon name="phone" size="28" color="#1A1A1A"></icon>
-      <text>电话联系</text>
-    </button>
-    <button class="btn-want" bindtap="onWant">我想要</button>
   </view>
 </view>

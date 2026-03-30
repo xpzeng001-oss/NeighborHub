@@ -121,7 +121,7 @@
   margin: 0;
 }
 .btn-chat::after { border: none; }
-.btn-contact {
+.btn-wechat {
   flex: 1;
   height: 88rpx;
   display: flex;
@@ -129,15 +129,32 @@
   justify-content: center;
   gap: 8rpx;
   font-size: 28rpx;
-  font-weight: 500;
-  background: #FEFCFA;
-  color: #2C2C2C;
+  font-weight: 600;
+  background: #07C160;
+  color: #fff;
   border: none;
   border-radius: 16rpx;
   padding: 0;
   margin: 0;
 }
-.btn-contact::after { border: none; }
+.btn-wechat::after { border: none; }
+.btn-phone {
+  flex: 1;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  background: #FF5722;
+  color: #fff;
+  border: none;
+  border-radius: 16rpx;
+  padding: 0;
+  margin: 0;
+}
+.btn-phone::after { border: none; }
 .btn-want {
   flex: 1.5;
   height: 88rpx;
