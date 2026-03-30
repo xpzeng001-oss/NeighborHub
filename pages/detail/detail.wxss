@@ -113,7 +113,7 @@
   gap: 8rpx;
   font-size: 28rpx;
   font-weight: 500;
-  background: #FEFCFA;
+  background: transparent;
   color: #2C2C2C;
   border: none;
   border-radius: 16rpx;
