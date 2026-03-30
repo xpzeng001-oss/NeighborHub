@@ -25,14 +25,6 @@
           </button>
         </view>
       </view>
-      <view class="tags">
-        <text class="tag tag-green">{{product.condition}}</text>
-        <text class="tag tag-blue">{{product.category}}</text>
-        <view class="tag tag-orange" wx:if="{{product.isFree}}" style="display:inline-flex;align-items:center;gap:4rpx;">
-          <icon name="recycle" size="22" color="#E8883C"></icon>
-          <text>环保</text>
-        </view>
-      </view>
       <text class="title">{{product.title}}</text>
     </view>
 
