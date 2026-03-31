@@ -45,7 +45,7 @@ exports.detail = async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.id, {
       include: [
-        { model: User, attributes: ['id', 'nick_name', 'avatar_url'] },
+        { model: User, attributes: ['id', 'nick_name', 'avatar_url', 'phone', 'wechat_id'] },
         {
           model: Comment,
           include: [{ model: User, attributes: ['id', 'nick_name', 'avatar_url'] }],
@@ -65,6 +65,8 @@ exports.detail = async (req, res, next) => {
         userId: post.user_id,
         userName: post.User ? post.User.nick_name : '匿名用户',
         userAvatar: post.User ? post.User.avatar_url : '',
+        contactWechat: post.User ? post.User.wechat_id : '',
+        contactPhone: post.User ? post.User.phone : '',
         category: post.category,
         title: post.title,
         content: post.content,

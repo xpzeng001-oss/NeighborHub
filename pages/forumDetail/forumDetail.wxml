@@ -21,11 +21,11 @@
 
       <!-- 互动数据 -->
       <view class="post-stats">
-        <view class="stat" style="display:inline-flex;align-items:center;gap:6rpx;">
-          <icon name="thumbs-up" size="28" color="#AAAAAA"></icon>
+        <view class="stat" bindtap="onLike">
+          <icon name="thumbs-up" size="28" color="{{isLiked ? '#C67A52' : '#AAAAAA'}}" filled="{{isLiked}}"></icon>
           <text>{{post.likeCount}}</text>
         </view>
-        <view class="stat" style="display:inline-flex;align-items:center;gap:6rpx;">
+        <view class="stat">
           <icon name="message-circle" size="28" color="#AAAAAA"></icon>
           <text>{{post.commentCount}}</text>
         </view>
@@ -34,30 +34,53 @@
 
     <!-- 评论区 -->
     <view class="comment-section">
-      <text class="section-title">评论 ({{comments.length}})</text>
+      <view class="section-header">
+        <text class="section-title">评论 ({{comments.length}})</text>
+      </view>
+      <!-- 评论输入 -->
+      <view class="comment-input-row">
+        <image class="comment-input-avatar" src="{{myAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
+        <view class="comment-input-wrap">
+          <input class="comment-input" placeholder="我有话要说..." bindinput="onCommentInput" value="{{commentText}}" confirm-type="send" bindconfirm="onSend"/>
+          <view class="comment-send-btn" wx:if="{{commentText}}" bindtap="onSend">
+            <icon name="send" size="28" color="#C67A52"></icon>
+          </view>
+        </view>
+      </view>
+      <!-- 评论列表 -->
       <view class="comment-item" wx:for="{{comments}}" wx:key="id">
-        <image class="comment-avatar" src="/images/avatar-placeholder.png" mode="aspectFill"></image>
+        <image class="comment-avatar" src="{{item.userAvatar || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
         <view class="comment-body">
-          <text class="comment-name">{{item.userName}}</text>
+          <view class="comment-meta">
+            <text class="comment-name">{{item.userName}}</text>
+            <text class="comment-time">· {{item.time}}</text>
+          </view>
           <text class="comment-text">{{item.content}}</text>
-          <text class="comment-time">{{item.time}}</text>
+        </view>
+        <view class="comment-like">
+          <icon name="thumbs-up" size="28" color="#CCCCCC"></icon>
         </view>
       </view>
       <view class="empty-comment" wx:if="{{comments.length === 0}}">
         <text class="text-secondary">暂无评论，说两句吧~</text>
       </view>
     </view>
-    <view style="height: 130rpx;"></view>
+    <view style="height: 200rpx;"></view>
   </scroll-view>
 
-  <!-- 底部评论栏 -->
-  <view class="comment-bar safe-bottom">
-    <input class="comment-input" placeholder="说说你的看法..." bindinput="onCommentInput" value="{{commentText}}"/>
-    <view class="bar-actions">
-      <view class="like-btn" bindtap="onLike">
-        <icon name="thumbs-up" size="40" color="{{isLiked ? '#C67A52' : '#999'}}" filled="{{isLiked}}"></icon>
-      </view>
-      <button class="send-btn" bindtap="onSend">发送</button>
-    </view>
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar safe-bottom" wx:if="{{post}}">
+    <button class="btn-chat" bindtap="onChat">
+      <icon name="message-circle" size="32" color="#1A1A1A" filled></icon>
+      <text>私信</text>
+    </button>
+    <button class="btn-wechat" wx:if="{{post.contactWechat}}" bindtap="onCopyWechat">
+      <icon name="wechat-logo" size="32" color="#07C160" filled></icon>
+      <text>微信咨询</text>
+    </button>
+    <button class="btn-phone" wx:if="{{post.contactPhone}}" bindtap="onCallPhone">
+      <icon name="phone" size="32" color="#3B82F6" filled></icon>
+      <text>电话联系</text>
+    </button>
   </view>
 </view>

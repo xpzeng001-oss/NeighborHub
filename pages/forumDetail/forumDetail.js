@@ -7,10 +7,15 @@ Page({
     post: {},
     comments: [],
     commentText: '',
-    isLiked: false
+    isLiked: false,
+    myAvatar: ''
   },
 
   async onLoad(options) {
+    const app = getApp();
+    if (app.globalData.userInfo) {
+      this.setData({ myAvatar: app.globalData.userInfo.avatarUrl || '' });
+    }
     const id = options.id;
     try {
       const post = await api.getPost(id);
@@ -59,6 +64,32 @@ Page({
       path: '/pages/forumDetail/forumDetail?id=' + p.id,
       imageUrl: (p.images && p.images.length > 0) ? p.images[0] : ''
     };
+  },
+
+  onChat() {
+    const app = getApp();
+    const p = this.data.post;
+    if (!p || !p.userId) return;
+    if (!app.globalData.userInfo) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
+    wx.navigateTo({
+      url: '/pages/chatDetail/chatDetail?targetUserId=' + p.userId +
+        '&nickName=' + encodeURIComponent(p.userName || '') +
+        '&avatarUrl=' + encodeURIComponent(p.userAvatar || '')
+    });
+  },
+
+  onCopyWechat() {
+    wx.setClipboardData({
+      data: this.data.post.contactWechat,
+      success: () => wx.showToast({ title: '微信号已复制，去微信添加好友', icon: 'none' })
+    });
+  },
+
+  onCallPhone() {
+    wx.makePhoneCall({ phoneNumber: this.data.post.contactPhone });
   },
 
   async onSend() {

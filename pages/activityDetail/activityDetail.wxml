@@ -60,13 +60,21 @@
     </view>
 
     <!-- 参与者 -->
-    <view class="participants-card" wx:if="{{detail.currentParticipants > 0}}">
+    <view class="participants-card" wx:if="{{detail.currentParticipants > 0 || !detail.isOrganizer}}">
       <view class="participants-row">
-        <view class="participants-stack">
-          <image class="participant-avatar {{index > 0 ? 'overlap' : ''}}" wx:for="{{detail.participantAvatars}}" wx:key="index"
-                 wx:if="{{index < 8}}" src="{{item}}" mode="aspectFill"></image>
+        <view class="participants-left" wx:if="{{detail.currentParticipants > 0}}">
+          <view class="participants-stack">
+            <image class="participant-avatar {{index > 0 ? 'overlap' : ''}}" wx:for="{{detail.participantAvatars}}" wx:key="index"
+                   wx:if="{{index < 8}}" src="{{item}}" mode="aspectFill"></image>
+          </view>
+          <text class="participants-count">{{detail.currentParticipants}}人想参加</text>
         </view>
-        <text class="participants-count">{{detail.currentParticipants}}人想参加</text>
+        <view class="participants-left" wx:else>
+          <text class="participants-count">暂无人报名</text>
+        </view>
+        <view class="btn-join {{detail.isJoined ? 'joined' : ''}}" wx:if="{{!detail.isOrganizer && detail.status === 'open'}}" bindtap="onJoin">
+          {{detail.isJoined ? '已报名' : '报名参加'}}
+        </view>
       </view>
     </view>
 
@@ -79,9 +87,8 @@
           <text class="organizer-label">活动发起人</text>
         </view>
       </view>
-      <view class="btn-chat" bindtap="onChat" wx:if="{{!detail.isOrganizer}}">
-        <icon name="message-circle" size="28" color="#C67A52"></icon>
-        <text>私信</text>
+      <view class="btn-manage" bindtap="onJoin" wx:if="{{detail.isOrganizer}}">
+        管理活动
       </view>
     </view>
 

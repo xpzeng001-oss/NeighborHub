@@ -50,19 +50,56 @@
   box-shadow: 0 -2rpx 16rpx rgba(0,0,0,0.05);
 }
 .btn-chat {
-  display: flex; align-items: center; justify-content: center; gap: 8rpx;
-  background: transparent; border: none; padding: 0 16rpx; margin: 0;
-  font-size: 28rpx; color: #2C2C2C; height: 88rpx;
+  flex: 1;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  background: transparent;
+  color: #2C2C2C;
+  border: none;
+  border-radius: 16rpx;
+  padding: 0;
+  margin: 0;
 }
 .btn-chat::after { border: none; }
-.btn-wechat, .btn-phone {
-  display: flex; align-items: center; justify-content: center; gap: 8rpx;
-  height: 88rpx; border-radius: 16rpx; padding: 0 24rpx; margin: 0;
-  font-size: 26rpx; font-weight: 600; background: #fff; flex-shrink: 0;
+.btn-wechat {
+  flex: 1;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  background: #fff;
+  color: #07C160;
+  border: none;
+  border-radius: 16rpx;
+  padding: 0;
+  margin: 0;
 }
-.btn-wechat { color: #07C160; border: 2rpx solid #07C160; }
-.btn-phone { color: #3B82F6; border: 2rpx solid #3B82F6; }
-.btn-wechat::after, .btn-phone::after { border: none; }
+.btn-wechat::after { border: none; }
+.btn-phone {
+  flex: 1;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  background: #fff;
+  color: #3B82F6;
+  border: none;
+  border-radius: 16rpx;
+  padding: 0;
+  margin: 0;
+}
+.btn-phone::after { border: none; }
 .btn-join {
   flex: 1; height: 88rpx; line-height: 88rpx; text-align: center;
   font-size: 30rpx; font-weight: 600; color: #fff;

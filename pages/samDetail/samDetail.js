@@ -1,5 +1,6 @@
 const app = getApp();
 const api = require('../../utils/api');
+const formatTime = d => { const df = Date.now() - d; if (df < 60000) return '刚刚'; if (df < 3600000) return Math.floor(df/60000)+'分钟前'; if (df < 86400000) return Math.floor(df/3600000)+'小时前'; if (df < 604800000) return Math.floor(df/86400000)+'天前'; const m = d.getMonth()+1, day = d.getDate(); return d.getFullYear()+'-'+(m<10?'0'+m:m)+'-'+(day<10?'0'+day:day); };
 
 const statusMap = {
   open: { label: '拼单中', cls: 'open' },
@@ -48,6 +49,11 @@ Page({
   },
 
   applyDetail(data) {
+    if (data.createdAt) data.createdAt = formatTime(new Date(data.createdAt));
+    if (data.deadline) {
+      const dl = new Date(data.deadline);
+      if (!isNaN(dl)) data.deadline = (dl.getMonth()+1)+'月'+dl.getDate()+'日 '+dl.getHours()+':'+(dl.getMinutes()<10?'0':'')+dl.getMinutes();
+    }
     this.setData({
       detail: data,
       statusInfo: statusMap[data.status] || statusMap.open,

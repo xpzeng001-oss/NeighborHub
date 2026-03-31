@@ -93,6 +93,14 @@
       <view class="members-empty" wx:else>
         <text>暂无人报名，快来第一个吧</text>
       </view>
+      <view class="join-row" wx:if="{{detail.status === 'open'}}">
+        <view class="join-row-left">
+          <text class="join-hint">{{responded ? '已报名，点击可取消' : ''}}</text>
+        </view>
+        <view class="btn-join {{responded ? 'joined' : ''}}" bindtap="onRespond">
+          {{responded ? '已报名' : btnText}}
+        </view>
+      </view>
     </view>
 
     <view style="height: 200rpx;"></view>
@@ -100,10 +108,10 @@
 
   <!-- 底部操作栏 -->
   <view class="bottom-bar safe-bottom" wx:if="{{detail}}">
-    <view class="btn-msg" bindtap="onContact">
+    <button class="btn-chat" bindtap="onContact">
       <icon name="message-circle" size="32" color="#1A1A1A" filled></icon>
       <text>私信</text>
-    </view>
+    </button>
     <button class="btn-wechat" wx:if="{{detail.contactWechat}}" bindtap="onCopyWechat">
       <icon name="wechat-logo" size="32" color="#07C160" filled></icon>
       <text>微信咨询</text>
@@ -112,8 +120,5 @@
       <icon name="phone" size="32" color="#3B82F6" filled></icon>
       <text>电话联系</text>
     </button>
-    <view class="btn-action {{responded ? 'btn-disabled' : ''}}" bindtap="onRespond">
-      <text>{{responded ? '已报名' : btnText}}</text>
-    </view>
   </view>
 </view>

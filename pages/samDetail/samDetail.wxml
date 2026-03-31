@@ -134,6 +134,16 @@
       <view class="empty-hint" wx:if="{{participants.length === 0}}">
         <text>暂无人参与，快来第一个吧</text>
       </view>
+
+      <!-- 拼单操作 -->
+      <view class="join-row" wx:if="{{!isOrganizer}}">
+        <view class="join-row-left">
+          <text class="participants-count">{{participants.length}}人参与</text>
+        </view>
+        <view class="btn-join {{isJoined ? 'joined' : ''}}" bindtap="{{isJoined ? '' : 'onJoin'}}" wx:if="{{detail.status === 'open'}}">
+          {{isJoined ? '已拼单' : '我要拼单'}}
+        </view>
+      </view>
     </view>
 
     <!-- 我的采购清单（已参与时显示） -->
@@ -158,34 +168,18 @@
 
   <!-- 底部操作栏 -->
   <view class="bottom-bar safe-bottom" wx:if="{{detail}}">
-    <!-- 非团长：私信+联系方式 -->
-    <view class="btn-msg" bindtap="onContact" wx:if="{{!isOrganizer}}">
+    <button class="btn-chat" bindtap="onContact">
       <icon name="message-circle" size="32" color="#1A1A1A" filled></icon>
       <text>私信</text>
-    </view>
-    <button class="btn-wechat" wx:if="{{!isOrganizer && detail.contactWechat}}" bindtap="onCopyWechat">
+    </button>
+    <button class="btn-wechat" wx:if="{{detail.contactWechat}}" bindtap="onCopyWechat">
       <icon name="wechat-logo" size="32" color="#07C160" filled></icon>
       <text>微信咨询</text>
     </button>
-    <button class="btn-phone" wx:if="{{!isOrganizer && detail.contactPhone}}" bindtap="onCallPhone">
+    <button class="btn-phone" wx:if="{{detail.contactPhone}}" bindtap="onCallPhone">
       <icon name="phone" size="32" color="#3B82F6" filled></icon>
       <text>电话联系</text>
     </button>
-    <!-- 非团长 + 未加入 + 拼单中：加入按钮 -->
-    <view class="btn-action" bindtap="onJoin" wx:if="{{!isOrganizer && !isJoined && detail.status === 'open'}}">
-      <text>我要拼单</text>
-    </view>
-    <!-- 非团长 + 已加入：已拼单（禁用）+ 填写清单 -->
-    <view class="btn-action btn-disabled" wx:if="{{!isOrganizer && isJoined}}">
-      <text>已拼单</text>
-    </view>
-    <view class="btn-action btn-secondary" bindtap="openListModal" wx:if="{{isJoined && !isOrganizer}}">
-      <text>{{myShoppingList ? '修改清单' : '填写清单'}}</text>
-    </view>
-    <!-- 团长：发布进度更新 -->
-    <view class="btn-action" bindtap="openUpdateModal" wx:if="{{isOrganizer}}">
-      <text>发布进度更新</text>
-    </view>
   </view>
 
   <!-- 弹窗：采购清单 -->

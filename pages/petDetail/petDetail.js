@@ -1,5 +1,6 @@
 const app = getApp();
 const api = require('../../utils/api');
+const formatTime = d => { const df = Date.now() - d; if (df < 60000) return '刚刚'; if (df < 3600000) return Math.floor(df/60000)+'分钟前'; if (df < 86400000) return Math.floor(df/3600000)+'小时前'; if (df < 604800000) return Math.floor(df/86400000)+'天前'; const m = d.getMonth()+1, day = d.getDate(); return d.getFullYear()+'-'+(m<10?'0'+m:m)+'-'+(day<10?'0'+day:day); };
 
 const typeMap = {
   need: { label: '寻求喂养', icon: 'paw-print', color: '#E8883C' },
@@ -33,11 +34,13 @@ Page({
     try {
       const data = await api.getPetDetail(id);
       const detail = data || {};
+      if (detail.createdAt) detail.createdAt = formatTime(new Date(detail.createdAt));
       this.setData({
         detail,
         typeInfo: typeMap[detail.type] || typeMap.need,
         btnText: btnTextMap[detail.type] || '我要参加',
-        respondents: detail.respondents || []
+        respondents: detail.respondents || [],
+        responded: detail.isResponded || false
       });
     } catch (err) {
       wx.showToast({ title: '加载失败', icon: 'none' });
@@ -76,6 +79,26 @@ Page({
     if (!item) return;
     if (!app.globalData.userInfo) {
       app.login(() => { this.onRespond(); });
+      return;
+    }
+    // 已报名则取消
+    if (this.data.responded) {
+      const confirmRes = await new Promise(resolve => {
+        wx.showModal({ title: '取消报名', content: '确定要取消报名吗？', success: resolve });
+      });
+      if (!confirmRes.confirm) return;
+      try {
+        const data = await api.cancelRespondPet(item.id);
+        this.setData({
+          'detail.responseCount': data.responseCount || Math.max(0, (this.data.detail.responseCount || 1) - 1),
+          responded: false,
+          respondents: data.respondents || this.data.respondents
+        });
+        wx.showToast({ title: '已取消报名', icon: 'success' });
+      } catch (err) {
+        this.setData({ responded: false, 'detail.responseCount': Math.max(0, (this.data.detail.responseCount || 1) - 1) });
+        wx.showToast({ title: '已取消报名', icon: 'success' });
+      }
       return;
     }
     try {

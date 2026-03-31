@@ -114,7 +114,6 @@
   gap: 16rpx;
   padding-top: 20rpx;
   margin-top: 12rpx;
-  border-top: 1rpx solid #E3D5BF;
 }
 .progress-bar { flex: 1; height: 12rpx; background: #F3E8DA; border-radius: 6rpx; overflow: hidden; }
 .progress-fill { height: 100%; background: linear-gradient(90deg, #D49A78, #C67A52); border-radius: 6rpx; transition: width 0.3s; }
@@ -285,44 +284,62 @@
   bottom: 0; left: 0; right: 0;
   display: flex;
   align-items: center;
-  padding: 16rpx 32rpx;
+  gap: 16rpx;
+  padding: 20rpx 32rpx;
+  padding-bottom: calc(20rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
   background: #fff;
   box-shadow: 0 -2rpx 16rpx rgba(0,0,0,0.05);
-  gap: 16rpx;
   z-index: 100;
 }
-.safe-bottom {
-  padding-bottom: calc(16rpx + constant(safe-area-inset-bottom));
-  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
-}
-.btn-msg {
+.btn-chat {
+  flex: 1;
+  height: 88rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8rpx;
-  height: 84rpx;
-  padding: 0 36rpx;
-  background: #FEFCFA;
+  font-size: 28rpx;
+  font-weight: 500;
+  background: transparent;
+  color: #2C2C2C;
+  border: none;
   border-radius: 16rpx;
+  padding: 0;
+  margin: 0;
 }
-.btn-msg text { font-size: 26rpx; color: #2C2C2C; font-weight: 500; }
-.btn-action {
+.btn-chat::after { border: none; }
+
+/* 拼单操作行 */
+.join-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24rpx;
+  padding-top: 24rpx;
+  border-top: 1rpx solid #E3D5BF;
+}
+.join-row-left {
+  display: flex;
+  align-items: center;
   flex: 1;
-  height: 84rpx;
-  line-height: 84rpx;
-  text-align: center;
-  background: #C67A52;
-  border-radius: 16rpx;
-  font-size: 30rpx;
-  font-weight: 600;
-  color: #fff;
 }
-.btn-action:active { opacity: 0.85; }
-.btn-disabled { background: #E3D5BF; color: #9A9A9A; }
-.btn-disabled:active { opacity: 1; }
-.btn-secondary {
-  background: #FEFCFA;
-  color: #C67A52;
+.participants-count {
+  font-size: 26rpx;
+  color: #9A9A9A;
+}
+.btn-join {
+  padding: 12rpx 32rpx;
+  background: #2C2C2C;
+  color: #fff;
+  font-size: 26rpx;
+  font-weight: 600;
+  border-radius: 32rpx;
+  flex-shrink: 0;
+}
+.btn-join.joined {
+  background: #E5E2DC;
+  color: #666;
 }
 
 /* 弹窗 */
@@ -396,20 +413,37 @@
 }
 
 /* 联系方式按钮 */
-.btn-wechat, .btn-phone {
+.btn-wechat {
+  flex: 1;
   height: 88rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8rpx;
-  font-size: 26rpx;
+  font-size: 28rpx;
   font-weight: 600;
   background: #fff;
+  color: #07C160;
+  border: none;
   border-radius: 16rpx;
-  padding: 0 24rpx;
+  padding: 0;
   margin: 0;
-  flex-shrink: 0;
 }
-.btn-wechat { color: #07C160; border: 2rpx solid #07C160; }
-.btn-phone { color: #3B82F6; border: 2rpx solid #3B82F6; }
-.btn-wechat::after, .btn-phone::after { border: none; }
+.btn-wechat::after { border: none; }
+.btn-phone {
+  flex: 1;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  background: #fff;
+  color: #3B82F6;
+  border: none;
+  border-radius: 16rpx;
+  padding: 0;
+  margin: 0;
+}
+.btn-phone::after { border: none; }
