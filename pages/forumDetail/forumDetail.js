@@ -57,6 +57,10 @@ Page({
     }
   },
 
+  focusComment() {
+    wx.pageScrollTo({ selector: '.comment-input-row', duration: 300 });
+  },
+
   onShareAppMessage() {
     const p = this.data.post;
     return {

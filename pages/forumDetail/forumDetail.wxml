@@ -19,17 +19,6 @@
         <image wx:for="{{post.images}}" wx:key="index" src="{{item}}" mode="widthFix" class="post-img"></image>
       </view>
 
-      <!-- 互动数据 -->
-      <view class="post-stats">
-        <view class="stat" bindtap="onLike">
-          <icon name="thumbs-up" size="28" color="{{isLiked ? '#C67A52' : '#AAAAAA'}}" filled="{{isLiked}}"></icon>
-          <text>{{post.likeCount}}</text>
-        </view>
-        <view class="stat">
-          <icon name="message-circle" size="28" color="#AAAAAA"></icon>
-          <text>{{post.commentCount}}</text>
-        </view>
-      </view>
     </view>
 
     <!-- 评论区 -->
@@ -68,19 +57,25 @@
     <view style="height: 200rpx;"></view>
   </scroll-view>
 
-  <!-- 底部操作栏 -->
+  <!-- 底部互动栏 -->
   <view class="bottom-bar safe-bottom" wx:if="{{post}}">
-    <button class="btn-chat" bindtap="onChat">
-      <icon name="message-circle" size="32" color="#1A1A1A" filled></icon>
+    <view class="bar-left">
+      <view class="bar-action" bindtap="onLike">
+        <icon name="thumbs-up" size="36" color="{{isLiked ? '#C67A52' : '#999'}}" filled="{{isLiked}}"></icon>
+        <text class="bar-action-text">{{post.likeCount}}</text>
+      </view>
+      <view class="bar-action" bindtap="focusComment">
+        <icon name="message-circle" size="36" color="#999"></icon>
+        <text class="bar-action-text">{{post.commentCount}}</text>
+      </view>
+      <button class="bar-action" open-type="share">
+        <icon name="share-2" size="36" color="#999"></icon>
+        <text class="bar-action-text">分享</text>
+      </button>
+    </view>
+    <view class="bar-chat-btn" bindtap="onChat">
+      <icon name="message-circle" size="28" color="#fff" filled></icon>
       <text>私信</text>
-    </button>
-    <button class="btn-wechat" wx:if="{{post.contactWechat}}" bindtap="onCopyWechat">
-      <icon name="wechat-logo" size="32" color="#07C160" filled></icon>
-      <text>微信咨询</text>
-    </button>
-    <button class="btn-phone" wx:if="{{post.contactPhone}}" bindtap="onCallPhone">
-      <icon name="phone" size="32" color="#3B82F6" filled></icon>
-      <text>电话联系</text>
-    </button>
+    </view>
   </view>
 </view>

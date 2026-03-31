@@ -105,68 +105,63 @@
 }
 .empty-comment { text-align: center; padding: 60rpx 0; font-size: 28rpx; color: #BBBBBB; }
 
-/* 底部操作栏 */
+/* 底部互动栏 */
 .bottom-bar {
   position: fixed;
   bottom: 0; left: 0; right: 0;
   display: flex;
   align-items: center;
-  gap: 16rpx;
-  padding: 20rpx 32rpx;
-  padding-bottom: calc(20rpx + constant(safe-area-inset-bottom));
-  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  padding: 16rpx 40rpx;
+  padding-bottom: calc(16rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
   background: #fff;
-  box-shadow: 0 -2rpx 16rpx rgba(0,0,0,0.05);
+  border-top: 1rpx solid #F0EDE8;
   z-index: 100;
 }
-.btn-chat {
+.bar-left {
   flex: 1;
-  height: 88rpx;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8rpx;
-  font-size: 28rpx;
-  font-weight: 500;
-  background: transparent;
-  color: #2C2C2C;
-  border: none;
-  border-radius: 16rpx;
-  padding: 0;
-  margin: 0;
+  gap: 32rpx;
 }
-.btn-chat::after { border: none; }
-.btn-wechat {
-  flex: 1;
-  height: 88rpx;
+.bar-action {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6rpx;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  line-height: 1;
+  min-height: 0;
+}
+.bar-action::after { display: none !important; }
+button.bar-action {
+  padding: 0 !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  width: auto !important;
+  background: transparent !important;
+  border: none !important;
+  line-height: 1 !important;
+}
+.bar-action-text {
+  font-size: 20rpx;
+  color: #999;
+}
+.bar-chat-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8rpx;
-  font-size: 28rpx;
+  gap: 6rpx;
+  height: 68rpx;
+  padding: 0 72rpx;
+  background: #C67A52;
+  color: #fff;
+  font-size: 26rpx;
   font-weight: 600;
-  background: #fff;
-  color: #07C160;
-  border: none;
-  border-radius: 16rpx;
-  padding: 0;
-  margin: 0;
+  border-radius: 34rpx;
+  flex-shrink: 0;
 }
-.btn-wechat::after { border: none; }
-.btn-phone {
-  flex: 1;
-  height: 88rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8rpx;
-  font-size: 28rpx;
-  font-weight: 600;
-  background: #fff;
-  color: #3B82F6;
-  border: none;
-  border-radius: 16rpx;
-  padding: 0;
-  margin: 0;
-}
-.btn-phone::after { border: none; }
