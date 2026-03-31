@@ -1,5 +1,6 @@
 const app = getApp();
 const api = require('../../utils/api');
+const { callWithMask } = require('../../utils/phone');
 
 const typeNames = {
   housekeeping: '家政保洁', repair: '维修服务', tutoring: '家教辅导', other: '其它'
@@ -50,7 +51,7 @@ Page({
   },
 
   onCallPhone() {
-    wx.makePhoneCall({ phoneNumber: this.data.detail.contactPhone });
+    callWithMask(this.data.detail.contactPhone);
   },
 
   previewImage(e) {

@@ -1,5 +1,6 @@
 // pages/activityDetail/activityDetail.js
 const api = require('../../utils/api');
+const { callWithMask } = require('../../utils/phone');
 
 const WEEKDAYS = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
 
@@ -241,7 +242,7 @@ Page({
   },
 
   onCallPhone() {
-    wx.makePhoneCall({ phoneNumber: this.data.detail.contactPhone });
+    callWithMask(this.data.detail.contactPhone);
   },
 
   onShareAppMessage() {

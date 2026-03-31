@@ -1,5 +1,6 @@
 const app = getApp();
 const api = require('../../utils/api');
+const { callWithMask } = require('../../utils/phone');
 
 Page({
   data: {
@@ -53,7 +54,7 @@ Page({
   },
 
   onCallPhone() {
-    wx.makePhoneCall({ phoneNumber: this.data.detail.contactPhone });
+    callWithMask(this.data.detail.contactPhone);
   },
 
   async onJoin() {
