@@ -173,21 +173,15 @@
 <!-- 联系方式编辑弹窗 -->
 <view class="guide-mask" wx:if="{{showContactEdit}}" catchtap="closeContactEdit">
   <view class="guide-modal" catchtap="preventBubble">
-    <text class="guide-title">至少填写一项联系方式</text>
-    <text class="guide-desc">方便其他人联系到你</text>
-    <view class="guide-field">
-      <text class="guide-label">手机号</text>
-      <view class="guide-input-wrap">
-        <input class="guide-input" type="number" maxlength="11" placeholder="输入手机号" value="{{editPhone}}" bindinput="onEditPhone"/>
-      </view>
-    </view>
+    <text class="guide-title">填写联系方式</text>
+    <text class="guide-desc">微信号将展示给其他用户，请确认后填写</text>
     <view class="guide-field">
       <text class="guide-label">微信号</text>
       <view class="guide-input-wrap">
         <input class="guide-input" placeholder="输入微信号" value="{{editWechat}}" bindinput="onEditWechat"/>
       </view>
     </view>
-    <view class="guide-btn {{editPhone || editWechat ? '' : 'guide-btn-disabled'}}" bindtap="onContactEditSave">
+    <view class="guide-btn {{editWechat ? '' : 'guide-btn-disabled'}}" bindtap="onContactEditSave">
       <text>确认</text>
     </view>
   </view>

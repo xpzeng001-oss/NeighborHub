@@ -496,14 +496,8 @@
 <view class="modal-mask" wx:if="{{showContactModal}}" catchtap="closeContactModal">
   <view class="contact-modal" catchtap="preventBubble">
     <text class="contact-title">填写联系方式</text>
-    <view class="contact-tip">方便其他人联系到你，至少填写一项</view>
+    <view class="contact-tip">微信号将展示给其他用户，请确认后填写</view>
     <view class="contact-form">
-      <view class="contact-field">
-        <text class="contact-label">手机号</text>
-        <view class="contact-item">
-          <input type="number" maxlength="11" placeholder="输入手机号" placeholder-class="contact-placeholder" value="{{contactPhone}}" bindinput="onContactPhone"/>
-        </view>
-      </view>
       <view class="contact-field">
         <text class="contact-label">微信号</text>
         <view class="contact-item">
@@ -511,6 +505,10 @@
         </view>
       </view>
     </view>
-    <button class="contact-btn {{contactPhone || contactWechat ? '' : 'disabled'}}" bindtap="onContactConfirm">确认</button>
+    <button class="contact-btn" bindtap="onContactConfirm" wx:if="{{contactWechat}}">确认</button>
+    <view class="skip-row" wx:else>
+      <text class="skip-btn" bindtap="onContactConfirm">跳过</text>
+      <text class="skip-tip">不填写可能无法被联系到</text>
+    </view>
   </view>
 </view>

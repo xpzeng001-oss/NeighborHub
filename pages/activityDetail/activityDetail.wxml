@@ -67,7 +67,7 @@
             <image class="participant-avatar {{index > 0 ? 'overlap' : ''}}" wx:for="{{detail.participantAvatars}}" wx:key="index"
                    wx:if="{{index < 8}}" src="{{item}}" mode="aspectFill"></image>
           </view>
-          <text class="participants-count">{{detail.currentParticipants}}人想参加</text>
+          <text class="participants-count">{{detail.currentParticipants}}人已报名</text>
         </view>
         <view class="participants-left" wx:else>
           <text class="participants-count">暂无人报名</text>
@@ -117,10 +117,6 @@
       <icon name="wechat-logo" size="32" color="#07C160" filled></icon>
       <text>微信咨询</text>
     </button>
-    <button class="btn-phone" wx:if="{{detail.contactPhone}}" bindtap="onCallPhone">
-      <icon name="phone" size="32" color="#3B82F6" filled></icon>
-      <text>电话联系</text>
-    </button>
   </view>
 
   <!-- 报名弹窗 -->
@@ -132,12 +128,12 @@
       <input class="modal-input" placeholder="请输入姓名" value="{{joinForm.name}}" bindinput="onJoinInput" data-field="name"/>
     </view>
     <view class="modal-field">
-      <text class="modal-label">手机号 <text style="color:#E8636F;">*</text></text>
+      <text class="modal-label">手机号 <text style="color:#999;font-size:22rpx;">（与微信号至少填一项）</text></text>
       <input class="modal-input" type="number" placeholder="请输入手机号" maxlength="11" value="{{joinForm.phone}}" bindinput="onJoinInput" data-field="phone"/>
     </view>
     <view class="modal-field">
-      <text class="modal-label">身份证号 <text style="color:#999;font-size:22rpx;">(选填)</text></text>
-      <input class="modal-input" placeholder="请输入身份证号" maxlength="18" value="{{joinForm.idCard}}" bindinput="onJoinInput" data-field="idCard"/>
+      <text class="modal-label">微信号 <text style="color:#999;font-size:22rpx;">（与手机号至少填一项）</text></text>
+      <input class="modal-input" placeholder="请输入微信号" value="{{joinForm.wechat}}" bindinput="onJoinInput" data-field="wechat"/>
     </view>
     <view class="modal-btns">
       <view class="modal-btn cancel" bindtap="closeJoinModal">取消</view>

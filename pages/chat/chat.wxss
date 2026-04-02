@@ -51,8 +51,8 @@
 
 /* 会话列表 */
 .conversation-list {
-  height: calc(100vh - 300rpx);
-  padding: 0 28rpx;
+  height: calc(100vh - 300rpx - 20rpx);
+  padding: 0 28rpx 20rpx;
   box-sizing: border-box;
   width: 100%;
 }

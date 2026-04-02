@@ -327,14 +327,6 @@ Page({
 
   async onContactConfirm() {
     const { contactPhone, contactWechat } = this.data;
-    if (!contactPhone.trim() && !contactWechat.trim()) {
-      wx.showToast({ title: '请至少填写一项联系方式', icon: 'none' });
-      return;
-    }
-    if (contactPhone && !/^1\d{10}$/.test(contactPhone)) {
-      wx.showToast({ title: '请输入正确的手机号', icon: 'none' });
-      return;
-    }
     // 同步到个人资料
     const app = getApp();
     const userInfo = app.globalData.userInfo;
@@ -433,23 +425,18 @@ Page({
       }
     }
 
-    // 闲置物品、发活动、本地服务：需要填写联系方式
-    const needContact = ['product', 'free', 'activity', 'pet', 'sam', 'carpool', 'housekeeping', 'repair', 'tutoring', 'other'];
-    if (needContact.indexOf(publishType) !== -1 && !this._contactConfirmed) {
+    // 联系方式：已有则自动带入，没有则弹窗让用户选填
+    if (!this._contactConfirmed) {
       const userInfo = app.globalData.userInfo || {};
-      const hasContact = userInfo.phone || userInfo.wechatId;
-      if (hasContact) {
-        // 已有联系方式，直接使用
+      if (userInfo.wechatId) {
         this.setData({
           contactPhone: userInfo.phone || '',
           contactWechat: userInfo.wechatId || ''
         });
         this._contactConfirmed = true;
       } else {
-        // 弹窗让用户填写
         this.setData({
           showContactModal: true,
-          contactPhone: this.data.contactPhone || '',
           contactWechat: this.data.contactWechat || ''
         });
         return;

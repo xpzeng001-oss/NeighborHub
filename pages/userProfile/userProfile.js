@@ -132,6 +132,10 @@ Page({
   },
 
   goBack() {
-    wx.navigateBack();
+    if (getCurrentPages().length > 1) {
+      wx.navigateBack();
+    } else {
+      wx.switchTab({ url: '/pages/index/index' });
+    }
   }
 });

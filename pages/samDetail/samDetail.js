@@ -66,7 +66,13 @@ Page({
     });
   },
 
-  goBack() { wx.navigateBack(); },
+  goBack() {
+    if (getCurrentPages().length > 1) {
+      wx.navigateBack();
+    } else {
+      wx.switchTab({ url: '/pages/index/index' });
+    }
+  },
 
   // --- 加入拼单 ---
   async onJoin() {

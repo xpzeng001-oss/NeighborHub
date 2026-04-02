@@ -26,10 +26,6 @@
       </picker>
     </view>
     <view class="form-item">
-      <text class="form-label">手机号</text>
-      <input class="form-input" type="number" maxlength="11" value="{{phone}}" bindinput="onPhoneInput" placeholder="选填" />
-    </view>
-    <view class="form-item">
       <text class="form-label">微信号</text>
       <input class="form-input" value="{{wechatId}}" bindinput="onWechatInput" placeholder="选填" />
     </view>

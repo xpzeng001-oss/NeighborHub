@@ -21,7 +21,7 @@ Page({
     statusBarHeight: 44,
     detail: null,
     showJoinModal: false,
-    joinForm: { name: '', phone: '', idCard: '' }
+    joinForm: { name: '', phone: '', wechat: '' }
   },
 
   onLoad(options) {
@@ -32,7 +32,11 @@ Page({
   },
 
   goBack() {
-    wx.navigateBack();
+    if (getCurrentPages().length > 1) {
+      wx.navigateBack();
+    } else {
+      wx.switchTab({ url: '/pages/index/index' });
+    }
   },
 
   async loadDetail() {
@@ -101,7 +105,7 @@ Page({
 
       if (detail.status !== 'open') return;
       // 弹出报名表单
-      this.setData({ showJoinModal: true, joinForm: { name: '', phone: '', idCard: '' } });
+      this.setData({ showJoinModal: true, joinForm: { name: '', phone: '', wechat: '' } });
     } catch (e) {
       console.error('[activityDetail] cancel failed', e);
     } finally {
@@ -124,7 +128,11 @@ Page({
       wx.showToast({ title: '请输入姓名', icon: 'none' });
       return;
     }
-    if (!joinForm.phone.trim() || joinForm.phone.length !== 11) {
+    if (!joinForm.phone.trim() && !joinForm.wechat.trim()) {
+      wx.showToast({ title: '请至少填写手机号或微信号', icon: 'none' });
+      return;
+    }
+    if (joinForm.phone.trim() && joinForm.phone.length !== 11) {
       wx.showToast({ title: '请输入正确的手机号', icon: 'none' });
       return;
     }
@@ -147,8 +155,9 @@ Page({
         try {
           const userInfo = getApp().globalData.userInfo;
           const senderName = userInfo ? userInfo.nickName : '用户';
-          let msg = `${senderName}报名了「${detail.title}」\n姓名：${joinForm.name}\n手机：${joinForm.phone}`;
-          if (joinForm.idCard.trim()) msg += `\n身份证：${joinForm.idCard}`;
+          let msg = `${senderName}报名了「${detail.title}」\n姓名：${joinForm.name}`;
+          if (joinForm.phone.trim()) msg += `\n手机：${joinForm.phone}`;
+          if (joinForm.wechat.trim()) msg += `\n微信：${joinForm.wechat}`;
           const convRes = await api.createConversation({ targetUserId: detail.userId });
           await api.sendMessage(convRes.id, { content: msg });
         } catch (e) {

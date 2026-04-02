@@ -55,11 +55,7 @@
         <text class="stat-value">{{product.viewCount}}</text>
         <text class="stat-label">浏览</text>
       </view>
-      <view class="stat-item">
-        <text class="stat-value">{{product.wantCount}}</text>
-        <text class="stat-label">想要</text>
-      </view>
-      <view class="stat-item">
+<view class="stat-item">
         <text class="stat-value">{{timeAgo}}</text>
         <text class="stat-label">发布时间</text>
       </view>
@@ -85,10 +81,6 @@
     <button class="btn-wechat" wx:if="{{product.contactWechat}}" bindtap="onCopyWechat">
       <icon name="wechat-logo" size="32" color="#07C160" filled></icon>
       <text>微信咨询</text>
-    </button>
-    <button class="btn-phone" wx:if="{{product.contactPhone}}" bindtap="onCallPhone">
-      <icon name="phone" size="32" color="#3B82F6" filled></icon>
-      <text>电话联系</text>
     </button>
   </view>
 </view>
