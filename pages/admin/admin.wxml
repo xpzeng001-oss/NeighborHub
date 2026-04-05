@@ -378,19 +378,16 @@
       <text class="empty-text">暂无群聊</text>
     </view>
 
-    <view class="community-card" wx:for="{{wechatGroupList}}" wx:key="id">
-      <view class="wechat-group-main">
-        <image class="wechat-group-qr" src="{{item.qrcode_url}}" mode="aspectFill" catchtap="previewGroupQr" data-url="{{item.qrcode_url}}"></image>
-        <view class="community-main" style="flex:1;">
-          <view class="community-name">{{item.name}}</view>
-          <view class="community-address" wx:if="{{item.description}}">{{item.description}}</view>
-          <view class="community-meta">
-            <text class="community-time">排序: {{item.sort_order || 0}}</text>
-            <text class="community-time" style="margin-left:16rpx;">状态: {{item.status === 'active' ? '启用' : '停用'}}</text>
-          </view>
+    <view class="wg-card" wx:for="{{wechatGroupList}}" wx:key="id">
+      <view class="wg-body">
+        <image class="wg-qr" src="{{item.qrcode_url}}" mode="aspectFill" catchtap="previewGroupQr" data-url="{{item.qrcode_url}}"></image>
+        <view class="wg-info">
+          <text class="wg-name">{{item.name}}</text>
+          <text class="wg-desc" wx:if="{{item.description}}">{{item.description}}</text>
+          <text class="wg-meta">排序: {{item.sort_order || 0}}　状态: {{item.status === 'active' ? '启用' : '停用'}}</text>
         </view>
       </view>
-      <view class="community-actions">
+      <view class="wg-actions">
         <view class="btn-action btn-warn btn-sm" bindtap="editWechatGroup" data-index="{{index}}">
           <text>编辑</text>
         </view>
