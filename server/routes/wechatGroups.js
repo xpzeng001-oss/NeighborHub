@@ -6,9 +6,10 @@ const { WechatGroup, User } = require('../models');
 // GET / — 公开列表
 router.get('/', optionalAuth, async (req, res, next) => {
   try {
+    const { Op } = require('sequelize');
     const where = { status: 'active' };
     if (req.query.districtId) {
-      where.district_id = req.query.districtId;
+      where.district_id = { [Op.or]: [req.query.districtId, null] };
     }
     const list = await WechatGroup.findAll({
       where,
