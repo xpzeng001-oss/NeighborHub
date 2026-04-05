@@ -121,7 +121,7 @@
         <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
       </view>
       <view class="menu-item" bindtap="goWechatGroupManage">
-        <icon name="wechat-logo" size="36" color="#333" class="menu-icon-wrap"></icon>
+        <icon name="chat-circle" size="36" color="#333" class="menu-icon-wrap"></icon>
         <text class="menu-text">群聊管理</text>
         <icon name="caret-right" size="28" color="#ccc" class="menu-arrow-icon"></icon>
       </view>
