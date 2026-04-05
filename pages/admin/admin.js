@@ -710,7 +710,7 @@ Page({
 
   async loadWechatGroups() {
     try {
-      const data = await api.getWechatGroups();
+      const data = await api.getWechatGroups({ status: 'all' });
       this.setData({ wechatGroupList: data.list || [] });
     } catch (err) {}
   },
@@ -758,7 +758,7 @@ Page({
     const index = e.currentTarget.dataset.index;
     const item = this.data.wechatGroupList[index];
     wx.showActionSheet({
-      itemList: ['修改名称', '修改简介', '更换群码', '切换状态'],
+      itemList: ['修改名称', '修改简介', '更换群码', '修改排序', '切换状态'],
       success: (res) => {
         if (res.tapIndex === 0) {
           wx.showModal({
@@ -793,6 +793,21 @@ Page({
         } else if (res.tapIndex === 2) {
           this._pickQrcodeAndSave(item.name, item.description, item.id);
         } else if (res.tapIndex === 3) {
+          wx.showModal({
+            title: '修改排序',
+            editable: true,
+            placeholderText: String(item.sort_order || 0),
+            success: async (r) => {
+              if (r.confirm && r.content !== undefined) {
+                try {
+                  await api.updateWechatGroup(item.id, { sort_order: parseInt(r.content) || 0 });
+                  wx.showToast({ title: '已更新', icon: 'success' });
+                  this.loadWechatGroups();
+                } catch (err) {}
+              }
+            }
+          });
+        } else if (res.tapIndex === 4) {
           const newStatus = item.status === 'active' ? 'inactive' : 'active';
           api.updateWechatGroup(item.id, { status: newStatus }).then(() => {
             wx.showToast({ title: newStatus === 'active' ? '已启用' : '已停用', icon: 'success' });

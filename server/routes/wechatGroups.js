@@ -7,7 +7,10 @@ const { WechatGroup, User } = require('../models');
 router.get('/', optionalAuth, async (req, res, next) => {
   try {
     const { Op } = require('sequelize');
-    const where = { status: 'active' };
+    const where = {};
+    if (req.query.status !== 'all') {
+      where.status = 'active';
+    }
     if (req.query.districtId) {
       where.district_id = { [Op.or]: [req.query.districtId, null] };
     }
