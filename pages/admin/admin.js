@@ -92,7 +92,11 @@ Page({
   },
 
   onLoad(options) {
-    if (options.mode === 'user') {
+    if (options.tab === 'wechatGroup') {
+      wx.setNavigationBarTitle({ title: '群聊管理' });
+      this.setData({ mode: 'wechatGroup', tab: 'wechatGroup' });
+      this.loadWechatGroups();
+    } else if (options.mode === 'user') {
       wx.setNavigationBarTitle({ title: '用户管理' });
       this.setData({ mode: 'user', tab: 'user' });
       this.loadUsers();
@@ -104,7 +108,6 @@ Page({
         else if (options.tab === 'community') this.loadCommunityApplications();
         else if (options.tab === 'manage') this.loadManagedCommunities();
         else if (options.tab === 'district') this.loadDistricts();
-        else if (options.tab === 'wechatGroup') this.loadWechatGroups();
         else this.loadReports();
       } else {
         this.loadReports();
