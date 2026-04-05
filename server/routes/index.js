@@ -21,6 +21,7 @@ router.use('/stats',     require('./stats'));
 router.use('/feed',      require('./feed'));
 router.use('/wechat',   require('./wechat'));
 router.use('/communities', require('./communities'));
+router.use('/wechat-groups', require('./wechatGroups'));
 router.use('/admin',    require('./admin'));
 
 module.exports = router;
