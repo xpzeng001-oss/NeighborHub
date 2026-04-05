@@ -305,45 +305,47 @@
 
 /* 本地群聊 */
 .group-list {
-  padding: 12rpx 24rpx;
+  padding: 16rpx 24rpx;
 }
 .group-card {
   display: flex;
   align-items: center;
   background: #fff;
-  border-radius: 20rpx;
-  padding: 28rpx;
-  margin-bottom: 16rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  border-radius: 24rpx;
+  padding: 36rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 24rpx rgba(0, 0, 0, 0.06);
 }
 .group-qrcode {
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 12rpx;
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 16rpx;
   flex-shrink: 0;
-  margin-right: 24rpx;
+  margin-right: 32rpx;
   background: #F0EDE8;
 }
 .group-info {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 6rpx;
+  gap: 10rpx;
 }
 .group-name {
-  font-size: 30rpx;
-  font-weight: 600;
+  font-size: 34rpx;
+  font-weight: 700;
   color: #2C2C2C;
 }
 .group-desc {
-  font-size: 24rpx;
+  font-size: 26rpx;
   color: #666;
+  line-height: 1.5;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
 .group-hint {
-  font-size: 22rpx;
+  font-size: 24rpx;
   color: #C67A52;
+  margin-top: 4rpx;
 }
