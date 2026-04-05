@@ -3,9 +3,9 @@ const api = require('../../utils/api');
 const TABS = [
   { id: 'all', name: '全部' },
   { id: 'product', name: '闲置' },
+  { id: 'wechat_group', name: '本地群聊' },
   { id: 'activity', name: '活动' },
   { id: 'local', name: '本地服务' },
-  { id: 'wechat_group', name: '本地群聊' },
   { id: 'post', name: '帖子' }
 ];
 
