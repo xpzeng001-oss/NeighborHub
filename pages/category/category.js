@@ -5,6 +5,7 @@ const TABS = [
   { id: 'product', name: '闲置' },
   { id: 'activity', name: '活动' },
   { id: 'local', name: '本地服务' },
+  { id: 'wechat_group', name: '本地群聊' },
   { id: 'post', name: '帖子' }
 ];
 
@@ -45,6 +46,7 @@ Page({
     tabs: TABS,
     activeTab: 'all',
     feedList: [],
+    groupList: [],
     isRefreshing: false,
     hasMore: true,
     page: 1
@@ -59,14 +61,22 @@ Page({
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({ selected: 1 });
     }
-    this.loadFeed(true);
+    if (this.data.activeTab === 'wechat_group') {
+      this.loadGroups();
+    } else {
+      this.loadFeed(true);
+    }
   },
 
   switchTab(e) {
     const id = e.currentTarget.dataset.id;
     if (id === this.data.activeTab) return;
-    this.setData({ activeTab: id, feedList: [], page: 1, hasMore: true });
-    this.loadFeed(true);
+    this.setData({ activeTab: id, feedList: [], groupList: [], page: 1, hasMore: true });
+    if (id === 'wechat_group') {
+      this.loadGroups();
+    } else {
+      this.loadFeed(true);
+    }
   },
 
   async loadFeed(reset) {
@@ -108,8 +118,30 @@ Page({
 
   async onRefresh() {
     this.setData({ isRefreshing: true });
-    await this.loadFeed(true);
+    if (this.data.activeTab === 'wechat_group') {
+      await this.loadGroups();
+    } else {
+      await this.loadFeed(true);
+    }
     this.setData({ isRefreshing: false });
+  },
+
+  async loadGroups() {
+    try {
+      const app = getApp();
+      const district = app.globalData.currentDistrict;
+      const params = {};
+      if (district && district.id) params.districtId = district.id;
+      const data = await api.getWechatGroups(params);
+      this.setData({ groupList: data.list || [] });
+    } catch (e) {
+      console.error('[plaza] load groups failed', e);
+    }
+  },
+
+  onPreviewQrcode(e) {
+    const url = e.currentTarget.dataset.url;
+    wx.previewImage({ current: url, urls: [url] });
   },
 
   onLoadMore() {
