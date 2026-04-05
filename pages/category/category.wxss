@@ -302,3 +302,48 @@
   font-size: 24rpx;
   color: #9A9A9A;
 }
+
+/* 本地群聊 */
+.group-list {
+  padding: 12rpx 24rpx;
+}
+.group-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 28rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+.group-qrcode {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+  margin-right: 24rpx;
+  background: #F0EDE8;
+}
+.group-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+.group-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #2C2C2C;
+}
+.group-desc {
+  font-size: 24rpx;
+  color: #666;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.group-hint {
+  font-size: 22rpx;
+  color: #C67A52;
+}
