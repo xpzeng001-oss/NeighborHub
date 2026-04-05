@@ -85,6 +85,9 @@ Page({
     // District management tab
     districtList: [],
 
+    // Wechat group management tab
+    wechatGroupList: [],
+
     loading: false
   },
 
@@ -128,6 +131,8 @@ Page({
       this.loadManagedCommunities().then(() => wx.stopPullDownRefresh());
     } else if (tab === 'district') {
       this.loadDistricts().then(() => wx.stopPullDownRefresh());
+    } else if (tab === 'wechatGroup') {
+      this.loadWechatGroups().then(() => wx.stopPullDownRefresh());
     }
   },
 
@@ -148,6 +153,8 @@ Page({
     } else if (tab === 'district') {
       if (this.data.districtList.length === 0) this.loadDistricts();
       if (this.data.manageCommunityList.length === 0) this.loadManagedCommunities();
+    } else if (tab === 'wechatGroup') {
+      this.loadWechatGroups();
     }
   },
 
@@ -693,6 +700,129 @@ Page({
         } catch (err) { wx.hideLoading(); }
       }
     });
+  },
+
+  // ==================== Wechat Groups ====================
+
+  async loadWechatGroups() {
+    try {
+      const data = await api.getWechatGroups();
+      this.setData({ wechatGroupList: data.list || [] });
+    } catch (err) {}
+  },
+
+  addWechatGroup() {
+    wx.showModal({
+      title: '添加群聊',
+      editable: true,
+      placeholderText: '请输入群名称',
+      success: (res) => {
+        if (res.confirm && res.content && res.content.trim()) {
+          this._pickQrcodeAndSave(res.content.trim(), '');
+        }
+      }
+    });
+  },
+
+  _pickQrcodeAndSave(name, description, groupId) {
+    wx.chooseMedia({
+      count: 1,
+      mediaType: ['image'],
+      success: async (res) => {
+        const tempPath = res.tempFiles[0].tempFilePath;
+        try {
+          wx.showLoading({ title: '上传中...' });
+          const qrcode_url = await api.uploadImage(tempPath);
+          if (groupId) {
+            await api.updateWechatGroup(groupId, { name, description, qrcode_url });
+            wx.showToast({ title: '已更新', icon: 'success' });
+          } else {
+            await api.createWechatGroup({ name, description, qrcode_url });
+            wx.showToast({ title: '添加成功', icon: 'success' });
+          }
+          wx.hideLoading();
+          this.loadWechatGroups();
+        } catch (err) {
+          wx.hideLoading();
+          wx.showToast({ title: '操作失败', icon: 'none' });
+        }
+      }
+    });
+  },
+
+  editWechatGroup(e) {
+    const index = e.currentTarget.dataset.index;
+    const item = this.data.wechatGroupList[index];
+    wx.showActionSheet({
+      itemList: ['修改名称', '修改简介', '更换群码', '切换状态'],
+      success: (res) => {
+        if (res.tapIndex === 0) {
+          wx.showModal({
+            title: '修改群名称',
+            editable: true,
+            placeholderText: item.name,
+            success: async (r) => {
+              if (r.confirm && r.content && r.content.trim()) {
+                try {
+                  await api.updateWechatGroup(item.id, { name: r.content.trim() });
+                  wx.showToast({ title: '已更新', icon: 'success' });
+                  this.loadWechatGroups();
+                } catch (err) {}
+              }
+            }
+          });
+        } else if (res.tapIndex === 1) {
+          wx.showModal({
+            title: '修改简介',
+            editable: true,
+            placeholderText: item.description || '请输入群简介',
+            success: async (r) => {
+              if (r.confirm) {
+                try {
+                  await api.updateWechatGroup(item.id, { description: (r.content || '').trim() });
+                  wx.showToast({ title: '已更新', icon: 'success' });
+                  this.loadWechatGroups();
+                } catch (err) {}
+              }
+            }
+          });
+        } else if (res.tapIndex === 2) {
+          this._pickQrcodeAndSave(item.name, item.description, item.id);
+        } else if (res.tapIndex === 3) {
+          const newStatus = item.status === 'active' ? 'inactive' : 'active';
+          api.updateWechatGroup(item.id, { status: newStatus }).then(() => {
+            wx.showToast({ title: newStatus === 'active' ? '已启用' : '已停用', icon: 'success' });
+            this.loadWechatGroups();
+          });
+        }
+      }
+    });
+  },
+
+  deleteWechatGroup(e) {
+    const { id, name } = e.currentTarget.dataset;
+    wx.showModal({
+      title: '确认删除',
+      content: '确认删除群聊「' + name + '」？',
+      confirmColor: '#E8636F',
+      confirmText: '删除',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            wx.showLoading({ title: '删除中...' });
+            await api.deleteWechatGroup(id);
+            wx.hideLoading();
+            wx.showToast({ title: '已删除', icon: 'success' });
+            this.loadWechatGroups();
+          } catch (err) { wx.hideLoading(); }
+        }
+      }
+    });
+  },
+
+  previewGroupQr(e) {
+    const url = e.currentTarget.dataset.url;
+    wx.previewImage({ current: url, urls: [url] });
   },
 
   // ==================== Common ====================
