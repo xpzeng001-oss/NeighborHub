@@ -28,7 +28,7 @@
 }
 .tab-item {
   flex-shrink: 0;
-  padding: 20rpx 28rpx;
+  padding: 20rpx 24rpx;
   font-size: 30rpx;
   color: #9A9A9A;
   position: relative;
