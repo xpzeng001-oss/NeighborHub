@@ -142,6 +142,12 @@ const getAvatarConfig     = ()         => request({ url: '/api/auth/avatar-confi
 // Feed
 const getFeed             = (params)   => request({ url: '/api/feed', data: params });
 
+// Wechat Groups
+const getWechatGroups    = (params)     => request({ url: '/api/wechat-groups', data: params });
+const createWechatGroup  = (data)       => request({ url: '/api/wechat-groups', method: 'POST', data });
+const updateWechatGroup  = (id, data)   => request({ url: '/api/wechat-groups/' + id, method: 'PUT', data });
+const deleteWechatGroup  = (id)         => request({ url: '/api/wechat-groups/' + id, method: 'DELETE' });
+
 // Stats
 const getCategoryCounts   = (params)   => request({ url: '/api/stats/counts', data: params });
 
@@ -199,6 +205,7 @@ module.exports = {
   getAdminCommunityApplications, handleCommunityApplication,
   getAdminStats, getAdminDashboard, toggleContentTop, getAdminReports, handleAdminReport, getAdminContent, takedownContent, restoreContent,
   getFeed,
+  getWechatGroups, createWechatGroup, updateWechatGroup, deleteWechatGroup,
   deleteHelp, deleteCarpool, deleteRental,
   getAdminUsers, banUser, unbanUser,
   getAdminCommunities, createAdminCommunity, deleteAdminCommunity, assignCommunityDistrict,
