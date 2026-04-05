@@ -33,7 +33,7 @@
         </view>
       </view>
       <view class="feed-empty" wx:if="{{groupList.length === 0}}">
-        <icon name="users" size="96" color="#ccc"></icon>
+        <icon name="wechat-logo" size="96" color="#ccc"></icon>
         <text>暂无群聊</text>
       </view>
     </view>

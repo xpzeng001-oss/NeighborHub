@@ -374,7 +374,7 @@
     </view>
 
     <view class="empty" wx:if="{{wechatGroupList.length === 0}}">
-      <icon name="users" size="80" color="#ddd"></icon>
+      <icon name="wechat-logo" size="80" color="#ddd"></icon>
       <text class="empty-text">暂无群聊</text>
     </view>
 
