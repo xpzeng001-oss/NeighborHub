@@ -21,7 +21,24 @@
   <scroll-view scroll-y class="feed-scroll" refresher-enabled="{{true}}"
                bindrefresherrefresh="onRefresh" refresher-triggered="{{isRefreshing}}"
                bindscrolltolower="onLoadMore">
-    <view class="feed-list">
+    <!-- 本地群聊列表 -->
+    <view class="group-list" wx:if="{{activeTab === 'wechat_group'}}">
+      <view class="group-card" wx:for="{{groupList}}" wx:key="id"
+            bindtap="onPreviewQrcode" data-url="{{item.qrcode_url}}">
+        <image class="group-qrcode" src="{{item.qrcode_url}}" mode="aspectFill"></image>
+        <view class="group-info">
+          <text class="group-name">{{item.name}}</text>
+          <text class="group-desc" wx:if="{{item.description}}">{{item.description}}</text>
+          <text class="group-hint">点击查看二维码，长按保存加群</text>
+        </view>
+      </view>
+      <view class="feed-empty" wx:if="{{groupList.length === 0}}">
+        <icon name="users" size="96" color="#ccc"></icon>
+        <text>暂无群聊</text>
+      </view>
+    </view>
+
+    <view class="feed-list" wx:if="{{activeTab !== 'wechat_group'}}">
       <view class="feed-card" wx:for="{{feedList}}" wx:key="{{item.feedType + '-' + item.id}}"
             bindtap="goDetail" data-type="{{item.feedType}}" data-id="{{item.id}}">
 
@@ -138,11 +155,11 @@
       </view>
     </view>
 
-    <view class="feed-empty" wx:if="{{feedList.length === 0 && !isRefreshing}}">
+    <view class="feed-empty" wx:if="{{activeTab !== 'wechat_group' && feedList.length === 0 && !isRefreshing}}">
       <icon name="compass" size="96" color="#ccc"></icon>
       <text>暂无内容</text>
     </view>
-    <view class="load-more" wx:if="{{feedList.length > 0 && !hasMore}}">— 没有更多了 —</view>
+    <view class="load-more" wx:if="{{activeTab !== 'wechat_group' && feedList.length > 0 && !hasMore}}">— 没有更多了 —</view>
     <view style="height: 160rpx;"></view>
   </scroll-view>
 </view>
