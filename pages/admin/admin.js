@@ -104,6 +104,7 @@ Page({
         else if (options.tab === 'community') this.loadCommunityApplications();
         else if (options.tab === 'manage') this.loadManagedCommunities();
         else if (options.tab === 'district') this.loadDistricts();
+        else if (options.tab === 'wechatGroup') this.loadWechatGroups();
         else this.loadReports();
       } else {
         this.loadReports();

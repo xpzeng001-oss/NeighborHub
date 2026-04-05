@@ -306,6 +306,9 @@ Page({
     wx.navigateTo({ url: '/pages/admin/admin?mode=user' });
   },
 
+  goWechatGroupManage() {
+    wx.navigateTo({ url: '/pages/admin/admin?tab=wechatGroup' });
+  },
   goFeedbackList() {
     wx.navigateTo({ url: '/pages/feedbackList/feedbackList' });
   },
