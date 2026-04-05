@@ -699,9 +699,7 @@
   color: #666;
   display: block;
   margin-bottom: 6rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  word-break: break-all;
 }
 .wg-meta {
   font-size: 22rpx;
