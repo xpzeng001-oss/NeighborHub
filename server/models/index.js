@@ -22,6 +22,7 @@ const CommunityApplication = require('./CommunityApplication');
 const CoinLog = require('./CoinLog');
 const Activity = require('./Activity');
 const ServicePost = require('./ServicePost');
+const WechatGroup = require('./WechatGroup');
 
 // User <-> Product
 User.hasMany(Product, { foreignKey: 'user_id' });
@@ -131,6 +132,14 @@ ServicePost.belongsTo(Community, { foreignKey: 'community_id', constraints: fals
 User.hasMany(CommunityApplication, { foreignKey: 'user_id' });
 CommunityApplication.belongsTo(User, { foreignKey: 'user_id' });
 
+// User <-> WechatGroup
+User.hasMany(WechatGroup, { foreignKey: 'created_by' });
+WechatGroup.belongsTo(User, { as: 'creator', foreignKey: 'created_by' });
+
+// District <-> WechatGroup
+District.hasMany(WechatGroup, { foreignKey: 'district_id' });
+WechatGroup.belongsTo(District, { foreignKey: 'district_id' });
+
 module.exports = {
   sequelize,
   User,
@@ -155,5 +164,6 @@ module.exports = {
   CommunityApplication,
   CoinLog,
   Activity,
-  ServicePost
+  ServicePost,
+  WechatGroup
 };
