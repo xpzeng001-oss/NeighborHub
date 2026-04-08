@@ -181,7 +181,6 @@ Page({
       wx.setStorageSync('userInfo', newUserInfo);
 
       // 设置当前小区并自动关联社区
-      const selectedCommunity = this.data.communities[this.data.communityIndex];
       if (selectedCommunity) {
         app.globalData.currentCommunity = selectedCommunity;
         wx.setStorageSync('currentCommunity', selectedCommunity);
