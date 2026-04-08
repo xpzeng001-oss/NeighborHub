@@ -93,12 +93,21 @@ Page({
           data: { code: loginRes.code, phoneCode, inviterId: app.globalData.inviterId || '' },
           success: (res) => {
             if (res.data.code === 0) {
-              const { token, userInfo, avatarConfig } = res.data.data;
+              const { token, userInfo, avatarConfig, community, district } = res.data.data;
               app.globalData.token = token;
               app.globalData.userInfo = userInfo;
               if (avatarConfig) {
                 app.globalData.avatarConfig = avatarConfig;
                 wx.setStorageSync('avatarConfig', avatarConfig);
+              }
+              // 恢复用户的小区和社区选择
+              if (community) {
+                app.globalData.currentCommunity = community;
+                wx.setStorageSync('currentCommunity', community);
+              }
+              if (district) {
+                app.globalData.currentDistrict = district;
+                wx.setStorageSync('currentDistrict', district);
               }
               wx.setStorageSync('token', token);
               wx.setStorageSync('userInfo', userInfo);
@@ -152,9 +161,9 @@ Page({
       return;
     }
     try {
-      await api.updateUser(this.data.userInfo.id, { building, isVerified: true });
+      await api.updateUser(this.data.userInfo.id, { building, isVerified: true, communityId: community.id });
     } catch (err) {}
-    const userInfo = { ...this.data.userInfo, community: community.name, communityName: community.name, building, isVerified: true };
+    const userInfo = { ...this.data.userInfo, community: community.name, communityName: community.name, communityId: community.id, building, isVerified: true };
     app.globalData.userInfo = userInfo;
     wx.setStorageSync('userInfo', userInfo);
     app.globalData.currentCommunity = community;
@@ -199,13 +208,15 @@ Page({
       const updated = await api.updateUser(this.data.userInfo.id, {
         nickName,
         building,
-        isVerified: true
+        isVerified: true,
+        communityId: community.id
       });
       const userInfo = {
         ...this.data.userInfo,
         nickName: updated.nickName || nickName,
         community: community.name,
         communityName: community.name,
+        communityId: community.id,
         building: updated.building || building,
         isVerified: true
       };

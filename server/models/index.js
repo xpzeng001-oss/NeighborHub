@@ -95,6 +95,10 @@ Violation.belongsTo(User, { foreignKey: 'user_id' });
 User.hasMany(CoinLog, { foreignKey: 'user_id' });
 CoinLog.belongsTo(User, { foreignKey: 'user_id' });
 
+// User <-> Community
+User.belongsTo(Community, { foreignKey: 'community_id' });
+Community.hasMany(User, { foreignKey: 'community_id' });
+
 // District <-> Community
 District.hasMany(Community, { foreignKey: 'district_id' });
 Community.belongsTo(District, { foreignKey: 'district_id' });

@@ -53,6 +53,12 @@ const User = sequelize.define('User', {
     type: DataTypes.BOOLEAN,
     defaultValue: false
   },
+  community_id: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: true,
+    defaultValue: null,
+    comment: '用户所属小区ID'
+  },
   invited_by: {
     type: DataTypes.INTEGER.UNSIGNED,
     defaultValue: null,

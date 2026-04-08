@@ -1,14 +1,31 @@
 const { Op } = require('sequelize');
-const { User, Product, Favorite, CoinLog } = require('../models');
+const { User, Product, Favorite, CoinLog, Community } = require('../models');
 
 exports.getProfile = async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id, {
-      attributes: ['id', 'nick_name', 'avatar_url', 'building', 'coins', 'is_verified', 'created_at']
+      attributes: ['id', 'nick_name', 'avatar_url', 'building', 'coins', 'is_verified', 'community_id', 'created_at'],
+      include: [{ model: Community, attributes: ['id', 'name'] }]
     });
 
     if (!user) {
       return res.status(404).json({ code: 404, message: '用户不存在', data: null });
+    }
+
+    // 兜底：community_id 为空时，从用户发布的商品中查找小区
+    let communityName = user.Community ? user.Community.name : '';
+    if (!communityName) {
+      const product = await Product.findOne({
+        where: { user_id: user.id, community_id: { [Op.ne]: null } },
+        attributes: ['community_id'],
+        include: [{ model: Community, attributes: ['id', 'name'] }],
+        order: [['created_at', 'DESC']]
+      });
+      if (product && product.Community) {
+        communityName = product.Community.name;
+        // 顺便回填 community_id
+        user.update({ community_id: product.community_id }).catch(() => {});
+      }
     }
 
     res.json({
@@ -18,6 +35,7 @@ exports.getProfile = async (req, res, next) => {
         nickName: user.nick_name,
         avatarUrl: user.avatar_url,
         building: user.building,
+        community: communityName,
         coins: user.coins,
         isVerified: user.is_verified,
         phone: user.phone,
@@ -41,9 +59,9 @@ exports.updateProfile = async (req, res, next) => {
       return res.status(404).json({ code: 404, message: '用户不存在', data: null });
     }
 
-    const allowedFields = ['nick_name', 'avatar_url', 'building', 'is_verified', 'phone', 'wechat_id'];
+    const allowedFields = ['nick_name', 'avatar_url', 'building', 'is_verified', 'phone', 'wechat_id', 'community_id'];
     const updates = {};
-    const fieldMap = { nickName: 'nick_name', avatarUrl: 'avatar_url', building: 'building', isVerified: 'is_verified', phone: 'phone', wechatId: 'wechat_id' };
+    const fieldMap = { nickName: 'nick_name', avatarUrl: 'avatar_url', building: 'building', isVerified: 'is_verified', phone: 'phone', wechatId: 'wechat_id', communityId: 'community_id' };
 
     for (const [camel, snake] of Object.entries(fieldMap)) {
       if (req.body[camel] !== undefined) updates[snake] = req.body[camel];

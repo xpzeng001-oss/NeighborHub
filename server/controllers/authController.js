@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Community, District } = require('../models');
 const wechatService = require('../services/wechatService');
 const tokenService = require('../services/tokenService');
 const coinService = require('../services/coinService');
@@ -102,6 +102,21 @@ exports.login = async (req, res, next) => {
     // 签发 JWT
     const token = tokenService.sign({ id: user.id, openid: user.openid });
 
+    // 查询用户所属小区及社区信息，用于前端恢复
+    let communityInfo = null;
+    let districtInfo = null;
+    if (user.community_id) {
+      const community = await Community.findByPk(user.community_id, {
+        include: [{ model: District, attributes: ['id', 'name'] }]
+      });
+      if (community) {
+        communityInfo = { id: community.id, name: community.name };
+        if (community.District) {
+          districtInfo = { id: community.District.id, name: community.District.name };
+        }
+      }
+    }
+
     res.json({
       code: 0,
       message: 'success',
@@ -116,8 +131,12 @@ exports.login = async (req, res, next) => {
           isVerified: user.is_verified,
           role: user.role,
           phone: user.phone,
-          wechatId: user.wechat_id
+          wechatId: user.wechat_id,
+          communityId: user.community_id,
+          community: communityInfo ? communityInfo.name : ''
         },
+        community: communityInfo,
+        district: districtInfo,
         avatarConfig: {
           baseUrl: AVATAR_BASE,
           count: AVATAR_COUNT

@@ -305,7 +305,7 @@ exports.listContent = async (req, res, next) => {
 exports.takedownContent = async (req, res, next) => {
   try {
     const { type, id } = req.params;
-    const { reason } = req.body;
+    const { reason, punish } = req.body;
 
     const Model = MODEL_MAP[type];
     if (!Model) {
@@ -317,6 +317,11 @@ exports.takedownContent = async (req, res, next) => {
       return res.status(404).json({ code: 404, message: '内容不存在', data: null });
     }
 
+    // 已经下架的不重复操作
+    if (item.status === 'off') {
+      return res.json({ code: 0, data: null });
+    }
+
     // Set status='off' if model has status field, otherwise destroy
     if (item.status !== undefined && DEFAULT_STATUS[type] !== null) {
       item.status = 'off';
@@ -325,21 +330,22 @@ exports.takedownContent = async (req, res, next) => {
       await item.destroy();
     }
 
-    // Create violation record
-    await Violation.create({
-      user_id:     item.user_id,
-      type:        'content_violation',
-      target_type: type,
-      target_id:   Number(id),
-      reason:      reason || '内容违规',
-      admin_id:    req.user.id
-    });
+    // 仅在明确要求处罚时才记违规+扣币
+    if (punish) {
+      await Violation.create({
+        user_id:     item.user_id,
+        type:        'content_violation',
+        target_type: type,
+        target_id:   Number(id),
+        reason:      reason || '内容违规',
+        admin_id:    req.user.id
+      });
 
-    // Deduct credit score
-    await User.decrement('coins', {
-      by: 10,
-      where: { id: item.user_id }
-    });
+      await User.decrement('coins', {
+        by: 10,
+        where: { id: item.user_id }
+      });
+    }
 
     res.json({ code: 0, data: null });
   } catch (err) {

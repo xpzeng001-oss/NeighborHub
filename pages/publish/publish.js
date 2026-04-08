@@ -81,6 +81,39 @@ Page({
       }
     }
     this.setData(data);
+
+    // 编辑模式：加载已有商品数据
+    if (options.editId) {
+      this._editId = Number(options.editId);
+      wx.setNavigationBarTitle({ title: '编辑商品' });
+      this.loadProductForEdit(this._editId);
+    }
+  },
+
+  async loadProductForEdit(id) {
+    try {
+      wx.showLoading({ title: '加载中...' });
+      const p = await api.getProduct(id);
+      const catObj = categories.find(c => c.id === p.category);
+      const isFree = p.isFree || Number(p.price) === 0;
+      this.setData({
+        publishType: isFree ? 'free' : 'product',
+        lockedType: true,
+        imageList: p.images || [],
+        'form.title': p.title,
+        'form.category': p.category || '',
+        'form.categoryName': catObj ? catObj.name : '',
+        'form.price': p.price != null ? String(p.price) : '',
+        'form.originalPrice': p.originalPrice ? String(p.originalPrice) : '',
+        'form.condition': p.condition || '',
+        'form.description': p.description || '',
+        'form.tradeMethod': p.tradeMethod || ''
+      });
+    } catch (err) {
+      wx.showToast({ title: '加载失败', icon: 'none' });
+    } finally {
+      wx.hideLoading();
+    }
   },
 
   onShow() {
@@ -445,12 +478,16 @@ Page({
 
     this._publishing = true;
     this._contactConfirmed = false;
-    wx.showLoading({ title: '发布中...' });
+    wx.showLoading({ title: this._editId ? '保存中...' : '发布中...' });
     try {
-      let imageUrls = [];
-      if (imageList.length > 0) {
-        imageUrls = await api.uploadImages(imageList);
+      // 区分已有远程图片和本地新图片
+      const existingUrls = imageList.filter(p => p.startsWith('http'));
+      const localPaths = imageList.filter(p => !p.startsWith('http'));
+      let uploadedUrls = [];
+      if (localPaths.length > 0) {
+        uploadedUrls = await api.uploadImages(localPaths);
       }
+      const imageUrls = existingUrls.concat(uploadedUrls);
 
       const app = getApp();
       const community = app.globalData.currentCommunity;
@@ -459,7 +496,7 @@ Page({
 
       if (publishType === 'product' || publishType === 'free') {
         const price = publishType === 'free' ? 0 : Number(form.price);
-        await api.createProduct({
+        const productData = {
           title: form.title,
           price: price,
           originalPrice: Number(form.originalPrice) || 0,
@@ -472,7 +509,12 @@ Page({
           communityId,
           contactPhone,
           contactWechat
-        });
+        };
+        if (this._editId) {
+          await api.updateProduct(this._editId, productData);
+        } else {
+          await api.createProduct(productData);
+        }
       } else if (publishType === 'post') {
         await api.createPost({
           category: form.postCategory,
@@ -587,9 +629,9 @@ Page({
       }
 
       wx.hideLoading();
-      wx.showToast({ title: '发布成功！', icon: 'success' });
+      wx.showToast({ title: this._editId ? '保存成功！' : '发布成功！', icon: 'success' });
       setTimeout(() => {
-        if (this.data.lockedType) {
+        if (this._editId || this.data.lockedType) {
           wx.navigateBack();
         } else {
           wx.switchTab({ url: '/pages/index/index' });

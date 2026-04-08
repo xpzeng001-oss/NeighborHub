@@ -205,7 +205,7 @@
 /* 我的发布（混合列表） */
 .publish-item {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   margin: 0 32rpx 16rpx;
   background: #fff;
   border-radius: 16rpx;
@@ -213,7 +213,6 @@
   overflow: hidden;
 }
 .publish-content {
-  flex: 1;
   display: flex;
   padding: 24rpx;
   min-width: 0;
@@ -278,35 +277,28 @@
 .publish-price { font-size: 28rpx; color: #C67A52; font-weight: 700; }
 .publish-free { font-size: 24rpx; color: #D49A78; font-weight: 600; }
 .publish-time { font-size: 22rpx; color: #BDBDBD; }
-.publish-actions {
+.publish-actions-row {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-shrink: 0;
-  border-left: 1rpx solid #f5f5f5;
+  border-top: 1rpx solid #f5f5f5;
 }
-.action-btn {
-  padding: 24rpx 28rpx;
+.action-btn-row {
+  flex: 1;
+  padding: 28rpx 0;
   font-size: 24rpx;
   font-weight: 600;
   text-align: center;
 }
-.action-off { color: #C67A52; }
-.action-off:active { background: #F3E8DA; }
+.action-edit { color: #4A90D9; }
+.action-edit:active { background: #E3EDFA; }
+.action-off { color: #9A9A9A; }
+.action-off:active { background: #f5f5f5; }
 .action-on { color: #4CAF50; }
 .action-on:active { background: #E8F5E9; }
 .action-sold { color: #9A9A9A; }
 .action-sold-btn { color: #C67A52; }
 .action-sold-btn:active { background: #F3E8DA; }
-.publish-delete {
-  padding: 24rpx 28rpx;
-  color: #E8636F;
-  font-size: 24rpx;
-  font-weight: 600;
-  flex-shrink: 0;
-  border-left: 1rpx solid #f5f5f5;
-}
-.publish-delete:active { background: #FCEAEC; }
+.action-delete { color: #E8636F; }
+.action-delete:active { background: #FCEAEC; }
 
 .loading-more {
   text-align: center;

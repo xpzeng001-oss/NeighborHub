@@ -150,8 +150,11 @@ Page({
   onShareAppMessage() {
     const p = this.data.product;
     const price = p.is_free ? '免费自取' : '¥' + p.price;
+    const suffix = ' · ' + price;
+    const maxLen = 28 - suffix.length;
+    const title = p.title.length > maxLen ? p.title.slice(0, maxLen) + '…' : p.title;
     return {
-      title: p.title + ' · ' + price,
+      title: title + suffix,
       path: '/pages/detail/detail?id=' + p.id,
       imageUrl: (p.images && p.images.length > 0) ? p.images[0] : ''
     };

@@ -302,26 +302,21 @@ Page({
 
   takedownContent(e) {
     const { type, id, index } = e.currentTarget.dataset;
-    wx.showModal({
-      title: '确认下架',
-      content: '确认下架该内容？下架后用户将无法查看。',
-      confirmColor: '#E8636F',
-      confirmText: '下架',
+    wx.showActionSheet({
+      itemList: ['仅下架', '下架并扣除邻里币'],
       success: async (res) => {
-        if (res.confirm) {
-          try {
-            wx.showLoading({ title: '处理中...' });
-            await api.takedownContent(type, id, { reason: '管理员下架' });
-            wx.hideLoading();
-            wx.showToast({ title: '已下架', icon: 'success' });
-            // Update local list item status
-            const key = 'contentList[' + index + '].status';
-            this.setData({ [key]: 'off' });
-            this.loadStats();
-          } catch (err) {
-            wx.hideLoading();
-            wx.showToast({ title: err.message || '操作失败', icon: 'none' });
-          }
+        const punish = res.tapIndex === 1;
+        try {
+          wx.showLoading({ title: '处理中...' });
+          await api.takedownContent(type, id, { reason: '管理员下架', punish });
+          wx.hideLoading();
+          wx.showToast({ title: punish ? '已下架并扣币' : '已下架', icon: 'success' });
+          const key = 'contentList[' + index + '].status';
+          this.setData({ [key]: 'off' });
+          this.loadStats();
+        } catch (err) {
+          wx.hideLoading();
+          wx.showToast({ title: err.message || '操作失败', icon: 'none' });
         }
       }
     });

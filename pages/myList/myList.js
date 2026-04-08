@@ -176,6 +176,12 @@ Page({
     }
   },
 
+  // 闲置商品：编辑
+  editProduct(e) {
+    const id = e.currentTarget.dataset.id;
+    wx.navigateTo({ url: '/pages/publish/publish?editId=' + id });
+  },
+
   // 闲置商品：下架
   offShelfProduct(e) {
     const { id, index } = e.currentTarget.dataset;

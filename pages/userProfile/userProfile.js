@@ -19,6 +19,8 @@ Page({
     tabs: TABS,
     activeTab: 'product',
     list: [],
+    leftProducts: [],
+    rightProducts: [],
     loading: true,
     page: 1,
     hasMore: true
@@ -38,6 +40,9 @@ Page({
   async loadUserInfo() {
     try {
       const userInfo = await api.getUser(this.data.userId);
+      if (userInfo.createdAt) {
+        userInfo.createdAt = userInfo.createdAt.substring(0, 10);
+      }
       this.setData({ userInfo });
       wx.setNavigationBarTitle({ title: userInfo.nickName + ' 的主页' });
     } catch (err) {
@@ -77,12 +82,24 @@ Page({
       }
 
       const newList = result.list || [];
-      this.setData({
-        list: page === 1 ? newList : [...this.data.list, ...newList],
+      const fullList = page === 1 ? newList : [...this.data.list, ...newList];
+      const updates = {
+        list: fullList,
         page: page + 1,
         hasMore: newList.length >= 20,
         loading: false
-      });
+      };
+      // 商品 tab 分左右列做瀑布流
+      if (activeTab === 'product') {
+        const left = [], right = [];
+        fullList.forEach((item, i) => {
+          if (i % 2 === 0) left.push(item);
+          else right.push(item);
+        });
+        updates.leftProducts = left;
+        updates.rightProducts = right;
+      }
+      this.setData(updates);
     } catch (err) {
       this.setData({ loading: false });
     }

@@ -153,13 +153,15 @@ Page({
 
       const { community, building } = this.data;
       const userInfo = app.globalData.userInfo;
+      const selectedCommunity = this.data.communities[this.data.communityIndex];
       const updated = await api.updateUser(userInfo.id, {
         nickName: nickName.trim(),
         avatarUrl,
         building,
         isVerified: !!building,
         phone: this.data.phone,
-        wechatId: this.data.wechatId
+        wechatId: this.data.wechatId,
+        communityId: selectedCommunity ? selectedCommunity.id : undefined
       });
 
       const newUserInfo = {
@@ -169,6 +171,7 @@ Page({
         avatarUrl: updated.avatarUrl || avatarUrl,
         avatar_url: updated.avatarUrl || avatarUrl,
         community,
+        communityId: selectedCommunity ? selectedCommunity.id : userInfo.communityId,
         building: updated.building || building,
         isVerified: !!building,
         phone: this.data.phone,

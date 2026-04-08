@@ -3,6 +3,10 @@
   module.exports.actualType = function(type, subType) {
     return type === 'activity' ? subType : type;
   }
+  module.exports.fmtTime = function(str) {
+    if (!str) return '';
+    return str.replace('T', ' ').substring(0, 16);
+  }
 </wxs>
 <view class="page">
   <!-- 分类Tab（我的发布） -->
@@ -44,30 +48,35 @@
           <view class="publish-bottom">
             <text class="publish-price" wx:if="{{item._type === 'product' && !item.isFree}}">¥{{item.price}}</text>
             <text class="publish-free" wx:if="{{item._type === 'product' && item.isFree}}">免费送</text>
-            <text class="publish-time">{{item.createdAt}}</text>
+            <text class="publish-time">{{helper.fmtTime(item.createdAt)}}</text>
           </view>
         </view>
       </view>
-      <!-- 闲置商品：下架+已卖出/上架/已售出 -->
-      <view class="publish-actions" wx:if="{{item._type === 'product'}}">
+      <!-- 闲置商品：编辑+下架+已卖出/上架/已售出 -->
+      <view class="publish-actions-row" wx:if="{{item._type === 'product'}}">
         <block wx:if="{{item.status === 'selling'}}">
-          <view class="action-btn action-off" bindtap="offShelfProduct" data-id="{{item.id}}" data-index="{{index}}">
+          <view class="action-btn-row action-off" bindtap="offShelfProduct" data-id="{{item.id}}" data-index="{{index}}">
             <text>下架</text>
           </view>
-          <view class="action-btn action-sold-btn" bindtap="markSoldProduct" data-id="{{item.id}}" data-index="{{index}}">
+          <view class="action-btn-row action-sold-btn" bindtap="markSoldProduct" data-id="{{item.id}}" data-index="{{index}}">
             <text>已卖出</text>
           </view>
+          <view class="action-btn-row action-edit" bindtap="editProduct" data-id="{{item.id}}">
+            <text>编辑</text>
+          </view>
         </block>
-        <view class="action-btn action-on" wx:elif="{{item.status === 'off'}}" bindtap="relistProduct" data-id="{{item.id}}" data-index="{{index}}">
+        <view class="action-btn-row action-on" wx:elif="{{item.status === 'off'}}" bindtap="relistProduct" data-id="{{item.id}}" data-index="{{index}}">
           <text>上架</text>
         </view>
-        <view class="action-btn action-sold" wx:elif="{{item.status === 'sold'}}">
+        <view class="action-btn-row action-sold" wx:elif="{{item.status === 'sold'}}">
           <text>已售出</text>
         </view>
       </view>
       <!-- 其他类型：删除 -->
-      <view class="publish-delete" wx:else bindtap="deleteItem" data-id="{{item.id}}" data-type="{{item._type}}" data-index="{{index}}">
-        <text>删除</text>
+      <view class="publish-actions-row" wx:else>
+        <view class="action-btn-row action-delete" bindtap="deleteItem" data-id="{{item.id}}" data-type="{{item._type}}" data-index="{{index}}">
+          <text>删除</text>
+        </view>
       </view>
     </view>
   </view>

@@ -73,6 +73,7 @@ const uploadImages = async (filePaths, onProgress) => {
 const getProducts   = (params)   => request({ url: '/api/products', data: params });
 const getProduct    = (id)       => request({ url: '/api/products/' + id });
 const createProduct = (data)     => request({ url: '/api/products', method: 'POST', data });
+const updateProduct = (id, data) => request({ url: '/api/products/' + id, method: 'PUT', data });
 const deleteProduct = (id)       => request({ url: '/api/products/' + id, method: 'DELETE' });
 const relistProduct = (id)       => request({ url: '/api/products/' + id + '/relist', method: 'PUT' });
 const markProductSold = (id)     => request({ url: '/api/products/' + id + '/sold', method: 'PUT' });
@@ -187,7 +188,7 @@ const createAdminDistrict = (data) => request({ url: '/api/admin/districts', met
 const deleteAdminDistrict = (id) => request({ url: '/api/admin/districts/' + id, method: 'DELETE' });
 
 module.exports = {
-  getProducts, getProduct, createProduct, deleteProduct, relistProduct, markProductSold, wantProduct, toggleFavorite,
+  getProducts, getProduct, createProduct, updateProduct, deleteProduct, relistProduct, markProductSold, wantProduct, toggleFavorite,
   getPosts, getPost, createPost, deletePost, likePost, addComment,
   getHelps, createHelp, respondHelp,
   getRentals,
