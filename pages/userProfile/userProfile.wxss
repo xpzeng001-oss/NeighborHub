@@ -1,5 +1,4 @@
-.page {
-  min-height: 100vh;
+page {
   background: linear-gradient(180deg, #F0E4D8 0%, #FAF8F4 300rpx);
 }
 

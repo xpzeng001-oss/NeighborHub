@@ -10,6 +10,7 @@ exports.list = async (req, res, next) => {
     const where = {};
     if (userId) {
       where.user_id = Number(userId);
+      where.status = 'selling';
     } else {
       where.status = 'selling';
     }
