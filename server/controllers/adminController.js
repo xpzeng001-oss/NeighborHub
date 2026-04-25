@@ -237,6 +237,10 @@ exports.listContent = async (req, res, next) => {
             where.status = { [Op.ne]: 'off' };
           }
           // For models without status (post, comment), all are active
+        } else if (status === 'top') {
+          // 仅置顶内容；模型无 is_top 字段则跳过
+          if (!Model.rawAttributes.is_top) continue;
+          where.is_top = true;
         }
       }
 

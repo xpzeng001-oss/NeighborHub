@@ -1,6 +1,11 @@
 // pages/forumDetail/forumDetail.js
 const api = require('../../utils/api');
-const { callWithMask } = require('../../utils/phone');
+function callWithMask(phone) {
+  if (!phone) return;
+  const masked = phone.length >= 7 ? phone.substring(0,3)+'****'+phone.substring(phone.length-4) : phone;
+  wx.showModal({ title:'电话联系', content:'确认拨打 '+masked+' ？', confirmText:'拨打', confirmColor:'#C67A52',
+    success(res){ if(res.confirm) wx.makePhoneCall({ phoneNumber: phone }); } });
+}
 const formatTime = d => { const df = Date.now() - d; if (df < 60000) return '刚刚'; if (df < 3600000) return Math.floor(df/60000)+'分钟前'; if (df < 86400000) return Math.floor(df/3600000)+'小时前'; if (df < 604800000) return Math.floor(df/86400000)+'天前'; const m = d.getMonth()+1, day = d.getDate(); return d.getFullYear()+'-'+(m<10?'0'+m:m)+'-'+(day<10?'0'+day:day); };
 
 Page({

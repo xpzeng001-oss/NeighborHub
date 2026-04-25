@@ -25,7 +25,9 @@ Page({
     rightProducts: [],
     isRefreshing: false,
     hasMore: true,
-    page: 1
+    loadingMore: false,
+    page: 1,
+    pageSize: 20
   },
 
   onLoad() {
@@ -57,9 +59,14 @@ Page({
   },
 
   // 加载商品数据
-  async loadProducts() {
+  async loadProducts(loadMore = false) {
+    if (loadMore && (!this.data.hasMore || this.data.loadingMore)) return;
+    if (loadMore) this.setData({ loadingMore: true });
+
     try {
-      const params = { page: 1, pageSize: 20 };
+      const pageSize = this.data.pageSize;
+      const page = loadMore ? this.data.page + 1 : 1;
+      const params = { page, pageSize };
       const type = this.data.activeType;
       const sort = this.data.activeSort;
 
@@ -78,7 +85,9 @@ Page({
       params.sort = sort === 0 ? 'new' : 'hot';
 
       const data = await api.getProducts(params);
-      const products = data.list || [];
+      const newList = data.list || [];
+
+      const products = loadMore ? this.data.products.concat(newList) : newList;
 
       // 分配瀑布流左右列
       const left = [], right = [];
@@ -91,11 +100,33 @@ Page({
         products,
         leftProducts: left,
         rightProducts: right,
-        hasMore: products.length >= 20
+        page,
+        hasMore: newList.length >= pageSize,
+        loadingMore: false
       });
     } catch (err) {
       console.log('加载商品失败', err);
+      this.setData({ loadingMore: false });
     }
+  },
+
+  // 上拉加载更多
+  onLoadMore() {
+    this.loadProducts(true);
+  },
+
+  // 图片加载完成：按真实宽高算高度，最高封顶 3:4 比例（高/宽 ≤ 4/3）
+  onImgLoad(e) {
+    const { col, idx } = e.currentTarget.dataset;
+    const { width, height } = e.detail;
+    if (!width || !height) return;
+    const COL_W = 335; // rpx
+    const ratio = Math.min(height / width, 4 / 3);
+    const imgHeight = Math.round(COL_W * ratio);
+    const key = col === 'left' ? 'leftProducts' : 'rightProducts';
+    const list = this.data[key];
+    if (!list[idx] || list[idx].imgHeight === imgHeight) return;
+    this.setData({ [`${key}[${idx}].imgHeight`]: imgHeight });
   },
 
   // 分类切换

@@ -6,7 +6,9 @@
     <view class="btn-back" bindtap="goBack">返回</view>
   </view>
 
-  <block wx:else>
+  <scroll-view wx:else class="scroll-container" scroll-y enhanced bounces="{{false}}"
+    refresher-enabled refresher-triggered="{{refreshing}}" bindrefresherrefresh="onRefresh"
+    bindscrolltolower="onScrollToLower" lower-threshold="100">
     <!-- 用户信息卡片 -->
     <view class="profile-card" wx:if="{{userInfo}}">
       <image class="avatar" src="{{userInfo.avatarUrl || '/images/avatar-placeholder.png'}}" mode="aspectFill"></image>
@@ -173,5 +175,5 @@
     <view class="loading-more" wx:if="{{!hasMore && list.length > 0}}">
       <text>没有更多了</text>
     </view>
-  </block>
+  </scroll-view>
 </view>

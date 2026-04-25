@@ -13,6 +13,16 @@ Thumbs.db
 *.swp
 *.swo
 
+# Claude Code
+.claude/
+
+# Pencil
+*.pen
+
+# Docs assets
+docs/poster.html
+docs/qrcode.jpg
+
 # Server
 server/.env
 server/database.sqlite

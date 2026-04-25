@@ -20,10 +20,17 @@
     </view>
   </view>
 
-  <scroll-view scroll-y class="scroll-content" refresher-enabled="{{true}}" bindrefresherrefresh="onRefresh" refresher-triggered="{{isRefreshing}}">
+  <scroll-view scroll-y class="scroll-content" refresher-enabled="{{true}}" bindrefresherrefresh="onRefresh" refresher-triggered="{{isRefreshing}}" bindscrolltolower="onLoadMore" lower-threshold="120">
 
-    <!-- Banner -->
-    <image class="banner-img" src="/images/banner-home.jpg" mode="aspectFill"></image>
+    <!-- Banner 轮播 -->
+    <swiper class="banner-swiper" autoplay circular indicator-dots indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#ffffff" interval="4000" duration="500">
+      <swiper-item>
+        <image class="banner-img" src="/images/banner-card.jpg" mode="aspectFill"></image>
+      </swiper-item>
+      <swiper-item>
+        <image class="banner-img" src="/images/banner-home.jpg" mode="aspectFill"></image>
+      </swiper-item>
+    </swiper>
 
     <!-- 分类胶囊 -->
     <scroll-view scroll-x class="type-scroll" enhanced show-scrollbar="{{false}}">
@@ -40,8 +47,8 @@
     <view class="product-grid">
       <view class="grid-column">
         <view class="product-card" wx:for="{{leftProducts}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
-          <view class="card-image">
-            <image src="{{item.images[0]}}" mode="aspectFill" class="product-img"></image>
+          <view class="card-image" style="height: {{item.imgHeight || 335}}rpx">
+            <image src="{{item.images[0]}}" mode="aspectFill" class="product-img" bindload="onImgLoad" data-col="left" data-idx="{{index}}"></image>
             <view class="free-badge" wx:if="{{item.isFree}}">免费</view>
           </view>
           <view class="card-info">
@@ -59,8 +66,8 @@
       </view>
       <view class="grid-column">
         <view class="product-card" wx:for="{{rightProducts}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
-          <view class="card-image">
-            <image src="{{item.images[0]}}" mode="aspectFill" class="product-img"></image>
+          <view class="card-image" style="height: {{item.imgHeight || 335}}rpx">
+            <image src="{{item.images[0]}}" mode="aspectFill" class="product-img" bindload="onImgLoad" data-col="right" data-idx="{{index}}"></image>
             <view class="free-badge" wx:if="{{item.isFree}}">免费</view>
           </view>
           <view class="card-info">
@@ -78,7 +85,8 @@
       </view>
     </view>
 
-    <view class="load-more" wx:if="{{!hasMore}}">— 没有更多了 —</view>
+    <view class="load-more" wx:if="{{loadingMore}}">加载中...</view>
+    <view class="load-more" wx:elif="{{!hasMore && products.length > 0}}">— 没有更多了 —</view>
     <view style="height: 160rpx;"></view>
   </scroll-view>
 </view>

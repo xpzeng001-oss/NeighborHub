@@ -1,6 +1,11 @@
 // pages/detail/detail.js
 const api = require('../../utils/api');
-const { callWithMask } = require('../../utils/phone');
+function callWithMask(phone) {
+  if (!phone) return;
+  const masked = phone.length >= 7 ? phone.substring(0,3)+'****'+phone.substring(phone.length-4) : phone;
+  wx.showModal({ title:'电话联系', content:'确认拨打 '+masked+' ？', confirmText:'拨打', confirmColor:'#C67A52',
+    success(res){ if(res.confirm) wx.makePhoneCall({ phoneNumber: phone }); } });
+}
 const formatTime = d => { const df = Date.now() - d; if (df < 60000) return '刚刚'; if (df < 3600000) return Math.floor(df/60000)+'分钟前'; if (df < 86400000) return Math.floor(df/3600000)+'小时前'; if (df < 604800000) return Math.floor(df/86400000)+'天前'; const m = d.getMonth()+1, day = d.getDate(); return d.getFullYear()+'-'+(m<10?'0'+m:m)+'-'+(day<10?'0'+day:day); };
 
 Page({
@@ -8,7 +13,8 @@ Page({
     product: {},
     currentImage: 0,
     isFav: false,
-    timeAgo: ''
+    timeAgo: '',
+    sellerProducts: []
   },
 
   async onLoad(options) {
@@ -21,9 +27,27 @@ Page({
         timeAgo: formatTime(new Date(product.createdAt))
       });
       wx.setNavigationBarTitle({ title: product.title.substring(0, 10) + '...' });
+      this.loadSellerProducts();
     } catch (err) {
       wx.showToast({ title: '加载失败', icon: 'none' });
     }
+  },
+
+  // 加载卖家其他在售商品
+  async loadSellerProducts() {
+    const p = this.data.product;
+    if (!p.userId) return;
+    try {
+      const data = await api.getProducts({ userId: p.userId, page: 1, pageSize: 30 });
+      const list = (data.list || []).filter(item => item.id !== p.id);
+      this.setData({ sellerProducts: list });
+    } catch (err) {}
+  },
+
+  goSellerProduct(e) {
+    const id = e.currentTarget.dataset.id;
+    if (id === this.data.product.id) return;
+    wx.redirectTo({ url: '/pages/detail/detail?id=' + id });
   },
 
   previewImage(e) {
@@ -140,6 +164,7 @@ Page({
   goUserProfile() {
     const app = getApp();
     const userId = this.data.product.userId;
+    if (!userId) return;
     if (app.globalData.userInfo && userId === app.globalData.userInfo.id) {
       wx.switchTab({ url: '/pages/mine/mine' });
     } else {

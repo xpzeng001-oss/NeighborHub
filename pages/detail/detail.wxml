@@ -61,6 +61,20 @@
       </view>
     </view>
 
+    <!-- 卖家其他宝贝 -->
+    <view class="section seller-products" wx:if="{{sellerProducts.length > 0}}">
+      <text class="section-title">TA 还有这些宝贝</text>
+      <view class="seller-grid">
+        <view class="seller-cell" wx:for="{{sellerProducts}}" wx:key="id" bindtap="goSellerProduct" data-id="{{item.id}}">
+          <image class="seller-cell-img" src="{{item.images[0]}}" mode="aspectFill"></image>
+          <view class="seller-cell-mask">
+            <text class="seller-cell-price" wx:if="{{!item.isFree}}">¥{{item.price}}</text>
+            <text class="seller-cell-price free" wx:else>免费</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
     <!-- 举报 -->
     <view class="report-row" bindtap="onReport">
       <view style="display:inline-flex;align-items:center;gap:8rpx;">

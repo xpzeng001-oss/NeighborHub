@@ -1,8 +1,7 @@
 {
   "navigationBarTitleText": "个人主页",
   "navigationBarBackgroundColor": "#F0E4D8",
-  "enablePullDownRefresh": true,
-  "onReachBottomDistance": 100,
+  "disableScroll": true,
   "usingComponents": {
     "icon": "/components/icon/icon"
   }

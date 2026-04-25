@@ -22,17 +22,18 @@ Page({
     leftProducts: [],
     rightProducts: [],
     loading: true,
+    refreshing: false,
     page: 1,
     hasMore: true
   },
 
   onLoad(options) {
-    const userId = options.userId;
-    if (!userId) {
+    const uid = Number(options.userId);
+    if (!uid || Number.isNaN(uid)) {
       this.setData({ notFound: true, loading: false });
       return;
     }
-    this.setData({ userId: Number(userId) });
+    this.setData({ userId: uid });
     this.loadUserInfo();
     this.loadList();
   },
@@ -105,16 +106,16 @@ Page({
     }
   },
 
-  onReachBottom() {
+  onScrollToLower() {
     if (this.data.hasMore && !this.data.loading) {
       this.loadList();
     }
   },
 
-  onPullDownRefresh() {
-    this.setData({ page: 1, list: [], hasMore: true });
+  onRefresh() {
+    this.setData({ page: 1, list: [], hasMore: true, refreshing: true });
     Promise.all([this.loadUserInfo(), this.loadList()]).then(() => {
-      wx.stopPullDownRefresh();
+      this.setData({ refreshing: false });
     });
   },
 

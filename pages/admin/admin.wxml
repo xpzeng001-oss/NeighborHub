@@ -108,6 +108,7 @@
     <view class="filter-row filter-row-sub">
       <view class="filter-pill-sm {{contentStatus === 'all' ? 'active' : ''}}" bindtap="switchContentStatus" data-status="all">全部</view>
       <view class="filter-pill-sm {{contentStatus === 'active' ? 'active' : ''}}" bindtap="switchContentStatus" data-status="active">正常</view>
+      <view class="filter-pill-sm {{contentStatus === 'top' ? 'active' : ''}}" bindtap="switchContentStatus" data-status="top">已置顶</view>
       <view class="filter-pill-sm {{contentStatus === 'off' ? 'active' : ''}}" bindtap="switchContentStatus" data-status="off">已下架</view>
     </view>
 
