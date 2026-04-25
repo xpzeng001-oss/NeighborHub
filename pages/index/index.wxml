@@ -27,9 +27,6 @@
       <swiper-item>
         <image class="banner-img" src="/images/banner-card.jpg" mode="aspectFill"></image>
       </swiper-item>
-      <swiper-item>
-        <image class="banner-img" src="/images/banner-home.jpg" mode="aspectFill"></image>
-      </swiper-item>
     </swiper>
 
     <!-- 分类胶囊 -->
